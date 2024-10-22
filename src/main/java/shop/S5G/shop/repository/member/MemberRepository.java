@@ -4,4 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import shop.S5G.shop.entity.member.Member;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
+    boolean existsByLoginId(String loginId);
 }

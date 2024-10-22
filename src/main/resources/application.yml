@@ -11,5 +11,26 @@ spring:
     activate:
       on-profile: dev
 
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://133.186.241.167:3306/nhn_academy_142
+    username: nhn_academy_142
+    password: qW1dglvk!
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    hibernate:
+      ddl-auto: create
+
+
+
 server:
   port: 8200
+
+logging:
+  level:
+    sql: debug

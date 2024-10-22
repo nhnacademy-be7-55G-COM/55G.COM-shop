@@ -1,10 +1,16 @@
 package shop.S5G.shop.entity.member;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Member {
 
     @Id
@@ -30,4 +36,14 @@ public class Member {
     private LocalDateTime lastestLoginAt;
     private Long point;
 
+    public Member(MemberStatus status, MemberGrade grade, String loginId, String password, String birth, LocalDateTime createdAt, LocalDateTime lastestLoginAt, Long point) {
+        this.status = status;
+        this.grade = grade;
+        this.loginId = loginId;
+        this.password = password;
+        this.birth = birth;
+        this.createdAt = createdAt;
+        this.lastestLoginAt = lastestLoginAt;
+        this.point = point;
+    }
 }
