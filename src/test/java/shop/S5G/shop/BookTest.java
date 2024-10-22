@@ -34,19 +34,19 @@ public class BookTest {
     @Test
     void addBookTest() {
         Book book = new Book(
-                2,
-                22,
-                222,
+                2L,
+                22L,
+                222L,
                 "아낌없이 주는 나무",
                 "전래동화",
                 "이 책은 전래동화 입니다.",
                 LocalDateTime.of(2000, 10, 10, 10, 50),
                 "978-3-15-148410-2",
-                15000,
+                15000L,
                 new BigDecimal("5.5"),
                 true,
                 200,
-                2000,
+                2000L,
                 LocalDateTime.of(2010, 5, 5, 15, 30)
                 );
 
@@ -63,35 +63,35 @@ public class BookTest {
     @Test
     void getAllBooksTest() {
         Book book1 = new Book(
-                1,
-                11,
-                111,
+                1L,
+                11L,
+                111L,
                 "총균쇠",
                 "다큐",
                 "이 책은 다큐 입니다.",
                 LocalDateTime.of(2000, 10, 10, 10, 50),
                 "978-3-15-15859-1",
-                20000,
+                20000L,
                 new BigDecimal("10.0"),
                 true,
                 200,
-                30000,
+                30000L,
                 LocalDateTime.of(2010, 5, 5, 15, 30)
         );
         Book book2 = new Book(
-                2,
-                22,
-                222,
+                2L,
+                22L,
+                222L,
                 "아낌없이 주는 나무",
                 "전래동화",
                 "이 책은 전래동화 입니다.",
                 LocalDateTime.of(2000, 10, 10, 10, 50),
                 "978-3-15-148410-2",
-                15000,
+                15000L,
                 new BigDecimal("5.5"),
                 true,
                 200,
-                2000,
+                2000L,
                 LocalDateTime.of(2010, 5, 5, 15, 30)
         );
 
@@ -107,19 +107,19 @@ public class BookTest {
     @Test
     void getBookByIdTest() {
         Book book = new Book(
-                1,
-                11,
-                111,
+                1L,
+                11L,
+                111L,
                 "총균쇠",
                 "다큐",
                 "이 책은 다큐 입니다.",
                 LocalDateTime.of(2000, 10, 10, 10, 50),
                 "978-3-15-15859-1",
-                20000,
+                20000L,
                 new BigDecimal("10.0"),
                 true,
                 200,
-                30000,
+                30000L,
                 LocalDateTime.of(2010, 5, 5, 15, 30)
         );
         bookRepository.save(book);
@@ -133,35 +133,35 @@ public class BookTest {
     @Test
     void updateBookTest() {
         Book book1 = new Book(
-                1,
-                11,
-                111,
+                1L,
+                11L,
+                111L,
                 "총균쇠",
                 "다큐",
                 "이 책은 다큐 입니다.",
                 LocalDateTime.of(2000, 10, 10, 10, 50),
                 "978-3-15-15859-1",
-                20000,
+                20000L,
                 new BigDecimal("10.0"),
                 true,
                 200,
-                30000,
+                30000L,
                 LocalDateTime.of(2010, 5, 5, 15, 30)
         );
         Book book2 = new Book(
-                1,
-                11,
-                111,
+                1L,
+                11L,
+                111L,
                 "코스모스",
                 "다큐",
                 "이 책은 다큐 입니다.",
                 LocalDateTime.of(2000, 10, 10, 10, 50),
                 "978-3-15-15859-1",
-                20000,
+                20000L,
                 new BigDecimal("10.0"),
                 true,
                 200,
-                30000,
+                30000L,
                 LocalDateTime.of(2010, 5, 5, 15, 30)
         );
         Book save = bookRepository.save(book1);

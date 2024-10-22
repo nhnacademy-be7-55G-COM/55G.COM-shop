@@ -10,17 +10,17 @@ import java.time.LocalDateTime;
 @Entity
 @Setter
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Book {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "book_id")
-    private int bookId;
+    private Long bookId;
     @Column(name = "publisher_id")
-    private int publisherId;
+    private Long publisherId;
     @Column(name = "book_status_id")
-    private int bookStatusId;
+    private Long bookStatusId;
     private String title;
     @Column(columnDefinition = "TEXT")
     private String chapter;
@@ -29,13 +29,47 @@ public class Book {
     @Column(name = "published_date")
     private LocalDateTime publishedDate;
     private String isbn;
-    private int price;
+    private Long price;
     @Column(name = "discount_rate")
     private BigDecimal discountRate;
     @Column(name = "is_packed")
     private boolean isPacked;
     private int stock;
-    private int views;
+    private Long views;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    public Book(Long publisherId, Long bookStatusId, String title, String chapter, String descreption, LocalDateTime publishedDate, String isbn, Long price, BigDecimal discountRate, boolean isPacked, int stock, Long views, LocalDateTime createdAt){
+        this.bookId = bookId;
+        this.publisherId = publisherId;
+        this.bookStatusId = bookStatusId;
+        this.title = title;
+        this.chapter = chapter;
+        this.descreption = descreption;
+        this.publishedDate = publishedDate;
+        this.isbn = isbn;
+        this.price = price;
+        this.discountRate = discountRate;
+        this.isPacked = isPacked;
+        this.stock = stock;
+        this.views = views;
+        this.createdAt = createdAt;
+    }
+
+    public Book(Long bookId, Long publisherId, Long bookStatusId, String title, String chapter, String descreption, LocalDateTime publishedDate, String isbn, Long price, BigDecimal discountRate, boolean isPacked, int stock, Long views, LocalDateTime createdAt) {
+        this.bookId = bookId;
+        this.publisherId = publisherId;
+        this.bookStatusId = bookStatusId;
+        this.title = title;
+        this.chapter = chapter;
+        this.descreption = descreption;
+        this.publishedDate = publishedDate;
+        this.isbn = isbn;
+        this.price = price;
+        this.discountRate = discountRate;
+        this.isPacked = isPacked;
+        this.stock = stock;
+        this.views = views;
+        this.createdAt = createdAt;
+    }
 }
