@@ -53,8 +53,8 @@ public class BookTest {
         Book book1 = bookRepository.save(book);
 
         int publisher_id = 22;
-        Optional<Book> id = bookRepository.findById(book1.getBook_id());
-        assertEquals(id.get().getPublisher_id(), publisher_id);
+        Optional<Book> id = bookRepository.findById(book1.getBookId());
+        assertEquals(id.get().getPublisherId(), publisher_id);
     }
 
     /**
@@ -123,8 +123,8 @@ public class BookTest {
                 LocalDateTime.of(2010, 5, 5, 15, 30)
         );
         bookRepository.save(book);
-        Optional<Book> id = bookRepository.findById(book.getBook_id());
-        assertEquals(id.get().getBook_id(), book.getBook_id());
+        Optional<Book> id = bookRepository.findById(book.getBookId());
+        assertEquals(id.get().getBookId(), book.getBookId());
     }
 
     /**
@@ -165,7 +165,7 @@ public class BookTest {
                 LocalDateTime.of(2010, 5, 5, 15, 30)
         );
         Book save = bookRepository.save(book1);
-        bookService.updateBooks(save.getBook_id(), book2);
+        bookService.updateBooks(save.getBookId(), book2);
         assertEquals(save.getTitle(), "코스모스");
     }
 }

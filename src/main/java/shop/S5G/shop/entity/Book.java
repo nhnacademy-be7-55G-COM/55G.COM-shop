@@ -15,20 +15,27 @@ import java.time.LocalDateTime;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int book_id;
-    private int publisher_id;
-    private int book_status_id;
+    @Column(name = "book_id")
+    private int bookId;
+    @Column(name = "publisher_id")
+    private int publisherId;
+    @Column(name = "book_status_id")
+    private int bookStatusId;
     private String title;
     @Column(columnDefinition = "TEXT")
     private String chapter;
     @Column(columnDefinition = "TEXT")
     private String descreption;
-    private LocalDateTime published_date;
+    @Column(name = "published_date")
+    private LocalDateTime publishedDate;
     private String isbn;
     private int price;
-    private BigDecimal discount_rate;
-    private boolean is_packed;
+    @Column(name = "discount_rate")
+    private BigDecimal discountRate;
+    @Column(name = "is_packed")
+    private boolean isPacked;
     private int stock;
     private int views;
-    private LocalDateTime created_at;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 }
