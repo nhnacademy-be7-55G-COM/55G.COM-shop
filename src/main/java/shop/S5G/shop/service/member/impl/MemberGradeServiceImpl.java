@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.S5G.shop.dto.memberGrade.MemberGradeRequestDto;
+import shop.S5G.shop.dto.memberGrade.MemberGradeResponseDto;
 import shop.S5G.shop.entity.member.MemberGrade;
 import shop.S5G.shop.exception.member.MemberGradeAlreadyExistsException;
 import shop.S5G.shop.exception.member.MemberGradeNotFoundException;
@@ -39,17 +40,35 @@ public class MemberGradeServiceImpl implements MemberGradeService {
 
     @Transactional(readOnly = true)
     @Override
-    public MemberGrade getGradeByName(String name) {
+    public MemberGradeResponseDto getGradeByName(String name) {
         if (!existsGradeByName(name)){
             throw new MemberGradeNotFoundException(name + "이 존재하지 않습니다.");
         }
-        return memberGradeRepository.findByGradeName(name);
+        MemberGrade grade = memberGradeRepository.findByGradeName(name);
+        return new MemberGradeResponseDto(grade.getMemberGradeId(), grade.getGradeName(), grade.getGradeCondition(), grade.getPoint());
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<MemberGrade> getAllGrades() {
-        return memberGradeRepository.findAll();
+    public MemberGradeResponseDto getGradeById(long id) {
+       MemberGrade grade = memberGradeRepository.findById(id)
+               .orElseThrow(() -> new MemberGradeNotFoundException("등급이 존재하지 않습니다"));
+
+        return new MemberGradeResponseDto(grade.getMemberGradeId(), grade.getGradeName(), grade.getGradeCondition(), grade.getPoint());
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<MemberGradeResponseDto> getActiveGrades() {
+        return memberGradeRepository.findByActive(true)
+                .stream()
+                .map(memberGrade ->
+                        new MemberGradeResponseDto(
+                                memberGrade.getMemberGradeId()
+                                , memberGrade.getGradeName()
+                                , memberGrade.getGradeCondition()
+                                , memberGrade.getPoint()))
+                .toList();
     }
 
     @Override
