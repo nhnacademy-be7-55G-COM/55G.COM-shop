@@ -8,8 +8,6 @@ import shop.S5G.shop.dto.member.MemberUpdateDto;
 
 import java.util.List;
 
-//TODO 회원 아이디 찾기, 비밀번호 찾기에 대해 생각해보기
-
 public interface MemberService {
 
     void saveMember(MemberRegistrationDto memberRegistrationDto);

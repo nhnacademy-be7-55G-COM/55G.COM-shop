@@ -47,7 +47,6 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void deleteById(Long memberId) {
-        //TODO delete 추후 생각해보기
         throw new UnsupportedOperationException();
     }
 }
