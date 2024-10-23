@@ -1,15 +1,14 @@
 package shop.S5G.shop.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import shop.S5G.shop.dto.MessageDto;
 import shop.S5G.shop.dto.memberGrade.MemberGradeRequestDto;
 import shop.S5G.shop.dto.memberGrade.MemberGradeResponseDto;
-import shop.S5G.shop.entity.member.MemberGrade;
-import shop.S5G.shop.exception.member.MemberGradeBadRequestException;
+import shop.S5G.shop.exception.BadRequestException;
 import shop.S5G.shop.service.member.MemberGradeService;
 
 import java.util.List;
@@ -35,21 +34,21 @@ public class MemberGradeController {
     }
 
     @PostMapping("/member/grade")
-    public ResponseEntity<MessageDto> createMemberGrade(@Validated @RequestBody MemberGradeRequestDto requestDto,
+    public ResponseEntity<MessageDto> createMemberGrade(@Valid @RequestBody MemberGradeRequestDto requestDto,
                                                         BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            throw new MemberGradeBadRequestException("잘못된 요청입니다");
+            throw new BadRequestException("잘못된 요청입니다");
         }
         memberGradeService.addGrade(requestDto);
         return ResponseEntity.status(201).body(new MessageDto("등급 생성 성공"));
     }
 
     @PutMapping("/member/grade/{gradeId}")
-    public ResponseEntity<MessageDto> updateMemberGrade(@Validated @RequestBody MemberGradeRequestDto requestDto,
+    public ResponseEntity<MessageDto> updateMemberGrade(@Valid @RequestBody MemberGradeRequestDto requestDto,
                                                         BindingResult bindingResult,
                                                         @PathVariable long gradeId) {
         if (gradeId <= 0 || bindingResult.hasErrors()) {
-            throw new MemberGradeBadRequestException("잘못된 요청입니다");
+            throw new BadRequestException("잘못된 요청입니다");
         }
         memberGradeService.updateGrade(gradeId, requestDto);
 
@@ -59,7 +58,7 @@ public class MemberGradeController {
     @DeleteMapping("/member/grade/{gradeId}")
     public ResponseEntity<MessageDto> deleteMemberGrade(@PathVariable long gradeId) {
         if (gradeId <= 0) {
-            throw new MemberGradeBadRequestException("잘못된 요청입니다");
+            throw new BadRequestException("잘못된 요청입니다");
         }
         memberGradeService.deleteGrade(gradeId);
         return ResponseEntity.ok(new MessageDto("삭제 성공"));

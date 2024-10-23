@@ -1,14 +1,11 @@
 package shop.S5G.shop.dto.member;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class MemberRegistrationDto {
 
     String name;

@@ -5,5 +5,6 @@ import shop.S5G.shop.entity.member.MemberStatus;
 
 public interface MemberStatusService {
     void saveMemberStatus(MemberStatusRequestDto memberStatusRequestDto);
-    void updateMemberStatus(MemberStatusRequestDto memberStatusRequestDto);
+    void inactiveMemberStatus(Long memberId);
+    void activeMemberStatus(Long memberId);
 }

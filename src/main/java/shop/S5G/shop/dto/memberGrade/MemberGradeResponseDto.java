@@ -1,21 +1,12 @@
 package shop.S5G.shop.dto.memberGrade;
 
-import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+public record MemberGradeResponseDto(
+    Long memberGradeId,
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class MemberGradeResponseDto {
-    private Long memberGradeId;
+    String gradeName,
 
-    private String gradeName;
+    int gradeCondition,
 
-    private int gradeCondition;
-
-    private int point;
+    int point
+){
 }

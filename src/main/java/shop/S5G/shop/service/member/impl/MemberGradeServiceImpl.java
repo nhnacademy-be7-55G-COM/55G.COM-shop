@@ -14,6 +14,7 @@ import shop.S5G.shop.service.member.MemberGradeService;
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class MemberGradeServiceImpl implements MemberGradeService {
 
@@ -21,21 +22,21 @@ public class MemberGradeServiceImpl implements MemberGradeService {
 
     @Override
     public void addGrade(MemberGradeRequestDto grade) {
-        if (existsGradeByName(grade.getGradeName())){
-            throw new MemberGradeAlreadyExistsException(grade.getGradeName() + "이 이미 존재합니다.");
+        if (existsGradeByName(grade.gradeName())){
+            throw new MemberGradeAlreadyExistsException(grade.gradeName() + "이 이미 존재합니다.");
         }
 
-        MemberGrade memberGrade = new MemberGrade(grade.getGradeName(), grade.getGradeCondition(), grade.getPoint(), true);
+        MemberGrade memberGrade = new MemberGrade(grade.gradeName(), grade.gradeCondition(), grade.point(), true);
         memberGradeRepository.save(memberGrade);
     }
 
     @Override
     public void updateGrade(long gradeId, MemberGradeRequestDto grade) {
-        if (!existsGradeByName(grade.getGradeName())){
-            throw new MemberGradeNotFoundException(grade.getGradeName() + "이 존재하지 않습니다");
+        if (!existsGradeByName(grade.gradeName())){
+            throw new MemberGradeNotFoundException(grade.gradeName() + "이 존재하지 않습니다");
         }
 
-        memberGradeRepository.updateMemberGrade(gradeId, grade.getGradeName(), grade.getGradeCondition(), grade.getPoint());
+        memberGradeRepository.updateMemberGrade(gradeId, grade.gradeName(), grade.gradeCondition(), grade.point());
     }
 
     @Transactional(readOnly = true)
