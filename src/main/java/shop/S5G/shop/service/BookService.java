@@ -5,6 +5,10 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import shop.S5G.shop.entity.Book;
+import shop.S5G.shop.exception.AlreadyExistsException;
+import shop.S5G.shop.exception.BookException.BookAlreadyExistsException;
+import shop.S5G.shop.exception.BookException.BookResourceNotFoundException;
+import shop.S5G.shop.exception.ResourceNotFoundException;
 import shop.S5G.shop.repository.BookRepository;
 
 import java.util.List;
@@ -20,6 +24,10 @@ public class BookService {
 
     //도서 등록
     public void createBook(Book book) {
+        Optional<Book> id = bookRepository.findById(book.getBookId());
+        if (id.isPresent()) {
+            throw new BookAlreadyExistsException("Book with id " + book.getBookId() + " already exists");
+        }
         bookRepository.save(book);
     }
 
@@ -29,33 +37,39 @@ public class BookService {
     }
 
     //도서 상세 조회
-    public Book getBookByid(int bookId) {
-        return bookRepository.findById(bookId).orElse(null);
+    public Book getBookByid(Long bookId) {
+        if(!bookRepository.existsById(bookId)) {
+             throw new BookResourceNotFoundException("Book with id " + bookId + " not found");
+        }
+        return bookRepository.findById(bookId).get();
     }
 
     //도서 수정
-    public void updateBooks(int bookId, Book book) {
+    public void updateBooks(Long bookId, Book book) {
         Optional<Book> books = bookRepository.findById(bookId);
 
-        books.get().setBook_id(book.getBook_id());
-        books.get().setPublisher_id(book.getPublisher_id());
-        books.get().setBook_status_id(book.getBook_status_id());
+        books.get().setPublisherId(book.getPublisherId());
+        books.get().setBookStatusId(book.getBookStatusId());
         books.get().setTitle(book.getTitle());
         books.get().setChapter(book.getChapter());
         books.get().setDescreption(book.getDescreption());
-        books.get().setPublished_date(book.getPublished_date());
+        books.get().setPublishedDate(book.getPublishedDate());
         books.get().setIsbn(book.getIsbn());
         books.get().setPrice(book.getPrice());
-        books.get().setDiscount_rate(book.getDiscount_rate());
-        books.get().set_packed(book.is_packed());
+        books.get().setDiscountRate(book.getDiscountRate());
+        books.get().setPacked(book.isPacked());
         books.get().setStock(book.getStock());
         books.get().setViews(book.getViews());
-        books.get().setCreated_at(book.getCreated_at());
+        books.get().setCreatedAt(book.getCreatedAt());
 
         bookRepository.save(books.get());
     }
 
-    public void deleteBooks(int bookId) {
+    //도서 삭제
+    public void deleteBooks(Long bookId) {
+        if(!bookRepository.existsById(bookId)) {
+            throw new BookResourceNotFoundException("Book with id " + bookId + " not found");
+        }
         bookRepository.deleteById(bookId);
     }
 }
