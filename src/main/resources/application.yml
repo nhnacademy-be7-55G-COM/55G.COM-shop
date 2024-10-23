@@ -5,32 +5,63 @@ spring:
 server:
   port: 8100
 
+eureka-server:
+  host: localhost
+  port: 8761
+  postfix: default
+
+eureka:
+  client:
+    # disable while no profile
+    enabled: false
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://${eureka-server.host}:${eureka-server.port}/eureka
+
 ---
+# on profile 'live'
+spring:
+  config:
+    activate:
+      on-profile: live
+
+eureka:
+  client:
+    enabled: true
+
+eureka-server:
+  postfix: live
+
+---
+# on profile 'dev'
 spring:
   config:
     activate:
       on-profile: dev
 
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://133.186.241.167:3306/nhn_academy_142
-    username: nhn_academy_142
-    password: qW1dglvk!
+eureka:
+  client:
+    enabled: true
 
-  jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect
-    properties:
-      hibernate:
-        show_sql: true
-        format_sql: true
-    hibernate:
-      ddl-auto: create
-
-
+eureka-server:
+  port: 8762
+  postfix: dev
 
 server:
   port: 8200
 
-logging:
-  level:
-    sql: debug
+---
+# on profile 'docker'
+spring:
+  config:
+    activate:
+      on-profile: docker
+
+eureka-server:
+  host: 55g-eureka
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${eureka-server.host}-${eureka-server.postfix}:${eureka-server.port}/eureka
