@@ -19,6 +19,9 @@ eureka:
     service-url:
       defaultZone: http://${eureka-server.host}:${eureka-server.port}/eureka
 
+55g:
+  log:
+    path: .
 ---
 # on profile 'live'
 spring:
@@ -33,6 +36,20 @@ eureka:
 eureka-server:
   postfix: live
 
+logging:
+  file:
+    name: ${55g.log.path}/shop-live.log
+  logback:
+    rollingpolicy:
+      max-history: 100
+      file-name-pattern: shop-live-%i.%d{yyyy-MM-dd}.log
+      max-file-size: 100KB
+  level:
+    root: info
+    shop.S5G.shop: info
+55g:
+  log:
+    path: /logs/live/shop
 ---
 # on profile 'dev'
 spring:
@@ -50,7 +67,21 @@ eureka-server:
 
 server:
   port: 8200
+logging:
+  file:
+    name: ${55g.log.path}/shop-dev.log
+  logback:
+    rollingpolicy:
+      max-history: 100
+      file-name-pattern: shop-dev-%i.%d{yyyy-MM-dd}.log
+      max-file-size: 100KB
+  level:
+    root: debug
+    shop.S5G.shop: trace
 
+55g:
+  log:
+    path: /logs/dev/shop
 ---
 # on profile 'docker'
 spring:
