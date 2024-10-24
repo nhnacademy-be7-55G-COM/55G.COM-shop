@@ -22,6 +22,9 @@ eureka:
 55g:
   log:
     path: .
+logging:
+  file:
+    name: ${55g.log.path}/shop.log
 ---
 # on profile 'live'
 spring:
