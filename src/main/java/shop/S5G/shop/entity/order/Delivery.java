@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalDate;
 import lombok.AccessLevel;
@@ -24,6 +25,7 @@ public class Delivery {
     private long id;
 
     @ManyToOne
+    @JoinColumn(name = "delivery_fee_id")
     private DeliveryFee deliveryFee;
 
     @Column(name = "delivery_address")

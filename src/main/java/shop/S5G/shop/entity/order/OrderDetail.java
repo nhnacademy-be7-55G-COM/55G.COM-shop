@@ -2,9 +2,11 @@ package shop.S5G.shop.entity.order;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -22,16 +24,21 @@ public class OrderDetail {
     @Column(name="order_detail_id")
     private long id;
 
-    @ManyToOne
+    // TODO: LAZY 로딩을 할지 조금 더 생각하기.
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_id")
     private Book book;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
     private Order order;
 
     @ManyToOne
+    @JoinColumn(name = "wrapping_paper_id")
     private WrappingPaper wrappingPaper;
 
     @ManyToOne
+    @JoinColumn(name = "order_detail_type_id")
     private OrderDetailType orderDetailType;
 
     private int quantity;

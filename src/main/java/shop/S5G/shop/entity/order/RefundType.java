@@ -12,16 +12,18 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class OrderDetailType {
+public class RefundType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_detail_type_id")
+    @Column(name = "refund_type_id")
     private long id;
 
-    @Column(name = "type_name")
+    @Column(name = "refund_type_name")
     @Length(max = 20)
     private String name;
+
+    private boolean active;
 }
