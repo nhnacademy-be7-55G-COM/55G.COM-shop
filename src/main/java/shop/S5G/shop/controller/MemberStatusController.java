@@ -32,6 +32,14 @@ public class MemberStatusController {
         return ResponseEntity.ok(memberStatusList);
     }
 
+    @GetMapping("/member/status/{memberStatusId}")
+    public ResponseEntity<MemberStatusResponseDto> getMemberStatusById(
+        @PathVariable Long memberStatusId) {
+        MemberStatusResponseDto memberStatusResponseDto = memberStatusService.getMemberStatus(
+            memberStatusId);
+        return ResponseEntity.ok(memberStatusResponseDto);
+    }
+
     @PostMapping("/member/status")
     public ResponseEntity<MessageDto> createMemberStatus(
         @Valid @RequestBody MemberStatusRequestDto requestDto, BindingResult bindingResult) {

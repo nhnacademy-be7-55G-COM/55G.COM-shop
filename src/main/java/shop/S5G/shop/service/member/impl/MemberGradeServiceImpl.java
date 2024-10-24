@@ -1,5 +1,6 @@
 package shop.S5G.shop.service.member.impl;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,8 +12,6 @@ import shop.S5G.shop.exception.member.MemberGradeNotFoundException;
 import shop.S5G.shop.repository.member.MemberGradeRepository;
 import shop.S5G.shop.service.member.MemberGradeService;
 
-import java.util.List;
-
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -22,74 +21,65 @@ public class MemberGradeServiceImpl implements MemberGradeService {
 
     @Override
     public void addGrade(MemberGradeRequestDto grade) {
-        if (existsGradeByName(grade.gradeName())){
+        if (!memberGradeRepository.existsByGradeNameAndActive(grade.gradeName(), true)) {
             throw new MemberGradeAlreadyExistsException(grade.gradeName() + "이 이미 존재합니다.");
         }
 
-        MemberGrade memberGrade = new MemberGrade(grade.gradeName(), grade.gradeCondition(), grade.point(), true);
+        MemberGrade memberGrade = new MemberGrade(grade.gradeName(), grade.gradeCondition(),
+            grade.point(), true);
         memberGradeRepository.save(memberGrade);
     }
 
     @Override
     public void updateGrade(long gradeId, MemberGradeRequestDto grade) {
-        if (!existsGradeByName(grade.gradeName())){
+        if (!memberGradeRepository.existsByGradeNameAndActive(grade.gradeName(), true)) {
             throw new MemberGradeNotFoundException(grade.gradeName() + "이 존재하지 않습니다");
         }
 
-        memberGradeRepository.updateMemberGrade(gradeId, grade.gradeName(), grade.gradeCondition(), grade.point());
+        memberGradeRepository.updateMemberGrade(gradeId, grade);
     }
 
     @Transactional(readOnly = true)
     @Override
     public MemberGradeResponseDto getGradeByName(String name) {
-        if (!existsGradeByName(name)){
+        if (!memberGradeRepository.existsByGradeNameAndActive(name, true)) {
             throw new MemberGradeNotFoundException(name + "이 존재하지 않습니다.");
         }
         MemberGrade grade = memberGradeRepository.findByGradeName(name);
-        return new MemberGradeResponseDto(grade.getMemberGradeId(), grade.getGradeName(), grade.getGradeCondition(), grade.getPoint());
+        return new MemberGradeResponseDto(grade.getMemberGradeId(), grade.getGradeName(),
+            grade.getGradeCondition(), grade.getPoint());
     }
 
     @Transactional(readOnly = true)
     @Override
     public MemberGradeResponseDto getGradeById(long id) {
-       MemberGrade grade = memberGradeRepository.findById(id)
-               .orElseThrow(() -> new MemberGradeNotFoundException("등급이 존재하지 않습니다"));
+        MemberGrade grade = memberGradeRepository.findById(id)
+            .orElseThrow(() -> new MemberGradeNotFoundException("등급이 존재하지 않습니다"));
 
-        return new MemberGradeResponseDto(grade.getMemberGradeId(), grade.getGradeName(), grade.getGradeCondition(), grade.getPoint());
+        return new MemberGradeResponseDto(grade.getMemberGradeId(), grade.getGradeName(),
+            grade.getGradeCondition(), grade.getPoint());
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<MemberGradeResponseDto> getActiveGrades() {
         return memberGradeRepository.findByActive(true)
-                .stream()
-                .map(memberGrade ->
-                        new MemberGradeResponseDto(
-                                memberGrade.getMemberGradeId()
-                                , memberGrade.getGradeName()
-                                , memberGrade.getGradeCondition()
-                                , memberGrade.getPoint()))
-                .toList();
+            .stream()
+            .map(memberGrade ->
+                new MemberGradeResponseDto(
+                    memberGrade.getMemberGradeId()
+                    , memberGrade.getGradeName()
+                    , memberGrade.getGradeCondition()
+                    , memberGrade.getPoint()))
+            .toList();
     }
 
     @Override
     public void deleteGrade(long gradeId) {
-        if (!existsGradeById(gradeId)){
+        if (!memberGradeRepository.existsById(gradeId)) {
             throw new MemberGradeNotFoundException("등급이 존재하지 않습니다.");
         }
 
         memberGradeRepository.inactiveMemberGrade(gradeId);
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public boolean existsGradeByName(String name) {
-        return memberGradeRepository.existsByGradeNameAndActive(name, true);
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public boolean existsGradeById(long gradeId) {
-        return memberGradeRepository.existsById(gradeId);
     }
 }

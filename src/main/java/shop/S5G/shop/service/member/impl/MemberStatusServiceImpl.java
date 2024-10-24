@@ -34,8 +34,7 @@ public class MemberStatusServiceImpl implements MemberStatusService {
         if (!memberStatusRepository.existsById(memberStatusId)) {
             throw new MemberStatusNotFoundException("변경하려는 상태가 존재하지 않습니다");
         }
-        memberStatusRepository.updateMemberStatus(memberStatusId,
-            memberStatusRequestDto.typeName());
+        memberStatusRepository.updateMemberStatus(memberStatusId, memberStatusRequestDto);
     }
 
     @Transactional(readOnly = true)
