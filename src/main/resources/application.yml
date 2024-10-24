@@ -42,7 +42,7 @@ logging:
   logback:
     rollingpolicy:
       max-history: 100
-      file-name-pattern: shop-live-%i.%d{yyyy-MM-dd}.log
+      file-name-pattern: ${55g.log.path}/shop-live-%d{yyyy-MM-dd}.%i.log
       max-file-size: 100KB
   level:
     root: info
@@ -73,7 +73,7 @@ logging:
   logback:
     rollingpolicy:
       max-history: 100
-      file-name-pattern: shop-dev-%i.%d{yyyy-MM-dd}.log
+      file-name-pattern: ${55g.log.path}/shop-dev-%d{yyyy-MM-dd}.%i.log
       max-file-size: 100KB
   level:
     root: debug
