@@ -20,6 +20,8 @@ eureka:
       defaultZone: http://${eureka-server.host}:${eureka-server.port}/eureka
 
 55g:
+  resource:
+    path: /static
   log:
     path: .
 logging:

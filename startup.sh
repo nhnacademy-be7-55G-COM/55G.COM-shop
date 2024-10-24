@@ -53,6 +53,7 @@ docker run -d --name $container_name \
        --env SERVER_PORT=$server_port \
        -p $server_port:$server_port \
        -v /logs:/logs \
+       -v /var/55g/static:/static \
        $image_name-$container_postfix
 
 echo "Pruning images..."
