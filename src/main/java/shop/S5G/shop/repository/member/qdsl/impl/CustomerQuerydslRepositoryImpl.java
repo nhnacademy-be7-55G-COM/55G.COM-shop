@@ -1,5 +1,6 @@
 package shop.S5G.shop.repository.member.qdsl.impl;
 
+
 import static shop.S5G.shop.entity.member.QCustomer.customer;
 
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
@@ -20,6 +21,14 @@ public class CustomerQuerydslRepositoryImpl extends QuerydslRepositorySupport im
             .set(customer.email, customerUpdateRequestDto.email())
             .set(customer.name, customerUpdateRequestDto.name())
             .set(customer.phoneNumber, customerUpdateRequestDto.phoneNumber())
+            .where(customer.customerId.eq(customerId))
+            .execute();
+    }
+
+    @Override
+    public void inactiveCustomer(long customerId) {
+        update(customer)
+            .set(customer.active, false)
             .where(customer.customerId.eq(customerId))
             .execute();
     }

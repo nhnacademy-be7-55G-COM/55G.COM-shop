@@ -50,6 +50,6 @@ public class CustomerServiceImpl implements CustomerService {
         if (!customerRepository.existsById(customerId)) {
             throw new CustomerNotFoundException("고객이 존재하지 않습니다.");
         }
-        customerRepository.deleteById(customerId);
+        customerRepository.inactiveCustomer(customerId);
     }
 }
