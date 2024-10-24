@@ -31,7 +31,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void updateCustomer(long customerId, CustomerUpdateRequestDto customerUpdateRequestDto) {
         if (!customerRepository.existsById(customerId)) {
-            throw new CustomerNotFoundException("고객이 존재하지 않습니다.");
+            throw new CustomerNotFoundException("변경할 고객이 존재하지 않습니다.");
         }
         customerRepository.updateCustomer(customerId, customerUpdateRequestDto);
     }

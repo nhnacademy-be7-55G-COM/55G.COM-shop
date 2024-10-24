@@ -7,5 +7,7 @@ import shop.S5G.shop.repository.member.qdsl.MemberStatusQuerydslRepository;
 public interface MemberStatusRepository extends JpaRepository<MemberStatus, Long>,
     MemberStatusQuerydslRepository {
 
+    MemberStatus findByTypeName(String typeName);
+
     boolean existsByTypeName(String typeName);
 }

@@ -59,23 +59,20 @@ public class MemberStatusServiceImpl implements MemberStatusService {
             .toList();
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public MemberStatus getMemberStatusByTypeName(String typeName) {
+        if (memberStatusRepository.existsByTypeName(typeName)) {
+            throw new MemberStatusAlreadyExistsException(typeName + "존재하지 않습니다");
+        }
+        return memberStatusRepository.findByTypeName(typeName);
+    }
+
     @Override
     public void deleteMemberStatus(long memberStatusId) {
-        if (!existsMemberStatus(memberStatusId)) {
+        if (!memberStatusRepository.existsById(memberStatusId)) {
             throw new MemberStatusNotFoundException("삭제하려는 상태가 존재하지 않습니다");
         }
         memberStatusRepository.deleteById(memberStatusId);
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public boolean existsMemberStatus(long memberStatusId) {
-        return memberStatusRepository.existsById(memberStatusId);
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public boolean existsMemberStatusByTypeName(String typeName) {
-        return memberStatusRepository.existsByTypeName(typeName);
     }
 }

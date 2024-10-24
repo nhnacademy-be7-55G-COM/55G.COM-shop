@@ -3,6 +3,7 @@ package shop.S5G.shop.service.member;
 import java.util.List;
 import shop.S5G.shop.dto.memberGrade.MemberGradeRequestDto;
 import shop.S5G.shop.dto.memberGrade.MemberGradeResponseDto;
+import shop.S5G.shop.entity.member.MemberGrade;
 
 public interface MemberGradeService {
 
@@ -10,7 +11,9 @@ public interface MemberGradeService {
 
     void updateGrade(long gradeId, MemberGradeRequestDto grade);
 
-    MemberGradeResponseDto getGradeByName(String name);
+    MemberGradeResponseDto getGradeDtoByName(String name);
+
+    MemberGrade getGradeByName(String name);
 
     MemberGradeResponseDto getGradeById(long id);
 

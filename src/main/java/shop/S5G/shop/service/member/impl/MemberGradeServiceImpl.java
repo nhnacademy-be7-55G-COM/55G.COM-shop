@@ -21,7 +21,7 @@ public class MemberGradeServiceImpl implements MemberGradeService {
 
     @Override
     public void addGrade(MemberGradeRequestDto grade) {
-        if (!memberGradeRepository.existsByGradeNameAndActive(grade.gradeName(), true)) {
+        if (memberGradeRepository.existsByGradeNameAndActive(grade.gradeName(), true)) {
             throw new MemberGradeAlreadyExistsException(grade.gradeName() + "이 이미 존재합니다.");
         }
 
@@ -41,13 +41,21 @@ public class MemberGradeServiceImpl implements MemberGradeService {
 
     @Transactional(readOnly = true)
     @Override
-    public MemberGradeResponseDto getGradeByName(String name) {
+    public MemberGradeResponseDto getGradeDtoByName(String name) {
         if (!memberGradeRepository.existsByGradeNameAndActive(name, true)) {
             throw new MemberGradeNotFoundException(name + "이 존재하지 않습니다.");
         }
         MemberGrade grade = memberGradeRepository.findByGradeName(name);
         return new MemberGradeResponseDto(grade.getMemberGradeId(), grade.getGradeName(),
             grade.getGradeCondition(), grade.getPoint());
+    }
+
+    @Override
+    public MemberGrade getGradeByName(String name) {
+        if (!memberGradeRepository.existsByGradeNameAndActive(name, true)) {
+            throw new MemberGradeNotFoundException(name + "이 존재하지 않습니다.");
+        }
+        return memberGradeRepository.findByGradeName(name);
     }
 
     @Transactional(readOnly = true)
