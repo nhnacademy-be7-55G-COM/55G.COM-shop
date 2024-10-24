@@ -17,4 +17,8 @@ public class MemberStatus {
 
     private String typeName;
 
+    public MemberStatus(String typeName) {
+        this.typeName = typeName;
+    }
+
 }

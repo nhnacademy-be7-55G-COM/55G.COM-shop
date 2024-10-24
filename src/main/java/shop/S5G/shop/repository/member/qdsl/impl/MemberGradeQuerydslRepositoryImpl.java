@@ -1,11 +1,13 @@
-package shop.S5G.shop.repository.member.qdsl;
+package shop.S5G.shop.repository.member.qdsl.impl;
 
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import shop.S5G.shop.entity.member.MemberGrade;
+import shop.S5G.shop.repository.member.qdsl.MemberGradeQuerydslRepository;
 
 import static shop.S5G.shop.entity.member.QMemberGrade.memberGrade;
 
-public class MemberGradeQuerydslRepositoryImpl extends QuerydslRepositorySupport implements MemberGradeQuerydslRepository {
+public class MemberGradeQuerydslRepositoryImpl extends QuerydslRepositorySupport implements
+    MemberGradeQuerydslRepository {
 
     public MemberGradeQuerydslRepositoryImpl() {
         super(MemberGrade.class);

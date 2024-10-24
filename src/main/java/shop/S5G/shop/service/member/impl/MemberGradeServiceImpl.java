@@ -81,11 +81,13 @@ public class MemberGradeServiceImpl implements MemberGradeService {
         memberGradeRepository.inactiveMemberGrade(gradeId);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public boolean existsGradeByName(String name) {
         return memberGradeRepository.existsByGradeNameAndActive(name, true);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public boolean existsGradeById(long gradeId) {
         return memberGradeRepository.existsById(gradeId);
