@@ -45,9 +45,16 @@ public class MemberServiceImpl implements MemberService {
             new CustomerRegistrationRequestDto(null, memberRegistrationRequestDto.name(),
                 memberRegistrationRequestDto.phoneNumber(), memberRegistrationRequestDto.email()));
 
-        Member member = new Member(customer, memberStatus, memberGrade,
-            memberRegistrationRequestDto.loginId(), memberRegistrationRequestDto.password(),
-            memberRegistrationRequestDto.birthDate(), LocalDateTime.now(), null, 0L);
+        Member member = Member.builder()
+            .customer(customer)
+            .status(memberStatus)
+            .grade(memberGrade)
+            .password(memberRegistrationRequestDto.password())
+            .loginId(memberRegistrationRequestDto.loginId())
+            .birth(memberRegistrationRequestDto.birthDate())
+            .createdAt(LocalDateTime.now())
+            .latestLoginAt(null)
+            .build();
 
         memberRepository.save(member);
     }

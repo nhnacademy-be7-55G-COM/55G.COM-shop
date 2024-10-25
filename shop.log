@@ -1,0 +1,352 @@
+2024-10-25T12:51:25.480+09:00  INFO 8336 --- [shop-service] [main] shop.S5G.shop.ShopApplication            : Starting ShopApplication using Java 22.0.1 with PID 8336 (C:\NHNacademy\book\55G.COM-shop\target\classes started by cbs10 in C:\NHNacademy\book\55G.COM-shop)
+2024-10-25T12:51:25.482+09:00  INFO 8336 --- [shop-service] [main] shop.S5G.shop.ShopApplication            : The following 1 profile is active: "local"
+2024-10-25T12:51:26.491+09:00  INFO 8336 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T12:51:26.628+09:00  INFO 8336 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 130 ms. Found 6 JPA repository interfaces.
+2024-10-25T12:51:26.824+09:00  INFO 8336 --- [shop-service] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=c57892d3-84c8-354a-b2bb-8fc67a552e71
+2024-10-25T12:51:27.079+09:00  WARN 8336 --- [shop-service] [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [lbRestClientPostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2024-10-25T12:51:27.082+09:00  WARN 8336 --- [shop-service] [main] trationDelegate$BeanPostProcessorChecker : Bean 'deferringLoadBalancerInterceptor' of type [org.springframework.cloud.client.loadbalancer.DeferringLoadBalancerInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2024-10-25T12:51:27.327+09:00  INFO 8336 --- [shop-service] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8820 (http)
+2024-10-25T12:51:27.341+09:00  INFO 8336 --- [shop-service] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-10-25T12:51:27.341+09:00  INFO 8336 --- [shop-service] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
+2024-10-25T12:51:27.399+09:00  INFO 8336 --- [shop-service] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-10-25T12:51:27.399+09:00  INFO 8336 --- [shop-service] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1866 ms
+2024-10-25T12:51:27.501+09:00  INFO 8336 --- [shop-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-10-25T12:51:27.666+09:00  INFO 8336 --- [shop-service] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2024-10-25T12:51:27.668+09:00  INFO 8336 --- [shop-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-10-25T12:51:27.675+09:00  INFO 8336 --- [shop-service] [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2024-10-25T12:51:27.828+09:00  INFO 8336 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T12:51:27.864+09:00  INFO 8336 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T12:51:27.894+09:00  INFO 8336 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T12:51:28.121+09:00  INFO 8336 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T12:51:28.161+09:00  WARN 8336 --- [shop-service] [main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-10-25T12:51:29.163+09:00  INFO 8336 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T12:51:29.237+09:00  INFO 8336 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T12:51:29.771+09:00  WARN 8336 --- [shop-service] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-10-25T12:51:30.512+09:00  INFO 8336 --- [shop-service] [main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2024-10-25T12:51:30.554+09:00  WARN 8336 --- [shop-service] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2024-10-25T12:51:30.564+09:00  INFO 8336 --- [shop-service] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2024-10-25T12:51:30.647+09:00  INFO 8336 --- [shop-service] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8820 (http) with context path '/'
+2024-10-25T12:51:30.660+09:00  INFO 8336 --- [shop-service] [main] shop.S5G.shop.ShopApplication            : Started ShopApplication in 5.652 seconds (process running for 6.515)
+2024-10-25T12:51:30.969+09:00  INFO 8336 --- [shop-service] [RMI TCP Connection(1)-192.168.0.42] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-10-25T12:51:30.969+09:00  INFO 8336 --- [shop-service] [RMI TCP Connection(1)-192.168.0.42] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-10-25T12:51:30.972+09:00  INFO 8336 --- [shop-service] [RMI TCP Connection(1)-192.168.0.42] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2024-10-25T12:51:37.617+09:00  INFO 8336 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T12:51:37.620+09:00  INFO 8336 --- [shop-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-10-25T12:51:37.624+09:00  INFO 8336 --- [shop-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-10-25T12:51:40.090+09:00  INFO 20332 --- [shop-service] [main] shop.S5G.shop.ShopApplication            : Starting ShopApplication using Java 22.0.1 with PID 20332 (C:\NHNacademy\book\55G.COM-shop\target\classes started by cbs10 in C:\NHNacademy\book\55G.COM-shop)
+2024-10-25T12:51:40.091+09:00  INFO 20332 --- [shop-service] [main] shop.S5G.shop.ShopApplication            : The following 1 profile is active: "local"
+2024-10-25T12:51:40.948+09:00  INFO 20332 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T12:51:41.086+09:00  INFO 20332 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 132 ms. Found 6 JPA repository interfaces.
+2024-10-25T12:51:41.253+09:00  INFO 20332 --- [shop-service] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=c57892d3-84c8-354a-b2bb-8fc67a552e71
+2024-10-25T12:51:41.531+09:00  WARN 20332 --- [shop-service] [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [lbRestClientPostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2024-10-25T12:51:41.534+09:00  WARN 20332 --- [shop-service] [main] trationDelegate$BeanPostProcessorChecker : Bean 'deferringLoadBalancerInterceptor' of type [org.springframework.cloud.client.loadbalancer.DeferringLoadBalancerInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2024-10-25T12:51:41.743+09:00  INFO 20332 --- [shop-service] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8820 (http)
+2024-10-25T12:51:41.758+09:00  INFO 20332 --- [shop-service] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-10-25T12:51:41.758+09:00  INFO 20332 --- [shop-service] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
+2024-10-25T12:51:41.815+09:00  INFO 20332 --- [shop-service] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-10-25T12:51:41.816+09:00  INFO 20332 --- [shop-service] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1672 ms
+2024-10-25T12:51:41.926+09:00  INFO 20332 --- [shop-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-10-25T12:51:42.087+09:00  INFO 20332 --- [shop-service] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2024-10-25T12:51:42.088+09:00  INFO 20332 --- [shop-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-10-25T12:51:42.097+09:00  INFO 20332 --- [shop-service] [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2024-10-25T12:51:42.244+09:00  INFO 20332 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T12:51:42.286+09:00  INFO 20332 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T12:51:42.320+09:00  INFO 20332 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T12:51:42.540+09:00  INFO 20332 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T12:51:42.576+09:00  WARN 20332 --- [shop-service] [main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-10-25T12:51:43.469+09:00  INFO 20332 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T12:51:43.527+09:00  INFO 20332 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T12:51:44.051+09:00  WARN 20332 --- [shop-service] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-10-25T12:51:44.787+09:00  INFO 20332 --- [shop-service] [main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2024-10-25T12:51:44.835+09:00  WARN 20332 --- [shop-service] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2024-10-25T12:51:44.844+09:00  INFO 20332 --- [shop-service] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2024-10-25T12:51:44.927+09:00  INFO 20332 --- [shop-service] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8820 (http) with context path '/'
+2024-10-25T12:51:44.940+09:00  INFO 20332 --- [shop-service] [main] shop.S5G.shop.ShopApplication            : Started ShopApplication in 5.265 seconds (process running for 5.918)
+2024-10-25T12:51:45.454+09:00  INFO 20332 --- [shop-service] [RMI TCP Connection(2)-192.168.0.42] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-10-25T12:51:45.455+09:00  INFO 20332 --- [shop-service] [RMI TCP Connection(2)-192.168.0.42] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-10-25T12:51:45.456+09:00  INFO 20332 --- [shop-service] [RMI TCP Connection(2)-192.168.0.42] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-10-25T13:16:10.797+09:00  INFO 3932 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Starting CustomerRepositoryTest using Java 22.0.1 with PID 3932 (started by cbs10 in C:\NHNacademy\book\55G.COM-shop)
+2024-10-25T13:16:10.799+09:00  INFO 3932 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:16:11.948+09:00  INFO 3932 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T13:16:12.150+09:00  INFO 3932 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 194 ms. Found 6 JPA repository interfaces.
+2024-10-25T13:16:12.206+09:00  INFO 3932 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T13:16:12.385+09:00  INFO 3932 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:029b414f-646c-4f16-8cbe-fec02f7122f2;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T13:16:12.727+09:00  INFO 3932 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T13:16:12.814+09:00  INFO 3932 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T13:16:12.848+09:00  INFO 3932 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T13:16:13.209+09:00  INFO 3932 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T13:16:14.191+09:00  INFO 3932 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T13:16:14.261+09:00  INFO 3932 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:16:15.026+09:00  INFO 3932 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Started CustomerRepositoryTest in 4.851 seconds (process running for 6.008)
+2024-10-25T13:16:16.296+09:00  INFO 3932 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:27:44.729+09:00  INFO 8604 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Starting CustomerRepositoryTest using Java 22.0.1 with PID 8604 (started by cbs10 in C:\NHNacademy\book\55G.COM-shop)
+2024-10-25T13:27:44.731+09:00  INFO 8604 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:27:45.238+09:00  INFO 8604 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T13:27:45.434+09:00  INFO 8604 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 187 ms. Found 6 JPA repository interfaces.
+2024-10-25T13:27:45.506+09:00  INFO 8604 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T13:27:45.704+09:00  INFO 8604 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:70bde6bd-63bc-4a8a-8bd1-928ff3bf6511;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T13:27:46.039+09:00  INFO 8604 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T13:27:46.129+09:00  INFO 8604 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T13:27:46.168+09:00  INFO 8604 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T13:27:46.566+09:00  INFO 8604 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T13:27:47.773+09:00  INFO 8604 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T13:27:47.851+09:00  INFO 8604 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:27:48.679+09:00  INFO 8604 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Started CustomerRepositoryTest in 4.475 seconds (process running for 5.524)
+2024-10-25T13:27:50.263+09:00  INFO 8604 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:33:10.105+09:00  INFO 16504 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Starting CustomerRepositoryTest using Java 22.0.1 with PID 16504 (started by cbs10 in C:\NHNacademy\book\55G.COM-shop)
+2024-10-25T13:33:10.106+09:00  INFO 16504 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:33:10.681+09:00  INFO 16504 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T13:33:10.919+09:00  INFO 16504 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 227 ms. Found 6 JPA repository interfaces.
+2024-10-25T13:33:10.980+09:00  INFO 16504 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T13:33:11.205+09:00  INFO 16504 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:12d667f4-6a2d-444f-9a1a-8bb7c212aaee;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T13:33:11.587+09:00  INFO 16504 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T13:33:11.665+09:00  INFO 16504 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T13:33:11.707+09:00  INFO 16504 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T13:33:12.116+09:00  INFO 16504 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T13:33:13.246+09:00  INFO 16504 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T13:33:13.314+09:00  INFO 16504 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:33:14.057+09:00  INFO 16504 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Started CustomerRepositoryTest in 4.54 seconds (process running for 5.646)
+2024-10-25T13:33:15.170+09:00  INFO 16504 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:34:06.593+09:00  INFO 17552 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Starting CustomerRepositoryTest using Java 22.0.1 with PID 17552 (started by cbs10 in C:\NHNacademy\book\55G.COM-shop)
+2024-10-25T13:34:06.595+09:00  INFO 17552 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:34:07.184+09:00  INFO 17552 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T13:34:07.458+09:00  INFO 17552 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 257 ms. Found 6 JPA repository interfaces.
+2024-10-25T13:34:07.539+09:00  INFO 17552 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T13:34:07.838+09:00  INFO 17552 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:7b1459bf-547c-4667-8ba0-d64f8a46aab3;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T13:34:08.198+09:00  INFO 17552 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T13:34:08.304+09:00  INFO 17552 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T13:34:08.386+09:00  INFO 17552 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T13:34:08.866+09:00  INFO 17552 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T13:34:10.153+09:00  INFO 17552 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T13:34:10.240+09:00  INFO 17552 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:34:11.061+09:00  INFO 17552 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Started CustomerRepositoryTest in 5.234 seconds (process running for 7.116)
+2024-10-25T13:39:59.910+09:00  INFO 17552 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:39:59.940+09:00  INFO 20332 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:39:59.943+09:00  INFO 20332 --- [shop-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-10-25T13:39:59.947+09:00  INFO 20332 --- [shop-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-10-25T13:40:09.745+09:00  INFO 6244 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Starting CustomerRepositoryTest using Java 22.0.1 with PID 6244 (started by cbs10 in C:\NHNacademy\book\55G.COM-shop)
+2024-10-25T13:40:09.747+09:00  INFO 6244 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:40:10.229+09:00  INFO 6244 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T13:40:10.434+09:00  INFO 6244 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 189 ms. Found 6 JPA repository interfaces.
+2024-10-25T13:40:10.509+09:00  INFO 6244 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T13:40:10.710+09:00  INFO 6244 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:57790d41-a51b-42b0-8310-464aa2e1e916;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T13:40:11.064+09:00  INFO 6244 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T13:40:11.148+09:00  INFO 6244 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T13:40:11.204+09:00  INFO 6244 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T13:40:11.615+09:00  INFO 6244 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T13:40:12.774+09:00  INFO 6244 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T13:40:12.852+09:00  INFO 6244 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:40:13.587+09:00  INFO 6244 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Started CustomerRepositoryTest in 4.466 seconds (process running for 5.811)
+2024-10-25T13:40:14.960+09:00  INFO 6244 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:50:39.815+09:00  INFO 21172 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Starting CustomerRepositoryTest using Java 22.0.1 with PID 21172 (started by cbs10 in C:\NHNacademy\book\55G.COM-shop)
+2024-10-25T13:50:39.818+09:00  INFO 21172 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:50:40.498+09:00  INFO 21172 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T13:50:40.733+09:00  INFO 21172 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 224 ms. Found 6 JPA repository interfaces.
+2024-10-25T13:50:40.822+09:00  INFO 21172 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T13:50:41.103+09:00  INFO 21172 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:1ad6eebf-1ad4-43b1-8380-9a4016e15765;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T13:50:41.488+09:00  INFO 21172 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T13:50:41.579+09:00  INFO 21172 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T13:50:41.624+09:00  INFO 21172 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T13:50:42.090+09:00  INFO 21172 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T13:50:43.420+09:00  INFO 21172 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T13:50:43.506+09:00  INFO 21172 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:50:44.347+09:00  INFO 21172 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Started CustomerRepositoryTest in 5.466 seconds (process running for 6.876)
+2024-10-25T13:50:45.898+09:00  INFO 21172 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:50:53.233+09:00  INFO 14388 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Starting CustomerRepositoryTest using Java 22.0.1 with PID 14388 (started by cbs10 in C:\NHNacademy\book\55G.COM-shop)
+2024-10-25T13:50:53.236+09:00  INFO 14388 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:50:53.986+09:00  INFO 14388 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T13:50:54.278+09:00  INFO 14388 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 278 ms. Found 6 JPA repository interfaces.
+2024-10-25T13:50:54.364+09:00  INFO 14388 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T13:50:54.654+09:00  INFO 14388 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:82f4cb7d-cbf3-4524-912e-9ccf787ca685;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T13:50:55.086+09:00  INFO 14388 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T13:50:55.193+09:00  INFO 14388 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T13:50:55.265+09:00  INFO 14388 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T13:50:55.750+09:00  INFO 14388 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T13:50:57.033+09:00  INFO 14388 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T13:50:57.099+09:00  INFO 14388 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:50:57.912+09:00  INFO 14388 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Started CustomerRepositoryTest in 5.596 seconds (process running for 7.184)
+2024-10-25T13:56:01.264+09:00  INFO 9632 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Starting CustomerRepositoryTest using Java 22.0.1 with PID 9632 (started by cbs10 in C:\NHNacademy\book\55G.COM-shop)
+2024-10-25T13:56:01.266+09:00  INFO 9632 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : The following 1 profile is active: "local"
+2024-10-25T13:56:01.906+09:00  INFO 9632 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T13:56:02.155+09:00  INFO 9632 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 234 ms. Found 6 JPA repository interfaces.
+2024-10-25T13:56:02.215+09:00  INFO 9632 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T13:56:02.486+09:00  INFO 9632 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:029303ce-b03c-44af-a4ce-fa8a289e57e1;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T13:56:02.887+09:00  INFO 9632 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T13:56:02.973+09:00  INFO 9632 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T13:56:03.029+09:00  INFO 9632 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T13:56:03.418+09:00  INFO 9632 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T13:56:03.467+09:00  WARN 9632 --- [shop-service] [main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-10-25T13:56:04.694+09:00  INFO 9632 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T13:56:04.760+09:00  INFO 9632 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:56:05.568+09:00  INFO 9632 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Started CustomerRepositoryTest in 4.987 seconds (process running for 6.142)
+2024-10-25T13:56:06.922+09:00  INFO 9632 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:56:26.754+09:00  INFO 14388 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:56:30.642+09:00  INFO 7764 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Starting CustomerRepositoryTest using Java 22.0.1 with PID 7764 (started by cbs10 in C:\NHNacademy\book\55G.COM-shop)
+2024-10-25T13:56:30.645+09:00  INFO 7764 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : The following 1 profile is active: "local"
+2024-10-25T13:56:31.267+09:00  INFO 7764 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T13:56:31.514+09:00  INFO 7764 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 230 ms. Found 6 JPA repository interfaces.
+2024-10-25T13:56:31.616+09:00  INFO 7764 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T13:56:31.914+09:00  INFO 7764 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:8fa6e7d2-e745-4d09-8c65-a47ea5de773b;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T13:56:32.292+09:00  INFO 7764 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T13:56:32.404+09:00  INFO 7764 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T13:56:32.461+09:00  INFO 7764 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T13:56:32.972+09:00  INFO 7764 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T13:56:33.024+09:00  WARN 7764 --- [shop-service] [main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-10-25T13:56:34.238+09:00  INFO 7764 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T13:56:34.304+09:00  INFO 7764 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:56:35.134+09:00  INFO 7764 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Started CustomerRepositoryTest in 5.271 seconds (process running for 6.91)
+2024-10-25T13:58:03.076+09:00  INFO 7764 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T14:15:22.929+09:00  INFO 20272 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Starting CustomerRepositoryTest using Java 22.0.1 with PID 20272 (started by cbs10 in C:\NHNacademy\book\55G.COM-shop)
+2024-10-25T14:15:22.935+09:00  INFO 20272 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T14:15:23.724+09:00  INFO 20272 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T14:15:24.094+09:00  INFO 20272 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 355 ms. Found 6 JPA repository interfaces.
+2024-10-25T14:15:24.173+09:00  INFO 20272 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T14:15:24.485+09:00  INFO 20272 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:b16ff0e8-1eef-417b-9355-ef6f2fc8b1fe;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T14:15:24.991+09:00  INFO 20272 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T14:15:25.122+09:00  INFO 20272 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T14:15:25.173+09:00  INFO 20272 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T14:15:25.719+09:00  INFO 20272 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T14:15:27.153+09:00  INFO 20272 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T14:15:27.239+09:00  INFO 20272 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T14:15:28.113+09:00  INFO 20272 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Started CustomerRepositoryTest in 6.128 seconds (process running for 7.607)
+2024-10-25T14:15:29.745+09:00  INFO 20272 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T14:18:27.006+09:00  INFO 22468 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Starting CustomerRepositoryTest using Java 22.0.1 with PID 22468 (started by cbs10 in C:\NHNacademy\book\55G.COM-shop)
+2024-10-25T14:18:27.011+09:00  INFO 22468 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T14:18:27.840+09:00  INFO 22468 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T14:18:28.130+09:00  INFO 22468 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 270 ms. Found 6 JPA repository interfaces.
+2024-10-25T14:18:28.215+09:00  INFO 22468 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T14:18:28.525+09:00  INFO 22468 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:60af6f43-7b61-4c49-9591-336d06fd1a1d;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T14:18:29.013+09:00  INFO 22468 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T14:18:29.167+09:00  INFO 22468 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T14:18:29.270+09:00  INFO 22468 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T14:18:29.899+09:00  INFO 22468 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T14:18:31.677+09:00  INFO 22468 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T14:18:31.807+09:00  INFO 22468 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T14:18:32.873+09:00  INFO 22468 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Started CustomerRepositoryTest in 7.086 seconds (process running for 8.861)
+2024-10-25T14:18:34.457+09:00  INFO 22468 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T14:18:45.967+09:00  INFO 16224 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Starting CustomerRepositoryTest using Java 22.0.1 with PID 16224 (started by cbs10 in C:\NHNacademy\book\55G.COM-shop)
+2024-10-25T14:18:45.972+09:00  INFO 16224 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T14:18:46.873+09:00  INFO 16224 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T14:18:47.195+09:00  INFO 16224 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 303 ms. Found 6 JPA repository interfaces.
+2024-10-25T14:18:47.301+09:00  INFO 16224 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T14:18:47.648+09:00  INFO 16224 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:d0b755fc-86dc-4221-9f87-752c9c2dc88b;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T14:18:48.186+09:00  INFO 16224 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T14:18:48.300+09:00  INFO 16224 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T14:18:48.367+09:00  INFO 16224 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T14:18:48.976+09:00  INFO 16224 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T14:18:50.736+09:00  INFO 16224 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T14:18:50.876+09:00  INFO 16224 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T14:18:51.903+09:00  INFO 16224 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Started CustomerRepositoryTest in 7.01 seconds (process running for 8.884)
+2024-10-25T14:18:53.797+09:00  INFO 16224 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T14:19:10.274+09:00  INFO 14316 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Starting CustomerRepositoryTest using Java 22.0.1 with PID 14316 (started by cbs10 in C:\NHNacademy\book\55G.COM-shop)
+2024-10-25T14:19:10.277+09:00  INFO 14316 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T14:19:11.100+09:00  INFO 14316 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T14:19:11.387+09:00  INFO 14316 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 264 ms. Found 6 JPA repository interfaces.
+2024-10-25T14:19:11.487+09:00  INFO 14316 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T14:19:11.832+09:00  INFO 14316 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:49f83438-9f23-4d08-af92-a5c1d3311fa2;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T14:19:12.300+09:00  INFO 14316 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T14:19:12.419+09:00  INFO 14316 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T14:19:12.494+09:00  INFO 14316 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T14:19:13.150+09:00  INFO 14316 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T14:19:14.897+09:00  INFO 14316 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T14:19:14.996+09:00  INFO 14316 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T14:19:16.016+09:00  INFO 14316 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Started CustomerRepositoryTest in 6.766 seconds (process running for 8.72)
+2024-10-25T14:27:29.284+09:00  INFO 14316 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T14:41:53.685+09:00  INFO 21648 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Starting CustomerRepositoryTest using Java 22.0.1 with PID 21648 (started by cbs10 in C:\NHNacademy\book\55G.COM-shop)
+2024-10-25T14:41:53.687+09:00  INFO 21648 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T14:41:54.297+09:00  INFO 21648 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T14:41:54.488+09:00  INFO 21648 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 182 ms. Found 6 JPA repository interfaces.
+2024-10-25T14:41:54.581+09:00  INFO 21648 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T14:41:54.830+09:00  INFO 21648 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:cb41f56e-e3b9-4f04-a23f-8fa268776867;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T14:41:55.116+09:00  INFO 21648 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T14:41:55.168+09:00  INFO 21648 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T14:41:55.191+09:00  INFO 21648 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T14:41:55.484+09:00  INFO 21648 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T14:41:56.303+09:00  INFO 21648 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T14:41:56.350+09:00  INFO 21648 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T14:41:56.879+09:00  INFO 21648 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Started CustomerRepositoryTest in 3.705 seconds (process running for 5.001)
+2024-10-25T14:41:57.804+09:00  INFO 21648 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T14:43:11.346+09:00  INFO 5724 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Starting CustomerRepositoryTest using Java 22.0.1 with PID 5724 (started by cbs10 in C:\NHNacademy\book\55G.COM-shop)
+2024-10-25T14:43:11.348+09:00  INFO 5724 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T14:43:12.054+09:00  INFO 5724 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T14:43:12.246+09:00  INFO 5724 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 182 ms. Found 6 JPA repository interfaces.
+2024-10-25T14:43:12.305+09:00  INFO 5724 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T14:43:12.492+09:00  INFO 5724 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:dea8fcc4-dc34-4550-8d9f-808c2c1b9980;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T14:43:12.812+09:00  INFO 5724 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T14:43:12.890+09:00  INFO 5724 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T14:43:12.926+09:00  INFO 5724 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T14:43:13.282+09:00  INFO 5724 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T14:43:14.112+09:00  INFO 5724 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T14:43:14.157+09:00  INFO 5724 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T14:43:14.816+09:00  INFO 5724 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Started CustomerRepositoryTest in 4.048 seconds (process running for 5.087)
+2024-10-25T14:43:15.643+09:00  INFO 5724 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T14:48:38.412+09:00  INFO 2796 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Starting CustomerRepositoryTest using Java 22.0.1 with PID 2796 (started by cbs10 in C:\NHNacademy\book\55G.COM-shop)
+2024-10-25T14:48:38.415+09:00  INFO 2796 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T14:48:39.248+09:00  INFO 2796 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T14:48:39.469+09:00  INFO 2796 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 208 ms. Found 6 JPA repository interfaces.
+2024-10-25T14:48:39.532+09:00  INFO 2796 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T14:48:39.779+09:00  INFO 2796 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:b95240a8-6e8c-45e9-b8cf-d4607772f135;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T14:48:40.120+09:00  INFO 2796 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T14:48:40.221+09:00  INFO 2796 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T14:48:40.256+09:00  INFO 2796 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T14:48:40.652+09:00  INFO 2796 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T14:48:41.518+09:00  INFO 2796 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T14:48:41.565+09:00  INFO 2796 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T14:48:42.236+09:00  INFO 2796 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Started CustomerRepositoryTest in 4.534 seconds (process running for 5.716)
+2024-10-25T14:48:43.281+09:00  INFO 2796 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T14:49:13.157+09:00  INFO 3844 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Starting CustomerRepositoryTest using Java 22.0.1 with PID 3844 (started by cbs10 in C:\NHNacademy\book\55G.COM-shop)
+2024-10-25T14:49:13.161+09:00  INFO 3844 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T14:49:13.887+09:00  INFO 3844 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T14:49:14.110+09:00  INFO 3844 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 208 ms. Found 6 JPA repository interfaces.
+2024-10-25T14:49:14.174+09:00  INFO 3844 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T14:49:14.415+09:00  INFO 3844 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:04a5ebda-bcb3-4d77-a930-b14a739b9f33;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T14:49:14.741+09:00  INFO 3844 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T14:49:14.834+09:00  INFO 3844 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T14:49:14.889+09:00  INFO 3844 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T14:49:15.298+09:00  INFO 3844 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T14:49:16.244+09:00  INFO 3844 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T14:49:16.315+09:00  INFO 3844 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T14:49:17.070+09:00  INFO 3844 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Started CustomerRepositoryTest in 4.727 seconds (process running for 6.168)
+2024-10-25T14:51:11.130+09:00  INFO 3844 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T14:51:16.394+09:00  INFO 1824 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Starting CustomerRepositoryTest using Java 22.0.1 with PID 1824 (started by cbs10 in C:\NHNacademy\book\55G.COM-shop)
+2024-10-25T14:51:16.396+09:00  INFO 1824 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T14:51:16.993+09:00  INFO 1824 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T14:51:17.183+09:00  INFO 1824 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 181 ms. Found 6 JPA repository interfaces.
+2024-10-25T14:51:17.240+09:00  INFO 1824 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T14:51:17.426+09:00  INFO 1824 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:b12f8061-ddbd-4358-abc1-bd98f3ef63b3;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T14:51:17.750+09:00  INFO 1824 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T14:51:17.824+09:00  INFO 1824 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T14:51:17.850+09:00  INFO 1824 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T14:51:18.187+09:00  INFO 1824 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T14:51:19.026+09:00  INFO 1824 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T14:51:19.076+09:00  INFO 1824 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T14:51:19.673+09:00  INFO 1824 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Started CustomerRepositoryTest in 3.871 seconds (process running for 5.295)
+2024-10-25T14:51:20.575+09:00  INFO 1824 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T15:09:01.294+09:00  INFO 20200 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Starting CustomerRepositoryTest using Java 22.0.1 with PID 20200 (started by cbs10 in C:\NHNacademy\book\55G.COM-shop)
+2024-10-25T15:09:01.297+09:00  INFO 20200 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T15:09:02.007+09:00  INFO 20200 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T15:09:02.424+09:00  INFO 20200 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 401 ms. Found 6 JPA repository interfaces.
+2024-10-25T15:09:02.514+09:00  INFO 20200 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T15:09:02.870+09:00  INFO 20200 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:ce874327-1f23-4f7c-993f-f948a20b5676;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T15:09:03.516+09:00  INFO 20200 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T15:09:03.622+09:00  INFO 20200 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T15:09:03.698+09:00  INFO 20200 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T15:09:04.176+09:00  INFO 20200 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T15:09:05.808+09:00  INFO 20200 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T15:09:05.923+09:00  INFO 20200 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T15:09:06.761+09:00  INFO 20200 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Started CustomerRepositoryTest in 6.521 seconds (process running for 8.582)
+2024-10-25T15:09:08.437+09:00  INFO 20200 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T15:12:30.758+09:00  INFO 9468 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Starting CustomerRepositoryTest using Java 22.0.1 with PID 9468 (started by cbs10 in C:\NHNacademy\book\55G.COM-shop)
+2024-10-25T15:12:30.760+09:00  INFO 9468 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T15:12:31.435+09:00  INFO 9468 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T15:12:31.846+09:00  INFO 9468 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 393 ms. Found 6 JPA repository interfaces.
+2024-10-25T15:12:31.940+09:00  INFO 9468 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T15:12:32.177+09:00  INFO 9468 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:9d613b87-48a1-4a27-a012-eca080de09ac;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T15:12:32.767+09:00  INFO 9468 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T15:12:32.869+09:00  INFO 9468 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T15:12:32.921+09:00  INFO 9468 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T15:12:33.118+09:00  INFO 9468 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T15:12:34.581+09:00  INFO 9468 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T15:12:34.730+09:00  INFO 9468 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T15:12:35.415+09:00  INFO 9468 --- [shop-service] [main] s.S.s.r.member.CustomerRepositoryTest    : Started CustomerRepositoryTest in 5.623 seconds (process running for 9.685)
+2024-10-25T15:12:36.295+09:00  INFO 9468 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
