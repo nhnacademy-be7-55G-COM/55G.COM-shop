@@ -8,5 +8,6 @@ public record MemberGradeResponseDto(
     int gradeCondition,
 
     int point
-){
+) {
+
 }
