@@ -9,5 +9,7 @@ class ShopApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
+	@Test
+	void testThenReturn() {
+	}
 }
