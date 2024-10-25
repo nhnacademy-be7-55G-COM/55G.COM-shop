@@ -11,8 +11,10 @@ import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
@@ -26,22 +28,27 @@ public class CouponPolicy {
     @Column(name = "coupon_policy_id")
     private Long couponPolicyId;
 
+    @Setter
     @Min(0)
     @NotNull
     @Column(name = "discount_price")
     private BigDecimal discountPrice;
 
+    @Setter
     @NotNull
     @Column(name = "condition")
     private Long condition;
 
+    @Setter
     @Column(name = "max_price")
     private Long maxPrice;
 
+    @Setter
     @NotNull
     @Column(name = "duration")
     private Integer duration;
 
+    @Builder
     public CouponPolicy(BigDecimal discountPrice, Long condition, Long maxPrice, Integer duration) {
         this.discountPrice = discountPrice;
         this.condition = condition;

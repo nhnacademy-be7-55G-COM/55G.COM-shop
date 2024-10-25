@@ -94,4 +94,5 @@ public class CouponPolicyController {
 
         return ResponseEntity.status(HttpStatus.OK).body(couponPolicyResponseDtoList);
     }
+
 }

@@ -1,0 +1,56 @@
+2024-10-25T14:39:24.287+09:00  INFO 17880 --- [shop-service] [main] s.S.s.coupon.CouponPolicyRepositoryTest  : Starting CouponPolicyRepositoryTest using Java 22.0.1 with PID 17880 (started by piman in C:\NHNSpring\55g.com\55G.COM-shop)
+2024-10-25T14:39:24.290+09:00  INFO 17880 --- [shop-service] [main] s.S.s.coupon.CouponPolicyRepositoryTest  : The following 1 profile is active: "local"
+2024-10-25T14:39:25.719+09:00  INFO 17880 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T14:39:25.998+09:00  INFO 17880 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 269 ms. Found 6 JPA repository interfaces.
+2024-10-25T14:39:26.092+09:00  INFO 17880 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T14:39:26.309+09:00  INFO 17880 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:f490dde1-1f43-47b7-9e64-9105457cc6c1;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T14:39:26.739+09:00  INFO 17880 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T14:39:26.848+09:00  INFO 17880 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T14:39:26.892+09:00  INFO 17880 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T14:39:27.347+09:00  INFO 17880 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T14:39:28.807+09:00  INFO 17880 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T14:39:28.905+09:00  INFO 17880 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T14:39:29.749+09:00  INFO 17880 --- [shop-service] [main] s.S.s.coupon.CouponPolicyRepositoryTest  : Started CouponPolicyRepositoryTest in 6.241 seconds (process running for 8.217)
+2024-10-25T14:39:30.634+09:00  INFO 17880 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T14:45:39.369+09:00  INFO 6872 --- [shop-service] [main] s.S.s.coupon.CouponPolicyRepositoryTest  : Starting CouponPolicyRepositoryTest using Java 22.0.1 with PID 6872 (started by piman in C:\NHNSpring\55g.com\55G.COM-shop)
+2024-10-25T14:45:39.371+09:00  INFO 6872 --- [shop-service] [main] s.S.s.coupon.CouponPolicyRepositoryTest  : The following 1 profile is active: "local"
+2024-10-25T14:45:40.019+09:00  INFO 6872 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T14:45:40.275+09:00  INFO 6872 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 239 ms. Found 6 JPA repository interfaces.
+2024-10-25T14:45:40.351+09:00  INFO 6872 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T14:45:40.580+09:00  INFO 6872 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:fa41a7d0-d3a7-4aba-b0f2-e8cb1c1e1141;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T14:45:41.010+09:00  INFO 6872 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T14:45:41.125+09:00  INFO 6872 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T14:45:41.197+09:00  INFO 6872 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T14:45:41.663+09:00  INFO 6872 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T14:45:42.961+09:00  INFO 6872 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T14:45:43.037+09:00  INFO 6872 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T14:45:43.682+09:00  INFO 6872 --- [shop-service] [main] s.S.s.coupon.CouponPolicyRepositoryTest  : Started CouponPolicyRepositoryTest in 5.068 seconds (process running for 6.619)
+2024-10-25T14:45:44.859+09:00  INFO 6872 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T14:59:19.485+09:00  INFO 20864 --- [shop-service] [main] s.S.s.c.r.CouponPolicyRepositoryTest     : Starting CouponPolicyRepositoryTest using Java 22.0.1 with PID 20864 (started by piman in C:\NHNSpring\55g.com\55G.COM-shop)
+2024-10-25T14:59:19.487+09:00  INFO 20864 --- [shop-service] [main] s.S.s.c.r.CouponPolicyRepositoryTest     : The following 1 profile is active: "local"
+2024-10-25T14:59:20.139+09:00  INFO 20864 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T14:59:20.537+09:00  INFO 20864 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 385 ms. Found 6 JPA repository interfaces.
+2024-10-25T14:59:20.625+09:00  INFO 20864 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T14:59:20.914+09:00  INFO 20864 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:b0a6b54f-433c-4e8d-9f02-c057ae2cba1c;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T14:59:21.315+09:00  INFO 20864 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T14:59:21.413+09:00  INFO 20864 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T14:59:21.472+09:00  INFO 20864 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T14:59:21.940+09:00  INFO 20864 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T14:59:23.272+09:00  INFO 20864 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T14:59:23.365+09:00  INFO 20864 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T14:59:24.179+09:00  INFO 20864 --- [shop-service] [main] s.S.s.c.r.CouponPolicyRepositoryTest     : Started CouponPolicyRepositoryTest in 5.422 seconds (process running for 6.872)
+2024-10-25T14:59:25.480+09:00  INFO 20864 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T14:59:47.046+09:00  INFO 22768 --- [shop-service] [main] s.S.s.c.r.CouponPolicyRepositoryTest     : Starting CouponPolicyRepositoryTest using Java 22.0.1 with PID 22768 (started by piman in C:\NHNSpring\55g.com\55G.COM-shop)
+2024-10-25T14:59:47.048+09:00  INFO 22768 --- [shop-service] [main] s.S.s.c.r.CouponPolicyRepositoryTest     : The following 1 profile is active: "local"
+2024-10-25T14:59:47.662+09:00  INFO 22768 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T14:59:47.888+09:00  INFO 22768 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 213 ms. Found 6 JPA repository interfaces.
+2024-10-25T14:59:47.948+09:00  INFO 22768 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T14:59:48.158+09:00  INFO 22768 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:2d623c3e-0515-4535-b688-814c10a982c0;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T14:59:48.545+09:00  INFO 22768 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T14:59:48.639+09:00  INFO 22768 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T14:59:48.681+09:00  INFO 22768 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T14:59:49.106+09:00  INFO 22768 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T14:59:50.306+09:00  INFO 22768 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T14:59:50.379+09:00  INFO 22768 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T14:59:51.104+09:00  INFO 22768 --- [shop-service] [main] s.S.s.c.r.CouponPolicyRepositoryTest     : Started CouponPolicyRepositoryTest in 4.642 seconds (process running for 6.076)
+2024-10-25T14:59:52.312+09:00  INFO 22768 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
