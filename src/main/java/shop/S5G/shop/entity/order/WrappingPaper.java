@@ -11,7 +11,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
-import shop.S5G.shop.dto.order.WrappingPaperRequestDto;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -40,7 +39,7 @@ public class WrappingPaper {
         this.imageName = imageName;
     }
 
-    public static WrappingPaper of(WrappingPaperRequestDto dto) {
-        return new WrappingPaper(dto.name(), dto.price(), dto.imageName());
-    }
+//    public static WrappingPaper of(WrappingPaperRequestDto dto) {
+//        return new WrappingPaper(dto.name(), dto.price(), dto.imageName());
+//    }
 }
