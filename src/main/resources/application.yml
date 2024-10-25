@@ -11,13 +11,17 @@ eureka-server:
   postfix: default
 
 eureka:
+  user:
+    name: admin
+    password: 1234
+
   client:
     # disable while no profile
     enabled: false
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://${eureka-server.host}:${eureka-server.port}/eureka
+      defaultZone: http://${eureka.user.name}:${eureka.user.password}@${eureka-server.host}:${eureka-server.port}/eureka
 
 55g:
   resource:
@@ -100,4 +104,4 @@ eureka-server:
 eureka:
   client:
     service-url:
-      defaultZone: http://${eureka-server.host}-${eureka-server.postfix}:${eureka-server.port}/eureka
+      defaultZone: http://${eureka.user.name}:${eureka.user.password}@${eureka-server.host}-${eureka-server.postfix}:${eureka-server.port}/eureka
