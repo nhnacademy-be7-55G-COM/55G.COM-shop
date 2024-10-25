@@ -29,7 +29,7 @@ public class RefundHistory {
     @JoinColumn(name = "order_detail_id")
     private OrderDetail orderDetail;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "refund_type_id")
     private RefundType refundType;
 
