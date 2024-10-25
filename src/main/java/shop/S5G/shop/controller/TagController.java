@@ -4,9 +4,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import shop.S5G.shop.dto.TagRequestDto;
+import shop.S5G.shop.dto.tag.TagRequestDto;
 import shop.S5G.shop.entity.Tag;
-import shop.S5G.shop.exception.TagException.TagAlreadyExistsException;
 import shop.S5G.shop.exception.TagException.TagBadRequestException;
 import shop.S5G.shop.service.TagService;
 

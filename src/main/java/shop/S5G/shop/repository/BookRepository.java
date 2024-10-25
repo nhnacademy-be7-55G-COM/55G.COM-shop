@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findAllByBookIdIn(List<Long> bookId);
+
+    boolean existsAllByBookIdIn(List<Long> bookId);
 }

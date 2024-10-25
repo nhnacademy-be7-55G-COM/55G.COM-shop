@@ -32,5 +32,6 @@ build/
 ### VS Code ###
 .vscode/
 
-### Not Commit ###
+
 src/main/resources/application-local.yml
+*.log
