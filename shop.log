@@ -1,0 +1,1022 @@
+2024-10-25T13:01:56.029+09:00  INFO 73027 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : Starting CategoryRepositoryTest using Java 21.0.4 with PID 73027 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:01:56.029+09:00  INFO 73027 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:01:56.180+09:00  INFO 73027 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T13:01:56.263+09:00  INFO 73027 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 79 ms. Found 8 JPA repository interfaces.
+2024-10-25T13:01:56.289+09:00  INFO 73027 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T13:01:56.348+09:00  INFO 73027 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:a329ae6a-4e83-41a4-bd4d-47f24f1acb5b;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T13:01:56.457+09:00  INFO 73027 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T13:01:56.483+09:00  INFO 73027 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T13:01:56.499+09:00  INFO 73027 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T13:01:56.610+09:00  INFO 73027 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T13:01:57.058+09:00  INFO 73027 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T13:01:57.083+09:00  INFO 73027 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:01:57.270+09:00  INFO 73027 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : Started CategoryRepositoryTest in 1.411 seconds (process running for 1.876)
+2024-10-25T13:01:57.510+09:00  INFO 73027 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:02:15.675+09:00  INFO 73046 --- [shop-service] [main] s.S.shop.repository.BookRepositoryTest   : Starting BookRepositoryTest using Java 21.0.4 with PID 73046 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:02:15.676+09:00  INFO 73046 --- [shop-service] [main] s.S.shop.repository.BookRepositoryTest   : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:02:15.833+09:00  INFO 73046 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T13:02:15.913+09:00  INFO 73046 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 78 ms. Found 8 JPA repository interfaces.
+2024-10-25T13:02:15.939+09:00  INFO 73046 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T13:02:15.994+09:00  INFO 73046 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:1ed72378-f988-49e9-906c-cfeaaa33387a;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T13:02:16.104+09:00  INFO 73046 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T13:02:16.125+09:00  INFO 73046 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T13:02:16.140+09:00  INFO 73046 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T13:02:16.246+09:00  INFO 73046 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T13:02:16.643+09:00  INFO 73046 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T13:02:16.667+09:00  INFO 73046 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:02:16.846+09:00  INFO 73046 --- [shop-service] [main] s.S.shop.repository.BookRepositoryTest   : Started BookRepositoryTest in 1.333 seconds (process running for 1.777)
+2024-10-25T13:02:17.096+09:00  INFO 73046 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:02:24.070+09:00  INFO 73059 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : Starting TagControllerTest using Java 21.0.4 with PID 73059 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:02:24.071+09:00  INFO 73059 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:02:24.665+09:00  INFO 73059 --- [shop-service] [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-10-25T13:02:24.665+09:00  INFO 73059 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-10-25T13:02:24.666+09:00  INFO 73059 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2024-10-25T13:02:24.678+09:00  INFO 73059 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : Started TagControllerTest in 0.772 seconds (process running for 1.22)
+2024-10-25T13:02:33.217+09:00  INFO 73074 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : Starting BookControllerTest using Java 21.0.4 with PID 73074 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:02:33.218+09:00  INFO 73074 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:02:33.805+09:00  INFO 73074 --- [shop-service] [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-10-25T13:02:33.806+09:00  INFO 73074 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-10-25T13:02:33.806+09:00  INFO 73074 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-10-25T13:02:33.818+09:00  INFO 73074 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : Started BookControllerTest in 0.767 seconds (process running for 1.22)
+2024-10-25T13:24:00.100+09:00  INFO 74019 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : Starting CategoryRepositoryTest using Java 21.0.4 with PID 74019 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:24:00.101+09:00  INFO 74019 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:24:00.244+09:00  INFO 74019 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T13:24:00.314+09:00  INFO 74019 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 66 ms. Found 8 JPA repository interfaces.
+2024-10-25T13:24:00.336+09:00  INFO 74019 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T13:24:00.398+09:00  INFO 74019 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:c322c128-8396-4089-a097-7889214cdf72;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T13:24:00.514+09:00  INFO 74019 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T13:24:00.540+09:00  INFO 74019 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T13:24:00.556+09:00  INFO 74019 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T13:24:00.679+09:00  INFO 74019 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T13:24:01.134+09:00  INFO 74019 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T13:24:01.159+09:00  INFO 74019 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:24:01.336+09:00  INFO 74019 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : Started CategoryRepositoryTest in 1.404 seconds (process running for 1.818)
+2024-10-25T13:24:01.585+09:00  INFO 74019 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.repository.BookRepositoryTest]: BookRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:24:01.589+09:00  INFO 74019 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.repository.BookRepositoryTest
+2024-10-25T13:24:01.621+09:00  INFO 74019 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.controller.BookControllerTest]: BookControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:24:01.631+09:00  INFO 74019 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.controller.BookControllerTest
+2024-10-25T13:24:01.659+09:00  INFO 74019 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : Starting BookControllerTest using Java 21.0.4 with PID 74019 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:24:01.659+09:00  INFO 74019 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:24:01.904+09:00  INFO 74019 --- [shop-service] [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-10-25T13:24:01.904+09:00  INFO 74019 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-10-25T13:24:01.905+09:00  INFO 74019 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2024-10-25T13:24:01.909+09:00  INFO 74019 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : Started BookControllerTest in 0.274 seconds (process running for 2.391)
+2024-10-25T13:24:01.985+09:00  INFO 74019 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.controller.TagControllerTest]: TagControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:24:01.988+09:00  INFO 74019 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.controller.TagControllerTest
+2024-10-25T13:24:02.002+09:00  INFO 74019 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : Starting TagControllerTest using Java 21.0.4 with PID 74019 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:24:02.002+09:00  INFO 74019 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:24:02.095+09:00  INFO 74019 --- [shop-service] [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-10-25T13:24:02.095+09:00  INFO 74019 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-10-25T13:24:02.095+09:00  INFO 74019 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-10-25T13:24:02.097+09:00  INFO 74019 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : Started TagControllerTest in 0.108 seconds (process running for 2.579)
+2024-10-25T13:24:02.151+09:00  INFO 74019 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.ShopApplicationTests]: ShopApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:24:02.154+09:00  INFO 74019 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.ShopApplicationTests
+2024-10-25T13:24:02.171+09:00  INFO 74019 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : Starting ShopApplicationTests using Java 21.0.4 with PID 74019 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:24:02.171+09:00  INFO 74019 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:24:02.326+09:00  INFO 74019 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T13:24:02.335+09:00  INFO 74019 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8 ms. Found 8 JPA repository interfaces.
+2024-10-25T13:24:02.368+09:00  INFO 74019 --- [shop-service] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=ecbfbc00-9546-3a45-bb0c-27058c7528bb
+2024-10-25T13:24:02.460+09:00  WARN 74019 --- [shop-service] [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [lbRestClientPostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2024-10-25T13:24:02.461+09:00  WARN 74019 --- [shop-service] [main] trationDelegate$BeanPostProcessorChecker : Bean 'deferringLoadBalancerInterceptor' of type [org.springframework.cloud.client.loadbalancer.DeferringLoadBalancerInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2024-10-25T13:24:02.488+09:00  INFO 74019 --- [shop-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-10-25T13:24:02.493+09:00  INFO 74019 --- [shop-service] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn14: url=jdbc:h2:mem:16d6978e-e786-4ea8-a7e6-2ce4e566ab99 user=SA
+2024-10-25T13:24:02.494+09:00  INFO 74019 --- [shop-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-10-25T13:24:02.498+09:00  INFO 74019 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T13:24:02.498+09:00  INFO 74019 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T13:24:02.502+09:00  INFO 74019 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T13:24:02.574+09:00  INFO 74019 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T13:24:02.583+09:00  INFO 74019 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:24:02.768+09:00  WARN 74019 --- [shop-service] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-10-25T13:24:02.985+09:00  INFO 74019 --- [shop-service] [main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2024-10-25T13:24:03.001+09:00  WARN 74019 --- [shop-service] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2024-10-25T13:24:03.005+09:00  INFO 74019 --- [shop-service] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2024-10-25T13:24:03.031+09:00  INFO 74019 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : Started ShopApplicationTests in 0.875 seconds (process running for 3.513)
+2024-10-25T13:24:03.074+09:00  INFO 74019 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.TagTest]: TagTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:24:03.077+09:00  INFO 74019 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.TagTest
+2024-10-25T13:24:03.078+09:00  WARN 74019 --- [shop-service] [main] o.s.test.context.TestContextManager      : Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener] to prepare test instance [shop.S5G.shop.TagTest@57e21ffb]
+
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'shop.S5G.shop.TagTest': Unsatisfied dependency expressed through field 'tagService': No qualifying bean of type 'shop.S5G.shop.service.TagService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:788) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:768) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:145) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:509) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1439) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireBeanProperties(AbstractAutowireCapableBeanFactory.java:398) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:143) ~[spring-test-6.1.13.jar:6.1.13]
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:98) ~[spring-test-6.1.13.jar:6.1.13]
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260) ~[spring-test-6.1.13.jar:6.1.13]
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:163) ~[spring-test-6.1.13.jar:6.1.13]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$10(ClassBasedTestDescriptor.java:378) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:383) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$11(ClassBasedTestDescriptor.java:378) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197) ~[na:na]
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:179) ~[na:na]
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1708) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499) ~[na:na]
+	at java.base/java.util.stream.StreamSpliterators$WrappingSpliterator.forEachRemaining(StreamSpliterators.java:310) ~[na:na]
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:735) ~[na:na]
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:734) ~[na:na]
+	at java.base/java.util.stream.ReferencePipeline$Head.forEach(ReferencePipeline.java:762) ~[na:na]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.invokeTestInstancePostProcessors(ClassBasedTestDescriptor.java:377) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$instantiateAndPostProcessTestInstance$6(ClassBasedTestDescriptor.java:290) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:289) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$4(ClassBasedTestDescriptor.java:279) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at java.base/java.util.Optional.orElseGet(Optional.java:364) ~[na:na]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$5(ClassBasedTestDescriptor.java:278) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.jupiter.engine.execution.TestInstancesProvider.getTestInstances(TestInstancesProvider.java:31) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$prepare$0(TestMethodTestDescriptor.java:106) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:105) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:69) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$prepare$2(NodeTestTask.java:123) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.prepare(NodeTestTask.java:123) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:90) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:58) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:141) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:57) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56) ~[surefire-junit-platform-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184) ~[surefire-junit-platform-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148) ~[surefire-junit-platform-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122) ~[surefire-junit-platform-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385) ~[surefire-booter-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162) ~[surefire-booter-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507) ~[surefire-booter-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495) ~[surefire-booter-3.2.5.jar:3.2.5]
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'shop.S5G.shop.service.TagService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.raiseNoMatchingBeanFound(DefaultListableBeanFactory.java:1880) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1406) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:785) ~[spring-beans-6.1.13.jar:6.1.13]
+	... 77 common frames omitted
+
+2024-10-25T13:24:03.083+09:00  WARN 74019 --- [shop-service] [main] o.s.test.context.TestContextManager      : Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener] to prepare test instance [shop.S5G.shop.TagTest@26d78474]
+
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'shop.S5G.shop.TagTest': Unsatisfied dependency expressed through field 'tagService': No qualifying bean of type 'shop.S5G.shop.service.TagService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:788) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:768) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:145) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:509) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1439) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireBeanProperties(AbstractAutowireCapableBeanFactory.java:398) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:143) ~[spring-test-6.1.13.jar:6.1.13]
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:98) ~[spring-test-6.1.13.jar:6.1.13]
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260) ~[spring-test-6.1.13.jar:6.1.13]
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:163) ~[spring-test-6.1.13.jar:6.1.13]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$10(ClassBasedTestDescriptor.java:378) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:383) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$11(ClassBasedTestDescriptor.java:378) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197) ~[na:na]
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:179) ~[na:na]
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1708) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499) ~[na:na]
+	at java.base/java.util.stream.StreamSpliterators$WrappingSpliterator.forEachRemaining(StreamSpliterators.java:310) ~[na:na]
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:735) ~[na:na]
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:734) ~[na:na]
+	at java.base/java.util.stream.ReferencePipeline$Head.forEach(ReferencePipeline.java:762) ~[na:na]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.invokeTestInstancePostProcessors(ClassBasedTestDescriptor.java:377) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$instantiateAndPostProcessTestInstance$6(ClassBasedTestDescriptor.java:290) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:289) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$4(ClassBasedTestDescriptor.java:279) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at java.base/java.util.Optional.orElseGet(Optional.java:364) ~[na:na]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$5(ClassBasedTestDescriptor.java:278) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.jupiter.engine.execution.TestInstancesProvider.getTestInstances(TestInstancesProvider.java:31) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$prepare$0(TestMethodTestDescriptor.java:106) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:105) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:69) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$prepare$2(NodeTestTask.java:123) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.prepare(NodeTestTask.java:123) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:90) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:58) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:141) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:57) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56) ~[surefire-junit-platform-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184) ~[surefire-junit-platform-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148) ~[surefire-junit-platform-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122) ~[surefire-junit-platform-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385) ~[surefire-booter-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162) ~[surefire-booter-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507) ~[surefire-booter-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495) ~[surefire-booter-3.2.5.jar:3.2.5]
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'shop.S5G.shop.service.TagService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.raiseNoMatchingBeanFound(DefaultListableBeanFactory.java:1880) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1406) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:785) ~[spring-beans-6.1.13.jar:6.1.13]
+	... 77 common frames omitted
+
+2024-10-25T13:24:03.084+09:00  WARN 74019 --- [shop-service] [main] o.s.test.context.TestContextManager      : Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener] to prepare test instance [shop.S5G.shop.TagTest@3658b0ce]
+
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'shop.S5G.shop.TagTest': Unsatisfied dependency expressed through field 'tagService': No qualifying bean of type 'shop.S5G.shop.service.TagService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:788) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:768) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:145) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:509) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1439) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireBeanProperties(AbstractAutowireCapableBeanFactory.java:398) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:143) ~[spring-test-6.1.13.jar:6.1.13]
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:98) ~[spring-test-6.1.13.jar:6.1.13]
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260) ~[spring-test-6.1.13.jar:6.1.13]
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:163) ~[spring-test-6.1.13.jar:6.1.13]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$10(ClassBasedTestDescriptor.java:378) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:383) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$11(ClassBasedTestDescriptor.java:378) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197) ~[na:na]
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:179) ~[na:na]
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1708) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499) ~[na:na]
+	at java.base/java.util.stream.StreamSpliterators$WrappingSpliterator.forEachRemaining(StreamSpliterators.java:310) ~[na:na]
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:735) ~[na:na]
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:734) ~[na:na]
+	at java.base/java.util.stream.ReferencePipeline$Head.forEach(ReferencePipeline.java:762) ~[na:na]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.invokeTestInstancePostProcessors(ClassBasedTestDescriptor.java:377) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$instantiateAndPostProcessTestInstance$6(ClassBasedTestDescriptor.java:290) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:289) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$4(ClassBasedTestDescriptor.java:279) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at java.base/java.util.Optional.orElseGet(Optional.java:364) ~[na:na]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$5(ClassBasedTestDescriptor.java:278) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.jupiter.engine.execution.TestInstancesProvider.getTestInstances(TestInstancesProvider.java:31) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$prepare$0(TestMethodTestDescriptor.java:106) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:105) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:69) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$prepare$2(NodeTestTask.java:123) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.prepare(NodeTestTask.java:123) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:90) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:58) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:141) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:57) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56) ~[surefire-junit-platform-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184) ~[surefire-junit-platform-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148) ~[surefire-junit-platform-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122) ~[surefire-junit-platform-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385) ~[surefire-booter-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162) ~[surefire-booter-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507) ~[surefire-booter-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495) ~[surefire-booter-3.2.5.jar:3.2.5]
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'shop.S5G.shop.service.TagService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.raiseNoMatchingBeanFound(DefaultListableBeanFactory.java:1880) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1406) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:785) ~[spring-beans-6.1.13.jar:6.1.13]
+	... 77 common frames omitted
+
+2024-10-25T13:24:03.086+09:00  WARN 74019 --- [shop-service] [main] o.s.test.context.TestContextManager      : Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener] to prepare test instance [shop.S5G.shop.TagTest@5492b0d3]
+
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'shop.S5G.shop.TagTest': Unsatisfied dependency expressed through field 'tagService': No qualifying bean of type 'shop.S5G.shop.service.TagService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:788) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:768) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:145) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:509) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1439) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireBeanProperties(AbstractAutowireCapableBeanFactory.java:398) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:143) ~[spring-test-6.1.13.jar:6.1.13]
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:98) ~[spring-test-6.1.13.jar:6.1.13]
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260) ~[spring-test-6.1.13.jar:6.1.13]
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:163) ~[spring-test-6.1.13.jar:6.1.13]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$10(ClassBasedTestDescriptor.java:378) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:383) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$11(ClassBasedTestDescriptor.java:378) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197) ~[na:na]
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:179) ~[na:na]
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1708) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499) ~[na:na]
+	at java.base/java.util.stream.StreamSpliterators$WrappingSpliterator.forEachRemaining(StreamSpliterators.java:310) ~[na:na]
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:735) ~[na:na]
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:734) ~[na:na]
+	at java.base/java.util.stream.ReferencePipeline$Head.forEach(ReferencePipeline.java:762) ~[na:na]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.invokeTestInstancePostProcessors(ClassBasedTestDescriptor.java:377) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$instantiateAndPostProcessTestInstance$6(ClassBasedTestDescriptor.java:290) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:289) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$4(ClassBasedTestDescriptor.java:279) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at java.base/java.util.Optional.orElseGet(Optional.java:364) ~[na:na]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$5(ClassBasedTestDescriptor.java:278) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.jupiter.engine.execution.TestInstancesProvider.getTestInstances(TestInstancesProvider.java:31) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$prepare$0(TestMethodTestDescriptor.java:106) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:105) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:69) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$prepare$2(NodeTestTask.java:123) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.prepare(NodeTestTask.java:123) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:90) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54) ~[junit-platform-engine-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:58) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:141) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:57) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47) ~[junit-platform-launcher-1.10.3.jar:1.10.3]
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56) ~[surefire-junit-platform-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184) ~[surefire-junit-platform-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148) ~[surefire-junit-platform-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122) ~[surefire-junit-platform-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385) ~[surefire-booter-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162) ~[surefire-booter-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507) ~[surefire-booter-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495) ~[surefire-booter-3.2.5.jar:3.2.5]
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'shop.S5G.shop.service.TagService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.raiseNoMatchingBeanFound(DefaultListableBeanFactory.java:1880) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1406) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:785) ~[spring-beans-6.1.13.jar:6.1.13]
+	... 77 common frames omitted
+
+2024-10-25T13:24:03.173+09:00  INFO 74019 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:24:03.179+09:00  INFO 74019 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:24:03.182+09:00  INFO 74019 --- [shop-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-10-25T13:24:03.183+09:00  INFO 74019 --- [shop-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-10-25T13:24:43.780+09:00  INFO 74078 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : Starting CategoryRepositoryTest using Java 21.0.4 with PID 74078 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:24:43.781+09:00  INFO 74078 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:24:43.927+09:00  INFO 74078 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T13:24:43.996+09:00  INFO 74078 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 65 ms. Found 8 JPA repository interfaces.
+2024-10-25T13:24:44.018+09:00  INFO 74078 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T13:24:44.072+09:00  INFO 74078 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:ad622627-fd6b-46b3-88d7-0f3eeebd6a58;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T13:24:44.194+09:00  INFO 74078 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T13:24:44.214+09:00  INFO 74078 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T13:24:44.225+09:00  INFO 74078 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T13:24:44.333+09:00  INFO 74078 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T13:24:44.764+09:00  INFO 74078 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T13:24:44.789+09:00  INFO 74078 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:24:44.963+09:00  INFO 74078 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : Started CategoryRepositoryTest in 1.36 seconds (process running for 1.746)
+2024-10-25T13:24:45.207+09:00  INFO 74078 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.repository.BookRepositoryTest]: BookRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:24:45.210+09:00  INFO 74078 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.repository.BookRepositoryTest
+2024-10-25T13:24:45.240+09:00  INFO 74078 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.controller.BookControllerTest]: BookControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:24:45.248+09:00  INFO 74078 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.controller.BookControllerTest
+2024-10-25T13:24:45.273+09:00  INFO 74078 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : Starting BookControllerTest using Java 21.0.4 with PID 74078 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:24:45.274+09:00  INFO 74078 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:24:45.519+09:00  INFO 74078 --- [shop-service] [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-10-25T13:24:45.519+09:00  INFO 74078 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-10-25T13:24:45.519+09:00  INFO 74078 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-10-25T13:24:45.524+09:00  INFO 74078 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : Started BookControllerTest in 0.272 seconds (process running for 2.307)
+2024-10-25T13:24:45.600+09:00  INFO 74078 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.controller.TagControllerTest]: TagControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:24:45.606+09:00  INFO 74078 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.controller.TagControllerTest
+2024-10-25T13:24:45.629+09:00  INFO 74078 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : Starting TagControllerTest using Java 21.0.4 with PID 74078 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:24:45.629+09:00  INFO 74078 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:24:45.705+09:00  INFO 74078 --- [shop-service] [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-10-25T13:24:45.705+09:00  INFO 74078 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-10-25T13:24:45.705+09:00  INFO 74078 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-10-25T13:24:45.707+09:00  INFO 74078 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : Started TagControllerTest in 0.1 seconds (process running for 2.49)
+2024-10-25T13:24:45.758+09:00  INFO 74078 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.ShopApplicationTests]: ShopApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:24:45.760+09:00  INFO 74078 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.ShopApplicationTests
+2024-10-25T13:24:45.776+09:00  INFO 74078 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : Starting ShopApplicationTests using Java 21.0.4 with PID 74078 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:24:45.776+09:00  INFO 74078 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:24:45.946+09:00  INFO 74078 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T13:24:45.955+09:00  INFO 74078 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 8 JPA repository interfaces.
+2024-10-25T13:24:45.981+09:00  INFO 74078 --- [shop-service] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=ecbfbc00-9546-3a45-bb0c-27058c7528bb
+2024-10-25T13:24:46.057+09:00  WARN 74078 --- [shop-service] [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [lbRestClientPostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2024-10-25T13:24:46.058+09:00  WARN 74078 --- [shop-service] [main] trationDelegate$BeanPostProcessorChecker : Bean 'deferringLoadBalancerInterceptor' of type [org.springframework.cloud.client.loadbalancer.DeferringLoadBalancerInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2024-10-25T13:24:46.091+09:00  INFO 74078 --- [shop-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-10-25T13:24:46.096+09:00  INFO 74078 --- [shop-service] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn14: url=jdbc:h2:mem:4d021f0b-35dd-442b-bbd9-a73b146d29c0 user=SA
+2024-10-25T13:24:46.096+09:00  INFO 74078 --- [shop-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-10-25T13:24:46.100+09:00  INFO 74078 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T13:24:46.101+09:00  INFO 74078 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T13:24:46.103+09:00  INFO 74078 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T13:24:46.171+09:00  INFO 74078 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T13:24:46.180+09:00  INFO 74078 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:24:46.366+09:00  WARN 74078 --- [shop-service] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-10-25T13:24:46.584+09:00  INFO 74078 --- [shop-service] [main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2024-10-25T13:24:46.600+09:00  WARN 74078 --- [shop-service] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2024-10-25T13:24:46.604+09:00  INFO 74078 --- [shop-service] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2024-10-25T13:24:46.627+09:00  INFO 74078 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : Started ShopApplicationTests in 0.865 seconds (process running for 3.41)
+2024-10-25T13:24:46.739+09:00  INFO 74078 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:24:46.745+09:00  INFO 74078 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:24:46.747+09:00  INFO 74078 --- [shop-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-10-25T13:24:46.749+09:00  INFO 74078 --- [shop-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-10-25T13:27:04.374+09:00  INFO 74260 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : Starting CategoryRepositoryTest using Java 21.0.4 with PID 74260 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:27:04.375+09:00  INFO 74260 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:27:04.520+09:00  INFO 74260 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T13:27:04.589+09:00  INFO 74260 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 66 ms. Found 8 JPA repository interfaces.
+2024-10-25T13:27:04.609+09:00  INFO 74260 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T13:27:04.656+09:00  INFO 74260 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:95edcbd3-b84e-4974-8bc9-4707fe47891b;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T13:27:04.780+09:00  INFO 74260 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T13:27:04.808+09:00  INFO 74260 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T13:27:04.821+09:00  INFO 74260 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T13:27:04.934+09:00  INFO 74260 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T13:27:05.383+09:00  INFO 74260 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T13:27:05.409+09:00  INFO 74260 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:27:05.577+09:00  INFO 74260 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : Started CategoryRepositoryTest in 1.366 seconds (process running for 1.747)
+2024-10-25T13:27:05.811+09:00  INFO 74260 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.repository.BookRepositoryTest]: BookRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:27:05.814+09:00  INFO 74260 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.repository.BookRepositoryTest
+2024-10-25T13:27:05.847+09:00  INFO 74260 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.controller.BookControllerTest]: BookControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:27:05.857+09:00  INFO 74260 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.controller.BookControllerTest
+2024-10-25T13:27:05.880+09:00  INFO 74260 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : Starting BookControllerTest using Java 21.0.4 with PID 74260 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:27:05.880+09:00  INFO 74260 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:27:06.129+09:00  INFO 74260 --- [shop-service] [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-10-25T13:27:06.129+09:00  INFO 74260 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-10-25T13:27:06.130+09:00  INFO 74260 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2024-10-25T13:27:06.134+09:00  INFO 74260 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : Started BookControllerTest in 0.273 seconds (process running for 2.305)
+2024-10-25T13:27:06.210+09:00  INFO 74260 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.controller.TagControllerTest]: TagControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:27:06.214+09:00  INFO 74260 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.controller.TagControllerTest
+2024-10-25T13:27:06.233+09:00  INFO 74260 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : Starting TagControllerTest using Java 21.0.4 with PID 74260 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:27:06.233+09:00  INFO 74260 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:27:06.309+09:00  INFO 74260 --- [shop-service] [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-10-25T13:27:06.309+09:00  INFO 74260 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-10-25T13:27:06.309+09:00  INFO 74260 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-10-25T13:27:06.311+09:00  INFO 74260 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : Started TagControllerTest in 0.096 seconds (process running for 2.481)
+2024-10-25T13:27:06.365+09:00  INFO 74260 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.ShopApplicationTests]: ShopApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:27:06.368+09:00  INFO 74260 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.ShopApplicationTests
+2024-10-25T13:27:06.384+09:00  INFO 74260 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : Starting ShopApplicationTests using Java 21.0.4 with PID 74260 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:27:06.384+09:00  INFO 74260 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:27:06.557+09:00  INFO 74260 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T13:27:06.565+09:00  INFO 74260 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 8 JPA repository interfaces.
+2024-10-25T13:27:06.592+09:00  INFO 74260 --- [shop-service] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=ecbfbc00-9546-3a45-bb0c-27058c7528bb
+2024-10-25T13:27:06.672+09:00  WARN 74260 --- [shop-service] [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [lbRestClientPostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2024-10-25T13:27:06.673+09:00  WARN 74260 --- [shop-service] [main] trationDelegate$BeanPostProcessorChecker : Bean 'deferringLoadBalancerInterceptor' of type [org.springframework.cloud.client.loadbalancer.DeferringLoadBalancerInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2024-10-25T13:27:06.705+09:00  INFO 74260 --- [shop-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-10-25T13:27:06.711+09:00  INFO 74260 --- [shop-service] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn14: url=jdbc:h2:mem:4057d0e9-de0c-4f18-a9bb-9f48dc5193a9 user=SA
+2024-10-25T13:27:06.711+09:00  INFO 74260 --- [shop-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-10-25T13:27:06.715+09:00  INFO 74260 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T13:27:06.715+09:00  INFO 74260 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T13:27:06.718+09:00  INFO 74260 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T13:27:06.780+09:00  INFO 74260 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T13:27:06.790+09:00  INFO 74260 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:27:06.957+09:00  WARN 74260 --- [shop-service] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-10-25T13:27:07.170+09:00  INFO 74260 --- [shop-service] [main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2024-10-25T13:27:07.186+09:00  WARN 74260 --- [shop-service] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2024-10-25T13:27:07.190+09:00  INFO 74260 --- [shop-service] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2024-10-25T13:27:07.213+09:00  INFO 74260 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : Started ShopApplicationTests in 0.843 seconds (process running for 3.383)
+2024-10-25T13:27:07.325+09:00  INFO 74260 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:27:07.331+09:00  INFO 74260 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:27:07.333+09:00  INFO 74260 --- [shop-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-10-25T13:27:07.335+09:00  INFO 74260 --- [shop-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-10-25T13:31:13.155+09:00  INFO 74466 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : Starting CategoryRepositoryTest using Java 21.0.4 with PID 74466 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:31:13.156+09:00  INFO 74466 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:31:13.289+09:00  INFO 74466 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T13:31:13.359+09:00  INFO 74466 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 66 ms. Found 8 JPA repository interfaces.
+2024-10-25T13:31:13.379+09:00  INFO 74466 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T13:31:13.427+09:00  INFO 74466 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:99acc201-9133-4d99-81c5-0b4421484f66;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T13:31:13.549+09:00  INFO 74466 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T13:31:13.576+09:00  INFO 74466 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T13:31:13.589+09:00  INFO 74466 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T13:31:13.704+09:00  INFO 74466 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T13:31:14.148+09:00  INFO 74466 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T13:31:14.175+09:00  INFO 74466 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:31:14.347+09:00  INFO 74466 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : Started CategoryRepositoryTest in 1.366 seconds (process running for 1.751)
+2024-10-25T13:31:14.584+09:00  INFO 74466 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.repository.BookRepositoryTest]: BookRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:31:14.587+09:00  INFO 74466 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.repository.BookRepositoryTest
+2024-10-25T13:31:14.621+09:00  INFO 74466 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.controller.BookControllerTest]: BookControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:31:14.630+09:00  INFO 74466 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.controller.BookControllerTest
+2024-10-25T13:31:14.652+09:00  INFO 74466 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : Starting BookControllerTest using Java 21.0.4 with PID 74466 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:31:14.652+09:00  INFO 74466 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:31:14.891+09:00  INFO 74466 --- [shop-service] [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-10-25T13:31:14.891+09:00  INFO 74466 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-10-25T13:31:14.892+09:00  INFO 74466 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2024-10-25T13:31:14.896+09:00  INFO 74466 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : Started BookControllerTest in 0.262 seconds (process running for 2.3)
+2024-10-25T13:31:14.970+09:00  INFO 74466 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.controller.TagControllerTest]: TagControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:31:14.973+09:00  INFO 74466 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.controller.TagControllerTest
+2024-10-25T13:31:14.994+09:00  INFO 74466 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : Starting TagControllerTest using Java 21.0.4 with PID 74466 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:31:14.994+09:00  INFO 74466 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:31:15.071+09:00  INFO 74466 --- [shop-service] [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-10-25T13:31:15.071+09:00  INFO 74466 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-10-25T13:31:15.071+09:00  INFO 74466 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-10-25T13:31:15.073+09:00  INFO 74466 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : Started TagControllerTest in 0.098 seconds (process running for 2.478)
+2024-10-25T13:31:15.133+09:00  INFO 74466 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.ShopApplicationTests]: ShopApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:31:15.136+09:00  INFO 74466 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.ShopApplicationTests
+2024-10-25T13:31:15.150+09:00  INFO 74466 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : Starting ShopApplicationTests using Java 21.0.4 with PID 74466 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:31:15.150+09:00  INFO 74466 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:31:15.311+09:00  INFO 74466 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T13:31:15.320+09:00  INFO 74466 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 9 ms. Found 8 JPA repository interfaces.
+2024-10-25T13:31:15.355+09:00  INFO 74466 --- [shop-service] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=ecbfbc00-9546-3a45-bb0c-27058c7528bb
+2024-10-25T13:31:15.445+09:00  WARN 74466 --- [shop-service] [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [lbRestClientPostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2024-10-25T13:31:15.446+09:00  WARN 74466 --- [shop-service] [main] trationDelegate$BeanPostProcessorChecker : Bean 'deferringLoadBalancerInterceptor' of type [org.springframework.cloud.client.loadbalancer.DeferringLoadBalancerInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2024-10-25T13:31:15.479+09:00  INFO 74466 --- [shop-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-10-25T13:31:15.484+09:00  INFO 74466 --- [shop-service] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn14: url=jdbc:h2:mem:aeaddf30-13ca-4aa9-9f45-9d45121b5719 user=SA
+2024-10-25T13:31:15.485+09:00  INFO 74466 --- [shop-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-10-25T13:31:15.488+09:00  INFO 74466 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T13:31:15.490+09:00  INFO 74466 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T13:31:15.493+09:00  INFO 74466 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T13:31:15.560+09:00  INFO 74466 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T13:31:15.569+09:00  INFO 74466 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:31:15.746+09:00  WARN 74466 --- [shop-service] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-10-25T13:31:15.957+09:00  INFO 74466 --- [shop-service] [main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2024-10-25T13:31:15.974+09:00  WARN 74466 --- [shop-service] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2024-10-25T13:31:15.978+09:00  INFO 74466 --- [shop-service] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2024-10-25T13:31:16.001+09:00  INFO 74466 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : Started ShopApplicationTests in 0.863 seconds (process running for 3.406)
+2024-10-25T13:31:16.112+09:00  INFO 74466 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:31:16.118+09:00  INFO 74466 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:31:16.120+09:00  INFO 74466 --- [shop-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-10-25T13:31:16.121+09:00  INFO 74466 --- [shop-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-10-25T13:43:03.418+09:00  INFO 75073 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : Starting CategoryRepositoryTest using Java 21.0.4 with PID 75073 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:43:03.419+09:00  INFO 75073 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:43:03.565+09:00  INFO 75073 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T13:43:03.633+09:00  INFO 75073 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 65 ms. Found 8 JPA repository interfaces.
+2024-10-25T13:43:03.654+09:00  INFO 75073 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T13:43:03.702+09:00  INFO 75073 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:a1bd49c3-4d8e-4f7b-bfa3-6d5dc316025a;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T13:43:03.806+09:00  INFO 75073 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T13:43:03.831+09:00  INFO 75073 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T13:43:03.848+09:00  INFO 75073 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T13:43:03.955+09:00  INFO 75073 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T13:43:04.382+09:00  INFO 75073 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T13:43:04.406+09:00  INFO 75073 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:43:04.575+09:00  INFO 75073 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : Started CategoryRepositoryTest in 1.316 seconds (process running for 1.705)
+2024-10-25T13:43:04.809+09:00  INFO 75073 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.repository.BookRepositoryTest]: BookRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:43:04.812+09:00  INFO 75073 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.repository.BookRepositoryTest
+2024-10-25T13:43:04.852+09:00  INFO 75073 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.controller.BookControllerTest]: BookControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:43:04.863+09:00  INFO 75073 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.controller.BookControllerTest
+2024-10-25T13:43:04.892+09:00  INFO 75073 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : Starting BookControllerTest using Java 21.0.4 with PID 75073 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:43:04.892+09:00  INFO 75073 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:43:05.131+09:00  INFO 75073 --- [shop-service] [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-10-25T13:43:05.131+09:00  INFO 75073 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-10-25T13:43:05.132+09:00  INFO 75073 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2024-10-25T13:43:05.136+09:00  INFO 75073 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : Started BookControllerTest in 0.268 seconds (process running for 2.266)
+2024-10-25T13:43:05.217+09:00  INFO 75073 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.controller.TagControllerTest]: TagControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:43:05.220+09:00  INFO 75073 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.controller.TagControllerTest
+2024-10-25T13:43:05.236+09:00  INFO 75073 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : Starting TagControllerTest using Java 21.0.4 with PID 75073 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:43:05.236+09:00  INFO 75073 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:43:05.306+09:00  INFO 75073 --- [shop-service] [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-10-25T13:43:05.306+09:00  INFO 75073 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-10-25T13:43:05.306+09:00  INFO 75073 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-10-25T13:43:05.308+09:00  INFO 75073 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : Started TagControllerTest in 0.087 seconds (process running for 2.437)
+2024-10-25T13:43:05.360+09:00  INFO 75073 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.ShopApplicationTests]: ShopApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:43:05.364+09:00  INFO 75073 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.ShopApplicationTests
+2024-10-25T13:43:05.381+09:00  INFO 75073 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : Starting ShopApplicationTests using Java 21.0.4 with PID 75073 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:43:05.381+09:00  INFO 75073 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:43:05.533+09:00  INFO 75073 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T13:43:05.541+09:00  INFO 75073 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 8 JPA repository interfaces.
+2024-10-25T13:43:05.572+09:00  INFO 75073 --- [shop-service] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=ecbfbc00-9546-3a45-bb0c-27058c7528bb
+2024-10-25T13:43:05.658+09:00  WARN 75073 --- [shop-service] [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [lbRestClientPostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2024-10-25T13:43:05.658+09:00  WARN 75073 --- [shop-service] [main] trationDelegate$BeanPostProcessorChecker : Bean 'deferringLoadBalancerInterceptor' of type [org.springframework.cloud.client.loadbalancer.DeferringLoadBalancerInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2024-10-25T13:43:05.709+09:00  INFO 75073 --- [shop-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-10-25T13:43:05.715+09:00  INFO 75073 --- [shop-service] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn14: url=jdbc:h2:mem:64cd3c86-f717-4993-baad-73fc770d172c user=SA
+2024-10-25T13:43:05.716+09:00  INFO 75073 --- [shop-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-10-25T13:43:05.720+09:00  INFO 75073 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T13:43:05.721+09:00  INFO 75073 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T13:43:05.724+09:00  INFO 75073 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T13:43:05.780+09:00  INFO 75073 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T13:43:05.789+09:00  INFO 75073 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:43:05.954+09:00  WARN 75073 --- [shop-service] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-10-25T13:43:06.165+09:00  INFO 75073 --- [shop-service] [main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2024-10-25T13:43:06.182+09:00  WARN 75073 --- [shop-service] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2024-10-25T13:43:06.186+09:00  INFO 75073 --- [shop-service] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2024-10-25T13:43:06.209+09:00  INFO 75073 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : Started ShopApplicationTests in 0.843 seconds (process running for 3.339)
+2024-10-25T13:43:06.320+09:00  INFO 75073 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:43:06.327+09:00  INFO 75073 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:43:06.329+09:00  INFO 75073 --- [shop-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-10-25T13:43:06.331+09:00  INFO 75073 --- [shop-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-10-25T13:51:35.847+09:00  INFO 75466 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : Starting CategoryRepositoryTest using Java 21.0.4 with PID 75466 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:51:35.847+09:00  INFO 75466 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:51:35.986+09:00  INFO 75466 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T13:51:36.054+09:00  INFO 75466 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 65 ms. Found 8 JPA repository interfaces.
+2024-10-25T13:51:36.074+09:00  INFO 75466 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T13:51:36.128+09:00  INFO 75466 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:e58d54d2-87f2-4632-9c80-477e8b8df611;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T13:51:36.247+09:00  INFO 75466 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T13:51:36.277+09:00  INFO 75466 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T13:51:36.291+09:00  INFO 75466 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T13:51:36.402+09:00  INFO 75466 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T13:51:36.840+09:00  INFO 75466 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T13:51:36.865+09:00  INFO 75466 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:51:37.031+09:00  INFO 75466 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : Started CategoryRepositoryTest in 1.35 seconds (process running for 1.746)
+2024-10-25T13:51:37.266+09:00  INFO 75466 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.repository.BookRepositoryTest]: BookRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:51:37.269+09:00  INFO 75466 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.repository.BookRepositoryTest
+2024-10-25T13:51:37.298+09:00  INFO 75466 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.controller.BookControllerTest]: BookControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:51:37.307+09:00  INFO 75466 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.controller.BookControllerTest
+2024-10-25T13:51:37.330+09:00  INFO 75466 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : Starting BookControllerTest using Java 21.0.4 with PID 75466 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:51:37.331+09:00  INFO 75466 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:51:37.581+09:00  INFO 75466 --- [shop-service] [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-10-25T13:51:37.581+09:00  INFO 75466 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-10-25T13:51:37.582+09:00  INFO 75466 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2024-10-25T13:51:37.586+09:00  INFO 75466 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : Started BookControllerTest in 0.275 seconds (process running for 2.301)
+2024-10-25T13:51:37.658+09:00  INFO 75466 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.controller.TagControllerTest]: TagControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:51:37.661+09:00  INFO 75466 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.controller.TagControllerTest
+2024-10-25T13:51:37.681+09:00  INFO 75466 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : Starting TagControllerTest using Java 21.0.4 with PID 75466 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:51:37.681+09:00  INFO 75466 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:51:37.762+09:00  INFO 75466 --- [shop-service] [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-10-25T13:51:37.763+09:00  INFO 75466 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-10-25T13:51:37.763+09:00  INFO 75466 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-10-25T13:51:37.765+09:00  INFO 75466 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : Started TagControllerTest in 0.103 seconds (process running for 2.48)
+2024-10-25T13:51:37.814+09:00  INFO 75466 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.ShopApplicationTests]: ShopApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:51:37.816+09:00  INFO 75466 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.ShopApplicationTests
+2024-10-25T13:51:37.830+09:00  INFO 75466 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : Starting ShopApplicationTests using Java 21.0.4 with PID 75466 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:51:37.830+09:00  INFO 75466 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:51:37.971+09:00  INFO 75466 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T13:51:37.980+09:00  INFO 75466 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8 ms. Found 8 JPA repository interfaces.
+2024-10-25T13:51:38.017+09:00  INFO 75466 --- [shop-service] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=ecbfbc00-9546-3a45-bb0c-27058c7528bb
+2024-10-25T13:51:38.112+09:00  WARN 75466 --- [shop-service] [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [lbRestClientPostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2024-10-25T13:51:38.113+09:00  WARN 75466 --- [shop-service] [main] trationDelegate$BeanPostProcessorChecker : Bean 'deferringLoadBalancerInterceptor' of type [org.springframework.cloud.client.loadbalancer.DeferringLoadBalancerInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2024-10-25T13:51:38.141+09:00  INFO 75466 --- [shop-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-10-25T13:51:38.147+09:00  INFO 75466 --- [shop-service] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn14: url=jdbc:h2:mem:f3e89965-e19c-45d3-9257-3634a8d44425 user=SA
+2024-10-25T13:51:38.147+09:00  INFO 75466 --- [shop-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-10-25T13:51:38.151+09:00  INFO 75466 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T13:51:38.152+09:00  INFO 75466 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T13:51:38.154+09:00  INFO 75466 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T13:51:38.243+09:00  INFO 75466 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T13:51:38.253+09:00  INFO 75466 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:51:38.419+09:00  WARN 75466 --- [shop-service] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-10-25T13:51:38.629+09:00  INFO 75466 --- [shop-service] [main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2024-10-25T13:51:38.651+09:00  WARN 75466 --- [shop-service] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2024-10-25T13:51:38.656+09:00  INFO 75466 --- [shop-service] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2024-10-25T13:51:38.678+09:00  INFO 75466 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : Started ShopApplicationTests in 0.86 seconds (process running for 3.393)
+2024-10-25T13:51:38.789+09:00  INFO 75466 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:51:38.796+09:00  INFO 75466 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:51:38.799+09:00  INFO 75466 --- [shop-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-10-25T13:51:38.801+09:00  INFO 75466 --- [shop-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-10-25T13:52:40.387+09:00  INFO 75570 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : Starting CategoryRepositoryTest using Java 21.0.4 with PID 75570 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:52:40.388+09:00  INFO 75570 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:52:40.524+09:00  INFO 75570 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T13:52:40.593+09:00  INFO 75570 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 66 ms. Found 8 JPA repository interfaces.
+2024-10-25T13:52:40.614+09:00  INFO 75570 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T13:52:40.662+09:00  INFO 75570 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:9270edb7-3b1e-4f51-a275-0a3c7246032b;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T13:52:40.773+09:00  INFO 75570 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T13:52:40.797+09:00  INFO 75570 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T13:52:40.810+09:00  INFO 75570 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T13:52:40.915+09:00  INFO 75570 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T13:52:41.346+09:00  INFO 75570 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T13:52:41.371+09:00  INFO 75570 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:52:41.538+09:00  INFO 75570 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : Started CategoryRepositoryTest in 1.311 seconds (process running for 1.706)
+2024-10-25T13:52:41.768+09:00  INFO 75570 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.repository.BookRepositoryTest]: BookRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:52:41.772+09:00  INFO 75570 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.repository.BookRepositoryTest
+2024-10-25T13:52:41.804+09:00  INFO 75570 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.controller.BookControllerTest]: BookControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:52:41.816+09:00  INFO 75570 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.controller.BookControllerTest
+2024-10-25T13:52:41.838+09:00  INFO 75570 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : Starting BookControllerTest using Java 21.0.4 with PID 75570 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:52:41.838+09:00  INFO 75570 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:52:42.060+09:00  INFO 75570 --- [shop-service] [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-10-25T13:52:42.060+09:00  INFO 75570 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-10-25T13:52:42.061+09:00  INFO 75570 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2024-10-25T13:52:42.065+09:00  INFO 75570 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : Started BookControllerTest in 0.245 seconds (process running for 2.233)
+2024-10-25T13:52:42.145+09:00  INFO 75570 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.controller.TagControllerTest]: TagControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:52:42.148+09:00  INFO 75570 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.controller.TagControllerTest
+2024-10-25T13:52:42.165+09:00  INFO 75570 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : Starting TagControllerTest using Java 21.0.4 with PID 75570 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:52:42.165+09:00  INFO 75570 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:52:42.232+09:00  INFO 75570 --- [shop-service] [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-10-25T13:52:42.232+09:00  INFO 75570 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-10-25T13:52:42.233+09:00  INFO 75570 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2024-10-25T13:52:42.236+09:00  INFO 75570 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : Started TagControllerTest in 0.086 seconds (process running for 2.404)
+2024-10-25T13:52:42.282+09:00  INFO 75570 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.ShopApplicationTests]: ShopApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:52:42.287+09:00  INFO 75570 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.ShopApplicationTests
+2024-10-25T13:52:42.307+09:00  INFO 75570 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : Starting ShopApplicationTests using Java 21.0.4 with PID 75570 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:52:42.307+09:00  INFO 75570 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:52:42.455+09:00  INFO 75570 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T13:52:42.462+09:00  INFO 75570 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 8 JPA repository interfaces.
+2024-10-25T13:52:42.492+09:00  INFO 75570 --- [shop-service] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=ecbfbc00-9546-3a45-bb0c-27058c7528bb
+2024-10-25T13:52:42.575+09:00  WARN 75570 --- [shop-service] [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [lbRestClientPostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2024-10-25T13:52:42.576+09:00  WARN 75570 --- [shop-service] [main] trationDelegate$BeanPostProcessorChecker : Bean 'deferringLoadBalancerInterceptor' of type [org.springframework.cloud.client.loadbalancer.DeferringLoadBalancerInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2024-10-25T13:52:42.609+09:00  INFO 75570 --- [shop-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-10-25T13:52:42.614+09:00  INFO 75570 --- [shop-service] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn14: url=jdbc:h2:mem:c797e410-22ea-4e5c-9dc7-95168671dcbb user=SA
+2024-10-25T13:52:42.614+09:00  INFO 75570 --- [shop-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-10-25T13:52:42.618+09:00  INFO 75570 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T13:52:42.619+09:00  INFO 75570 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T13:52:42.621+09:00  INFO 75570 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T13:52:42.681+09:00  INFO 75570 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T13:52:42.690+09:00  INFO 75570 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:52:42.867+09:00  WARN 75570 --- [shop-service] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-10-25T13:52:43.074+09:00  INFO 75570 --- [shop-service] [main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2024-10-25T13:52:43.090+09:00  WARN 75570 --- [shop-service] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2024-10-25T13:52:43.095+09:00  INFO 75570 --- [shop-service] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2024-10-25T13:52:43.117+09:00  INFO 75570 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : Started ShopApplicationTests in 0.828 seconds (process running for 3.284)
+2024-10-25T13:52:43.229+09:00  INFO 75570 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:52:43.237+09:00  INFO 75570 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:52:43.239+09:00  INFO 75570 --- [shop-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-10-25T13:52:43.241+09:00  INFO 75570 --- [shop-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-10-25T13:54:32.880+09:00  INFO 75660 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : Starting CategoryRepositoryTest using Java 21.0.4 with PID 75660 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:54:32.881+09:00  INFO 75660 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:54:33.034+09:00  INFO 75660 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T13:54:33.109+09:00  INFO 75660 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 73 ms. Found 8 JPA repository interfaces.
+2024-10-25T13:54:33.132+09:00  INFO 75660 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T13:54:33.195+09:00  INFO 75660 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:57145b10-e84b-4624-873f-def6ec7943f5;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T13:54:33.314+09:00  INFO 75660 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T13:54:33.342+09:00  INFO 75660 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T13:54:33.355+09:00  INFO 75660 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T13:54:33.466+09:00  INFO 75660 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T13:54:33.911+09:00  INFO 75660 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T13:54:33.936+09:00  INFO 75660 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:54:34.112+09:00  INFO 75660 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : Started CategoryRepositoryTest in 1.399 seconds (process running for 1.789)
+2024-10-25T13:54:34.349+09:00  INFO 75660 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.repository.BookRepositoryTest]: BookRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:54:34.353+09:00  INFO 75660 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.repository.BookRepositoryTest
+2024-10-25T13:54:34.387+09:00  INFO 75660 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.controller.BookControllerTest]: BookControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:54:34.398+09:00  INFO 75660 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.controller.BookControllerTest
+2024-10-25T13:54:34.425+09:00  INFO 75660 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : Starting BookControllerTest using Java 21.0.4 with PID 75660 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:54:34.425+09:00  INFO 75660 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:54:34.675+09:00  INFO 75660 --- [shop-service] [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-10-25T13:54:34.675+09:00  INFO 75660 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-10-25T13:54:34.675+09:00  INFO 75660 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-10-25T13:54:34.680+09:00  INFO 75660 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : Started BookControllerTest in 0.277 seconds (process running for 2.357)
+2024-10-25T13:54:34.760+09:00  INFO 75660 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.controller.TagControllerTest]: TagControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:54:34.763+09:00  INFO 75660 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.controller.TagControllerTest
+2024-10-25T13:54:34.784+09:00  INFO 75660 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : Starting TagControllerTest using Java 21.0.4 with PID 75660 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:54:34.784+09:00  INFO 75660 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:54:34.874+09:00  INFO 75660 --- [shop-service] [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-10-25T13:54:34.875+09:00  INFO 75660 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-10-25T13:54:34.875+09:00  INFO 75660 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-10-25T13:54:34.877+09:00  INFO 75660 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : Started TagControllerTest in 0.112 seconds (process running for 2.554)
+2024-10-25T13:54:34.924+09:00  INFO 75660 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.ShopApplicationTests]: ShopApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:54:34.927+09:00  INFO 75660 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.ShopApplicationTests
+2024-10-25T13:54:34.941+09:00  INFO 75660 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : Starting ShopApplicationTests using Java 21.0.4 with PID 75660 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:54:34.941+09:00  INFO 75660 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:54:35.106+09:00  INFO 75660 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T13:54:35.113+09:00  INFO 75660 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 8 JPA repository interfaces.
+2024-10-25T13:54:35.141+09:00  INFO 75660 --- [shop-service] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=ecbfbc00-9546-3a45-bb0c-27058c7528bb
+2024-10-25T13:54:35.223+09:00  WARN 75660 --- [shop-service] [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [lbRestClientPostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2024-10-25T13:54:35.224+09:00  WARN 75660 --- [shop-service] [main] trationDelegate$BeanPostProcessorChecker : Bean 'deferringLoadBalancerInterceptor' of type [org.springframework.cloud.client.loadbalancer.DeferringLoadBalancerInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2024-10-25T13:54:35.253+09:00  INFO 75660 --- [shop-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-10-25T13:54:35.263+09:00  INFO 75660 --- [shop-service] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn14: url=jdbc:h2:mem:588049bf-889e-45c3-8c3f-f30474b960b4 user=SA
+2024-10-25T13:54:35.264+09:00  INFO 75660 --- [shop-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-10-25T13:54:35.269+09:00  INFO 75660 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T13:54:35.270+09:00  INFO 75660 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T13:54:35.273+09:00  INFO 75660 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T13:54:35.352+09:00  INFO 75660 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T13:54:35.363+09:00  INFO 75660 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:54:35.532+09:00  WARN 75660 --- [shop-service] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-10-25T13:54:35.755+09:00  INFO 75660 --- [shop-service] [main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2024-10-25T13:54:35.782+09:00  WARN 75660 --- [shop-service] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2024-10-25T13:54:35.787+09:00  INFO 75660 --- [shop-service] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2024-10-25T13:54:35.811+09:00  INFO 75660 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : Started ShopApplicationTests in 0.882 seconds (process running for 3.488)
+2024-10-25T13:54:35.911+09:00  INFO 75660 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:54:35.918+09:00  INFO 75660 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:54:35.920+09:00  INFO 75660 --- [shop-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-10-25T13:54:35.921+09:00  INFO 75660 --- [shop-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-10-25T13:57:39.080+09:00  INFO 75899 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : Starting CategoryRepositoryTest using Java 21.0.4 with PID 75899 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:57:39.080+09:00  INFO 75899 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:57:39.220+09:00  INFO 75899 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T13:57:39.287+09:00  INFO 75899 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 63 ms. Found 8 JPA repository interfaces.
+2024-10-25T13:57:39.307+09:00  INFO 75899 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T13:57:39.362+09:00  INFO 75899 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:80d67cbd-2238-4a8f-a238-a2d2c610665b;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T13:57:39.490+09:00  INFO 75899 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T13:57:39.515+09:00  INFO 75899 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T13:57:39.527+09:00  INFO 75899 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T13:57:39.641+09:00  INFO 75899 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T13:57:40.089+09:00  INFO 75899 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T13:57:40.114+09:00  INFO 75899 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:57:40.292+09:00  INFO 75899 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : Started CategoryRepositoryTest in 1.384 seconds (process running for 1.789)
+2024-10-25T13:57:40.535+09:00  INFO 75899 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.repository.BookRepositoryTest]: BookRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:57:40.538+09:00  INFO 75899 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.repository.BookRepositoryTest
+2024-10-25T13:57:40.570+09:00  INFO 75899 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.controller.BookControllerTest]: BookControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:57:40.580+09:00  INFO 75899 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.controller.BookControllerTest
+2024-10-25T13:57:40.605+09:00  INFO 75899 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : Starting BookControllerTest using Java 21.0.4 with PID 75899 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:57:40.606+09:00  INFO 75899 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:57:40.848+09:00  INFO 75899 --- [shop-service] [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-10-25T13:57:40.849+09:00  INFO 75899 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-10-25T13:57:40.849+09:00  INFO 75899 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-10-25T13:57:40.854+09:00  INFO 75899 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : Started BookControllerTest in 0.27 seconds (process running for 2.35)
+2024-10-25T13:57:40.954+09:00  INFO 75899 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.controller.TagControllerTest]: TagControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:57:40.959+09:00  INFO 75899 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.controller.TagControllerTest
+2024-10-25T13:57:40.981+09:00  INFO 75899 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : Starting TagControllerTest using Java 21.0.4 with PID 75899 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:57:40.981+09:00  INFO 75899 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:57:41.055+09:00  INFO 75899 --- [shop-service] [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-10-25T13:57:41.055+09:00  INFO 75899 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-10-25T13:57:41.056+09:00  INFO 75899 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2024-10-25T13:57:41.057+09:00  INFO 75899 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : Started TagControllerTest in 0.097 seconds (process running for 2.554)
+2024-10-25T13:57:41.108+09:00  INFO 75899 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.ShopApplicationTests]: ShopApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T13:57:41.112+09:00  INFO 75899 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.ShopApplicationTests
+2024-10-25T13:57:41.126+09:00  INFO 75899 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : Starting ShopApplicationTests using Java 21.0.4 with PID 75899 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T13:57:41.126+09:00  INFO 75899 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T13:57:41.291+09:00  INFO 75899 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T13:57:41.299+09:00  INFO 75899 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 8 JPA repository interfaces.
+2024-10-25T13:57:41.331+09:00  INFO 75899 --- [shop-service] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=ecbfbc00-9546-3a45-bb0c-27058c7528bb
+2024-10-25T13:57:41.423+09:00  WARN 75899 --- [shop-service] [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [lbRestClientPostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2024-10-25T13:57:41.424+09:00  WARN 75899 --- [shop-service] [main] trationDelegate$BeanPostProcessorChecker : Bean 'deferringLoadBalancerInterceptor' of type [org.springframework.cloud.client.loadbalancer.DeferringLoadBalancerInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2024-10-25T13:57:41.461+09:00  INFO 75899 --- [shop-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-10-25T13:57:41.468+09:00  INFO 75899 --- [shop-service] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn14: url=jdbc:h2:mem:8882a44d-0895-4ee5-97b5-6e378afd6330 user=SA
+2024-10-25T13:57:41.469+09:00  INFO 75899 --- [shop-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-10-25T13:57:41.473+09:00  INFO 75899 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T13:57:41.474+09:00  INFO 75899 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T13:57:41.477+09:00  INFO 75899 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T13:57:41.547+09:00  INFO 75899 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T13:57:41.556+09:00  INFO 75899 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:57:41.749+09:00  WARN 75899 --- [shop-service] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-10-25T13:57:41.967+09:00  INFO 75899 --- [shop-service] [main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2024-10-25T13:57:41.985+09:00  WARN 75899 --- [shop-service] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2024-10-25T13:57:41.989+09:00  INFO 75899 --- [shop-service] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2024-10-25T13:57:42.013+09:00  INFO 75899 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : Started ShopApplicationTests in 0.899 seconds (process running for 3.509)
+2024-10-25T13:57:42.141+09:00  INFO 75899 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:57:42.148+09:00  INFO 75899 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T13:57:42.150+09:00  INFO 75899 --- [shop-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-10-25T13:57:42.151+09:00  INFO 75899 --- [shop-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-10-25T14:04:30.275+09:00  INFO 1253 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : Starting CategoryRepositoryTest using Java 21.0.4 with PID 1253 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T14:04:30.276+09:00  INFO 1253 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T14:04:30.413+09:00  INFO 1253 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T14:04:30.479+09:00  INFO 1253 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 63 ms. Found 8 JPA repository interfaces.
+2024-10-25T14:04:30.499+09:00  INFO 1253 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T14:04:30.556+09:00  INFO 1253 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:cb66c1b2-8375-4bf0-b1e7-ca33b84b9d72;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T14:04:30.680+09:00  INFO 1253 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T14:04:30.704+09:00  INFO 1253 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T14:04:30.718+09:00  INFO 1253 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T14:04:30.831+09:00  INFO 1253 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T14:04:31.264+09:00  INFO 1253 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T14:04:31.290+09:00  INFO 1253 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T14:04:31.464+09:00  INFO 1253 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : Started CategoryRepositoryTest in 1.362 seconds (process running for 1.76)
+2024-10-25T14:04:31.714+09:00  INFO 1253 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.repository.BookRepositoryTest]: BookRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T14:04:31.718+09:00  INFO 1253 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.repository.BookRepositoryTest
+2024-10-25T14:04:31.748+09:00  INFO 1253 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.controller.BookControllerTest]: BookControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T14:04:31.757+09:00  INFO 1253 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.controller.BookControllerTest
+2024-10-25T14:04:31.780+09:00  INFO 1253 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : Starting BookControllerTest using Java 21.0.4 with PID 1253 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T14:04:31.781+09:00  INFO 1253 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T14:04:32.033+09:00  INFO 1253 --- [shop-service] [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-10-25T14:04:32.033+09:00  INFO 1253 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-10-25T14:04:32.033+09:00  INFO 1253 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-10-25T14:04:32.038+09:00  INFO 1253 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : Started BookControllerTest in 0.277 seconds (process running for 2.334)
+2024-10-25T14:04:32.117+09:00  INFO 1253 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.controller.TagControllerTest]: TagControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T14:04:32.120+09:00  INFO 1253 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.controller.TagControllerTest
+2024-10-25T14:04:32.142+09:00  INFO 1253 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : Starting TagControllerTest using Java 21.0.4 with PID 1253 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T14:04:32.143+09:00  INFO 1253 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T14:04:32.244+09:00  INFO 1253 --- [shop-service] [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-10-25T14:04:32.244+09:00  INFO 1253 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-10-25T14:04:32.245+09:00  INFO 1253 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2024-10-25T14:04:32.246+09:00  INFO 1253 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : Started TagControllerTest in 0.124 seconds (process running for 2.543)
+2024-10-25T14:04:32.292+09:00  INFO 1253 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.ShopApplicationTests]: ShopApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T14:04:32.297+09:00  INFO 1253 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.ShopApplicationTests
+2024-10-25T14:04:32.314+09:00  INFO 1253 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : Starting ShopApplicationTests using Java 21.0.4 with PID 1253 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T14:04:32.314+09:00  INFO 1253 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T14:04:32.477+09:00  INFO 1253 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T14:04:32.484+09:00  INFO 1253 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 8 JPA repository interfaces.
+2024-10-25T14:04:32.516+09:00  INFO 1253 --- [shop-service] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=ecbfbc00-9546-3a45-bb0c-27058c7528bb
+2024-10-25T14:04:32.613+09:00  WARN 1253 --- [shop-service] [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [lbRestClientPostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2024-10-25T14:04:32.614+09:00  WARN 1253 --- [shop-service] [main] trationDelegate$BeanPostProcessorChecker : Bean 'deferringLoadBalancerInterceptor' of type [org.springframework.cloud.client.loadbalancer.DeferringLoadBalancerInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2024-10-25T14:04:32.642+09:00  INFO 1253 --- [shop-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-10-25T14:04:32.648+09:00  INFO 1253 --- [shop-service] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn14: url=jdbc:h2:mem:3b5bd90d-f0ae-41d1-89f5-373181d0a40c user=SA
+2024-10-25T14:04:32.648+09:00  INFO 1253 --- [shop-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-10-25T14:04:32.652+09:00  INFO 1253 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T14:04:32.652+09:00  INFO 1253 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T14:04:32.655+09:00  INFO 1253 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T14:04:32.724+09:00  INFO 1253 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T14:04:32.733+09:00  INFO 1253 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T14:04:32.906+09:00  WARN 1253 --- [shop-service] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-10-25T14:04:33.135+09:00  INFO 1253 --- [shop-service] [main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2024-10-25T14:04:33.157+09:00  WARN 1253 --- [shop-service] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2024-10-25T14:04:33.161+09:00  INFO 1253 --- [shop-service] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2024-10-25T14:04:33.187+09:00  INFO 1253 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : Started ShopApplicationTests in 0.887 seconds (process running for 3.483)
+2024-10-25T14:04:33.299+09:00  INFO 1253 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T14:04:33.305+09:00  INFO 1253 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T14:04:33.307+09:00  INFO 1253 --- [shop-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-10-25T14:04:33.309+09:00  INFO 1253 --- [shop-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-10-25T15:07:36.215+09:00  INFO 4100 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : Starting CategoryRepositoryTest using Java 21.0.4 with PID 4100 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T15:07:36.216+09:00  INFO 4100 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T15:07:36.356+09:00  INFO 4100 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T15:07:36.427+09:00  INFO 4100 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 68 ms. Found 8 JPA repository interfaces.
+2024-10-25T15:07:36.447+09:00  INFO 4100 --- [shop-service] [main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-10-25T15:07:36.502+09:00  INFO 4100 --- [shop-service] [main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:d5aba3bc-932e-43ff-8f45-fb20e9b25903;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-10-25T15:07:36.617+09:00  INFO 4100 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T15:07:36.637+09:00  INFO 4100 --- [shop-service] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-25T15:07:36.647+09:00  INFO 4100 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T15:07:36.750+09:00  INFO 4100 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T15:07:37.175+09:00  INFO 4100 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T15:07:37.205+09:00  INFO 4100 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T15:07:37.378+09:00  INFO 4100 --- [shop-service] [main] s.S.s.repository.CategoryRepositoryTest  : Started CategoryRepositoryTest in 1.332 seconds (process running for 1.73)
+2024-10-25T15:07:37.608+09:00  INFO 4100 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.repository.BookRepositoryTest]: BookRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T15:07:37.611+09:00  INFO 4100 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.repository.BookRepositoryTest
+2024-10-25T15:07:37.643+09:00  INFO 4100 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.controller.BookControllerTest]: BookControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T15:07:37.653+09:00  INFO 4100 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.controller.BookControllerTest
+2024-10-25T15:07:37.681+09:00  INFO 4100 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : Starting BookControllerTest using Java 21.0.4 with PID 4100 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T15:07:37.682+09:00  INFO 4100 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T15:07:37.938+09:00  INFO 4100 --- [shop-service] [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-10-25T15:07:37.939+09:00  INFO 4100 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-10-25T15:07:37.939+09:00  INFO 4100 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-10-25T15:07:37.944+09:00  INFO 4100 --- [shop-service] [main] s.S.shop.controller.BookControllerTest   : Started BookControllerTest in 0.287 seconds (process running for 2.296)
+2024-10-25T15:07:38.016+09:00  INFO 4100 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.controller.TagControllerTest]: TagControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T15:07:38.018+09:00  INFO 4100 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.controller.TagControllerTest
+2024-10-25T15:07:38.037+09:00  INFO 4100 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : Starting TagControllerTest using Java 21.0.4 with PID 4100 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T15:07:38.037+09:00  INFO 4100 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T15:07:38.116+09:00  INFO 4100 --- [shop-service] [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-10-25T15:07:38.116+09:00  INFO 4100 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-10-25T15:07:38.116+09:00  INFO 4100 --- [shop-service] [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-10-25T15:07:38.118+09:00  INFO 4100 --- [shop-service] [main] s.S5G.shop.controller.TagControllerTest  : Started TagControllerTest in 0.099 seconds (process running for 2.471)
+2024-10-25T15:07:38.170+09:00  INFO 4100 --- [shop-service] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [shop.S5G.shop.ShopApplicationTests]: ShopApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-10-25T15:07:38.173+09:00  INFO 4100 --- [shop-service] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration shop.S5G.shop.ShopApplication for test class shop.S5G.shop.ShopApplicationTests
+2024-10-25T15:07:38.187+09:00  INFO 4100 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : Starting ShopApplicationTests using Java 21.0.4 with PID 4100 (started by ukksj0621 in /Users/ukksj0621/Downloads/55G.COM-shop2)
+2024-10-25T15:07:38.187+09:00  INFO 4100 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : No active profile set, falling back to 1 default profile: "default"
+2024-10-25T15:07:38.360+09:00  INFO 4100 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-25T15:07:38.368+09:00  INFO 4100 --- [shop-service] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 8 JPA repository interfaces.
+2024-10-25T15:07:38.397+09:00  INFO 4100 --- [shop-service] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=2b889643-ad54-3c20-a623-cafdfdaaa52a
+2024-10-25T15:07:38.480+09:00  WARN 4100 --- [shop-service] [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [lbRestClientPostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2024-10-25T15:07:38.481+09:00  WARN 4100 --- [shop-service] [main] trationDelegate$BeanPostProcessorChecker : Bean 'deferringLoadBalancerInterceptor' of type [org.springframework.cloud.client.loadbalancer.DeferringLoadBalancerInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2024-10-25T15:07:38.510+09:00  INFO 4100 --- [shop-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-10-25T15:07:38.515+09:00  INFO 4100 --- [shop-service] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn14: url=jdbc:h2:mem:ebe2ee37-011a-465f-bef9-a222a2876f6a user=SA
+2024-10-25T15:07:38.515+09:00  INFO 4100 --- [shop-service] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-10-25T15:07:38.519+09:00  INFO 4100 --- [shop-service] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-25T15:07:38.520+09:00  INFO 4100 --- [shop-service] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-25T15:07:38.522+09:00  INFO 4100 --- [shop-service] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-25T15:07:38.597+09:00  INFO 4100 --- [shop-service] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-25T15:07:38.608+09:00  INFO 4100 --- [shop-service] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T15:07:38.790+09:00  WARN 4100 --- [shop-service] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-10-25T15:07:38.810+09:00  WARN 4100 --- [shop-service] [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Multiple @RequestMapping annotations found on public org.springframework.http.ResponseEntity shop.S5G.shop.controller.BookCategoryController.getCategoryInBook(java.lang.Long,java.lang.Long), but only the first will be used: [@org.springframework.web.bind.annotation.PostMapping(consumes={}, headers={}, name="", params={}, path={"/{bookId}/{categoryId}"}, produces={}, value={"/{bookId}/{categoryId}"}), @org.springframework.web.bind.annotation.GetMapping(consumes={}, headers={}, name="", params={}, path={"/{bookId}/{categoryId}"}, produces={}, value={"/{bookId}/{categoryId}"})]
+2024-10-25T15:07:38.993+09:00  INFO 4100 --- [shop-service] [main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2024-10-25T15:07:39.009+09:00  WARN 4100 --- [shop-service] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2024-10-25T15:07:39.020+09:00  INFO 4100 --- [shop-service] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2024-10-25T15:07:39.043+09:00  INFO 4100 --- [shop-service] [main] shop.S5G.shop.ShopApplicationTests       : Started ShopApplicationTests in 0.868 seconds (process running for 3.396)
+2024-10-25T15:07:39.157+09:00  INFO 4100 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T15:07:39.163+09:00  INFO 4100 --- [shop-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-25T15:07:39.166+09:00  INFO 4100 --- [shop-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-10-25T15:07:39.167+09:00  INFO 4100 --- [shop-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

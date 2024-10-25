@@ -4,7 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import shop.S5G.shop.dto.CategoryRequestDto;
+import shop.S5G.shop.dto.category.CategoryRequestDto;
 import shop.S5G.shop.entity.Category;
 import shop.S5G.shop.exception.CategoryException.CategoryBadRequestException;
 import shop.S5G.shop.service.CategoryService;

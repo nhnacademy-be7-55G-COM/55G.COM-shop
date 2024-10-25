@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import shop.S5G.shop.dto.BookRequestDto;
+import shop.S5G.shop.dto.Book.BookRequestDto;
 import shop.S5G.shop.entity.Book;
 import shop.S5G.shop.exception.BookException.BookBadRequestException;
 import shop.S5G.shop.service.BookService;

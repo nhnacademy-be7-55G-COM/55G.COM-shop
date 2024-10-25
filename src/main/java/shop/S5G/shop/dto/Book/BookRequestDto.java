@@ -1,4 +1,4 @@
-package shop.S5G.shop.dto;
+package shop.S5G.shop.dto.Book;
 
 import lombok.*;
 
