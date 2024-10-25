@@ -1,17 +1,23 @@
 package shop.S5G.shop.controller;
 
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import shop.S5G.shop.dto.MessageDto;
 import shop.S5G.shop.dto.memberGrade.MemberGradeRequestDto;
 import shop.S5G.shop.dto.memberGrade.MemberGradeResponseDto;
 import shop.S5G.shop.exception.BadRequestException;
 import shop.S5G.shop.service.member.MemberGradeService;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,8 +40,8 @@ public class MemberGradeController {
     }
 
     @PostMapping("/member/grade")
-    public ResponseEntity<MessageDto> createMemberGrade(@Valid @RequestBody MemberGradeRequestDto requestDto,
-                                                        BindingResult bindingResult) {
+    public ResponseEntity<MessageDto> createMemberGrade(
+        @Valid @RequestBody MemberGradeRequestDto requestDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException("잘못된 요청입니다");
         }
@@ -44,9 +50,9 @@ public class MemberGradeController {
     }
 
     @PutMapping("/member/grade/{gradeId}")
-    public ResponseEntity<MessageDto> updateMemberGrade(@Valid @RequestBody MemberGradeRequestDto requestDto,
-                                                        BindingResult bindingResult,
-                                                        @PathVariable long gradeId) {
+    public ResponseEntity<MessageDto> updateMemberGrade(
+        @Valid @RequestBody MemberGradeRequestDto requestDto, BindingResult bindingResult,
+        @PathVariable long gradeId) {
         if (gradeId <= 0 || bindingResult.hasErrors()) {
             throw new BadRequestException("잘못된 요청입니다");
         }
