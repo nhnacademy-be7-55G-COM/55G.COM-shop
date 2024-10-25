@@ -1,6 +1,10 @@
 package shop.S5G.shop.entity.member;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Table(name = "member_status")
 public class MemberStatus {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberStatusId;

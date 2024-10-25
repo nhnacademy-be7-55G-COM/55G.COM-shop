@@ -19,13 +19,14 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
 
     @Override
-    public void addCustomer(CustomerRegistrationRequestDto customerRegistrationRequestDto) {
-        customerRepository.save(new Customer(
+    public Customer addCustomer(CustomerRegistrationRequestDto customerRegistrationRequestDto) {
+        return customerRepository.save(new Customer(
             customerRegistrationRequestDto.password(),
             customerRegistrationRequestDto.name(),
             customerRegistrationRequestDto.phoneNumber(),
             customerRegistrationRequestDto.email()
         ));
+
     }
 
     @Override
