@@ -31,7 +31,7 @@ import shop.S5G.shop.repository.cart.CartRedisRepository;
 import shop.S5G.shop.repository.cart.CartRepository;
 
 @ExtendWith(MockitoExtension.class)
-public class CartServiceTest {
+class CartServiceTest {
     @Mock
     CartRepository cartRepository;
 

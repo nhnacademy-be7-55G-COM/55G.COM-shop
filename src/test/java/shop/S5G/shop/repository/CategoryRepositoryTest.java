@@ -1,18 +1,17 @@
 package shop.S5G.shop.repository;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import shop.S5G.shop.entity.Category;
 import shop.S5G.shop.exception.CategoryException.CategoryResourceNotFoundException;
 
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 @DataJpaTest
-public class CategoryRepositoryTest {
+class CategoryRepositoryTest {
 
     private final CategoryRepository categoryRepository;
 

@@ -22,7 +22,7 @@ import shop.S5G.shop.dto.cart.response.CartBooksResponseDto;
 import shop.S5G.shop.service.CartService;
 
 @WebMvcTest(CartController.class)
-public class CartControllerTest {
+class CartControllerTest {
 
     @Autowired
     MockMvc mockMvc;

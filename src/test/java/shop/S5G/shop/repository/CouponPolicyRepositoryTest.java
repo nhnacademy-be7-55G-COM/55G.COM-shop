@@ -12,7 +12,7 @@ import shop.S5G.shop.repository.coupon.CouponPolicyRepository;
 
 @DataJpaTest
 @ActiveProfiles("local")
-public class CouponPolicyRepositoryTest {
+class CouponPolicyRepositoryTest {
 
     @Autowired
     private CouponPolicyRepository couponPolicyRepository;
