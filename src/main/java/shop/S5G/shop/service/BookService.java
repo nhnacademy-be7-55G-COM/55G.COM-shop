@@ -5,22 +5,21 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import shop.S5G.shop.entity.Book;
-import shop.S5G.shop.exception.AlreadyExistsException;
 import shop.S5G.shop.exception.BookException.BookAlreadyExistsException;
 import shop.S5G.shop.exception.BookException.BookResourceNotFoundException;
-import shop.S5G.shop.exception.ResourceNotFoundException;
 import shop.S5G.shop.repository.BookRepository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
-@NoArgsConstructor
 public class BookService {
-    @Autowired
-    private BookRepository bookRepository;
 
+    private final BookRepository bookRepository;
+    @Autowired
+    public BookService(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
     //도서 등록
     public void createBook(Book book) {
         Optional<Book> id = bookRepository.findById(book.getBookId());
@@ -36,7 +35,7 @@ public class BookService {
     }
 
     //도서 상세 조회
-    public Book getBookByid(Long bookId) {
+    public Book getBookById(Long bookId) {
         if(!bookRepository.existsById(bookId)) {
              throw new BookResourceNotFoundException("Book with id " + bookId + " not found");
         }
@@ -70,5 +69,11 @@ public class BookService {
             throw new BookResourceNotFoundException("Book with id " + bookId + " not found");
         }
         bookRepository.deleteById(bookId);
+    }
+
+    //도서 아이디 list로 도서 조회
+    public List<Book> findAllByBookIds(List<Long> bookIds) {
+
+        return bookRepository.findAllByBookIdIn(bookIds);
     }
 }

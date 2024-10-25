@@ -1,22 +1,22 @@
 package shop.S5G.shop;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.DirtiesContext;
-import shop.S5G.shop.entity.Book;
 import shop.S5G.shop.entity.Tag;
 import shop.S5G.shop.repository.TagRepository;
 import shop.S5G.shop.service.TagService;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
+@ExtendWith(MockitoExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class TagTest {
 
@@ -60,9 +60,9 @@ public class TagTest {
         Tag tag1 = new Tag(1L, "베스트셀러", true);
         Tag tag2 = new Tag(1L, "밀리언셀러", true);
         Tag tags = tagRepository.save(tag1);
-        tagService.updateTag(tags.getPublisherId(), tag2);
+        tagService.updateTag(tags.getTagId(), tag2);
 //        Optional<Tag> tagOptional = tagRepository.findById(1);
-        assertEquals(tags.getPublisherName(), "밀리언셀러");
+        assertEquals(tags.getTagName(), "밀리언셀러");
     }
 
     /**
@@ -72,7 +72,7 @@ public class TagTest {
     void deleteTagTest() {
         Tag tag1 = new Tag(1L, "베스트셀러", true);
         tagRepository.save(tag1);
-        tagService.deleteTags(tag1.getPublisherId());
+        tagService.deleteTags(tag1.getTagId());
         assertEquals(tagRepository.count(), 0);
     }
 }

@@ -1,11 +1,8 @@
 package shop.S5G.shop.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import shop.S5G.shop.entity.Tag;
-import shop.S5G.shop.exception.AlreadyExistsException;
-import shop.S5G.shop.exception.ResourceNotFoundException;
 import shop.S5G.shop.exception.TagException.TagAlreadyExistsException;
 import shop.S5G.shop.exception.TagException.TagResourceNotFoundException;
 import shop.S5G.shop.repository.TagRepository;
@@ -20,9 +17,9 @@ public class TagService {
 
     //태그 등록
     public void createtag(Tag tag) {
-        Optional<Tag> tags = tagRepository.findById(tag.getPublisherId());
+        Optional<Tag> tags = tagRepository.findById(tag.getTagId());
         if (tags.isPresent()) {
-            throw new TagAlreadyExistsException("Tag with id " + tag.getPublisherId() + " already exists");
+            throw new TagAlreadyExistsException("Tag with id " + tag.getTagId() + " already exists");
         }
         tagRepository.save(tag);
     }
@@ -34,10 +31,11 @@ public class TagService {
 
     //태그 수정
     public void updateTag(Long tagId, Tag tag) {
+
         Optional<Tag> tags = tagRepository.findById(tagId);
 
 //        tags.get().setPublisherId(tag.getPublisherId());
-        tags.get().setPublisherName(tag.getPublisherName());
+        tags.get().setTagName(tag.getTagName());
         tags.get().setActive(tag.isActive());
         tagRepository.save(tags.get());
     }

@@ -4,16 +4,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import shop.S5G.shop.dto.BookDto;
+import shop.S5G.shop.dto.BookRequestDto;
 import shop.S5G.shop.entity.Book;
-import shop.S5G.shop.exception.BadRequestException;
 import shop.S5G.shop.exception.BookException.BookBadRequestException;
 import shop.S5G.shop.service.BookService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/shop")
 public class BookController {
     private final BookService bookService;
     public BookController(BookService bookService) {
@@ -22,7 +21,7 @@ public class BookController {
 
     //도서 등록
     @PostMapping("/book")
-    public ResponseEntity addBook(@Validated @RequestBody BookDto bookdto, BindingResult bindingResult) {
+    public ResponseEntity addBook(@Validated @RequestBody BookRequestDto bookdto, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
             throw new BookBadRequestException("잘못된 입력입니다.");
         }
@@ -57,16 +56,17 @@ public class BookController {
         if (bookId < 1) {
             throw new BookBadRequestException("bookId must be greater than 0");
         }
-        Book book = bookService.getBookByid(bookId);
+        Book book = bookService.getBookById(bookId);
         return ResponseEntity.ok().body(book);
     }
 
     //도서 수정
     @PutMapping("/book/{bookId}")
-    public ResponseEntity updateBook(@Validated @PathVariable("bookId") Long bookId, @Validated @RequestBody BookDto bookdto, BindingResult bindingResult) {
+    public ResponseEntity<String> updateBook(@Validated @PathVariable("bookId") Long bookId, @Validated @RequestBody BookRequestDto bookdto, BindingResult bindingResult) {
         if(bookId < 1) {
             throw new BookBadRequestException("bookId must be greater than 0");
         }
+
         if (bindingResult.hasErrors()) {
             throw new BookBadRequestException("잘못된 입력입니다.");
         }

@@ -1,8 +1,8 @@
 package shop.S5G.shop.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.antlr.v4.runtime.misc.NotNull;
 
 @Entity
 @Setter
@@ -11,21 +11,21 @@ import org.antlr.v4.runtime.misc.NotNull;
 public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "publisher_id")
-    private Long publisherId;
-    @Column(name = "publisher_name")
-    private String publisherName;
+    @Column(name = "tag_id")
+    private Long tagId;
+    @Column(name = "tag_name")
+    private String tagName;
     private boolean active;
 
-    public Tag(String publisherName, boolean active) {
-        this.publisherId = publisherId;
-        this.publisherName = publisherName;
+    public Tag(String tagName, boolean active) {
+        this.tagId = tagId;
+        this.tagName = tagName;
         this.active = active;
     }
 
-    public Tag(Long publisherId, String publisherName, boolean active) {
-        this.publisherId = publisherId;
-        this.publisherName = publisherName;
+    public Tag(Long tagId, String tagName, boolean active) {
+        this.tagId = tagId;
+        this.tagName = tagName;
         this.active = active;
     }
 }

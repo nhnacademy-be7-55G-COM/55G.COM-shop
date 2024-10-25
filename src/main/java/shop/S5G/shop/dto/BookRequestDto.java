@@ -1,6 +1,5 @@
 package shop.S5G.shop.dto;
 
-import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -10,7 +9,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class BookDto {
+public class BookRequestDto {
 
 //    private Long bookId;
     private Long publisherId;

@@ -1,30 +1,32 @@
-package shop.S5G.shop;
+package shop.S5G.shop.repository;
 
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import shop.S5G.shop.entity.Book;
 import shop.S5G.shop.exception.BookException.BookResourceNotFoundException;
-import shop.S5G.shop.repository.BookRepository;
 import shop.S5G.shop.service.BookService;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class BookTest {
+//@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+public class BookRepositoryTest {
 
-    private BookRepository bookRepository;
-    private BookService bookService;
+    private final BookRepository bookRepository;
 
-//    @Sql("Book-test.sql")
+    @Autowired
+    public BookRepositoryTest(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
 
     /**
      * 도서 등록 Test
@@ -46,7 +48,7 @@ public class BookTest {
                 200,
                 2000L,
                 LocalDateTime.of(2010, 5, 5, 15, 30)
-                );
+        );
 
         Book book1 = bookRepository.save(book);
 
@@ -105,7 +107,7 @@ public class BookTest {
     @Test
     void getBookByIdTest() {
         Book book = new Book(
-                1L,
+                5L,
                 11L,
                 111L,
                 "총균쇠",
@@ -120,9 +122,9 @@ public class BookTest {
                 30000L,
                 LocalDateTime.of(2010, 5, 5, 15, 30)
         );
-        bookRepository.save(book);
-        Optional<Book> id = bookRepository.findById(book.getBookId());
-        assertEquals(id.get().getBookId(), book.getBookId());
+        Book save = bookRepository.save(book);
+        Book id = bookRepository.findById(save.getBookId()).orElseThrow(()-> new BookResourceNotFoundException("Book not found"));
+        assertEquals(id.getTitle(), "총균쇠");
     }
 
     /**
@@ -182,5 +184,32 @@ public class BookTest {
 
         Book book3 = bookRepository.save(book);
         assertEquals(book3.getTitle(), "코스모스");
+    }
+
+    /**
+     * 도서 삭제 test
+     */
+    @Test
+    void deleteBookTest() {
+        Book book = new Book(
+                2L,
+                11L,
+                111L,
+                "총균쇠",
+                "다큐",
+                "이 책은 다큐 입니다.",
+                LocalDateTime.of(2000, 10, 10, 10, 50),
+                "978-3-15-15859-1",
+                20000L,
+                new BigDecimal("10.0"),
+                true,
+                200,
+                30000L,
+                LocalDateTime.of(2010, 5, 5, 15, 30)
+        );
+        bookRepository.save(book);
+        bookRepository.delete(book);
+//        List<Book> books = bookRepository.findAll();
+        assertEquals(bookRepository.count(), 0);
     }
 }
