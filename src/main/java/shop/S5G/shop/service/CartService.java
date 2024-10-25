@@ -60,7 +60,7 @@ public class CartService {
             .map(book -> new CartBooksResponseDto(book.getPrice(),
                 BigDecimal.valueOf(book.getPrice())
                     .multiply(BigDecimal.valueOf(1).subtract(book.getDiscountRate())),
-                (Integer) booksInRedisCart.get(book.getBookId()), book.getStock())
+                (Integer) booksInRedisCart.get(book.getBookId()), book.getStock(),book.getTitle())
             ).collect(Collectors.toList());
 
         return cartBooks;

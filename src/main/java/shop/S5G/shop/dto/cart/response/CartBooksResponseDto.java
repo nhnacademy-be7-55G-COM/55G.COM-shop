@@ -7,7 +7,8 @@ public record CartBooksResponseDto(
     Long price,
     BigDecimal discountedPrice,
     Integer quantity,
-    Integer stock
+    Integer stock,
+    String title
 ) {
 
 }
