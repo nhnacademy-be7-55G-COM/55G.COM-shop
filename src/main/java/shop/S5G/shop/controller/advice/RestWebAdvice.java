@@ -1,10 +1,11 @@
 package shop.S5G.shop.controller.advice;
 
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import shop.S5G.shop.dto.MessageDto;
+import shop.S5G.shop.dto.tag.MessageDto;
 import shop.S5G.shop.exception.AlreadyExistsException;
 import shop.S5G.shop.exception.BadRequestException;
 import shop.S5G.shop.exception.ResourceNotFoundException;
