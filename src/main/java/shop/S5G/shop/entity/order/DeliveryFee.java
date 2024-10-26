@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,6 +16,7 @@ import org.hibernate.validator.constraints.Length;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Entity
+@Table(name = "delivery_fee")
 public class DeliveryFee {
     @Id
     @Column(name = "delivery_fee_id")
@@ -29,5 +31,7 @@ public class DeliveryFee {
     private int refundFee;
 
     @Length(max = 20)
+    // TODO: unique=true?
+//    @Column(unique = true)
     private String name;
 }

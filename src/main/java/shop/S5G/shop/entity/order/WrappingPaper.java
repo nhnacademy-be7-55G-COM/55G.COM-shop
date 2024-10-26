@@ -5,17 +5,20 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
+import shop.S5G.shop.dto.wrappingpaper.WrappingPaperRequestDto;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Entity
+@Table(name = "wrapping_paper")
 public class WrappingPaper {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +42,7 @@ public class WrappingPaper {
         this.imageName = imageName;
     }
 
-//    public static WrappingPaper of(WrappingPaperRequestDto dto) {
-//        return new WrappingPaper(dto.name(), dto.price(), dto.imageName());
-//    }
+    public static WrappingPaper of(WrappingPaperRequestDto dto) {
+        return new WrappingPaper(dto.name(), dto.price(), dto.imageName());
+    }
 }
