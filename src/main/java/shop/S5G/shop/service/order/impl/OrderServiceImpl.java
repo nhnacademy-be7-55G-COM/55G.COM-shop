@@ -1,5 +1,6 @@
 package shop.S5G.shop.service.order.impl;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,11 +22,8 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findAllByCustomerCustomerId(customerId, pageable);
     }
 
-    @Override
-    public Page<OrderWithDetailResponseDto> queryAllOrdersByCustomerId(
-        long customerId, Pageable pageable
-    ) {
-        return orderRepository.findOrdersByCustomerId(customerId, pageable);
+    public List<OrderWithDetailResponseDto> queryAllOrdersByCustomerId(long customerId) {
+        return orderRepository.findOrdersByCustomerId(customerId);
     }
 
 }

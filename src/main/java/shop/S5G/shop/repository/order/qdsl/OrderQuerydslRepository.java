@@ -1,10 +1,12 @@
 package shop.S5G.shop.repository.order.qdsl;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.time.LocalDate;
+import java.util.List;
 import shop.S5G.shop.dto.order.OrderWithDetailResponseDto;
 
 public interface OrderQuerydslRepository {
 
-    Page<OrderWithDetailResponseDto> findOrdersByCustomerId(long id, Pageable pageable);
+    List<OrderWithDetailResponseDto> findOrdersByCustomerIdBetweenDates(long id, LocalDate fromDate,
+        LocalDate toDate);
+    List<OrderWithDetailResponseDto> findOrdersByCustomerId(long id);
 }

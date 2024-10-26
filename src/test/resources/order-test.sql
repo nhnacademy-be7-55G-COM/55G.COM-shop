@@ -3,7 +3,7 @@ insert into publisher (publisher_name, active) VALUES ('테스트 퍼블리셔',
 
 insert into book (book_id, publisher_id, book_status_id, title, chapter, description, published_date, isbn, price, discount_rate, is_packed, stock, views, created_at)
 VALUES
-    (1, 1, 1, '테스트 타이틀', '챕터', '설명', '2024-09-01', '23232323', 5000, 0, true, 3, 10000, 2024-09-01);
+    (1, 1, 1, '테스트 타이틀', '챕터', '설명', '2024-09-01', '23232323', 5000, 0, true, 3, 10000, '2024-09-01');
 
 insert into wrapping_paper (name, price, active, image_name) VALUES ('테스트 종이', 2000, true, '12313');
 

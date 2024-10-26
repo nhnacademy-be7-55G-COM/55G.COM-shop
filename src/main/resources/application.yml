@@ -120,4 +120,5 @@ spring:
         show_sql: true
         generate_statistics: true
         use_sql_comments: true
+        highlight_sql: true
     database: h2
