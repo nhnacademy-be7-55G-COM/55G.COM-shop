@@ -4,7 +4,9 @@ package shop.S5G.shop.dto.order;
 public record OrderDetailResponseDto(
     long bookId,
     String bookTitle,
-    String wrappingPaper,
+    String bookThumbnail,
+    String wrappingPaperName,
+    long orderDetailId,
     String orderDetailType,
     int quantity,
     long totalPrice,

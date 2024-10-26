@@ -26,8 +26,8 @@ public class OrderQuerydslRepositoryImpl extends QuerydslRepositorySupport
     public Page<OrderWithDetailResponseDto> findOrdersByCustomerId(long id, Pageable pageable) {
 //        select()from(order).join(orderDetail).on(orderDetail.order.id.eq(order.id)).fetch()
         List<OrderWithDetailResponseDto> list = from(order)
-            .join(order.orderDetails, orderDetail).fetchJoin()
-            .join(orderDetail.book, book).fetchJoin()
+            .innerJoin(order.orderDetails, orderDetail).fetchJoin()
+            .innerJoin(orderDetail.book, book).fetchJoin()
             .where(order.customer.customerId.eq(id))
             .groupBy(order.id)
             .offset(pageable.getOffset())

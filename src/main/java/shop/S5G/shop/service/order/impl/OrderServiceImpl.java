@@ -22,8 +22,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Page<OrderWithDetailResponseDto> queryAllOrdersByCustomerId(long customerId,
-        Pageable pageable) {
+    public Page<OrderWithDetailResponseDto> queryAllOrdersByCustomerId(
+        long customerId, Pageable pageable
+    ) {
         return orderRepository.findOrdersByCustomerId(customerId, pageable);
     }
+
 }
