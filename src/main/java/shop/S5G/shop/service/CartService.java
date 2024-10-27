@@ -28,7 +28,7 @@ public class CartService {
         cartRedisRepository.putBook(bookId, quantity, sessionId);
     }
 
-    public void putBookByMap(Map<String, Object> books,String sessionId) {
+    public void putBookByMap(Map<Long, Object> books,String sessionId) {
         cartRedisRepository.putBookByMap(books, sessionId);
     }
 
@@ -36,8 +36,8 @@ public class CartService {
         cartRedisRepository.reduceBookQuantity(bookId, sessionId, quantity);
     }
 
-    public void deleteBookFromCart(Long bookId, String sessionId, Integer quantity) {
-        cartRedisRepository.deleteBookFromCart(bookId, sessionId, quantity);
+    public void deleteBookFromCart(Long bookId, String sessionId) {
+        cartRedisRepository.deleteBookFromCart(bookId, sessionId);
     }
 
     public List<CartBooksResponseDto> lookUpAllBooks(String sessionId) {
@@ -61,7 +61,7 @@ public class CartService {
                 BigDecimal.valueOf(book.getPrice())
                     .multiply(BigDecimal.valueOf(1).subtract(book.getDiscountRate())),
                 (Integer) booksInRedisCart.get(book.getBookId()), book.getStock(),book.getTitle())
-            ).collect(Collectors.toList());
+            ).toList();
 
         return cartBooks;
     }

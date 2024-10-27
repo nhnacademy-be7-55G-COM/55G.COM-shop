@@ -5,8 +5,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -31,7 +33,7 @@ import shop.S5G.shop.repository.cart.CartRedisRepository;
 import shop.S5G.shop.repository.cart.CartRepository;
 
 @ExtendWith(MockitoExtension.class)
-public class CartServiceTest {
+class CartServiceTest {
     @Mock
     CartRepository cartRepository;
 
@@ -137,5 +139,108 @@ public class CartServiceTest {
         //then
         Assertions.assertEquals(cartService.lookUpAllBooks(testSessionId).size(), 0);
 
+    }
+
+
+    @Test
+    void putBookByMap() {
+        //given
+        doNothing().when(cartRedisRepository).putBookByMap(anyMap(), anyString());
+
+        //when
+        assertThatCode(
+            () -> cartService.putBookByMap(anyMap(), anyString())).doesNotThrowAnyException();
+
+        //then
+        verify(cartRedisRepository, times(1)).putBookByMap(anyMap(), anyString());
+    }
+
+    @Test
+    void reduceBookQuantityTest() {
+        //given
+        doNothing().when(cartRedisRepository).reduceBookQuantity(anyLong(), anyString(), anyInt());
+
+        //when
+        assertThatCode(() -> cartService.reduceBookQuantity(anyLong(), anyString(),
+            anyInt())).doesNotThrowAnyException();
+
+
+        //then
+
+        verify(cartRedisRepository, times(1)).reduceBookQuantity(anyLong(), anyString(), anyInt());
+    }
+
+    @Test
+    void deleteBookFromCartTest() {
+        //given
+        doNothing().when(cartRedisRepository).deleteBookFromCart(anyLong(), anyString());
+        //when
+        assertThatCode(() -> cartService.deleteBookFromCart(anyLong(),
+            anyString())).doesNotThrowAnyException();
+
+        //then
+        verify(cartRedisRepository).deleteBookFromCart(anyLong(), anyString());
+
+    }
+
+    @Test
+    void setLoginFlagTest() {
+        //given
+        doNothing().when(cartRedisRepository).setLoginFlag(anyString());
+
+        //when
+        assertThatCode(() -> cartService.setLoginFlag(anyString())).doesNotThrowAnyException();
+
+        //then
+        verify(cartRedisRepository, times(1)).setLoginFlag(anyString());
+
+    }
+
+    @Test
+    void deleteLoginFlagTest() {
+        //given
+        doNothing().when(cartRedisRepository).deleteLoginFlag(anyString());
+
+        //when
+        assertThatCode(() -> cartService.deleteLoginFlag(anyString())).doesNotThrowAnyException();
+
+        //then
+        verify(cartRedisRepository, times(1)).deleteLoginFlag(anyString());
+    }
+
+    @Test
+    void setCustomerIdTest() {
+        //given
+        doNothing().when(cartRedisRepository).setCustomerId(anyString(), anyLong());
+        //when
+        assertThatCode(
+            () -> cartService.setCustomerId(anyString(), anyLong())).doesNotThrowAnyException();
+        //then
+        verify(cartRedisRepository, times(1)).setCustomerId(anyString(), anyLong());
+    }
+
+    @Test
+    void deleteCustomerIdTest() {
+        //given
+        doNothing().when(cartRedisRepository).deleteCustomerId(anyString());
+
+        //when
+        assertThatCode(() -> cartService.deleteCustomerId(anyString())).doesNotThrowAnyException();
+
+        //then
+        verify(cartRedisRepository, times(1)).deleteCustomerId(anyString());
+
+    }
+
+    @Test
+    void deleteOldCartTest() {
+        //given
+        doNothing().when(cartRedisRepository).deleteOldCart(anyString());
+
+        //when
+        assertThatCode(() -> cartService.deleteOldCart(anyString())).doesNotThrowAnyException();
+
+        //then
+        verify(cartRedisRepository, times(1)).deleteOldCart(anyString());
     }
 }
