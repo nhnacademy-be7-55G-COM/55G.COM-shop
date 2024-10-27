@@ -59,7 +59,7 @@ public class CartRedisRepository {
 
 
 
-    public void reduceBookQuantity(Long bookId, String sessionId, Integer quantity) {
+    public void reduceBookQuantity(Long bookId, String sessionId) {
         Integer existingQuantity = (Integer) redisTemplate.opsForHash().get(CART + sessionId, bookId);
         if (existingQuantity <= 1) {
             redisTemplate.opsForHash().delete(CART + sessionId, bookId);

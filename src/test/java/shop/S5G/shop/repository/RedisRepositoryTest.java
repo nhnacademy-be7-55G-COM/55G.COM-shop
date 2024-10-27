@@ -5,7 +5,6 @@ package shop.S5G.shop.repository;
 import java.util.HashMap;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
@@ -171,8 +170,8 @@ class RedisRepositoryTest {
 
 
         Long bookId = 2l;
-        Integer quantity = 1;
-        cartRedisRepository.reduceBookQuantity(bookId, sessionId, quantity);
+
+        cartRedisRepository.reduceBookQuantity(bookId, sessionId);
 
 
         Map<Long, Object> ReducedBooks = new HashMap<>(Map.of(1l, 1, 2l, 1));
@@ -191,7 +190,7 @@ class RedisRepositoryTest {
 
         Long bookId = 1l;
         Integer quantity = 1;
-        cartRedisRepository.reduceBookQuantity(bookId, sessionId, quantity);
+        cartRedisRepository.reduceBookQuantity(bookId, sessionId);
 
         Map<Long, Object> ReducedBooks = new HashMap<>(Map.of(2l, 2));
         Assertions.assertThat(

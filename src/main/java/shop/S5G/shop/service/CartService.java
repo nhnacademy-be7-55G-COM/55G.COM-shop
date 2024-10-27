@@ -32,8 +32,8 @@ public class CartService {
         cartRedisRepository.putBookByMap(books, sessionId);
     }
 
-    public void reduceBookQuantity(Long bookId, String sessionId, Integer quantity) {
-        cartRedisRepository.reduceBookQuantity(bookId, sessionId, quantity);
+    public void reduceBookQuantity(Long bookId, String sessionId) {
+        cartRedisRepository.reduceBookQuantity(bookId, sessionId);
     }
 
     public void deleteBookFromCart(Long bookId, String sessionId) {

@@ -158,16 +158,17 @@ class CartServiceTest {
     @Test
     void reduceBookQuantityTest() {
         //given
-        doNothing().when(cartRedisRepository).reduceBookQuantity(anyLong(), anyString(), anyInt());
+        doNothing().when(cartRedisRepository).reduceBookQuantity(anyLong(), anyString());
 
         //when
-        assertThatCode(() -> cartService.reduceBookQuantity(anyLong(), anyString(),
-            anyInt())).doesNotThrowAnyException();
+        assertThatCode(() -> cartService.reduceBookQuantity(anyLong(),
+            anyString())).doesNotThrowAnyException();
 
 
         //then
 
-        verify(cartRedisRepository, times(1)).reduceBookQuantity(anyLong(), anyString(), anyInt());
+        verify(cartRedisRepository, times(1)).reduceBookQuantity(anyLong(), anyString());
+
     }
 
     @Test
