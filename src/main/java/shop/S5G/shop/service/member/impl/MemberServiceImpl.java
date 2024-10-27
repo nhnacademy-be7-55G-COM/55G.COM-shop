@@ -54,6 +54,7 @@ public class MemberServiceImpl implements MemberService {
             .birth(memberRegistrationRequestDto.birthDate())
             .createdAt(LocalDateTime.now())
             .latestLoginAt(null)
+            .point(0L)
             .build();
 
         memberRepository.save(member);

@@ -62,8 +62,8 @@ public class MemberStatusServiceImpl implements MemberStatusService {
     @Transactional(readOnly = true)
     @Override
     public MemberStatus getMemberStatusByTypeName(String typeName) {
-        if (memberStatusRepository.existsByTypeName(typeName)) {
-            throw new MemberStatusAlreadyExistsException(typeName + "존재하지 않습니다");
+        if (!memberStatusRepository.existsByTypeName(typeName)) {
+            throw new MemberStatusAlreadyExistsException(typeName + " 존재하지 않습니다");
         }
         return memberStatusRepository.findByTypeName(typeName);
     }
