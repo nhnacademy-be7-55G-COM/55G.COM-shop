@@ -28,9 +28,6 @@ eureka:
     path: /static
   log:
     path: .
-logging:
-  file:
-    name: ${55g.log.path}/shop.log
 ---
 # on profile 'live'
 spring:
@@ -129,3 +126,31 @@ eureka:
   client:
     service-url:
       defaultZone: http://${eureka.user.name}:${eureka.user.password}@${eureka-server.host}-${eureka-server.postfix}:${eureka-server.port}/eureka
+
+---
+spring:
+  config:
+    activate:
+      on-profile: embed-db
+
+  jpa:
+    database: h2
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+        generate_statistics: true
+        use_sql_comments: true
+        highlight_sql: true
+
+
+logging:
+  level:
+    shop.S5G: trace
+    root: info

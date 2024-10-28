@@ -1,11 +1,17 @@
 package shop.S5G.shop.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
-
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Setter
@@ -26,7 +32,7 @@ public class Book {
     @Column(columnDefinition = "TEXT")
     private String chapter;
     @Column(columnDefinition = "TEXT")
-    private String descreption;
+    private String description;
     @Column(name = "published_date")
     private LocalDateTime publishedDate;
     private String isbn;
@@ -40,13 +46,12 @@ public class Book {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    public Book(Long publisherId, Long bookStatusId, String title, String chapter, String descreption, LocalDateTime publishedDate, String isbn, Long price, BigDecimal discountRate, boolean isPacked, int stock, Long views, LocalDateTime createdAt){
-        this.bookId = bookId;
+    public Book(Long publisherId, Long bookStatusId, String title, String chapter, String description, LocalDateTime publishedDate, String isbn, Long price, BigDecimal discountRate, boolean isPacked, int stock, Long views, LocalDateTime createdAt){
         this.publisherId = publisherId;
         this.bookStatusId = bookStatusId;
         this.title = title;
         this.chapter = chapter;
-        this.descreption = descreption;
+        this.description = description;
         this.publishedDate = publishedDate;
         this.isbn = isbn;
         this.price = price;
@@ -57,13 +62,13 @@ public class Book {
         this.createdAt = createdAt;
     }
 
-    public Book(Long bookId, Long publisherId, Long bookStatusId, String title, String chapter, String descreption, LocalDateTime publishedDate, String isbn, Long price, BigDecimal discountRate, boolean isPacked, int stock, Long views, LocalDateTime createdAt) {
+    public Book(Long bookId, Long publisherId, Long bookStatusId, String title, String chapter, String description, LocalDateTime publishedDate, String isbn, Long price, BigDecimal discountRate, boolean isPacked, int stock, Long views, LocalDateTime createdAt) {
         this.bookId = bookId;
         this.publisherId = publisherId;
         this.bookStatusId = bookStatusId;
         this.title = title;
         this.chapter = chapter;
-        this.descreption = descreption;
+        this.description = description;
         this.publishedDate = publishedDate;
         this.isbn = isbn;
         this.price = price;
