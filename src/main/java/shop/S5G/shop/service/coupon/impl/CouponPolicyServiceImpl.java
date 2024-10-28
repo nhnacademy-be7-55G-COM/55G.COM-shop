@@ -20,7 +20,7 @@ public class CouponPolicyServiceImpl implements CouponPolicyService {
     private final CouponPolicyRepository couponPolicyRepository;
 
     @Override
-    public void saveCouponPolicy(CouponPolicyRequestDto couponPolicyRequestDto) {
+    public CouponPolicy saveCouponPolicy(CouponPolicyRequestDto couponPolicyRequestDto) {
 
         CouponPolicy couponPolicy = new CouponPolicy(
             couponPolicyRequestDto.discountPrice(),
@@ -29,7 +29,7 @@ public class CouponPolicyServiceImpl implements CouponPolicyService {
             couponPolicyRequestDto.duration()
         );
 
-        couponPolicyRepository.save(couponPolicy);
+        return couponPolicyRepository.save(couponPolicy);
     }
 
     @Override
