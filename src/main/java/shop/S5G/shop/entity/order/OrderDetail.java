@@ -11,6 +11,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import shop.S5G.shop.entity.Book;
@@ -45,4 +46,15 @@ public class OrderDetail {
     private int quantity;
     private long totalPrice;
     private int accumulationPrice;
+
+    @Builder
+    public OrderDetail(Book book, Order order, WrappingPaper wrappingPaper, OrderDetailType orderDetailType, int quantity, long totalPrice, int accumulationPrice) {
+        this.book = book;
+        this.order = order;
+        this.wrappingPaper = wrappingPaper;
+        this.orderDetailType = orderDetailType;
+        this.quantity = quantity;
+        this.totalPrice = totalPrice;
+        this.accumulationPrice = accumulationPrice;
+    }
 }
