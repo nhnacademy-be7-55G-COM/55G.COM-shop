@@ -5,7 +5,7 @@ import shop.S5G.shop.entity.member.MemberGrade;
 import shop.S5G.shop.entity.member.MemberStatus;
 
 public record MemberResponseDto(
-
+    Long customerId,
     MemberStatus status,
     MemberGrade grade,
     String loginId,

@@ -1,0 +1,90 @@
+= Member API Documentation
+:toc: left
+:toclevels: 3
+
+== Member API
+
+=== Create Member
+
+include::{snippets}/member-register/http-request.adoc[]
+include::{snippets}/member-register/http-response.adoc[]
+
+=== Create Member With Invalid Param
+
+include::{snippets}/member-register-bad-request/http-request.adoc[]
+include::{snippets}/member-register-bad-request/http-response.adoc[]
+
+== MemberStatus API
+
+=== Create MemberStatus
+
+include::{snippets}/member-status-create/http-request.adoc[]
+include::{snippets}/member-status-create/http-response.adoc[]
+
+=== Create MemberStatus With Invalid Param
+
+include::{snippets}/member-status-create-invalid/http-request.adoc[]
+include::{snippets}/member-status-create-invalid/http-response.adoc[]
+
+=== Get MemberStatus
+
+include::{snippets}/member-status-get/http-request.adoc[]
+include::{snippets}/member-status-get/http-response.adoc[]
+
+=== Get MemberStatusList
+
+include::{snippets}/member-status-list/http-request.adoc[]
+include::{snippets}/member-status-list/http-response.adoc[]
+
+=== update MemberStatus
+
+include::{snippets}/member-status-update/http-request.adoc[]
+include::{snippets}/member-status-update/http-response.adoc[]
+
+=== update MemberStatus With Invalid param
+
+include::{snippets}/member-status-update-invalid/http-request.adoc[]
+include::{snippets}/member-status-update-invalid/http-response.adoc[]
+
+== MemberGrade API
+
+=== Get MemberGrade
+
+include::{snippets}/member-grade-get/http-request.adoc[]
+include::{snippets}/member-grade-get/http-response.adoc[]
+
+=== Get MemberGradeList
+
+include::{snippets}/member-grade-list/http-request.adoc[]
+include::{snippets}/member-grade-list/http-response.adoc[]
+
+=== Create MemberGrade
+
+include::{snippets}/member-grade-create/http-request.adoc[]
+include::{snippets}/member-grade-create/http-response.adoc[]
+
+=== Create MemberGrade With Invalid Param
+
+include::{snippets}/member-grade-create-bad-request/http-request.adoc[]
+include::{snippets}/member-grade-create-bad-request/http-response.adoc[]
+
+=== update MemberGrade
+
+include::{snippets}/member-grade-update/http-request.adoc[]
+include::{snippets}/member-grade-update/http-response.adoc[]
+
+=== update MemberGrade With Invalid param
+
+include::{snippets}/member-grade-update-bad-request/http-request.adoc[]
+include::{snippets}/member-grade-update-bad-request/http-response.adoc[]
+
+=== delete MemberGrade
+
+include::{snippets}/member-grade-delete/http-request.adoc[]
+include::{snippets}/member-grade-delete/http-response.adoc[]
+
+=== delete MemberGrade With Invalid param
+
+include::{snippets}/member-grade-delete-bad-request/http-request.adoc[]
+include::{snippets}/member-grade-delete-bad-request/http-response.adoc[]
+
