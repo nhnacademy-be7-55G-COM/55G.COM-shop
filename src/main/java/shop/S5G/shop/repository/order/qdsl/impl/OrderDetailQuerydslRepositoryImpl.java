@@ -20,15 +20,16 @@ public class OrderDetailQuerydslRepositoryImpl extends QuerydslRepositorySupport
     @Override
     public List<OrderDetailWithBookResponseDto> queryAllDetailsByOrderId(long orderId) {
         return from(orderDetail)
-            .innerJoin(orderDetail.book, book).fetchJoin()
-            .innerJoin(orderDetail.wrappingPaper, wrappingPaper).fetchJoin()
-            .innerJoin(orderDetail.orderDetailType, orderDetailType).fetchJoin()
+            .innerJoin(orderDetail.book, book)
+            .innerJoin(orderDetail.wrappingPaper, wrappingPaper)
+            .innerJoin(orderDetail.orderDetailType, orderDetailType)
 //            .innerJoin(bookImage.bookId, book)
             .where(orderDetail.order.id.eq(orderId))
             .select(Projections.constructor(OrderDetailWithBookResponseDto.class,
                 book.bookId,
                 book.title,
                 wrappingPaper.name,
+                orderDetail.id,
                 orderDetailType.name,
                 orderDetail.quantity,
                 orderDetail.totalPrice,
