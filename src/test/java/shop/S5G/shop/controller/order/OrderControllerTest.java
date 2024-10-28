@@ -19,6 +19,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import shop.S5G.shop.dto.order.OrderWithDetailResponseDto;
+import shop.S5G.shop.service.order.OrderDetailService;
 import shop.S5G.shop.service.order.OrderService;
 
 @WebMvcTest(OrderController.class)
@@ -28,6 +29,9 @@ class OrderControllerTest {
 
     @MockBean
     OrderService orderService;
+
+    @MockBean
+    OrderDetailService orderDetailService;
 
     @Test
     void fetchOrdersEmptyTest() throws Exception{
