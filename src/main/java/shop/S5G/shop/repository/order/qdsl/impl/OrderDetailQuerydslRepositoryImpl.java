@@ -10,12 +10,14 @@ import java.util.List;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import shop.S5G.shop.dto.order.OrderDetailWithBookResponseDto;
 import shop.S5G.shop.entity.order.OrderDetail;
+import shop.S5G.shop.repository.order.qdsl.OrderDetailQuerydslRepository;
 
-public class OrderDetailQuerydslRepositoryImpl extends QuerydslRepositorySupport {
+public class OrderDetailQuerydslRepositoryImpl extends QuerydslRepositorySupport implements OrderDetailQuerydslRepository {
     public OrderDetailQuerydslRepositoryImpl() {
         super(OrderDetail.class);
     }
 
+    @Override
     public List<OrderDetailWithBookResponseDto> queryAllDetailsByOrderId(long orderId) {
         return from(orderDetail)
             .innerJoin(orderDetail.book, book).fetchJoin()

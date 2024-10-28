@@ -17,6 +17,7 @@ class OrderRepositoryTest {
     @Test
     @Sql("classpath:order-test.sql")
     void querydslTest() {
+        // TODO: order-test.sql 에 쿼리 더 넣기.
         orderRepository.findOrdersByCustomerId(1L);
     }
 }
