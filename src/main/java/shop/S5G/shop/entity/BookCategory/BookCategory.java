@@ -1,8 +1,7 @@
 package shop.S5G.shop.entity.BookCategory;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import shop.S5G.shop.entity.Book;
 import shop.S5G.shop.entity.Category;
 
@@ -10,6 +9,8 @@ import shop.S5G.shop.entity.Category;
 @Table(name = "book_category")
 @Getter
 @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class BookCategory {
 
     @EmbeddedId
@@ -25,10 +26,4 @@ public class BookCategory {
     @MapsId("bookId")
     private Book book;
 
-    public BookCategory() {}
-
-    public BookCategory(Category category, Book book) {
-        this.category = category;
-        this.book = book;
-    }
 }

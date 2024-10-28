@@ -4,13 +4,11 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
 @Setter
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Book {
 
     @Id
@@ -25,7 +23,7 @@ public class Book {
     @Column(columnDefinition = "TEXT")
     private String chapter;
     @Column(columnDefinition = "TEXT")
-    private String descreption;
+    private String description;
     @Column(name = "published_date")
     private LocalDateTime publishedDate;
     private String isbn;
@@ -45,7 +43,7 @@ public class Book {
         this.bookStatusId = bookStatusId;
         this.title = title;
         this.chapter = chapter;
-        this.descreption = descreption;
+        this.description = descreption;
         this.publishedDate = publishedDate;
         this.isbn = isbn;
         this.price = price;
@@ -62,7 +60,7 @@ public class Book {
         this.bookStatusId = bookStatusId;
         this.title = title;
         this.chapter = chapter;
-        this.descreption = descreption;
+        this.description = descreption;
         this.publishedDate = publishedDate;
         this.isbn = isbn;
         this.price = price;
@@ -71,5 +69,8 @@ public class Book {
         this.stock = stock;
         this.views = views;
         this.createdAt = createdAt;
+    }
+
+    public Book() {
     }
 }

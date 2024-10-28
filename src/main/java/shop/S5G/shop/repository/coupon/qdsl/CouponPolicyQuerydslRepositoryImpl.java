@@ -23,5 +23,4 @@ public class CouponPolicyQuerydslRepositoryImpl extends QuerydslRepositorySuppor
             .where(couponPolicy.couponPolicyId.eq(couponId))
             .execute();
     }
-
 }

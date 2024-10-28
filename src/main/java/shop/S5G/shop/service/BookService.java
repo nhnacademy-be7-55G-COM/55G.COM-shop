@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import shop.S5G.shop.entity.Book;
 import shop.S5G.shop.exception.BookException.BookAlreadyExistsException;
+import shop.S5G.shop.exception.BookException.BookBadRequestException;
 import shop.S5G.shop.exception.BookException.BookResourceNotFoundException;
 import shop.S5G.shop.repository.BookRepository;
 
@@ -44,23 +45,23 @@ public class BookService {
 
     //도서 수정
     public void updateBooks(Long bookId, Book book) {
-        Optional<Book> books = bookRepository.findById(bookId);
+        Book books = bookRepository.findById(bookId).orElseThrow(() -> new BookResourceNotFoundException("Book with id " + bookId + " not found"));
 
-        books.get().setPublisherId(book.getPublisherId());
-        books.get().setBookStatusId(book.getBookStatusId());
-        books.get().setTitle(book.getTitle());
-        books.get().setChapter(book.getChapter());
-        books.get().setDescreption(book.getDescreption());
-        books.get().setPublishedDate(book.getPublishedDate());
-        books.get().setIsbn(book.getIsbn());
-        books.get().setPrice(book.getPrice());
-        books.get().setDiscountRate(book.getDiscountRate());
-        books.get().setPacked(book.isPacked());
-        books.get().setStock(book.getStock());
-        books.get().setViews(book.getViews());
-        books.get().setCreatedAt(book.getCreatedAt());
+        books.setPublisherId(book.getPublisherId());
+        books.setBookStatusId(book.getBookStatusId());
+        books.setTitle(book.getTitle());
+        books.setChapter(book.getChapter());
+        books.setDescription(book.getDescription());
+        books.setPublishedDate(book.getPublishedDate());
+        books.setIsbn(book.getIsbn());
+        books.setPrice(book.getPrice());
+        books.setDiscountRate(book.getDiscountRate());
+        books.setPacked(book.isPacked());
+        books.setStock(book.getStock());
+        books.setViews(book.getViews());
+        books.setCreatedAt(book.getCreatedAt());
 
-        bookRepository.save(books.get());
+        bookRepository.save(books);
     }
 
     //도서 삭제

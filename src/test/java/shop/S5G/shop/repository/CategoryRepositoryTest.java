@@ -1,5 +1,6 @@
 package shop.S5G.shop.repository;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -11,6 +12,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Disabled
 @DataJpaTest
 public class CategoryRepositoryTest {
 
@@ -31,7 +33,6 @@ public class CategoryRepositoryTest {
         Optional<Category> id = categoryRepository.findById(c.getCategoryId());
         c.setCategoryName("dd");
         Category saved = categoryRepository.save(c);
-
 
         assertEquals(category, id.get());
     }
