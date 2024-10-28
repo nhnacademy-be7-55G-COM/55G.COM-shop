@@ -1,5 +1,8 @@
 package shop.S5G.shop.controller.member;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
@@ -33,7 +36,6 @@ class MemberControllerTest {
     @Test
     @DisplayName("POST /api/shop/member - Register a new member")
     void registerMember() throws Exception {
-        // Mock the successful registration scenario
         mockMvc.perform(post("/api/shop/member")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
@@ -70,7 +72,6 @@ class MemberControllerTest {
     @Test
     @DisplayName("POST /api/shop/member - Bad Request on Validation Error")
     void registerMemberBadRequest() throws Exception {
-        // Mock a validation error scenario
         mockMvc.perform(post("/api/shop/member")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
@@ -102,5 +103,6 @@ class MemberControllerTest {
                     fieldWithPath("message").type(JsonFieldType.STRING)
                         .description("Response Message")
                 )));
+        verify(memberService, never()).saveMember(any());
     }
 }
