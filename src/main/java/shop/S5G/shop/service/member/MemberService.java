@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import shop.S5G.shop.dto.member.MemberRegistrationRequestDto;
 import shop.S5G.shop.dto.member.MemberResponseDto;
 import shop.S5G.shop.dto.member.MemberUpdateRequestDto;
+import shop.S5G.shop.entity.member.Member;
 
 public interface MemberService {
 
@@ -13,9 +14,11 @@ public interface MemberService {
 
     void updateMember(MemberUpdateRequestDto memberUpdateRequestDto);
 
-    MemberResponseDto findMember(String loginId);
-
     List<MemberResponseDto> findAllMembers(Pageable pageable);
+
+    MemberResponseDto findMemberDto(String loginId);
+
+    Member findMember(String loginId);
 
     void deleteById(Long memberId);
 }

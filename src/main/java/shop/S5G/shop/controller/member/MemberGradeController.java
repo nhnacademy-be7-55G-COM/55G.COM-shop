@@ -1,4 +1,4 @@
-package shop.S5G.shop.controller;
+package shop.S5G.shop.controller.member;
 
 import jakarta.validation.Valid;
 import java.util.List;
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import shop.S5G.shop.dto.tag.MessageDto;
 import shop.S5G.shop.dto.memberGrade.MemberGradeRequestDto;
 import shop.S5G.shop.dto.memberGrade.MemberGradeResponseDto;
+import shop.S5G.shop.dto.tag.MessageDto;
 import shop.S5G.shop.exception.BadRequestException;
 import shop.S5G.shop.service.member.MemberGradeService;
 

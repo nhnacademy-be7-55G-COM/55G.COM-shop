@@ -11,6 +11,11 @@ import shop.S5G.shop.exception.BadRequestException;
 import shop.S5G.shop.exception.EssentialDataNotFoundException;
 import shop.S5G.shop.exception.ResourceNotFoundException;
 
+/**
+ * 공통 예외 처리 advice
+ *
+ * @author bobo1006
+ */
 @RestControllerAdvice
 public class RestWebAdvice {
 
