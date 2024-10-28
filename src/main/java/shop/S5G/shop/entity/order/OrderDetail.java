@@ -26,7 +26,6 @@ public class OrderDetail {
     @Column(name="order_detail_id")
     private long id;
 
-    // TODO: LAZY 로딩을 할지 조금 더 생각하기.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
     private Book book;
@@ -35,11 +34,11 @@ public class OrderDetail {
     @JoinColumn(name = "order_id")
     private Order order;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "wrapping_paper_id")
     private WrappingPaper wrappingPaper;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_detail_type_id")
     private OrderDetailType orderDetailType;
 

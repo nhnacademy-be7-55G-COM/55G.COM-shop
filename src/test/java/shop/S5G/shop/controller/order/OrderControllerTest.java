@@ -19,6 +19,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import shop.S5G.shop.dto.order.OrderWithDetailResponseDto;
+import shop.S5G.shop.exception.order.OrderDetailsNotExistException;
 import shop.S5G.shop.service.order.OrderDetailService;
 import shop.S5G.shop.service.order.OrderService;
 
@@ -57,6 +58,7 @@ class OrderControllerTest {
 //            new PageImpl<>(result, Pageable.unpaged(), result.size())
 //        );
         when(orderService.queryAllOrdersByCustomerId(anyLong())).thenReturn(result);
+
         mvc.perform(MockMvcRequestBuilders.get("/api/shop/orders")
                 .param("customerId", "3")
             )
@@ -65,5 +67,29 @@ class OrderControllerTest {
             .andDo(print());
 
         verify(orderService, times(1)).queryAllOrdersByCustomerId(eq(3L));
+    }
+
+    @Test
+    void fetchOrderDetailsEmptyTest() throws Exception{
+        when(orderDetailService.findOrderDetailsByOrderId(anyLong())).thenReturn(List.of());
+
+        mvc.perform(MockMvcRequestBuilders.get("/api/shop/orders/1"))
+            .andExpect(status().isOk())
+            .andExpect(content().string(org.hamcrest.Matchers.equalTo("[]")));
+
+        verify(orderDetailService, times(1)).findOrderDetailsByOrderId(eq(1L));
+    }
+
+    @Test
+    void fetchOrderDetailsErrorTest() throws Exception {
+        when(orderDetailService.findOrderDetailsByOrderId(anyLong())).thenThrow(
+            new OrderDetailsNotExistException("OrderDetails do not exist")
+        );
+
+        mvc.perform(MockMvcRequestBuilders.get("/api/shop/orders/1"))
+            .andExpect(status().isNotFound())
+            .andExpect(content().string(containsString("not exist")));
+
+        verify(orderDetailService, times(1)).findOrderDetailsByOrderId(eq(1L));
     }
 }

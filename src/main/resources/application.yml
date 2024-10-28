@@ -28,10 +28,6 @@ eureka:
     path: /static
   log:
     path: .
-logging:
-  file:
-    name: ${55g.log.path}/shop.log
-
 ---
 # on profile 'live'
 spring:
@@ -111,8 +107,15 @@ eureka:
 spring:
   config:
     activate:
-      on-profile: local
+      on-profile: embed-db
 
+  jpa:
+    database: h2
+---
+spring:
+  config:
+    activate:
+      on-profile: test
   jpa:
     properties:
       hibernate:
@@ -121,4 +124,9 @@ spring:
         generate_statistics: true
         use_sql_comments: true
         highlight_sql: true
-    database: h2
+
+
+logging:
+  level:
+    shop.S5G: trace
+    root: info
