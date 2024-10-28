@@ -36,7 +36,6 @@ class OrderControllerTest {
 
     @Test
     void fetchOrdersEmptyTest() throws Exception{
-//        when(orderService.queryAllOrdersByCustomerId(anyLong(), any())).thenReturn(Page.empty());
         when(orderService.queryAllOrdersByCustomerId(anyLong())).thenReturn(List.of());
         mvc.perform(MockMvcRequestBuilders.get("/api/shop/orders")
             .param("customerId", "3")
@@ -54,9 +53,6 @@ class OrderControllerTest {
         );
         List<OrderWithDetailResponseDto> result =  List.of(dto, dto);
 
-//        when(orderService.queryAllOrdersByCustomerId(anyLong(), any())).thenReturn(
-//            new PageImpl<>(result, Pageable.unpaged(), result.size())
-//        );
         when(orderService.queryAllOrdersByCustomerId(anyLong())).thenReturn(result);
 
         mvc.perform(MockMvcRequestBuilders.get("/api/shop/orders")

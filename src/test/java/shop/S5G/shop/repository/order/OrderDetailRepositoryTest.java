@@ -22,8 +22,7 @@ class OrderDetailRepositoryTest {
         assertThat(orderDetailRepository.countOrderDetailsByOrderId(2L))
             .isEqualTo(2L);
         assertThat(orderDetailRepository.countOrderDetailsByOrderId(Long.MAX_VALUE))
-            .isEqualTo(0L);
-
+            .isZero();
     }
 
     @Test

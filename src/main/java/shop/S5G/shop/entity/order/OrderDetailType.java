@@ -23,6 +23,7 @@ public class OrderDetailType {
     @Column(name = "order_detail_type_id")
     private long id;
 
+    // TODO: unique? enum?
     @Column(name = "type_name")
     @Length(max = 20)
     private String name;
