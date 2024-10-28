@@ -1,7 +1,8 @@
 package shop.S5G.shop.repository.cart;
 
-import java.util.HashMap;
+
 import java.util.Map;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
@@ -45,26 +46,33 @@ public class CartRedisRepository {
 
 
     public void putBook(Long bookId,Integer quantity,String sessionId) {
-        redisTemplate.opsForHash().put(CART + sessionId, bookId , quantity);
+        Integer newQuantity = Optional.ofNullable(
+                redisTemplate.opsForHash().get(CART + sessionId, bookId))
+            .map(currentQuantity -> (Integer) currentQuantity + quantity).orElse(quantity);
+
+        redisTemplate.opsForHash().put(CART + sessionId, bookId, newQuantity);
     }
 
-    public void putBookByMap(Map<String, Object> books,String sessionId) {
+    public void putBookByMap(Map<Long, Object> books,String sessionId) {
         redisTemplate.opsForHash().putAll(CART + sessionId, books);
     }
 
 
 
-    public void reduceBookQuantity(Long bookId, String sessionId, Integer quantity) {
-        if ((Integer) redisTemplate.opsForHash().get(CART + sessionId, bookId) <= 1) {
+    public void reduceBookQuantity(Long bookId, String sessionId) {
+        Integer existingQuantity = (Integer) redisTemplate.opsForHash().get(CART + sessionId, bookId);
+        if (existingQuantity <= 1) {
             redisTemplate.opsForHash().delete(CART + sessionId, bookId);
             return;
         }
 
-        redisTemplate.opsForHash().increment(CART + sessionId, bookId, -1);
+        redisTemplate.opsForHash().put(CART + sessionId, bookId, existingQuantity - 1);
     }
 
 
-    public void deleteBookFromCart(Long bookId, String sessionId, Integer quantity) {
+    public void deleteBookFromCart(Long bookId, String sessionId) {
+        Map<Object, Object> booksInRedisCart = redisTemplate.opsForHash().entries(CART + sessionId);
+
         redisTemplate.opsForHash().delete(CART + sessionId, bookId);
     }
 
