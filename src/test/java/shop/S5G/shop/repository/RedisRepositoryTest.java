@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -16,7 +17,7 @@ import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import shop.S5G.shop.repository.cart.CartRedisRepository;
 
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 class RedisRepositoryTest {
 
     private static final String REDIS_IMAGE = "redis:7.0.8-alpine";
@@ -69,7 +70,6 @@ class RedisRepositoryTest {
     }
 
     @Test
-    @Order(2)
     void deleteLoginFlagTest() {
 
         String sessionId = "testSessionId";
@@ -216,3 +216,5 @@ class RedisRepositoryTest {
 
     }
 }
+
+
