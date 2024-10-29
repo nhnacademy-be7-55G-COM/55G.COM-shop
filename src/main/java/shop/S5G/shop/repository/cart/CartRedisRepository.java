@@ -4,11 +4,14 @@ package shop.S5G.shop.repository.cart;
 import java.util.Map;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
+import shop.S5G.shop.config.RedisConfig;
 
 @Repository
 @RequiredArgsConstructor
+@ConditionalOnBean(RedisConfig.class)
 public class CartRedisRepository {
 
     private final RedisTemplate<String, Object> redisTemplate;

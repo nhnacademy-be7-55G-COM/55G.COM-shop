@@ -2,6 +2,7 @@ package shop.S5G.shop.controller;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import shop.S5G.shop.config.RedisConfig;
 import shop.S5G.shop.dto.cart.request.CartDeleteBookRequestDto;
 import shop.S5G.shop.dto.cart.request.CartPutRequestDto;
 import shop.S5G.shop.dto.cart.request.CartReduceBookQuantityRequestDto;
@@ -21,7 +23,7 @@ import shop.S5G.shop.dto.cart.response.CartBooksResponseDto;
 import shop.S5G.shop.exception.BadRequestException;
 import shop.S5G.shop.service.cart.CartService;
 
-
+@ConditionalOnBean(RedisConfig.class)
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/api/shop")

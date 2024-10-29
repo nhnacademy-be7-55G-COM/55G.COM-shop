@@ -6,7 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Service;
+import shop.S5G.shop.config.RedisConfig;
 import shop.S5G.shop.dto.cart.response.CartBooksResponseDto;
 import shop.S5G.shop.entity.Book;
 import shop.S5G.shop.entity.cart.Cart;
@@ -21,6 +23,7 @@ import shop.S5G.shop.service.member.MemberService;
 
 @Service
 @RequiredArgsConstructor
+@ConditionalOnBean(RedisConfig.class)
 public class CartServiceImpl implements CartService {
 
     private final CartRepository cartRepository;

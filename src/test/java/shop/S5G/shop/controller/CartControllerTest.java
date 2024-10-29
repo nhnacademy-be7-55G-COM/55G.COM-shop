@@ -18,14 +18,22 @@ import java.math.BigDecimal;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.IfProfileValue;
+import org.springframework.test.context.junit.jupiter.DisabledIf;
 import org.springframework.test.web.servlet.MockMvc;
+import shop.S5G.shop.config.RedisConfig;
 import shop.S5G.shop.dto.cart.response.CartBooksResponseDto;
 import shop.S5G.shop.service.cart.impl.CartServiceImpl;
 
+@DisabledIf("#{T(org.springframework.util.StringUtils).hasText(environment['spring.profiles.active']) && environment['spring.profiles.active'].contains('disable-redis')}")
 @WebMvcTest(CartController.class)
+@Import(RedisConfig.class)
 class CartControllerTest {
 
     @Autowired
@@ -43,7 +51,7 @@ class CartControllerTest {
                 .content(content))
             .andExpect(status().isCreated());
 
-        verify(cartServiceImpl,times(1)).putBook(1l,3,"testSessionId");
+        verify(cartServiceImpl, times(1)).putBook(1l, 3, "testSessionId");
     }
 
     @Test
