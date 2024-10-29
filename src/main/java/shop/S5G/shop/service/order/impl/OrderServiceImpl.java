@@ -59,6 +59,7 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findOrdersByCustomerId(customerId);
     }
 
+    // TODO: 포인트 사용, 재고처리에 대해 고민해야함.
     @Override
     public OrderCreateResponseDto createOrder(OrderCreateRequestDto requestDto) {
         DeliveryCreateRequestDto deliveryDto = requestDto.delivery();
@@ -86,7 +87,7 @@ public class OrderServiceImpl implements OrderService {
         return OrderCreateResponseDto.of(order);
     }
 
-    private void linkOrderDetails(Order order, OrderDetailCreateRequestDto[] details) {
+    private void linkOrderDetails(Order order, List<OrderDetailCreateRequestDto> details) {
         for (OrderDetailCreateRequestDto detail: details) {
             Book book = bookRepository.findById(detail.bookId()).orElseThrow(
                 () -> new BookResourceNotFoundException("Book not found: "+detail.bookId())
