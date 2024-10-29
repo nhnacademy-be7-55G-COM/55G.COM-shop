@@ -1,8 +1,9 @@
 package shop.S5G.shop.controller.order;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -16,9 +17,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
+import shop.S5G.shop.dto.order.OrderCreateResponseDto;
 import shop.S5G.shop.dto.order.OrderWithDetailResponseDto;
+import shop.S5G.shop.exception.member.CustomerNotFoundException;
 import shop.S5G.shop.exception.order.OrderDetailsNotExistException;
 import shop.S5G.shop.service.order.OrderDetailService;
 import shop.S5G.shop.service.order.OrderService;
@@ -33,6 +38,7 @@ class OrderControllerTest {
 
     @MockBean
     OrderDetailService orderDetailService;
+    ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
     void fetchOrdersEmptyTest() throws Exception{
@@ -43,7 +49,7 @@ class OrderControllerTest {
             .andExpect(status().isOk())
             .andExpect(content().string(containsString("[]")))
             .andDo(print());
-        verify(orderService, times(1)).queryAllOrdersByCustomerId(eq(3L));
+        verify(orderService, times(1)).queryAllOrdersByCustomerId(3L);
     }
 
     @Test
@@ -62,7 +68,7 @@ class OrderControllerTest {
             .andExpect(content().string(containsString("\"representTitle\":\"test title\"")))
             .andDo(print());
 
-        verify(orderService, times(1)).queryAllOrdersByCustomerId(eq(3L));
+        verify(orderService, times(1)).queryAllOrdersByCustomerId(3L);
     }
 
     @Test
@@ -73,7 +79,7 @@ class OrderControllerTest {
             .andExpect(status().isOk())
             .andExpect(content().string(org.hamcrest.Matchers.equalTo("[]")));
 
-        verify(orderDetailService, times(1)).findOrderDetailsByOrderId(eq(1L));
+        verify(orderDetailService, times(1)).findOrderDetailsByOrderId(1L);
     }
 
     @Test
@@ -86,6 +92,79 @@ class OrderControllerTest {
             .andExpect(status().isNotFound())
             .andExpect(content().string(containsString("not exist")));
 
-        verify(orderDetailService, times(1)).findOrderDetailsByOrderId(eq(1L));
+        verify(orderDetailService, times(1)).findOrderDetailsByOrderId(1L);
+    }
+    String validatedTestCase = """
+        {
+            "customerId": 1,
+            "delivery": {
+                "address": "테스트 주소",
+                "deliveryFeeId": 1,
+                "receivedDate": "2024-10-30"
+            },
+            "cartList": [
+                {
+                    "bookId": 1,
+                    "wrappingPaperId": 1,
+                    "quantity": 1,
+                    "totalPrice": 10000,
+                    "accumulationPrice": 200
+                }
+            ],
+            "netPrice": 99800,
+            "totalPrice": 10000
+        }
+        """;
+    // 비어있는 장바구니
+    String failedTestCase = """
+        {
+            "customerId": 1,
+            "delivery": {
+                "address": "테스트 주소",
+                "deliveryFeeId": 1,
+                "receivedDate": "2024-10-30"
+            },
+            "cartList": [],
+            "netPrice": 99800,
+            "totalPrice": 10000
+        }
+        """;
+    @Test
+    void createNewOrderValidateFailTest() throws Exception{
+        mvc.perform(MockMvcRequestBuilders.post("/api/shop/orders")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(failedTestCase)
+            ).andExpect(status().isBadRequest());
+        verify(orderService, never()).createOrder(any());
+    }
+
+    @Test
+    void createNewOrderSuccessTest() throws Exception{
+        OrderCreateResponseDto response = new OrderCreateResponseDto(1L);
+        when(orderService.createOrder(any())).thenReturn(response);
+
+        mvc.perform(MockMvcRequestBuilders.post("/api/shop/orders")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(validatedTestCase)
+        )
+            .andExpect(status().isCreated())
+            .andExpect(content().string(containsString("\"orderId\":1")))
+        ;
+
+        verify(orderService, times(1)).createOrder(any());
+    }
+
+    @Test
+    void createNewOrderExceptionTest() throws Exception {
+        when(orderService.createOrder(any())).thenThrow(CustomerNotFoundException.class);
+
+        mvc.perform(MockMvcRequestBuilders.post("/api/shop/orders")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(validatedTestCase)
+            )
+            .andExpect(status().isNotFound())
+        ;
+
+        verify(orderService, times(1)).createOrder(any());
     }
 }

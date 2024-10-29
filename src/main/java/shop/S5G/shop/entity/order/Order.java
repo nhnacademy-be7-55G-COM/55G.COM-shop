@@ -46,4 +46,13 @@ public class Order {
     private long netPrice;
     private long totalPrice;
     private boolean active;
+
+    public Order(Customer customer, Delivery delivery, long netPrice, long totalPrice) {
+        this.customer = customer;
+        this.delivery = delivery;
+        this.netPrice = netPrice;
+        this.totalPrice = totalPrice;
+        orderedAt = LocalDateTime.now();
+        active = true;
+    }
 }

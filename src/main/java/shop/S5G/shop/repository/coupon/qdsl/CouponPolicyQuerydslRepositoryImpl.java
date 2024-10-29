@@ -12,6 +12,14 @@ public class CouponPolicyQuerydslRepositoryImpl extends QuerydslRepositorySuppor
         super(CouponPolicy.class);
     }
 
+    /**
+     * 쿠폰 정책 업데이트 쿼리 Dsl
+     * @param couponId
+     * @param discountPrice
+     * @param condition
+     * @param maxPrice
+     * @param duration
+     */
     @Override
     public void updateCouponPolicy(Long couponId, BigDecimal discountPrice, Long condition,
         Long maxPrice, Integer duration) {
