@@ -19,7 +19,6 @@ import shop.S5G.shop.entity.order.Order;
 import shop.S5G.shop.entity.order.OrderDetail;
 import shop.S5G.shop.entity.order.OrderDetailType;
 import shop.S5G.shop.entity.order.WrappingPaper;
-import shop.S5G.shop.exception.BadRequestException;
 import shop.S5G.shop.exception.BookException.BookResourceNotFoundException;
 import shop.S5G.shop.exception.EssentialDataNotFoundException;
 import shop.S5G.shop.exception.member.CustomerNotFoundException;
@@ -65,7 +64,7 @@ public class OrderServiceImpl implements OrderService {
         DeliveryCreateRequestDto deliveryDto = requestDto.delivery();
 
         DeliveryFee fee = deliveryFeeRepository.findById(deliveryDto.deliveryFeeId()).orElseThrow(
-            () -> new BadRequestException("Cannot find delivery fee data")
+            () -> new EssentialDataNotFoundException("Cannot find delivery fee data")
         );
         Delivery delivery = deliveryRepository.save(
             new Delivery(deliveryDto.address(), deliveryDto.receivedDate(), (int)fee.getFee())
