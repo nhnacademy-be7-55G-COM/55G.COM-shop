@@ -25,7 +25,7 @@ import shop.S5G.shop.service.coupon.CouponPolicyService;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/admin/coupons")
+@RequestMapping("/api/shop/admin/coupons")
 public class CouponPolicyController {
 
     private final CouponPolicyService couponPolicyService;
