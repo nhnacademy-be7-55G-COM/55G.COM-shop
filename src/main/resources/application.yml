@@ -28,15 +28,24 @@ eureka:
     path: /static
   log:
     path: .
-logging:
-  file:
-    name: ${55g.log.path}/shop.log
 ---
 # on profile 'live'
 spring:
   config:
     activate:
       on-profile: live
+
+  datasource:
+    url: jdbc:mysql://133.186.241.167:3306/project_be7_55g.com_prod
+    username: be7_55g
+    password: eY3WQW!(yOBcB@SV
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
 
 eureka:
   client:
@@ -59,12 +68,24 @@ logging:
 55g:
   log:
     path: /logs/live/shop
+
 ---
 # on profile 'dev'
 spring:
   config:
     activate:
       on-profile: dev
+  datasource:
+    url: jdbc:mysql://133.186.241.167:3306/project_be7_55g.com_dev
+    username: be7_55g
+    password: eY3WQW!(yOBcB@SV
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
 
 eureka:
   client:
@@ -105,3 +126,31 @@ eureka:
   client:
     service-url:
       defaultZone: http://${eureka.user.name}:${eureka.user.password}@${eureka-server.host}-${eureka-server.postfix}:${eureka-server.port}/eureka
+
+---
+spring:
+  config:
+    activate:
+      on-profile: embed-db
+
+  jpa:
+    database: h2
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+        generate_statistics: true
+        use_sql_comments: true
+        highlight_sql: true
+
+
+logging:
+  level:
+    shop.S5G: trace
+    root: info

@@ -1,16 +1,13 @@
 package shop.S5G.shop.service;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import shop.S5G.shop.entity.Book;
 import shop.S5G.shop.exception.BookException.BookAlreadyExistsException;
 import shop.S5G.shop.exception.BookException.BookResourceNotFoundException;
 import shop.S5G.shop.repository.BookRepository;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookService {
@@ -50,7 +47,7 @@ public class BookService {
         books.get().setBookStatusId(book.getBookStatusId());
         books.get().setTitle(book.getTitle());
         books.get().setChapter(book.getChapter());
-        books.get().setDescreption(book.getDescreption());
+        books.get().setDescription(book.getDescription());
         books.get().setPublishedDate(book.getPublishedDate());
         books.get().setIsbn(book.getIsbn());
         books.get().setPrice(book.getPrice());

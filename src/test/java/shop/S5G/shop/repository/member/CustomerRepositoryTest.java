@@ -2,22 +2,25 @@ package shop.S5G.shop.repository.member;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.transaction.annotation.Transactional;
 import shop.S5G.shop.entity.member.Customer;
 
 @DataJpaTest
-@Transactional
 class CustomerRepositoryTest {
 
     @Autowired
     private CustomerRepository customerRepository;
 
     private Customer testCustomer;
+
+    @PersistenceContext
+    private EntityManager em;
 
     @BeforeEach
     void setUp() {
@@ -66,18 +69,18 @@ class CustomerRepositoryTest {
         assertThat(exists).isTrue();
     }
 
-//    @Test
-//    void inactiveCustomerTest() {
-//        // Given
-//        Long customerId = testCustomer.getCustomerId();
-//
-//        // When
-//        customerRepository.inactiveCustomer(customerId);
-//        customerRepository.flush();
-//
-//        // Then
-//        Optional<Customer> inactiveCustomer = customerRepository.findById(customerId);
-//        assertThat(inactiveCustomer).isPresent();
-//        assertThat(inactiveCustomer.get().isActive()).isFalse();
-//    }
+    @Test
+    void inactiveCustomerTest() {
+        // given
+        testCustomer = customerRepository.save(testCustomer);
+        long customerId = testCustomer.getCustomerId();
+
+        // when
+        customerRepository.inactiveCustomer(customerId);
+        customerRepository.flush(); // 변경사항 DB에 반영
+        em.clear();
+        // then
+        Customer inactiveCustomer = customerRepository.findById(customerId).orElseThrow();
+        assertThat(inactiveCustomer.isActive()).isFalse();
+    }
 }

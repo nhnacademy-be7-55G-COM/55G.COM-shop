@@ -173,7 +173,7 @@ class MemberStatusServiceImplTest {
     void getMemberStatusByTypeNameTest() {
         // Given
         String typeName = "ACTIVE";
-        when(memberStatusRepository.existsByTypeName(typeName)).thenReturn(false);
+        when(memberStatusRepository.existsByTypeName(typeName)).thenReturn(true);
         when(memberStatusRepository.findByTypeName(typeName)).thenReturn(testMemberStatus);
 
         // When
@@ -189,12 +189,12 @@ class MemberStatusServiceImplTest {
     void getMemberStatusByTypeName_NotFoundTest() {
         // Given
         String nonExistentTypeName = "NON_EXISTENT";
-        when(memberStatusRepository.existsByTypeName(nonExistentTypeName)).thenReturn(true);
+        when(memberStatusRepository.existsByTypeName(nonExistentTypeName)).thenReturn(false);
 
         // When & Then
         assertThatThrownBy(() -> memberStatusService.getMemberStatusByTypeName(nonExistentTypeName))
             .isInstanceOf(MemberStatusAlreadyExistsException.class)
-            .hasMessage(nonExistentTypeName + "존재하지 않습니다");
+            .hasMessage(nonExistentTypeName + " 존재하지 않습니다");
         verify(memberStatusRepository, never()).findByTypeName(nonExistentTypeName);
     }
 
