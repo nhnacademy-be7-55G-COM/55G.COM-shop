@@ -31,9 +31,10 @@ import shop.S5G.shop.exception.BadRequestException;
 import shop.S5G.shop.exception.ResourceNotFoundException;
 import shop.S5G.shop.repository.cart.CartRedisRepository;
 import shop.S5G.shop.repository.cart.CartRepository;
+import shop.S5G.shop.service.cart.impl.CartServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
-class CartServiceTest {
+class CartServiceImplTest {
     @Mock
     CartRepository cartRepository;
 
@@ -44,7 +45,7 @@ class CartServiceTest {
     BookService bookService;
 
     @InjectMocks
-    CartService cartService;
+    CartServiceImpl cartServiceImpl;
 
     Map<Object, Object> booksInRedisCart = new HashMap<>();
     List<Book> booksInfoInRedisCart = new ArrayList<>();
@@ -59,7 +60,7 @@ class CartServiceTest {
         when(bookService.getBookById(anyLong())).thenThrow(ResourceNotFoundException.class);
 
         //when
-        assertThatThrownBy(() -> cartService.putBook(123L, 1, "testSessionId"))
+        assertThatThrownBy(() -> cartServiceImpl.putBook(123L, 1, "testSessionId"))
             .isInstanceOf(ResourceNotFoundException.class);
 
         //then
@@ -75,7 +76,7 @@ class CartServiceTest {
         when(bookService.getBookById(anyLong())).thenReturn(book);
 
         //when
-        assertThatCode(() -> cartService.putBook(1L, 1, "testSessionId"))
+        assertThatCode(() -> cartServiceImpl.putBook(1L, 1, "testSessionId"))
             .doesNotThrowAnyException();
 
 
@@ -90,7 +91,7 @@ class CartServiceTest {
         String testSessionId = " ";
 
         //when
-        assertThatThrownBy(() -> cartService.lookUpAllBooks(testSessionId)).isInstanceOf(
+        assertThatThrownBy(() -> cartServiceImpl.lookUpAllBooks(testSessionId)).isInstanceOf(
             BadRequestException.class);
 
         //then
@@ -120,7 +121,7 @@ class CartServiceTest {
 
 
         //when
-        assertThatCode(() -> cartService.lookUpAllBooks(testSessionId)).doesNotThrowAnyException();
+        assertThatCode(() -> cartServiceImpl.lookUpAllBooks(testSessionId)).doesNotThrowAnyException();
 
         //then
         verify(bookService,times(1)).findAllByBookIds(anyList());
@@ -137,7 +138,7 @@ class CartServiceTest {
         when(cartRedisRepository.getBooksInRedisCart(anyString())).thenReturn(emptyMap);
 
         //then
-        Assertions.assertEquals(cartService.lookUpAllBooks(testSessionId).size(), 0);
+        Assertions.assertEquals(cartServiceImpl.lookUpAllBooks(testSessionId).size(), 0);
 
     }
 
@@ -149,7 +150,7 @@ class CartServiceTest {
 
         //when
         assertThatCode(
-            () -> cartService.putBookByMap(anyMap(), anyString())).doesNotThrowAnyException();
+            () -> cartServiceImpl.putBookByMap(anyMap(), anyString())).doesNotThrowAnyException();
 
         //then
         verify(cartRedisRepository, times(1)).putBookByMap(anyMap(), anyString());
@@ -161,7 +162,7 @@ class CartServiceTest {
         doNothing().when(cartRedisRepository).reduceBookQuantity(anyLong(), anyString());
 
         //when
-        assertThatCode(() -> cartService.reduceBookQuantity(anyLong(),
+        assertThatCode(() -> cartServiceImpl.reduceBookQuantity(anyLong(),
             anyString())).doesNotThrowAnyException();
 
 
@@ -176,7 +177,7 @@ class CartServiceTest {
         //given
         doNothing().when(cartRedisRepository).deleteBookFromCart(anyLong(), anyString());
         //when
-        assertThatCode(() -> cartService.deleteBookFromCart(anyLong(),
+        assertThatCode(() -> cartServiceImpl.deleteBookFromCart(anyLong(),
             anyString())).doesNotThrowAnyException();
 
         //then
@@ -190,7 +191,7 @@ class CartServiceTest {
         doNothing().when(cartRedisRepository).setLoginFlag(anyString());
 
         //when
-        assertThatCode(() -> cartService.setLoginFlag(anyString())).doesNotThrowAnyException();
+        assertThatCode(() -> cartServiceImpl.setLoginFlag(anyString())).doesNotThrowAnyException();
 
         //then
         verify(cartRedisRepository, times(1)).setLoginFlag(anyString());
@@ -203,7 +204,7 @@ class CartServiceTest {
         doNothing().when(cartRedisRepository).deleteLoginFlag(anyString());
 
         //when
-        assertThatCode(() -> cartService.deleteLoginFlag(anyString())).doesNotThrowAnyException();
+        assertThatCode(() -> cartServiceImpl.deleteLoginFlag(anyString())).doesNotThrowAnyException();
 
         //then
         verify(cartRedisRepository, times(1)).deleteLoginFlag(anyString());
@@ -212,12 +213,13 @@ class CartServiceTest {
     @Test
     void setCustomerIdTest() {
         //given
-        doNothing().when(cartRedisRepository).setCustomerId(anyString(), anyLong());
+        doNothing().when(cartRedisRepository).setCustomerId(anyString(), anyString());
         //when
         assertThatCode(
-            () -> cartService.setCustomerId(anyString(), anyLong())).doesNotThrowAnyException();
+            () -> cartServiceImpl.setCustomerId(anyString(), anyString())).doesNotThrowAnyException();
+
         //then
-        verify(cartRedisRepository, times(1)).setCustomerId(anyString(), anyLong());
+        verify(cartRedisRepository, times(1)).setCustomerId(anyString(), anyString());
     }
 
     @Test
@@ -226,7 +228,7 @@ class CartServiceTest {
         doNothing().when(cartRedisRepository).deleteCustomerId(anyString());
 
         //when
-        assertThatCode(() -> cartService.deleteCustomerId(anyString())).doesNotThrowAnyException();
+        assertThatCode(() -> cartServiceImpl.deleteCustomerId(anyString())).doesNotThrowAnyException();
 
         //then
         verify(cartRedisRepository, times(1)).deleteCustomerId(anyString());
@@ -239,7 +241,7 @@ class CartServiceTest {
         doNothing().when(cartRedisRepository).deleteOldCart(anyString());
 
         //when
-        assertThatCode(() -> cartService.deleteOldCart(anyString())).doesNotThrowAnyException();
+        assertThatCode(() -> cartServiceImpl.deleteOldCart(anyString())).doesNotThrowAnyException();
 
         //then
         verify(cartRedisRepository, times(1)).deleteOldCart(anyString());

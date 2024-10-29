@@ -1,13 +1,10 @@
 package shop.S5G.shop.repository;
 
-
-
 import java.util.HashMap;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
@@ -84,13 +81,13 @@ class RedisRepositoryTest {
     @Test
     void setCustomerIdTest() {
         String sessionId = "testSessionId";
-        Long customerId = 1l;
+        String customerLoginId = "loginId";
 
-        cartRedisRepository.setCustomerId(sessionId, customerId);
+        cartRedisRepository.setCustomerId(sessionId, customerLoginId);
 
         Assertions.assertThat(
                 redisTemplate.opsForValue().get(CartRedisRepository.CUSTOMER_ID + sessionId))
-            .isEqualTo(1l);
+            .isEqualTo(customerLoginId);
 
     }
 
@@ -98,8 +95,9 @@ class RedisRepositoryTest {
     void deleteCustomerIdTest() {
 
         String sessionId = "testSessionId";
-        Long customerId = 1l;
-        cartRedisRepository.setCustomerId(sessionId, customerId);
+        String customerLoginId = "loginId";
+
+        cartRedisRepository.setCustomerId(sessionId, customerLoginId);
 
         cartRedisRepository.deleteCustomerId(sessionId);
 
@@ -138,7 +136,7 @@ class RedisRepositoryTest {
     void putBookByMapTest() {
 
         String sessionId = "testSessionId";
-        Map<Long, Object> books = new HashMap<>(Map.of(1l, 1, 2l, 2));
+        Map<Long, Integer> books = new HashMap<>(Map.of(1l, 1, 2l, 2));
 
         cartRedisRepository.putBookByMap(books, sessionId);
 
@@ -153,7 +151,7 @@ class RedisRepositoryTest {
 
 
         String sessionId = "testSessionId";
-        Map<Long, Object> books = new HashMap<>(Map.of(1l, 1, 2l, 2));
+        Map<Long, Integer> books = new HashMap<>(Map.of(1l, 1, 2l, 2));
         cartRedisRepository.putBookByMap(books, sessionId);
 
         Assertions.assertThat(
@@ -165,7 +163,7 @@ class RedisRepositoryTest {
     @Test
     void reduceBookQuantityTest() {
         String sessionId = "testSessionId";
-        Map<Long, Object> books = new HashMap<>(Map.of(1l, 1, 2l, 2));
+        Map<Long, Integer> books = new HashMap<>(Map.of(1l, 1, 2l, 2));
         cartRedisRepository.putBookByMap(books, sessionId);
 
 
@@ -184,7 +182,7 @@ class RedisRepositoryTest {
     @Test
     void reduceBookQuantityDeleteTest() {
         String sessionId = "testSessionId";
-        Map<Long, Object> books = new HashMap<>(Map.of(1l, 1, 2l, 2));
+        Map<Long, Integer> books = new HashMap<>(Map.of(1l, 1, 2l, 2));
         cartRedisRepository.putBookByMap(books, sessionId);
 
 
@@ -203,7 +201,7 @@ class RedisRepositoryTest {
     void deleteBookFromCartTest() {
         String sessionId = "testSessionId";
 
-        Map<Long, Object> books = new HashMap<>(Map.of(1l, 1, 2l, 2));
+        Map<Long, Integer> books = new HashMap<>(Map.of(1l, 1, 2l, 2));
         cartRedisRepository.putBookByMap(books, sessionId);
 
         Long bookId = 2l;

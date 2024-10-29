@@ -20,12 +20,20 @@ public class CartRedisRepository {
         redisTemplate.opsForValue().set(IS_LOGGED_IN+sessionId, true);
     }
 
+    public Boolean getLoginFlag(String sessionId) {
+        return (Boolean) redisTemplate.opsForValue().get(IS_LOGGED_IN + sessionId);
+    }
+
     public void deleteLoginFlag(String sessionId) {
         redisTemplate.delete(IS_LOGGED_IN + sessionId);
     }
 
-    public void setCustomerId(String sessionId, Long customerId) {
-        redisTemplate.opsForValue().set(CUSTOMER_ID + sessionId, customerId);
+    public void setCustomerId(String sessionId, String customerLoginId) {
+        redisTemplate.opsForValue().set(CUSTOMER_ID + sessionId, customerLoginId);
+    }
+
+    public String getCustomerId(String sessionId) {
+        return (String) redisTemplate.opsForValue().get(CUSTOMER_ID + sessionId);
     }
 
     public void deleteCustomerId(String sessionId) {
@@ -53,7 +61,7 @@ public class CartRedisRepository {
         redisTemplate.opsForHash().put(CART + sessionId, bookId, newQuantity);
     }
 
-    public void putBookByMap(Map<Long, Object> books,String sessionId) {
+    public void putBookByMap(Map<Long, Integer> books,String sessionId) {
         redisTemplate.opsForHash().putAll(CART + sessionId, books);
     }
 
@@ -71,8 +79,6 @@ public class CartRedisRepository {
 
 
     public void deleteBookFromCart(Long bookId, String sessionId) {
-        Map<Object, Object> booksInRedisCart = redisTemplate.opsForHash().entries(CART + sessionId);
-
         redisTemplate.opsForHash().delete(CART + sessionId, bookId);
     }
 
