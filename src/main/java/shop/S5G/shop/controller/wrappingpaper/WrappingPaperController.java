@@ -35,11 +35,11 @@ public class WrappingPaperController {
     }
 
     @PostMapping
-    public WrappingPaperResponseDto createPaper(@Valid @RequestBody WrappingPaperRequestDto createRequest, BindingResult error) {
+    public ResponseEntity<WrappingPaperResponseDto> createPaper(@Valid @RequestBody WrappingPaperRequestDto createRequest, BindingResult error) {
         if (error.hasErrors()) {
             throw new BadRequestException("Name is null");
         }
-        return wrappingPaperService.save(createRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(wrappingPaperService.save(createRequest));
     }
 
     @DeleteMapping("/{paperId}")
