@@ -1,17 +1,13 @@
 package shop.S5G.shop.dto.Book;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Setter
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class BookRequestDto {
-
-//    private Long bookId;
+@Setter @Getter
+public class BookResponseDto {
     private Long publisherId;
     private Long bookStatusId;
     private String title;

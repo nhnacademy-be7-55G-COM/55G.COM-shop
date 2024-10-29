@@ -13,6 +13,7 @@ import shop.S5G.shop.entity.Book;
 import shop.S5G.shop.exception.BadRequestException;
 import shop.S5G.shop.repository.cart.CartRedisRepository;
 import shop.S5G.shop.repository.cart.CartRepository;
+import shop.S5G.shop.service.book.impl.BookServiceImpl;
 
 @Service
 @RequiredArgsConstructor
@@ -20,11 +21,11 @@ public class CartService {
 
     private final CartRepository cartRepository;
     private final CartRedisRepository cartRedisRepository;
-    private final BookService bookService;
+    private final BookServiceImpl bookServiceImpl;
 
     public void putBook(Long bookId, Integer quantity, String sessionId) {
 
-        bookService.getBookById(bookId);
+        bookServiceImpl.getBookById(bookId);
         cartRedisRepository.putBook(bookId, quantity, sessionId);
     }
 
@@ -53,7 +54,7 @@ public class CartService {
             return emptyList;
         }
 
-        List<Book> booksInfoInRedisCart = bookService.findAllByBookIds(
+        List<Book> booksInfoInRedisCart = bookServiceImpl.findAllByBookIds(
             booksInRedisCart.keySet().stream().collect(Collectors.toList()));
 
         List<CartBooksResponseDto> cartBooks = booksInfoInRedisCart.stream()

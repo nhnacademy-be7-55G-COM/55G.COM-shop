@@ -9,10 +9,8 @@ import shop.S5G.shop.entity.Book;
 import shop.S5G.shop.entity.BookCategory.BookCategory;
 import shop.S5G.shop.entity.BookCategory.BookCategoryId;
 import shop.S5G.shop.entity.Category;
-import shop.S5G.shop.exception.BookException.BookResourceNotFoundException;
 import shop.S5G.shop.exception.bookcategory.BookCategoryAlreadyExistsException;
 import shop.S5G.shop.exception.bookcategory.BookCategoryBadRequestException;
-import shop.S5G.shop.exception.bookcategory.BookCategoryResourceNotFoundException;
 import shop.S5G.shop.repository.BookRepository;
 import shop.S5G.shop.repository.CategoryRepository;
 import shop.S5G.shop.repository.bookcategory.BookCategoryRepository;
@@ -25,7 +23,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class BookCategoryServiceTest {
+public class BookCategoryServiceImplTest {
 
     @Mock
     private BookCategoryRepository bookCategoryRepository;

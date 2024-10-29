@@ -1,4 +1,4 @@
-package shop.S5G.shop.controller;
+package shop.S5G.shop.controller.book;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

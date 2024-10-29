@@ -20,8 +20,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import shop.S5G.shop.controller.book.BookController;
 import shop.S5G.shop.dto.Book.BookRequestDto;
-import shop.S5G.shop.service.BookService;
+import shop.S5G.shop.service.book.impl.BookServiceImpl;
 
 @WebMvcTest(BookController.class)
 class BookControllerTest {
@@ -30,7 +31,7 @@ class BookControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private BookService bookService;
+    private BookServiceImpl bookServiceImpl;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -62,7 +63,7 @@ class BookControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("success"))
                 .andDo(print());
-        verify(bookService, times(1)).createBook(any());
+        verify(bookServiceImpl, times(1)).createBook(any());
     }
     /**
      * 도서 등록 실패 test
@@ -91,7 +92,7 @@ class BookControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("success"))
                 .andDo(print());
-        verify(bookService, times(1)).createBook(any());
+        verify(bookServiceImpl, times(1)).createBook(any());
     }
 
     /**

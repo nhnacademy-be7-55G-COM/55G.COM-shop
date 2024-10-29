@@ -6,13 +6,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import shop.S5G.shop.dto.Book.BookRequestDto;
 import shop.S5G.shop.entity.Book;
-import shop.S5G.shop.exception.BookException.BookAlreadyExistsException;
 import shop.S5G.shop.exception.BookException.BookResourceNotFoundException;
 import shop.S5G.shop.repository.BookRepository;
+import shop.S5G.shop.service.book.impl.BookServiceImpl;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.eq;
@@ -23,16 +24,15 @@ class BookServiceTest {
     @Mock
     private BookRepository bookRepository;
     @InjectMocks
-    private BookService bookService;
+    private BookServiceImpl bookServiceImpl;
 
     /**
      * 도서 등록 Test
      */
     @Test
     void addBook() {
-//        //given
-        Book mockBook = new Book(
-                2L,
+        //given-준비
+        BookRequestDto bookDto = new BookRequestDto(
                 22L,
                 222L,
                 "아낌없이 주는 나무",
@@ -47,20 +47,12 @@ class BookServiceTest {
                 2000L,
                 LocalDateTime.of(2010, 5, 5, 15, 30)
         );
-        Book book = mock(Book.class);
-//        when(bookRepository.findById(eq(2L))).thenReturn(Optional.empty());
-        //2L인 book이 존재한다고 가정했을 때
-        //when({스터빙할 메소드}).{OngoingStubbing 메소드};
-        when(bookRepository.findById(eq(2L))).thenReturn(Optional.of(book));
 
-        assertThatThrownBy(() -> bookService.createBook(mockBook)).isInstanceOf(BookAlreadyExistsException.class);
+        //when-실행
+        bookServiceImpl.createBook(bookDto);
 
-        verify(bookRepository, times(1)).findById(eq(2L));
-        verify(bookRepository, never()).save(any(Book.class));
-        //when
-
-
-        //then
+        //then-검증
+        verify(bookRepository, times(1)).save(any(Book.class));
     }
 
     /**
@@ -71,7 +63,7 @@ class BookServiceTest {
         Book mockBook = mock(Book.class);
         when(bookRepository.existsById(2L)).thenReturn(false);
 //        when(bookRepository.findById(eq(2L))).thenReturn(Optional.empty());
-        assertThatThrownBy(()-> bookService.getBookById(2L)).isInstanceOf(BookResourceNotFoundException.class);
+        assertThatThrownBy(()-> bookServiceImpl.getBookById(2L)).isInstanceOf(BookResourceNotFoundException.class);
         verify(bookRepository, never()).findById(eq(2L));
         verify(bookRepository, times(1)).existsById(eq(2L));
 
@@ -99,7 +91,7 @@ class BookServiceTest {
         when(bookRepository.existsById(2L)).thenReturn(false);
 
         //when
-        assertThatThrownBy(() -> bookService.deleteBooks(2L)).isInstanceOf(BookResourceNotFoundException.class);
+        assertThatThrownBy(() -> bookServiceImpl.deleteBooks(2L)).isInstanceOf(BookResourceNotFoundException.class);
 
         //then
         verify(bookRepository, never()).findById(eq(2L));

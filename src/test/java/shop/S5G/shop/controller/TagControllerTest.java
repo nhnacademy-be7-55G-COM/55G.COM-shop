@@ -8,9 +8,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import shop.S5G.shop.controller.book.TagController;
 import shop.S5G.shop.dto.tag.TagRequestDto;
 import shop.S5G.shop.exception.TagException.TagBadRequestException;
-import shop.S5G.shop.service.TagService;
+import shop.S5G.shop.service.tag.impl.TagServiceImpl;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.eq;
@@ -27,7 +28,7 @@ class TagControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private TagService tagService;
+    private TagServiceImpl tagServiceImpl;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -47,7 +48,7 @@ class TagControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("success"))
                 .andDo(print());
-        verify(tagService, times(1)).createtag(any());
+        verify(tagServiceImpl, times(1)).createtag(any());
     }
 
     /**

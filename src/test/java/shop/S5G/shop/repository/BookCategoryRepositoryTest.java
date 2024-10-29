@@ -56,8 +56,7 @@ class BookCategoryRepositoryTest {
         Category save1 = categoryRepository.save(category1);
 
         Book book2 = bookRepository.findById(save.getBookId()).orElseThrow(() -> new BookResourceNotFoundException("Book not found"));
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" +save1.getCategoryId());
-        Category category2 = categoryRepository.findById(1L).orElseThrow(() -> new BookCategoryResourceNotFoundException("Book category not found"));
+        Category category2 = categoryRepository.findById(save.getBookId()).orElseThrow(() -> new BookCategoryResourceNotFoundException("Book category not found"));
 
         BookCategory bookCategory = new BookCategory(new BookCategoryId(1L, 1L), category2, book2);
 

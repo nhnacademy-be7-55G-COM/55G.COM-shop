@@ -73,7 +73,6 @@ public class BookCategoryServiceImpl implements BookCategoryService {
         return bookCategoryResponseDtoList;
     }
 
-
     //도서 내 카테고리 삭제
     @Override
     public void deleteCategory(Long bookId, Long categoryId) {
