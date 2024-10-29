@@ -62,7 +62,7 @@ public class CouponPolicyControllerTest {
         );
 
         // When
-        mockMvc.perform(post("/api/admin/coupons/policy")
+        mockMvc.perform(post("/api/shop/admin/coupons/policy")
             .contentType(MediaType.APPLICATION_JSON)
             .content(addCouponPolicy))
             .andExpect(status().isCreated());
@@ -88,7 +88,7 @@ public class CouponPolicyControllerTest {
         );
 
         // When
-        mockMvc.perform(patch("/api/admin/coupons/policy/1")
+        mockMvc.perform(patch("/api/shop/admin/coupons/policy/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(updateCouponPolicy))
             .andExpect(status().isOk());
@@ -111,7 +111,7 @@ public class CouponPolicyControllerTest {
         ));
 
         // When & Then
-        mockMvc.perform(get("/api/admin/coupons/policy/{couponPolicyId}", couponPolicyId))
+        mockMvc.perform(get("/api/shop/admin/coupons/policy/{couponPolicyId}", couponPolicyId))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.discountPrice").value(new BigDecimal("0.5")))
             .andExpect(jsonPath("$.condition").value(20000L))
@@ -135,7 +135,7 @@ public class CouponPolicyControllerTest {
         when(couponPolicyService.findByAllCouponPolicies()).thenReturn(couponPolicyResponseDtoList);
 
         // When & Then
-        mockMvc.perform(get("/api/admin/coupons/policy"))
+        mockMvc.perform(get("/api/shop/admin/coupons/policy"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$[0].discountPrice").value(new BigDecimal("0.5")))
             .andExpect(jsonPath("$[0].condition").value(20000L))
