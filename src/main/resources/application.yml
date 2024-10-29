@@ -10,6 +10,10 @@ eureka-server:
   port: 8761
   postfix: default
 
+redis:
+  host: localhost
+  port: 6379
+
 eureka:
   user:
     name: admin
@@ -46,6 +50,9 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+
+redis:
+  postfix: live
 
 eureka:
   client:
@@ -87,6 +94,9 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
 
+redis:
+  postfix: dev
+
 eureka:
   client:
     enabled: true
@@ -127,6 +137,10 @@ eureka:
     service-url:
       defaultZone: http://${eureka.user.name}:${eureka.user.password}@${eureka-server.host}-${eureka-server.postfix}:${eureka-server.port}/eureka
 
+redis:
+  host: redis-${redis.postfix}
+  port: 6379
+
 ---
 spring:
   config:
@@ -154,3 +168,4 @@ logging:
   level:
     shop.S5G: trace
     root: info
+
