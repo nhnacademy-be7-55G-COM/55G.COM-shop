@@ -21,8 +21,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import shop.S5G.shop.controller.coupon.CouponPolicyController;
-import shop.S5G.shop.dto.couponpolicy.CouponPolicyRequestDto;
-import shop.S5G.shop.dto.couponpolicy.CouponPolicyResponseDto;
+import shop.S5G.shop.dto.coupon.policy.CouponPolicyRequestDto;
+import shop.S5G.shop.dto.coupon.policy.CouponPolicyResponseDto;
 import shop.S5G.shop.service.coupon.impl.CouponPolicyServiceImpl;
 
 @ActiveProfiles("local")

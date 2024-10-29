@@ -1,4 +1,4 @@
-package shop.S5G.shop.dto.couponpolicy;
+package shop.S5G.shop.dto.coupon.policy;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;

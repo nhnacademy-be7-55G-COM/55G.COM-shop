@@ -1,6 +1,5 @@
 package shop.S5G.shop.controller.couponpolicy;
 
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -17,7 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import shop.S5G.shop.controller.coupon.CouponPolicyController;
-import shop.S5G.shop.dto.couponpolicy.CouponPolicyRequestDto;
+import shop.S5G.shop.dto.coupon.policy.CouponPolicyRequestDto;
 import shop.S5G.shop.service.coupon.impl.CouponPolicyServiceImpl;
 
 @ActiveProfiles("local")
