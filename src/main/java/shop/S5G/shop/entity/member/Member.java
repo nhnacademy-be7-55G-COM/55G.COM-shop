@@ -9,12 +9,14 @@ import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @NoArgsConstructor
+@Builder
 @AllArgsConstructor
 public class Member {
 
@@ -41,17 +43,4 @@ public class Member {
     private LocalDateTime latestLoginAt;
     private Long point;
 
-    public Member(Customer customer, MemberStatus status, MemberGrade grade, String loginId,
-        String password, String birth, LocalDateTime createdAt, LocalDateTime latestLoginAt,
-        Long point) {
-        this.customer = customer;
-        this.status = status;
-        this.grade = grade;
-        this.loginId = loginId;
-        this.password = password;
-        this.birth = birth;
-        this.createdAt = createdAt;
-        this.latestLoginAt = latestLoginAt;
-        this.point = point;
-    }
 }

@@ -1,25 +1,20 @@
 package shop.S5G.shop.repository;
 
-import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
-import shop.S5G.shop.entity.Book;
-import shop.S5G.shop.exception.BookException.BookResourceNotFoundException;
-import shop.S5G.shop.service.BookService;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import shop.S5G.shop.entity.Book;
+import shop.S5G.shop.exception.BookException.BookResourceNotFoundException;
 
 @DataJpaTest
 //@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class BookRepositoryTest {
+class BookRepositoryTest {
 
     private final BookRepository bookRepository;
 
