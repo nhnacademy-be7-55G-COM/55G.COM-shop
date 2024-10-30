@@ -47,7 +47,7 @@ public class CouponTemplate {
     @NotNull
     private boolean active;
 
-    CouponTemplate(CouponPolicy couponPolicy, String couponName, String couponDescription) {
+    public CouponTemplate(CouponPolicy couponPolicy, String couponName, String couponDescription) {
         this.couponPolicy = couponPolicy;
         this.couponName = couponName;
         this.couponDescription = couponDescription;
