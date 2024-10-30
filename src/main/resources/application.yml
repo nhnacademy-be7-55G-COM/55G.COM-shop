@@ -12,6 +12,10 @@ spring:
     config:
       label: main
 
+redis:
+  host: localhost
+  port: 6379
+
 ---
 spring:
   config:
@@ -20,13 +24,31 @@ spring:
 
     import: optional:configserver:http://55g-config-live:9000
 
+redis:
+  postfix: live
+
 ---
+# on profile 'dev'
 spring:
   config:
     activate:
       on-profile: dev
 
     import: optional:configserver:http://55g-config-dev:9050
+
+redis:
+  postfix: dev
+
+---
+# on profile 'docker'
+spring:
+  config:
+    activate:
+      on-profile: docker
+
+redis:
+  host: redis-${redis.postfix}
+  port: 6379
 
 ---
 spring:
