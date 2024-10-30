@@ -1,4 +1,4 @@
-package shop.S5G.shop.dto.couponpolicy;
+package shop.S5G.shop.dto.coupon.policy;
 
 import java.math.BigDecimal;
 
