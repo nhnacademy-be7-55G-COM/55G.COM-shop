@@ -1,16 +1,16 @@
-package shop.S5G.shop.service.coupon.impl;
+package shop.S5G.shop.service.coupon.policy.impl;
 
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import shop.S5G.shop.dto.couponpolicy.CouponPolicyRequestDto;
-import shop.S5G.shop.dto.couponpolicy.CouponPolicyResponseDto;
+import shop.S5G.shop.dto.coupon.policy.CouponPolicyRequestDto;
+import shop.S5G.shop.dto.coupon.policy.CouponPolicyResponseDto;
 import shop.S5G.shop.entity.coupon.CouponPolicy;
 import shop.S5G.shop.exception.coupon.CouponPolicyNotFoundException;
-import shop.S5G.shop.repository.coupon.CouponPolicyRepository;
-import shop.S5G.shop.service.coupon.CouponPolicyService;
+import shop.S5G.shop.repository.coupon.policy.CouponPolicyRepository;
+import shop.S5G.shop.service.coupon.policy.CouponPolicyService;
 
 @Service
 @Transactional
@@ -19,8 +19,13 @@ public class CouponPolicyServiceImpl implements CouponPolicyService {
 
     private final CouponPolicyRepository couponPolicyRepository;
 
+    /**
+     * 쿠폰 정책 생성
+     * @param couponPolicyRequestDto
+     * @return couponPolicy entity
+     */
     @Override
-    public void saveCouponPolicy(CouponPolicyRequestDto couponPolicyRequestDto) {
+    public CouponPolicy saveCouponPolicy(CouponPolicyRequestDto couponPolicyRequestDto) {
 
         CouponPolicy couponPolicy = new CouponPolicy(
             couponPolicyRequestDto.discountPrice(),
@@ -29,9 +34,14 @@ public class CouponPolicyServiceImpl implements CouponPolicyService {
             couponPolicyRequestDto.duration()
         );
 
-        couponPolicyRepository.save(couponPolicy);
+        return couponPolicyRepository.save(couponPolicy);
     }
 
+    /**
+     * 쿠폰 정책 업데이트
+     * @param couponPolicyId
+     * @param couponPolicyRequestDto
+     */
     @Override
     public void updateCouponPolicy(Long couponPolicyId, CouponPolicyRequestDto couponPolicyRequestDto) {
         if (Objects.isNull(couponPolicyId) || couponPolicyId <= 0) {
@@ -51,6 +61,11 @@ public class CouponPolicyServiceImpl implements CouponPolicyService {
         );
     }
 
+    /**
+     * 특정 쿠폰 정책 찾기
+     * @param couponPolicyId
+     * @return couponPolicyResponseDto
+     */
     @Override
     @Transactional(readOnly = true)
     public CouponPolicyResponseDto findByCouponPolicyId(Long couponPolicyId) {
@@ -70,6 +85,10 @@ public class CouponPolicyServiceImpl implements CouponPolicyService {
         );
     }
 
+    /**
+     * 모든 쿠폰 정책 찾기
+     * @return List<CouponPolicyResponseDto>
+     */
     @Override
     @Transactional(readOnly = true)
     public List<CouponPolicyResponseDto> findByAllCouponPolicies() {
@@ -83,6 +102,5 @@ public class CouponPolicyServiceImpl implements CouponPolicyService {
                 couponPolicy.getDuration()
             ))
             .toList();
-
     }
 }

@@ -1,7 +1,14 @@
-package shop.S5G.shop.dto.couponpolicy;
+package shop.S5G.shop.dto.coupon.policy;
 
 import java.math.BigDecimal;
 
+/**
+ * 쿠폰 정책 응답 Dto
+ * @param discountPrice
+ * @param condition
+ * @param maxPrice
+ * @param duration
+ */
 public record CouponPolicyResponseDto (
     BigDecimal discountPrice,
     Long condition,
