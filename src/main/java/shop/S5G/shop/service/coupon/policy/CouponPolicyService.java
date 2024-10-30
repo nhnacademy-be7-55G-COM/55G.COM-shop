@@ -1,8 +1,8 @@
-package shop.S5G.shop.service.coupon;
+package shop.S5G.shop.service.coupon.policy;
 
 import java.util.List;
-import shop.S5G.shop.dto.couponpolicy.CouponPolicyRequestDto;
-import shop.S5G.shop.dto.couponpolicy.CouponPolicyResponseDto;
+import shop.S5G.shop.dto.coupon.policy.CouponPolicyRequestDto;
+import shop.S5G.shop.dto.coupon.policy.CouponPolicyResponseDto;
 import shop.S5G.shop.entity.coupon.CouponPolicy;
 
 public interface CouponPolicyService {
