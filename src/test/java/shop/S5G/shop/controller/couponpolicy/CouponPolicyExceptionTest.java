@@ -17,7 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import shop.S5G.shop.controller.coupon.CouponPolicyController;
 import shop.S5G.shop.dto.coupon.policy.CouponPolicyRequestDto;
-import shop.S5G.shop.service.coupon.impl.CouponPolicyServiceImpl;
+import shop.S5G.shop.service.coupon.policy.impl.CouponPolicyServiceImpl;
 
 @ActiveProfiles("local")
 @WebMvcTest(CouponPolicyController.class)

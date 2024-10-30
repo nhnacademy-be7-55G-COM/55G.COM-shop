@@ -17,7 +17,7 @@ import shop.S5G.shop.dto.tag.MessageDto;
 import shop.S5G.shop.dto.coupon.policy.CouponPolicyRequestDto;
 import shop.S5G.shop.dto.coupon.policy.CouponPolicyResponseDto;
 import shop.S5G.shop.exception.BadRequestException;
-import shop.S5G.shop.service.coupon.CouponPolicyService;
+import shop.S5G.shop.service.coupon.policy.CouponPolicyService;
 
 /**
  * 쿠폰 정책 생성 컨트롤러

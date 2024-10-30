@@ -1,4 +1,4 @@
-package shop.S5G.shop.service.coupon;
+package shop.S5G.shop.service.coupon.policy;
 
 import java.util.List;
 import shop.S5G.shop.dto.coupon.policy.CouponPolicyRequestDto;

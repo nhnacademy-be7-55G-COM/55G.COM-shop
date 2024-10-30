@@ -1,4 +1,4 @@
-package shop.S5G.shop.service.coupon.impl;
+package shop.S5G.shop.service.coupon.policy.impl;
 
 import java.util.List;
 import java.util.Objects;
@@ -9,8 +9,8 @@ import shop.S5G.shop.dto.coupon.policy.CouponPolicyRequestDto;
 import shop.S5G.shop.dto.coupon.policy.CouponPolicyResponseDto;
 import shop.S5G.shop.entity.coupon.CouponPolicy;
 import shop.S5G.shop.exception.coupon.CouponPolicyNotFoundException;
-import shop.S5G.shop.repository.coupon.CouponPolicyRepository;
-import shop.S5G.shop.service.coupon.CouponPolicyService;
+import shop.S5G.shop.repository.coupon.policy.CouponPolicyRepository;
+import shop.S5G.shop.service.coupon.policy.CouponPolicyService;
 
 @Service
 @Transactional

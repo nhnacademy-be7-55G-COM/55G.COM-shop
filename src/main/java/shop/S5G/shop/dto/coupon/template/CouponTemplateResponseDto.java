@@ -2,7 +2,13 @@ package shop.S5G.shop.dto.coupon.template;
 
 import shop.S5G.shop.entity.coupon.CouponPolicy;
 
-public record CouponTemplateRequestDto(
+/**
+ * 쿠폰 템플릿 응답 Dto
+ * @param couponPolicy
+ * @param couponName
+ * @param couponDescription
+ */
+public record CouponTemplateResponseDto(
 
     CouponPolicy couponPolicy,
 
@@ -11,5 +17,4 @@ public record CouponTemplateRequestDto(
     String couponDescription
 
 ) {
-
 }
