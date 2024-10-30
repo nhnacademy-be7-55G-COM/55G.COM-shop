@@ -45,7 +45,7 @@ public class TagController {
         if(bindingResult.hasErrors()) {
             throw new TagBadRequestException("잘못된 입력입니다.");
         }
-        Tag tag = new Tag(tagdto.getTagName(), tagdto.isActive());
+        Tag tag = new Tag(tagdto.tagName(), tagdto.active());
         tagServiceImpl.updateTag(tagId, tag);
         return ResponseEntity.ok().body("success");
     }

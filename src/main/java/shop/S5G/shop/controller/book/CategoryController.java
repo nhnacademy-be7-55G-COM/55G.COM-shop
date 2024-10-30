@@ -26,7 +26,7 @@ public class CategoryController {
         if(bindingResult.hasErrors()) {
             throw new CategoryBadRequestException("잘못된 입력입니다.");
         }
-        Category category = new Category(categorydto.getCategoryName(), categorydto.isActive());
+        Category category = new Category(categorydto.categoryName(), categorydto.active());
         categoryServiceImpl.createCategory(categorydto);
         return ResponseEntity.ok().build();
     }

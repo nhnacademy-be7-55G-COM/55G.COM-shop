@@ -7,10 +7,10 @@ import shop.S5G.shop.entity.Book;
 import java.util.List;
 
 public interface BookService {
-    public void createBook(BookRequestDto bookDto);
-    public List<BookResponseDto> allBook();
-    public BookResponseDto getBookById(Long bookId);
-    public void updateBooks(Long bookId, BookRequestDto bookDto);
-    public void deleteBooks(Long bookId);
-    public List<Book> findAllByBookIds(List<Long> bookIds);
+    void createBook(BookRequestDto bookDto);
+    List<BookResponseDto> allBook();
+    BookResponseDto getBookById(Long bookId);
+    void updateBooks(Long bookId, BookRequestDto bookDto);
+    void deleteBooks(Long bookId);
+    List<BookResponseDto> findAllByBookIds(List<Long> bookIds);
 }

@@ -26,11 +26,16 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.projection.ProjectionFactory;
+import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
+import shop.S5G.shop.dto.Book.BookResponseDto;
 import shop.S5G.shop.entity.Book;
 import shop.S5G.shop.exception.BadRequestException;
 import shop.S5G.shop.exception.ResourceNotFoundException;
 import shop.S5G.shop.repository.cart.CartRedisRepository;
 import shop.S5G.shop.repository.cart.CartRepository;
+import shop.S5G.shop.service.book.BookService;
 import shop.S5G.shop.service.book.impl.BookServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
@@ -42,48 +47,49 @@ class CartServiceTest {
     CartRedisRepository cartRedisRepository;
 
     @Mock
-    BookServiceImpl bookServiceImpl;
+    BookService bookService;
 
     @InjectMocks
     CartService cartService;
 
     Map<Object, Object> booksInRedisCart = new HashMap<>();
-    List<Book> booksInfoInRedisCart = new ArrayList<>();
+    List<BookResponseDto> booksInfoInRedisCart = new ArrayList<>();
 
-
+//    @Autowired
+    ProjectionFactory projectionFactory = new SpelAwareProxyProjectionFactory();
 
 
     @Test
     void putBookExceptionTest() {
 
         //given
-        when(bookServiceImpl.getBookById(anyLong())).thenThrow(ResourceNotFoundException.class);
+        when(bookService.getBookById(anyLong())).thenThrow(ResourceNotFoundException.class);
 
         //when
         assertThatThrownBy(() -> cartService.putBook(123L, 1, "testSessionId"))
             .isInstanceOf(ResourceNotFoundException.class);
 
         //then
-        verify(bookServiceImpl, times(1)).getBookById(anyLong());
+        verify(bookService, times(1)).getBookById(anyLong());
         verify(cartRedisRepository, never()).putBook(anyLong(), anyInt(), anyString());
 
     }
 
-//    @Test
-//    void putBookTest() {
-//        //given
-//        Book book = mock(Book.class);
-//        when(bookService.getBookById(anyLong())).thenReturn(book);
-//
-//        //when
-//        assertThatCode(() -> cartService.putBook(1L, 1, "testSessionId"))
-//            .doesNotThrowAnyException();
-//
-//
-//        //then
-//        verify(bookService, times(1)).getBookById(1L);
-//        verify(cartRedisRepository, times(1)).putBook(eq(1L), anyInt(), anyString());
-//    }
+    @Test
+    void putBookTest() {
+        //given
+        BookResponseDto bookResponseDto = mock(BookResponseDto.class);
+        when(bookService.getBookById(anyLong())).thenReturn(bookResponseDto);
+
+        //when
+        assertThatCode(() -> cartService.putBook(1L, 1, "testSessionId"))
+            .doesNotThrowAnyException();
+
+
+        //then
+        verify(bookService, times(1)).getBookById(1L);
+        verify(cartRedisRepository, times(1)).putBook(eq(1L), anyInt(), anyString());
+    }
 
     @Test
     void lookUpAllBooksExceptionTest() {
@@ -95,7 +101,7 @@ class CartServiceTest {
             BadRequestException.class);
 
         //then
-        verify(bookServiceImpl, never()).findAllByBookIds(anyList());
+        verify(bookService, never()).findAllByBookIds(anyList());
         verify(cartRedisRepository, never()).getBooksInRedisCart(anyString());
     }
 
@@ -105,8 +111,10 @@ class CartServiceTest {
             .stock(10).title("title1").build();
         Book book2 = Book.builder().bookId(2l).price(2000l).discountRate(BigDecimal.valueOf(0.2))
             .stock(20).title("title2").build();
-        booksInfoInRedisCart.add(book1);
-        booksInfoInRedisCart.add(book2);
+        BookResponseDto b1 = projectionFactory.createProjection(BookResponseDto.class, book1);
+        BookResponseDto b2 = projectionFactory.createProjection(BookResponseDto.class, book2);
+        booksInfoInRedisCart.add(b1);
+        booksInfoInRedisCart.add(b2);
         booksInRedisCart.put(book1.getBookId(), 1);
         booksInRedisCart.put(book2.getBookId(), 1);
     }
@@ -116,7 +124,7 @@ class CartServiceTest {
         //given
         String testSessionId = "testSessionId";
 
-        when(bookServiceImpl.findAllByBookIds(anyList())).thenReturn(booksInfoInRedisCart);
+        when(bookService.findAllByBookIds(anyList())).thenReturn(booksInfoInRedisCart);
         when(cartRedisRepository.getBooksInRedisCart(anyString())).thenReturn(booksInRedisCart);
 
 
@@ -124,7 +132,7 @@ class CartServiceTest {
         assertThatCode(() -> cartService.lookUpAllBooks(testSessionId)).doesNotThrowAnyException();
 
         //then
-        verify(bookServiceImpl,times(1)).findAllByBookIds(anyList());
+        verify(bookService,times(1)).findAllByBookIds(anyList());
         verify(cartRedisRepository,times(1)).getBooksInRedisCart(anyString());
     }
 

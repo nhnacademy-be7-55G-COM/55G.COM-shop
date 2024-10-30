@@ -8,12 +8,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import shop.S5G.shop.dto.Book.BookResponseDto;
 import shop.S5G.shop.dto.cart.response.CartBooksResponseDto;
-import shop.S5G.shop.entity.Book;
 import shop.S5G.shop.exception.BadRequestException;
 import shop.S5G.shop.repository.cart.CartRedisRepository;
 import shop.S5G.shop.repository.cart.CartRepository;
-import shop.S5G.shop.service.book.impl.BookServiceImpl;
+import shop.S5G.shop.service.book.BookService;
+
 
 @Service
 @RequiredArgsConstructor
@@ -21,11 +22,11 @@ public class CartService {
 
     private final CartRepository cartRepository;
     private final CartRedisRepository cartRedisRepository;
-    private final BookServiceImpl bookServiceImpl;
+    private final BookService bookService;
 
     public void putBook(Long bookId, Integer quantity, String sessionId) {
 
-        bookServiceImpl.getBookById(bookId);
+        bookService.getBookById(bookId);
         cartRedisRepository.putBook(bookId, quantity, sessionId);
     }
 
@@ -54,7 +55,7 @@ public class CartService {
             return emptyList;
         }
 
-        List<Book> booksInfoInRedisCart = bookServiceImpl.findAllByBookIds(
+        List<BookResponseDto> booksInfoInRedisCart = bookService.findAllByBookIds(
             booksInRedisCart.keySet().stream().collect(Collectors.toList()));
 
         List<CartBooksResponseDto> cartBooks = booksInfoInRedisCart.stream()

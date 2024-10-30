@@ -1,11 +1,11 @@
 package shop.S5G.shop.dto.bookcategory;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotNull;
 
-@AllArgsConstructor
-@NoArgsConstructor
-public class BookCategoryRequestDto {
-    private Long categoryId;
-    private Long BookId;
+public record BookCategoryRequestDto (
+    @NotNull
+    Long categoryId,
+    @NotNull
+    Long BookId
+){
 }

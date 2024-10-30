@@ -1,12 +1,13 @@
 package shop.S5G.shop.dto.category;
 
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.validation.constraints.NotNull;
 import shop.S5G.shop.entity.Category;
 
-@Getter @Setter
-public class CategoryResponseDto {
-    private Category parentCategory;
-    private String categoryName;
-    private boolean active;
+public record CategoryResponseDto (
+    Category parentCategory,
+    @NotNull
+    String categoryName,
+    @NotNull
+    boolean active
+){
 }

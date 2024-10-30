@@ -5,45 +5,43 @@ import org.springframework.stereotype.Service;
 import shop.S5G.shop.dto.category.CategoryRequestDto;
 import shop.S5G.shop.dto.category.CategoryResponseDto;
 import shop.S5G.shop.entity.Category;
-import shop.S5G.shop.exception.CategoryException.CategoryAlreadyExistsException;
 import shop.S5G.shop.exception.CategoryException.CategoryResourceNotFoundException;
 import shop.S5G.shop.repository.CategoryRepository;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CategoryServiceImpl {
-    @Autowired
-    private CategoryRepository categoryRepository;
 
+    private final CategoryRepository categoryRepository;
+    @Autowired
+    public CategoryServiceImpl(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
+    
     //카테고리 등록
     public void createCategory(CategoryRequestDto categorydto) {
-        Category category = new Category(categorydto.getCategoryId(), categorydto.getParentCategory(), categorydto.getCategoryName(), categorydto.isActive());
+        Category category = new Category(categorydto.parentCategory(), categorydto.categoryName(), categorydto.active());
 
-        Optional<Category> id = categoryRepository.findById(categorydto.getCategoryId());
-        if(id.isPresent()) {
-            throw new CategoryAlreadyExistsException("Category already exists");
-        }
         categoryRepository.save(category);
     }
 
     //모든 카테고리 조회
     public List<CategoryResponseDto> allCategory() {
-        List<Category> category = categoryRepository.findAll();
-        List<CategoryResponseDto> categoryResponseDto = new ArrayList<>();
-        for(int i=0 ; i<category.size() ; i++) {
-            categoryResponseDto.get(i).setParentCategory(category.get(i).getParentCategory());
-            categoryResponseDto.get(i).setCategoryName(category.get(i).getCategoryName());
-            categoryResponseDto.get(i).setActive(category.get(i).isActive());
-        }
-        return categoryResponseDto;
+
+        return categoryRepository.findAll()
+                .stream()
+                .map(category -> new CategoryResponseDto(
+                        category.getParentCategory(),
+                        category.getCategoryName(),
+                        category.isActive()
+                ))
+                .toList();
     }
 
     //카테고리 수정
     public void updateCategory(Long categoryId, CategoryRequestDto categoryDto) {
-        Category category = new Category(categoryDto.getCategoryName(), categoryDto.isActive());
+        Category category = new Category(categoryDto.categoryName(), categoryDto.active());
 
         Category category1 = categoryRepository.findById(categoryId)
                 .orElseThrow(()->new CategoryResourceNotFoundException("해당 카테고리가 없습니다."));

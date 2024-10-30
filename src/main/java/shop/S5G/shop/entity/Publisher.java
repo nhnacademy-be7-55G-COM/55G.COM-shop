@@ -33,5 +33,11 @@ public class Publisher {
 
     public Publisher(String name) {
         this.name = name;
+        active = true;
+    }
+
+    public Publisher(String name, boolean active) {
+        this.name = name;
+        this.active = active;
     }
 }

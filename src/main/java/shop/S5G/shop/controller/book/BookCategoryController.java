@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import shop.S5G.shop.dto.bookcategory.BookCategoryResponseDto;
-import shop.S5G.shop.service.BookCategory.BookCategoryService;
+import shop.S5G.shop.service.bookcategory.BookCategoryService;
 
 import java.util.List;
 

@@ -21,11 +21,11 @@ public class TagServiceImpl {
     //태그 등록
     public void createtag(TagRequestDto tagDto) {
 
-        if (tagRepository.existsByTagNameAndActive(tagDto.getTagName(), tagDto.isActive())) {
-            throw new TagAlreadyExistsException(tagDto.getTagName() + " 가 이미 존재합니다.");
+        if (tagRepository.existsByTagNameAndActive(tagDto.tagName(), tagDto.active())) {
+            throw new TagAlreadyExistsException(tagDto.tagName() + " 가 이미 존재합니다.");
         }
 
-        Tag tag = new Tag(tagDto.getTagName(), tagDto.isActive());
+        Tag tag = new Tag(tagDto.tagName(), tagDto.active());
         tagRepository.save(tag);
     }
 

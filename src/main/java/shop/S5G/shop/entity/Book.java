@@ -14,9 +14,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Setter
 @Getter
-@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Book {
 
     @Id
@@ -45,6 +44,7 @@ public class Book {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @Builder
     public Book(Long publisherId, Long bookStatusId, String title, String chapter, String description, LocalDateTime publishedDate, String isbn, Long price, BigDecimal discountRate, boolean isPacked, int stock, Long views, LocalDateTime createdAt){
         this.publisherId = publisherId;
         this.bookStatusId = bookStatusId;
@@ -59,25 +59,5 @@ public class Book {
         this.stock = stock;
         this.views = views;
         this.createdAt = createdAt;
-    }
-
-    public Book(Long bookId, Long publisherId, Long bookStatusId, String title, String chapter, String description, LocalDateTime publishedDate, String isbn, Long price, BigDecimal discountRate, boolean isPacked, int stock, Long views, LocalDateTime createdAt) {
-        this.bookId = bookId;
-        this.publisherId = publisherId;
-        this.bookStatusId = bookStatusId;
-        this.title = title;
-        this.chapter = chapter;
-        this.description = description;
-        this.publishedDate = publishedDate;
-        this.isbn = isbn;
-        this.price = price;
-        this.discountRate = discountRate;
-        this.isPacked = isPacked;
-        this.stock = stock;
-        this.views = views;
-        this.createdAt = createdAt;
-    }
-
-    public Book() {
     }
 }
