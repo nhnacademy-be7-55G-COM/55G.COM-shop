@@ -6,7 +6,7 @@ spring:
     name: shop-service
 
   config:
-    import: configserver:http://admin:55g.com7@localhost:9000
+    import: optional:configserver:http://localhost:9000
 
   cloud:
     config:
