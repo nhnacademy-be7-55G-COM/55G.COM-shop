@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import shop.S5G.shop.dto.tag.MessageDto;
-import shop.S5G.shop.dto.couponpolicy.CouponPolicyRequestDto;
-import shop.S5G.shop.dto.couponpolicy.CouponPolicyResponseDto;
+import shop.S5G.shop.dto.coupon.policy.CouponPolicyRequestDto;
+import shop.S5G.shop.dto.coupon.policy.CouponPolicyResponseDto;
 import shop.S5G.shop.exception.BadRequestException;
-import shop.S5G.shop.service.coupon.CouponPolicyService;
+import shop.S5G.shop.service.coupon.policy.CouponPolicyService;
 
 /**
  * 쿠폰 정책 생성 컨트롤러
@@ -25,7 +25,7 @@ import shop.S5G.shop.service.coupon.CouponPolicyService;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/admin/coupons")
+@RequestMapping("/api/shop/admin/coupons")
 public class CouponPolicyController {
 
     private final CouponPolicyService couponPolicyService;

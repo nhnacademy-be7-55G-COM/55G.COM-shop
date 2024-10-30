@@ -1,9 +1,12 @@
-package shop.S5G.shop.repository.coupon.qdsl;
+package shop.S5G.shop.repository.coupon.policy.qdsl;
 
 import static shop.S5G.shop.entity.coupon.QCouponPolicy.couponPolicy;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.math.BigDecimal;
+import java.util.List;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
+import shop.S5G.shop.dto.coupon.policy.CouponPolicyResponseDto;
 import shop.S5G.shop.entity.coupon.CouponPolicy;
 
 public class CouponPolicyQuerydslRepositoryImpl extends QuerydslRepositorySupport implements CouponPolicyQuerydslRepository {
@@ -31,4 +34,11 @@ public class CouponPolicyQuerydslRepositoryImpl extends QuerydslRepositorySuppor
             .where(couponPolicy.couponPolicyId.eq(couponId))
             .execute();
     }
+
+    //TODO(Doo) : 나중에 작성 - Querydsl 이용해 List Dto 반환
+    @Override
+    public List<CouponPolicyResponseDto> findAllCouponPolicies() {
+        return List.of();
+    }
+
 }

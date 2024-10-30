@@ -1,73 +1,31 @@
 spring:
+  profiles:
+    active: default
+
   application:
     name: shop-service
 
-server:
-  port: 8100
+  config:
+    import: optional:configserver:http://localhost:9000
 
-eureka-server:
+  cloud:
+    config:
+      label: main
+
+redis:
   host: localhost
-  port: 8761
-  postfix: default
+  port: 6379
 
-eureka:
-  user:
-    name: admin
-    password: 1234
-
-  client:
-    # disable while no profile
-    enabled: false
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://${eureka.user.name}:${eureka.user.password}@${eureka-server.host}:${eureka-server.port}/eureka
-
-55g:
-  resource:
-    path: /static
-  log:
-    path: .
 ---
-# on profile 'live'
 spring:
   config:
     activate:
       on-profile: live
 
-  datasource:
-    url: jdbc:mysql://133.186.241.167:3306/project_be7_55g.com_prod
-    username: be7_55g
-    password: eY3WQW!(yOBcB@SV
-  jpa:
-    hibernate:
-      ddl-auto: none
-    show-sql: true
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
+    import: optional:configserver:http://55g-config-live:9000
 
-eureka:
-  client:
-    enabled: true
-
-eureka-server:
+redis:
   postfix: live
-
-logging:
-  file:
-    name: ${55g.log.path}/shop-live.log
-  logback:
-    rollingpolicy:
-      max-history: 100
-      file-name-pattern: ${55g.log.path}/shop-live-%d{yyyy-MM-dd}.%i.log
-      max-file-size: 100KB
-  level:
-    root: info
-    shop.S5G.shop: info
-55g:
-  log:
-    path: /logs/live/shop
 
 ---
 # on profile 'dev'
@@ -75,43 +33,12 @@ spring:
   config:
     activate:
       on-profile: dev
-  datasource:
-    url: jdbc:mysql://133.186.241.167:3306/project_be7_55g.com_dev
-    username: be7_55g
-    password: eY3WQW!(yOBcB@SV
-  jpa:
-    hibernate:
-      ddl-auto: none
-    show-sql: true
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
 
-eureka:
-  client:
-    enabled: true
+    import: optional:configserver:http://55g-config-dev:9050
 
-eureka-server:
-  port: 8762
+redis:
   postfix: dev
 
-server:
-  port: 8200
-logging:
-  file:
-    name: ${55g.log.path}/shop-dev.log
-  logback:
-    rollingpolicy:
-      max-history: 100
-      file-name-pattern: ${55g.log.path}/shop-dev-%d{yyyy-MM-dd}.%i.log
-      max-file-size: 100KB
-  level:
-    root: debug
-    shop.S5G.shop: trace
-
-55g:
-  log:
-    path: /logs/dev/shop
 ---
 # on profile 'docker'
 spring:
@@ -119,13 +46,9 @@ spring:
     activate:
       on-profile: docker
 
-eureka-server:
-  host: 55g-eureka
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://${eureka.user.name}:${eureka.user.password}@${eureka-server.host}-${eureka-server.postfix}:${eureka-server.port}/eureka
+redis:
+  host: redis-${redis.postfix}
+  port: 6379
 
 ---
 spring:

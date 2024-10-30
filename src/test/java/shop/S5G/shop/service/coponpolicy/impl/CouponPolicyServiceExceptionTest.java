@@ -14,10 +14,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ActiveProfiles;
-import shop.S5G.shop.dto.couponpolicy.CouponPolicyRequestDto;
+import shop.S5G.shop.dto.coupon.policy.CouponPolicyRequestDto;
 import shop.S5G.shop.exception.coupon.CouponPolicyNotFoundException;
-import shop.S5G.shop.repository.coupon.CouponPolicyRepository;
-import shop.S5G.shop.service.coupon.impl.CouponPolicyServiceImpl;
+import shop.S5G.shop.repository.coupon.policy.CouponPolicyRepository;
+import shop.S5G.shop.service.coupon.policy.impl.CouponPolicyServiceImpl;
 
 @ActiveProfiles("local")
 @ExtendWith(MockitoExtension.class)
