@@ -1,6 +1,5 @@
-package shop.S5G.shop.controller.couponpolicy;
+package shop.S5G.shop.controller.coupon.policy;
 
-import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -10,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -19,9 +19,10 @@ import shop.S5G.shop.controller.coupon.CouponPolicyController;
 import shop.S5G.shop.dto.coupon.policy.CouponPolicyRequestDto;
 import shop.S5G.shop.service.coupon.policy.impl.CouponPolicyServiceImpl;
 
+@AutoConfigureRestDocs
 @ActiveProfiles("local")
 @WebMvcTest(CouponPolicyController.class)
-public class CouponPolicyExceptionTest {
+class CouponPolicyExceptionTest {
 
     @Autowired
     private MockMvc mockMvc;

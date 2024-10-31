@@ -21,7 +21,7 @@ import shop.S5G.shop.service.coupon.policy.impl.CouponPolicyServiceImpl;
 
 @ActiveProfiles("local")
 @ExtendWith(MockitoExtension.class)
-public class CouponPolicyServiceExceptionTest {
+class CouponPolicyServiceExceptionTest {
 
     @Mock
     private CouponPolicyRepository couponPolicyRepository;
