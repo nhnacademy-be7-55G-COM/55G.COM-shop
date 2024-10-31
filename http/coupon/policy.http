@@ -1,0 +1,24 @@
+### 쿠폰 정책 생성
+POST localhost:8080/api/shop/admin/coupons/policy
+Content-Type: application/json
+
+{
+  "discountPrice" : 0.5,
+  "condition" : 20000,
+  "maxPrice" : 2000,
+  "duration": 7
+}
+
+### 쿠폰 정책 조회
+GET localhost:8080/api/shop/admin/coupons/policy/1
+
+### 쿠폰 정책 수정
+PATCH localhost:8080/api/shop/admin/coupons/policy/1
+Content-Type: application/json
+
+{
+  "discountPrice" : 0.5,
+  "condition" : 50000,
+  "maxPrice" : 2000,
+  "duration": 7
+}

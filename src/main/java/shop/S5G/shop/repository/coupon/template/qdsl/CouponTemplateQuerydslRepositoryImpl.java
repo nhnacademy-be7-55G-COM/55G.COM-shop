@@ -8,6 +8,7 @@ import jakarta.persistence.EntityManager;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import shop.S5G.shop.dto.coupon.template.CouponTemplateRequestDto;
 import shop.S5G.shop.dto.coupon.template.CouponTemplateResponseDto;
+import shop.S5G.shop.entity.coupon.CouponPolicy;
 import shop.S5G.shop.entity.coupon.CouponTemplate;
 import shop.S5G.shop.entity.coupon.QCouponTemplate;
 
@@ -29,7 +30,7 @@ public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupp
         QCouponTemplate couponTemplate = QCouponTemplate.couponTemplate;
 
         return jpaQueryFactory
-            .select(Projections.fields(
+            .select(Projections.constructor(
                 CouponTemplateResponseDto.class,
                 couponTemplate.couponPolicy,
                 couponTemplate.couponName,
@@ -41,9 +42,9 @@ public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupp
     }
 
     @Override
-    public void updateCouponTemplate(Long couponTemplateId, CouponTemplateRequestDto couponTemplateRequestDto) {
+    public void updateCouponTemplate(Long couponTemplateId, CouponPolicy couponPolicy, CouponTemplateRequestDto couponTemplateRequestDto) {
         update(couponTemplate)
-            .set(couponTemplate.couponPolicy, couponTemplateRequestDto.couponPolicy())
+            .set(couponTemplate.couponPolicy, couponPolicy)
             .set(couponTemplate.couponName, couponTemplateRequestDto.couponName())
             .set(couponTemplate.couponDescription, couponTemplateRequestDto.couponDescription())
             .set(couponTemplate.active, ACTIVE)
@@ -65,11 +66,9 @@ public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupp
 
     @Override
     public void deleteCouponTemplate(Long couponTemplateId) {
-
         update(couponTemplate)
             .set(couponTemplate.active, INACTIVE)
             .where(couponTemplate.couponTemplateId.eq(couponTemplateId))
             .execute();
-
     }
 }
