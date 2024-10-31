@@ -1,4 +1,4 @@
-package shop.S5G.shop.dto.payment.toss;
+package shop.S5G.shop.dto.payments.toss;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
@@ -16,7 +16,7 @@ public record TossPaymentsCancel(
     String transactionKey,
     @Nullable
     String receiptKey,
-    String cancelSttus,
+    String cancelStatus,    // DONE 이면 취소 성공
     @Nullable
     String cancelRequestId
 ) {

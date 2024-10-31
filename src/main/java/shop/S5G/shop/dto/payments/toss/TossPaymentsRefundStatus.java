@@ -1,4 +1,4 @@
-package shop.S5G.shop.dto.payment.toss;
+package shop.S5G.shop.dto.payments.toss;
 
 // 환불 처리 상태.
 public enum TossPaymentsRefundStatus {

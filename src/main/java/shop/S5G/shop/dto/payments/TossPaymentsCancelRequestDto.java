@@ -1,8 +1,8 @@
-package shop.S5G.shop.dto.payment;
+package shop.S5G.shop.dto.payments;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import shop.S5G.shop.dto.payment.toss.TossPaymentsRefundReceiveAccount;
+import shop.S5G.shop.dto.payments.toss.TossPaymentsRefundReceiveAccount;
 
 @JsonInclude(Include.NON_NULL)
 public record TossPaymentsCancelRequestDto(

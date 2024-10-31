@@ -1,4 +1,4 @@
-package shop.S5G.shop.dto.payment;
+package shop.S5G.shop.dto.payments;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.annotation.Nullable;
@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
-import shop.S5G.shop.dto.payment.toss.*;
+import shop.S5G.shop.dto.payments.toss.*;
 
 // https://docs.tosspayments.com/reference
 public record TossPaymentsDto(

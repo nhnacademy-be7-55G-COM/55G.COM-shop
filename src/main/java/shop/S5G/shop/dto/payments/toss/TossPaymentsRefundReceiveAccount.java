@@ -1,4 +1,4 @@
-package shop.S5G.shop.dto.payment.toss;
+package shop.S5G.shop.dto.payments.toss;
 
 public record TossPaymentsRefundReceiveAccount(
     String bankCode,

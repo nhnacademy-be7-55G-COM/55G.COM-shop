@@ -1,4 +1,4 @@
-package shop.S5G.shop.dto.payment.toss;
+package shop.S5G.shop.dto.payments.toss;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Size;
