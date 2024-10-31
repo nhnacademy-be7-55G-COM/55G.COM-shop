@@ -1,5 +1,7 @@
 package shop.S5G.shop.repository.coupon.coupon.qdsl;
 
+import static shop.S5G.shop.entity.coupon.QCoupon.coupon;
+
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import java.awt.print.Pageable;
@@ -26,7 +28,10 @@ public class CouponQueryRepositoryImpl extends QuerydslRepositorySupport impleme
 
     @Override
     public void updateCouponExpiredDatetime(Long couponId, LocalDateTime expiredAt) {
-
+        update(coupon)
+            .set(coupon.expiredAt, expiredAt)
+            .where(coupon.couponId.eq(couponId))
+            .execute();
     }
 
     @Override
