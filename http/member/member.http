@@ -1,0 +1,33 @@
+### memberGrade 생성
+POST http://localhost:8820/api/shop/member/grade
+Content-Type: application/json
+
+{
+  "gradeCondition": 100000,
+  "gradeName": "일반",
+  "point": 3
+}
+
+### memberStatus 생성
+POST http://localhost:8820/api/shop/member/status
+Content-Type: application/json
+
+{
+  "typeName": "ACTIVE"
+}
+
+### member 생성
+POST http://localhost:8820/api/shop/member
+Content-Type: application/json
+
+{
+  "password": "123",
+  "name": "test",
+  "birthDate": "19991001",
+  "email": "test@test.com",
+  "loginId": "test",
+  "phoneNumber": "01000000000"
+}
+
+### memberGrade 삭제
+DELETE http://localhost:8820/api/shop/member/grade/1

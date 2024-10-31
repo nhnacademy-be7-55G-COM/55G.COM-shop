@@ -1,13 +1,17 @@
 package shop.S5G.shop.repository.cart;
 
-import java.util.HashMap;
+
 import java.util.Map;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
+import shop.S5G.shop.config.RedisConfig;
 
 @Repository
 @RequiredArgsConstructor
+@ConditionalOnBean(RedisConfig.class)
 public class CartRedisRepository {
 
     private final RedisTemplate<String, Object> redisTemplate;
@@ -19,12 +23,20 @@ public class CartRedisRepository {
         redisTemplate.opsForValue().set(IS_LOGGED_IN+sessionId, true);
     }
 
+    public Boolean getLoginFlag(String sessionId) {
+        return (Boolean) redisTemplate.opsForValue().get(IS_LOGGED_IN + sessionId);
+    }
+
     public void deleteLoginFlag(String sessionId) {
         redisTemplate.delete(IS_LOGGED_IN + sessionId);
     }
 
-    public void setCustomerId(String sessionId, Long customerId) {
-        redisTemplate.opsForValue().set(CUSTOMER_ID + sessionId, customerId);
+    public void setCustomerId(String sessionId, String customerLoginId) {
+        redisTemplate.opsForValue().set(CUSTOMER_ID + sessionId, customerLoginId);
+    }
+
+    public String getCustomerId(String sessionId) {
+        return (String) redisTemplate.opsForValue().get(CUSTOMER_ID + sessionId);
     }
 
     public void deleteCustomerId(String sessionId) {
@@ -45,26 +57,31 @@ public class CartRedisRepository {
 
 
     public void putBook(Long bookId,Integer quantity,String sessionId) {
-        redisTemplate.opsForHash().put(CART + sessionId, bookId , quantity);
+        Integer newQuantity = Optional.ofNullable(
+                redisTemplate.opsForHash().get(CART + sessionId, bookId))
+            .map(currentQuantity -> (Integer) currentQuantity + quantity).orElse(quantity);
+
+        redisTemplate.opsForHash().put(CART + sessionId, bookId, newQuantity);
     }
 
-    public void putBookByMap(Map<String, Object> books,String sessionId) {
+    public void putBookByMap(Map<Long, Integer> books,String sessionId) {
         redisTemplate.opsForHash().putAll(CART + sessionId, books);
     }
 
 
 
-    public void reduceBookQuantity(Long bookId, String sessionId, Integer quantity) {
-        if ((Integer) redisTemplate.opsForHash().get(CART + sessionId, bookId) <= 1) {
+    public void reduceBookQuantity(Long bookId, String sessionId) {
+        Integer existingQuantity = (Integer) redisTemplate.opsForHash().get(CART + sessionId, bookId);
+        if (existingQuantity <= 1) {
             redisTemplate.opsForHash().delete(CART + sessionId, bookId);
             return;
         }
 
-        redisTemplate.opsForHash().increment(CART + sessionId, bookId, -1);
+        redisTemplate.opsForHash().put(CART + sessionId, bookId, existingQuantity - 1);
     }
 
 
-    public void deleteBookFromCart(Long bookId, String sessionId, Integer quantity) {
+    public void deleteBookFromCart(Long bookId, String sessionId) {
         redisTemplate.opsForHash().delete(CART + sessionId, bookId);
     }
 

@@ -167,7 +167,7 @@ class BookRepositoryTest {
         book.setBookStatusId(book2.getBookStatusId());
         book.setTitle(book2.getTitle());
         book.setChapter(book2.getChapter());
-        book.setDescreption(book2.getDescreption());
+        book.setDescription(book2.getDescription());
         book.setPublishedDate(book2.getPublishedDate());
         book.setIsbn(book2.getIsbn());
         book.setPrice(book2.getPrice());

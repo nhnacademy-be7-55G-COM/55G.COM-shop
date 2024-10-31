@@ -16,6 +16,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * 쿠폰 정책 Entity
+ * @author : DooYoungHo
+ */
 @Entity
 @Getter
 @AllArgsConstructor
@@ -43,7 +47,7 @@ public class CouponPolicy {
     @Column(name = "max_price")
     private Long maxPrice;
 
-    @Setter
+
     @NotNull
     @Column(name = "duration")
     private Integer duration;

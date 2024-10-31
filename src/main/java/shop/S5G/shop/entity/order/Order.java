@@ -8,9 +8,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,8 +39,20 @@ public class Order {
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+    private List<OrderDetail> orderDetails;
+
     private LocalDateTime orderedAt;
     private long netPrice;
     private long totalPrice;
     private boolean active;
+
+    public Order(Customer customer, Delivery delivery, long netPrice, long totalPrice) {
+        this.customer = customer;
+        this.delivery = delivery;
+        this.netPrice = netPrice;
+        this.totalPrice = totalPrice;
+        orderedAt = LocalDateTime.now();
+        active = true;
+    }
 }
