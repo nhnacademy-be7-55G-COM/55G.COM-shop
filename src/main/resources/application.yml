@@ -13,10 +13,13 @@ spring:
       label: main
 
   rabbitmq:
-    host: localhost
+    host: ${rabbitmq.host}
     port: 5672
     username: guest
     password: guest
+
+rabbitmq:
+  host: localhost
 
 redis:
   host: localhost
