@@ -46,4 +46,13 @@ public class Coupon {
 
     @NotNull
     private boolean active;
+
+    public Coupon(CouponTemplate couponTemplate, String couponCode, LocalDateTime expiredAt) {
+        this.couponTemplate = couponTemplate;
+        this.couponCode = couponCode;
+        this.createdAt = LocalDateTime.now();
+        this.expiredAt = expiredAt;
+        this.usedAt = null;
+        this.active = true;
+    }
 }

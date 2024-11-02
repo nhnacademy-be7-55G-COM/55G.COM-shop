@@ -1,14 +1,11 @@
 package shop.S5G.shop.repository.coupon.coupon.qdsl;
 
-import java.awt.print.Pageable;
 import java.time.LocalDateTime;
 import java.util.List;
-import shop.S5G.shop.dto.coupon.coupon.CouponRequestDto;
+import org.springframework.data.domain.Pageable;
 import shop.S5G.shop.dto.coupon.coupon.CouponResponseDto;
 
 public interface CouponQuerydslRepository {
-
-    CouponResponseDto createCoupon(CouponRequestDto couponRequestDto);
 
     void updateCouponExpiredDatetime(Long couponId, LocalDateTime expiredAt);
 
@@ -16,5 +13,5 @@ public interface CouponQuerydslRepository {
 
     List<CouponResponseDto> findCoupons(Pageable pageable);
 
-    void deleteCoupon(Long couponId);
+    void deleteCouponById(Long couponId);
 }
