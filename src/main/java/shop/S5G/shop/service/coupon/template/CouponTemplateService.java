@@ -12,7 +12,7 @@ public interface CouponTemplateService {
     CouponTemplateResponseDto findCouponTemplate(Long couponTemplateId);
 
     // Update
-    void updateCouponTemplate(CouponTemplateRequestDto couponTemplateRequestDto);
+    void updateCouponTemplate(Long couponTemplateId, CouponTemplateRequestDto couponTemplateRequestDto);
 
     // Delete
     void deleteCouponTemplate(Long couponTemplateId);

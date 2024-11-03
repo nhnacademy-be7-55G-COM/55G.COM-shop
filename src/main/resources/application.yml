@@ -12,9 +12,24 @@ spring:
     config:
       label: main
 
+  rabbitmq:
+    host: ${rabbitmq.host}
+    port: 5672
+    username: guest
+    password: guest
+
+rabbitmq:
+  host: localhost
+
 redis:
   host: localhost
   port: 6379
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,busrefresh
 
 ---
 spring:
@@ -56,6 +71,7 @@ spring:
     activate:
       on-profile: embed-db
 
+
   jpa:
     database: h2
 ---
@@ -71,6 +87,12 @@ spring:
         generate_statistics: true
         use_sql_comments: true
         highlight_sql: true
+  cloud:
+    openfeign:
+      client:
+        config:
+          default:
+            logger-level: full
 
 
 logging:
