@@ -30,11 +30,6 @@ public class Category {
     @Setter
     private boolean active;
 
-//    public Category(String categoryName, boolean active) {
-//        this.categoryName = categoryName;
-//        this.active = active;
-//    }
-
     public Category(Category parentCategory, String categoryName, boolean active) {
         this.parentCategory = parentCategory;
         this.categoryName = categoryName;

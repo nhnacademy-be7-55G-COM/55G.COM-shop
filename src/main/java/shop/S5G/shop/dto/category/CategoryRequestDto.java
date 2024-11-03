@@ -7,7 +7,7 @@ import shop.S5G.shop.entity.Category;
 
 public record CategoryRequestDto (
 
-    Category parentCategory,
+    Long parentCategory,
     @NotNull
     String categoryName,
     @NotNull

@@ -6,8 +6,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import shop.S5G.shop.dto.category.CategoryRequestDto;
 import shop.S5G.shop.dto.category.CategoryResponseDto;
+import shop.S5G.shop.dto.category.CategoryUpdateRequestDto;
+import shop.S5G.shop.dto.tag.MessageDto;
 import shop.S5G.shop.entity.Category;
-import shop.S5G.shop.exception.CategoryException.CategoryBadRequestException;
+import shop.S5G.shop.exception.category.CategoryBadRequestException;
 import shop.S5G.shop.service.category.impl.CategoryServiceImpl;
 
 import java.util.List;
@@ -22,13 +24,12 @@ public class CategoryController {
 
     //카테고리 등록
     @PostMapping("/category")
-    public ResponseEntity addCategory(@Valid @RequestBody CategoryRequestDto categorydto, BindingResult bindingResult) {
+    public ResponseEntity<MessageDto> addCategory(@Valid @RequestBody CategoryRequestDto categoryDto, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
             throw new CategoryBadRequestException("잘못된 입력입니다.");
         }
-        Category category = new Category(categorydto.categoryName(), categorydto.active());
-        categoryServiceImpl.createCategory(categorydto);
-        return ResponseEntity.ok().build();
+        categoryServiceImpl.createCategory(categoryDto);
+        return ResponseEntity.ok().body(new MessageDto("카테고리 등록 성공"));
     }
 
     //카테고리 목록 조회
@@ -40,24 +41,25 @@ public class CategoryController {
 
     //카테고리 수정
     @PutMapping("/category/{categoryId}")
-    public ResponseEntity updateCategory(@Valid @PathVariable("categoryId") Long categoryId, @Valid @RequestBody CategoryRequestDto categoryDto, BindingResult bindingResult) {
+    public ResponseEntity<MessageDto> updateCategory(@Valid @PathVariable("categoryId") Long categoryId, @Valid @RequestBody CategoryUpdateRequestDto categoryDto, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
             throw new CategoryBadRequestException("잘못된 입력입니다.");
         }
         if (categoryId < 1) {
-            throw new CategoryBadRequestException("categoryId must be greater than 0");
+            throw new CategoryBadRequestException("카테고리 Id는 1보다 커야 합니다.");
         }
 
         categoryServiceImpl.updateCategory(categoryId, categoryDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(new MessageDto("카테고리 수정 성공"));
     }
+
     //카테고리 삭제
     @DeleteMapping("/category/{categoryId}")
-    public ResponseEntity deleteCategory(@PathVariable("categoryId") Long categoryId) {
+    public ResponseEntity<MessageDto> deleteCategory(@PathVariable("categoryId") Long categoryId) {
         if (categoryId < 1) {
-            throw new CategoryBadRequestException("categoryId must be greater than 0");
+            throw new CategoryBadRequestException("카테고리 Id는 1보다 커야 합니다.");
         }
         categoryServiceImpl.deleteCategory(categoryId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(new MessageDto("카테고리 삭제 성공"));
     }
 }

@@ -1,7 +1,6 @@
 package shop.S5G.shop.dto.Book;
 
-import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
+import shop.S5G.shop.entity.Publisher;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

@@ -5,5 +5,5 @@ import shop.S5G.shop.dto.bookcategory.BookCategoryResponseDto;
 import java.util.List;
 
 public interface BookCategoryQuerydslRepository {
-    List<BookCategoryResponseDto> findByIdBookId(Long bookId);
+    List<BookCategoryResponseDto> findCategoryByBookId(Long bookId);
 }

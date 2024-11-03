@@ -4,14 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import shop.S5G.shop.dto.category.CategoryRequestDto;
 import shop.S5G.shop.dto.category.CategoryResponseDto;
+import shop.S5G.shop.dto.category.CategoryUpdateRequestDto;
 import shop.S5G.shop.entity.Category;
-import shop.S5G.shop.exception.CategoryException.CategoryResourceNotFoundException;
-import shop.S5G.shop.repository.CategoryRepository;
+import shop.S5G.shop.exception.category.CategoryResourceNotFoundException;
+import shop.S5G.shop.repository.category.CategoryRepository;
+import shop.S5G.shop.service.category.CategoryService;
 
 import java.util.List;
 
 @Service
-public class CategoryServiceImpl {
+public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
     @Autowired
@@ -20,45 +22,33 @@ public class CategoryServiceImpl {
     }
     
     //카테고리 등록
-    public void createCategory(CategoryRequestDto categorydto) {
-        Category category = new Category(categorydto.parentCategory(), categorydto.categoryName(), categorydto.active());
+    public void createCategory(CategoryRequestDto categoryDto) {
+
+        Category p_category = categoryRepository.findById(categoryDto.parentCategory()).orElseThrow(() -> new CategoryResourceNotFoundException("해당 카테고리는 존재하지 않습니다."));
+        Category category = new Category(p_category, categoryDto.categoryName(), categoryDto.active());
 
         categoryRepository.save(category);
     }
 
     //모든 카테고리 조회
     public List<CategoryResponseDto> allCategory() {
-
-        return categoryRepository.findAll()
-                .stream()
-                .map(category -> new CategoryResponseDto(
-                        category.getParentCategory(),
-                        category.getCategoryName(),
-                        category.isActive()
-                ))
-                .toList();
+        return categoryRepository.getAllCategory();
     }
 
     //카테고리 수정
-    public void updateCategory(Long categoryId, CategoryRequestDto categoryDto) {
-        Category category = new Category(categoryDto.categoryName(), categoryDto.active());
+    public void updateCategory(Long categoryId, CategoryUpdateRequestDto categoryDto) {
+        if(categoryRepository.findById(categoryId).isPresent()) {
+            throw new CategoryResourceNotFoundException(categoryId + " 는 존재하지 않습니다.");
+        }
 
-        Category category1 = categoryRepository.findById(categoryId)
-                .orElseThrow(()->new CategoryResourceNotFoundException("해당 카테고리가 없습니다."));
-
-        category1.setCategoryId(category.getCategoryId());
-        category1.setParentCategory(category.getParentCategory());
-        category1.setCategoryName(category.getCategoryName());
-        category1.setActive(category.isActive());
-
-        categoryRepository.save(category1);
+        categoryRepository.updatesCategory(categoryId, categoryDto);
     }
 
-    //카테고리 삭제
+    //카테고리 삭제(비활성화)
     public void deleteCategory(Long categoryId) {
         if (!categoryRepository.existsById(categoryId)) {
             throw new CategoryResourceNotFoundException("Category with id " + categoryId + " not found");
         }
-        categoryRepository.deleteById(categoryId);
+        categoryRepository.inactiveCategory(categoryId);
     }
 }

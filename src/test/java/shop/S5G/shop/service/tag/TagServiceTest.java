@@ -7,9 +7,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.S5G.shop.dto.tag.TagRequestDto;
 import shop.S5G.shop.entity.Tag;
-import shop.S5G.shop.exception.TagException.TagAlreadyExistsException;
-import shop.S5G.shop.exception.TagException.TagResourceNotFoundException;
-import shop.S5G.shop.repository.TagRepository;
+import shop.S5G.shop.exception.tag.TagAlreadyExistsException;
+import shop.S5G.shop.exception.tag.TagResourceNotFoundException;
+import shop.S5G.shop.repository.tag.TagRepository;
 import shop.S5G.shop.service.tag.impl.TagServiceImpl;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

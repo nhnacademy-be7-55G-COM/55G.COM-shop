@@ -8,12 +8,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import shop.S5G.shop.dto.publisher.PublisherRequestDto;
 import shop.S5G.shop.dto.publisher.PublisherResponseDto;
+import shop.S5G.shop.dto.tag.MessageDto;
 import shop.S5G.shop.entity.Publisher;
 import shop.S5G.shop.exception.publisher.PublisherBadRequestException;
 import shop.S5G.shop.service.publisher.PublisherService;
 
 @RestController
-@RequestMapping("/api/admin/publisher")
+@RequestMapping("/api/shop")
 public class PublisherController {
 
     private final PublisherService publisherService;
@@ -24,17 +25,17 @@ public class PublisherController {
     }
 
     //출판사 등록
-    @PostMapping
-    public ResponseEntity addPublisher(@Valid @RequestBody PublisherRequestDto publisherRequestDto, BindingResult bindingResult) {
+    @PostMapping("/publisher")
+    public ResponseEntity<MessageDto> addPublisher(@Valid @RequestBody PublisherRequestDto publisherRequestDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new PublisherBadRequestException("잘못된 입력입니다.");
         }
         publisherService.addPublisher(publisherRequestDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(new MessageDto("출판사 등록 성공"));
     }
 
     //출판사 조회
-    @GetMapping("/{publisherId")
+    @GetMapping("/publisher/{publisherId}")
     public ResponseEntity<PublisherResponseDto> findPublisher(@Valid @PathVariable("publisherId") Long publisherId) {
         if (publisherId < 1) {
             throw new PublisherBadRequestException("출판사 Id는 1보다 커야 합니다.");
@@ -44,8 +45,8 @@ public class PublisherController {
     }
 
     //출판사 수정
-    @PutMapping("/{publisherId}")
-    public ResponseEntity updatePublisher(@Valid @PathVariable("publisherId") Long publisherId, @Valid @RequestBody PublisherRequestDto publisherRequestDto, BindingResult bindingResult) {
+    @PutMapping("/publisher/{publisherId}")
+    public ResponseEntity<MessageDto> updatePublisher(@Valid @PathVariable("publisherId") Long publisherId, @Valid @RequestBody PublisherRequestDto publisherRequestDto, BindingResult bindingResult) {
         if (publisherId < 1) {
             throw new PublisherBadRequestException("출판사 id는 1보다 커야 합니다.");
         }
@@ -53,16 +54,16 @@ public class PublisherController {
             throw new PublisherBadRequestException("잘못된 입력 입니다.");
         }
         publisherService.updatePublisher(publisherId, publisherRequestDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(new MessageDto("출판사 수정 성공"));
     }
 
     //출판사 삭제
-    @DeleteMapping("/{publisherId}")
-    public ResponseEntity deletePublisher(@Valid @PathVariable("publisherId") Long publisherId) {
+    @DeleteMapping("/publisher/{publisherId}")
+    public ResponseEntity<MessageDto> deletePublisher(@Valid @PathVariable("publisherId") Long publisherId) {
         if (publisherId < 1) {
             throw new PublisherBadRequestException("출판사 id는 1보다 커야 합니다.");
         }
         publisherService.deletePublisher(publisherId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(new MessageDto("출판사 삭제 성공"));
     }
 }

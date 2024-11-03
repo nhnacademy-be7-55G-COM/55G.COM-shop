@@ -1,4 +1,4 @@
-package shop.S5G.shop.exception.CategoryException;
+package shop.S5G.shop.exception.category;
 
 import shop.S5G.shop.exception.AlreadyExistsException;
 

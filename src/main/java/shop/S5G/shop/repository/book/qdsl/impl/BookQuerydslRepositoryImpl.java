@@ -2,31 +2,39 @@ package shop.S5G.shop.repository.book.qdsl.impl;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
+import org.springframework.stereotype.Repository;
 import shop.S5G.shop.dto.Book.BookRequestDto;
 import shop.S5G.shop.dto.Book.BookResponseDto;
 import shop.S5G.shop.entity.Book;
-import shop.S5G.shop.entity.QBook;
 import shop.S5G.shop.repository.book.qdsl.BookQuerydslRepository;
 
 import java.util.List;
 
+import static com.querydsl.jpa.JPAExpressions.select;
 import static shop.S5G.shop.entity.QBook.book;
 
+@Repository
 public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implements BookQuerydslRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
-    public BookQuerydslRepositoryImpl(JPAQueryFactory jpaQueryFactory) {
+
+    public BookQuerydslRepositoryImpl(EntityManager em) {
         super(Book.class);
-        this.jpaQueryFactory = jpaQueryFactory;
+        this.jpaQueryFactory = new JPAQueryFactory(em);
     }
 
-    //도서 수정
+    @PersistenceContext
+    private EntityManager em;
+
+    // 도서 수정
     @Override
     public void updateBook(long bookId, BookRequestDto bookDto) {
-        update(book)
-                .set(book.publisherId, bookDto.publisherId())
-                .set(book.bookStatusId, bookDto.bookStatusId())
+        jpaQueryFactory.update(book)
+                .set(book.publisherId.id, bookDto.publisherId()) //TODO bookDto의 publisherId로 publisher를 찾아 객체를 바꿔줘야 되는지?
+                .set(book.bookStatusId.id, bookDto.bookStatusId()) //TODO bookDto의 statusId로 status를 찾아 객체를 바꿔줘야 되는지?
                 .set(book.title, bookDto.title())
                 .set(book.chapter, bookDto.chapter())
                 .set(book.description, bookDto.description())
@@ -42,39 +50,13 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
                 .execute();
     }
 
-    //모든 도서 List<BookResponseDto>타입으로 리턴
+    // 모든 도서 List<BookResponseDto>타입으로 리턴
     @Override
     public List<BookResponseDto> findAllBookList() {
-        QBook book = QBook.book;
-
         return jpaQueryFactory
                 .select(Projections.fields(BookResponseDto.class,
-                        book.publisherId,
-                        book.bookStatusId,
-                        book.title,
-                        book.chapter,
-                        book.description,
-                        book.publishedDate,
-                        book.isbn,
-                        book.price,
-                        book.discountRate,
-                        book.isPacked,
-                        book.stock,
-                        book.views,
-                        book.createdAt
-                        ))
-                .from(book)
-                .fetch();
-    }
-
-    //도서 상세 BookResponseDto타입으로 리턴
-    @Override
-    public BookResponseDto getBookDetail(long bookId) {
-
-        return jpaQueryFactory
-                .select(Projections.fields(BookResponseDto.class,
-                        book.publisherId,
-                        book.bookStatusId,
+                        book.publisherId.id.as("publisherId"),
+                        book.bookStatusId.id.as("bookStatusId"),
                         book.title,
                         book.chapter,
                         book.description,
@@ -88,7 +70,29 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
                         book.createdAt
                 ))
                 .from(book)
+                .fetch();
+    }
+
+    // 도서 상세 BookResponseDto타입으로 리턴
+    @Override
+    public BookResponseDto getBookDetail(long bookId) {
+        return select(Projections.fields(BookResponseDto.class,
+                book.publisherId,
+                book.bookStatusId,
+                book.title,
+                book.chapter,
+                book.description,
+                book.publishedDate,
+                book.isbn,
+                book.price,
+                book.discountRate,
+                book.isPacked,
+                book.stock,
+                book.views,
+                book.createdAt
+        ))
+                .from(book)
                 .where(book.bookId.eq(bookId))
-                .fetchOne(); //bookId에 해당하는 단일 결과 반환
+                .fetchOne();
     }
 }

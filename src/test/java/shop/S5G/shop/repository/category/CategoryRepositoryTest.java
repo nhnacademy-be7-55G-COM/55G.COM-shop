@@ -3,18 +3,23 @@ package shop.S5G.shop.repository.category;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
-import java.util.Optional;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import shop.S5G.shop.dto.category.CategoryUpdateRequestDto;
 import shop.S5G.shop.entity.Category;
-import shop.S5G.shop.exception.CategoryException.CategoryResourceNotFoundException;
-import shop.S5G.shop.repository.CategoryRepository;
+import shop.S5G.shop.exception.category.CategoryResourceNotFoundException;
 
 @DataJpaTest
 class CategoryRepositoryTest {
 
     private final CategoryRepository categoryRepository;
+    @Autowired
+    private TestEntityManager testEntityManager;
 
     @Autowired
     public CategoryRepositoryTest(CategoryRepository categoryRepository) {
@@ -25,14 +30,12 @@ class CategoryRepositoryTest {
      * 카테고리 등록 test
      */
     @Test
+    @DisplayName("카테고리 등록 test")
     void addCategoryTest() {
-        Category category = new Category();
+        Category category = new Category(null, "컴퓨터", true);
         Category c = categoryRepository.save(category);
-        Optional<Category> id = categoryRepository.findById(c.getCategoryId());
-        c.setCategoryName("dd");
-        Category saved = categoryRepository.save(c);
 
-        assertEquals(category, id.get());
+        assertEquals(1, categoryRepository.findAll().size());
     }
 
     /**
@@ -40,12 +43,14 @@ class CategoryRepositoryTest {
      */
     @Test
     void getAllCategoriesTest() {
-        Category category1 = new Category();
+        Category category1 = new Category(null, "헬스", true);
         Category category2 = new Category(category1, "컴퓨터", true);
 
         categoryRepository.save(category1);
         categoryRepository.save(category2);
+
         List<Category> categories = categoryRepository.findAll();
+
         assertEquals(2, categories.size());
     }
 
@@ -54,28 +59,43 @@ class CategoryRepositoryTest {
      */
     @Test
     void updateCategoryTest() {
-        Category category1 = new Category();
+        Category category1 = new Category(null, "음악", true);
         Category category2 = new Category(category1, "컴퓨터", true);
-        Category category3 = new Category(category1, "인문학", true);
-        categoryRepository.save(category1);
-        Category save1 = categoryRepository.save(category2);
-        Category category = categoryRepository.findById(save1.getCategoryId()).orElseThrow(() -> new CategoryResourceNotFoundException("찾을 수 없습니다."));
 
-        category.setCategoryId(category3.getCategoryId());
-        category.setParentCategory(category3.getParentCategory());
-        category.setCategoryName(category3.getCategoryName());
-        category.setActive(category3.isActive());
-        Category saved = categoryRepository.save(category);
-        assertEquals(saved.getCategoryName(), "인문학");
+        Category saved1 = categoryRepository.save(category1);
+        Category saved2 = categoryRepository.save(category2);
+
+        CategoryUpdateRequestDto category3 = new CategoryUpdateRequestDto("인문학", true);
+
+        //category2를 category3으로 수정
+        categoryRepository.updatesCategory(saved2.getCategoryId(), category3);
+
+        //영속성 컨텍스트를 갱신해 변경사항을 반영
+        testEntityManager.flush();
+        testEntityManager.clear();
+
+        //DB에서 다시 조회하여 반영 확인
+        Category newCategory = categoryRepository.findById(saved2.getCategoryId())
+                .orElseThrow(() -> new CategoryResourceNotFoundException("해당 카테고리는 존재하지 않습니다."));
+        Assertions.assertEquals("인문학", newCategory.getCategoryName());
+
     }
     /**
      * 카테고리 삭제 test
      */
     @Test
     void deleteCategoryTest() {
-        Category category1 = new Category();
-        categoryRepository.save(category1);
-        categoryRepository.delete(category1);
-        assertEquals(categoryRepository.count(), 0);
+        Category category = new Category(null, "음악", true);
+        Category saved = categoryRepository.save(category);
+
+        categoryRepository.inactiveCategory(saved.getCategoryId());
+
+        testEntityManager.flush();
+        testEntityManager.clear();
+
+        Category result = categoryRepository.findById(saved.getCategoryId())
+                .orElseThrow(() -> new CategoryResourceNotFoundException("해당 카테고리는 존재하지 않습니다."));
+        Assertions.assertEquals(false, result.isActive());
+
     }
 }

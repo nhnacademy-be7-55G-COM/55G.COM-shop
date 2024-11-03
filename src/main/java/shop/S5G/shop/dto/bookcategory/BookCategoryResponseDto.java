@@ -6,6 +6,6 @@ public record BookCategoryResponseDto (
     @NotNull
     Long categoryId,
     @NotNull
-    Long BookId
+    Long bookId
 ){
 }

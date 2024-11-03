@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import shop.S5G.shop.dto.bookcategory.BookCategoryResponseDto;
+import shop.S5G.shop.dto.tag.MessageDto;
 import shop.S5G.shop.service.bookcategory.BookCategoryService;
 
 import java.util.List;
@@ -20,24 +21,23 @@ public class BookCategoryController {
 
     //도서 내 카테고리 등록
     @PostMapping("/bookcategory/{bookId}/{categoryId}")
-    public ResponseEntity addCategoryInBook(@PathVariable("bookId") Long bookId, @PathVariable("categoryId") Long categoryId) {
+    public ResponseEntity<MessageDto> addCategoryInBook(@PathVariable("bookId") Long bookId, @PathVariable("categoryId") Long categoryId) {
         bookCategoryService.addCategoryInBook(bookId, categoryId);
-        return ResponseEntity.ok().body("등록 성공");
+        return ResponseEntity.ok().body(new MessageDto("도서 내 카테고리 등록 성공"));
     }
 
     //도서 내 카테고리 조회
     @GetMapping("/bookcategory/{bookId}")
-    public ResponseEntity getCategoryInBook(@PathVariable("bookId") Long bookId) {
-        List<BookCategoryResponseDto> categoryList = bookCategoryService.getCategoryInBook(bookId);
-        return ResponseEntity.ok().body(categoryList);
+    public ResponseEntity<List<BookCategoryResponseDto>> getCategoryInBook(@PathVariable("bookId") Long bookId) {
+        return ResponseEntity.ok().body(bookCategoryService.getCategoryInBook(bookId));
     }
 
 
 
     //도서 내 카테고리 삭제
     @DeleteMapping("/bookcategory/{bookId}/{categoryId}")
-    public ResponseEntity deleteCategoryInBook(@PathVariable("bookId") Long bookId, @PathVariable("categoryId") Long categoryId) {
+    public ResponseEntity<MessageDto> deleteCategoryInBook(@PathVariable("bookId") Long bookId, @PathVariable("categoryId") Long categoryId) {
         bookCategoryService.deleteCategory(bookId, categoryId);
-        return ResponseEntity.ok().body("삭제 성공");
+        return ResponseEntity.ok().body(new MessageDto("도서 내 카테고리 삭제 성공"));
     }
 }

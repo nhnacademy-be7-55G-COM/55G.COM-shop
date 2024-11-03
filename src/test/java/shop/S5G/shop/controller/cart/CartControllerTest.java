@@ -1,4 +1,4 @@
-package shop.S5G.shop.controller;
+package shop.S5G.shop.controller.cart;
 
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -18,16 +18,14 @@ import java.math.BigDecimal;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
-import org.springframework.test.annotation.IfProfileValue;
 import org.springframework.test.context.junit.jupiter.DisabledIf;
 import org.springframework.test.web.servlet.MockMvc;
 import shop.S5G.shop.config.RedisConfig;
+import shop.S5G.shop.controller.CartController;
 import shop.S5G.shop.dto.cart.response.CartBooksResponseDto;
 import shop.S5G.shop.service.cart.impl.CartServiceImpl;
 

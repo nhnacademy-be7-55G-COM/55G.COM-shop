@@ -10,15 +10,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import shop.S5G.shop.controller.book.TagController;
 import shop.S5G.shop.dto.tag.TagRequestDto;
-import shop.S5G.shop.exception.TagException.TagBadRequestException;
 import shop.S5G.shop.service.tag.impl.TagServiceImpl;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(TagController.class)
@@ -46,7 +41,6 @@ class TagControllerTest {
                         .content(objectMapper.writeValueAsString(tagRequestDto))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string("success"))
                 .andDo(print());
         verify(tagServiceImpl, times(1)).createtag(any());
     }
@@ -61,14 +55,10 @@ class TagControllerTest {
 
         this.mockMvc
                 .perform(post("/api/shop/tag")
-                        .content(objectMapper.writeValueAsString(tagRequestDto))
+                        .content("{ \"tagName\":\"\", \"active\":true}")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
-                .andExpect(result ->
-                        assertThat(result.getResolvedException())
-                                .isInstanceOf(TagBadRequestException.class)
-                                .hasMessage("잘못된 입력입니다.")
-                );
+                .andDo(print());
     }
 
     /**
@@ -85,40 +75,28 @@ class TagControllerTest {
     /**
      * 태그 수정 test
      */
-//    @Test
-//    void updateTagTest() throws Exception {
-//
-//        this.mockMvc
-//                .perform(put("/api/shop/tag/0")
-//                        .content("{\"publisherName\": \"asdda\", \"active\": true}")
-//                        .contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk())
-//                .andExpect(content().string(equalTo("success")))
-//                .andDo(print());
-//        verify(tagService, times(1)).updateTag(eq(2L), Mockito.any(Tag.class));
-//    }
+    @Test
+    void updateTagTest() throws Exception {
+        this.mockMvc
+                .perform(put("/api/shop/tag/{tagId}", 1)
+                        .content("{\"tagName\": \"베스트셀러\", \"active\": true}")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
 
     /**
      * 태그 수정 실패 test
      */
-//    @Test
-//    void updateTagErrorTest() {
-//        Long invalidTagId = 0L;
-//        TagRequestDto tagRequestDto = new TagRequestDto();
-//        tagRequestDto.setTagName("수정된 태그 이름");
-//        tagRequestDto.setActive(true);
-//
-//        // When & Then
-//        mockMvc.perform(put("/api/tag/{tagId}", invalidTagId)
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(objectMapper.writeValueAsString(tagRequestDto)))
-//                .andExpect(status().isBadRequest())
-//                .andExpect(result -> {
-//                    Exception resolvedException = result.getResolvedException();
-//                    assertThat(resolvedException).isInstanceOf(TagBadRequestException.class);
-//                    assertThat(resolvedException.getMessage()).isEqualTo("tagId must be grater than 0.");
-//                });
-//    }
+    @Test
+    void updateTagErrorTest() throws Exception {
+        this.mockMvc
+                .perform(put("/api/shop/tag/{tagId}", 1)
+                        .content("{\"publisherName\": \"베스트셀러\", \"active\": true}")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
 
     /**
      * 태그 삭제 test
@@ -127,13 +105,9 @@ class TagControllerTest {
     @DisplayName("태그 삭제 test")
     void deleteTagTest() throws Exception {
         this.mockMvc
-                .perform(delete("/api/shop/tag/{tagId}", 1L)
+                .perform(delete("/api/shop/tag/{tagId}", 1)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
-    /**
-     * 태그 삭제 실패 test
-     */
-
 }

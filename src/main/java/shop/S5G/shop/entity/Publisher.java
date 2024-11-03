@@ -14,7 +14,7 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "publisher")
@@ -22,7 +22,7 @@ public class Publisher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "publisher_id")
-    private long id;
+    private Long id;
 
     @Length(max = 50)
     @Column(name = "publisher_name")

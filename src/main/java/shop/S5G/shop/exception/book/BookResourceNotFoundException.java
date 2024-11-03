@@ -1,4 +1,4 @@
-package shop.S5G.shop.exception.BookException;
+package shop.S5G.shop.exception.book;
 
 import shop.S5G.shop.exception.ResourceNotFoundException;
 

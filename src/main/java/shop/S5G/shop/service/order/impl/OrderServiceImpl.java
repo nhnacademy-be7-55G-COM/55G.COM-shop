@@ -19,7 +19,7 @@ import shop.S5G.shop.entity.order.Order;
 import shop.S5G.shop.entity.order.OrderDetail;
 import shop.S5G.shop.entity.order.OrderDetailType;
 import shop.S5G.shop.entity.order.WrappingPaper;
-import shop.S5G.shop.exception.BookException.BookResourceNotFoundException;
+import shop.S5G.shop.exception.book.BookResourceNotFoundException;
 import shop.S5G.shop.exception.EssentialDataNotFoundException;
 import shop.S5G.shop.exception.member.CustomerNotFoundException;
 import shop.S5G.shop.exception.order.WrappingPaperDoesNotExistsException;

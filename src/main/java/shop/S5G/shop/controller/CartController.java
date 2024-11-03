@@ -34,14 +34,14 @@ public class CartController {
     //담기
     @PostMapping("/cart")
     public ResponseEntity<Void> putBook(@RequestBody @Validated CartPutRequestDto cartPutRequestDto,
-        BindingResult bindingResult) {
+                                        BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             throw new BadRequestException("Field Error When Putting Book In Cart");
         }
 
         cartService.putBook(cartPutRequestDto.bookId(), cartPutRequestDto.quantity(),
-            cartPutRequestDto.sessionId());
+                cartPutRequestDto.sessionId());
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -49,7 +49,7 @@ public class CartController {
     // 조회
     @GetMapping("/cart/{sessionId}")
     public ResponseEntity<List<CartBooksResponseDto>> lookUpAllBooks(
-        @PathVariable("sessionId") String sessionId) {
+            @PathVariable("sessionId") String sessionId) {
         List<CartBooksResponseDto> cartBooks = cartService.lookUpAllBooks(sessionId);
 
         return new ResponseEntity<>(cartBooks, HttpStatus.OK);
@@ -58,7 +58,7 @@ public class CartController {
     // 도서 1개 삭제
     @PatchMapping("/cart")
     public ResponseEntity<Void> reduceBookQuantityInCart(@RequestBody @Validated
-    CartReduceBookQuantityRequestDto reduceQuantityReq, BindingResult bindingResult) {
+                                                         CartReduceBookQuantityRequestDto reduceQuantityReq, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             throw new BadRequestException("Field Error When Reducing Book Quantity In Cart");
@@ -72,8 +72,8 @@ public class CartController {
     // 특정도서 전체삭제
     @DeleteMapping("/cart")
     public ResponseEntity<Void> deleteBookInCart(
-        @RequestBody @Validated CartDeleteBookRequestDto deleteBookReq,
-        BindingResult bindingResult) {
+            @RequestBody @Validated CartDeleteBookRequestDto deleteBookReq,
+            BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             throw new BadRequestException("Field Error When Deleting Book In Cart");
@@ -87,7 +87,7 @@ public class CartController {
     // AuthenticationSuccessEvent (인증을 성공했으나 아직 세션이 새롭게 생성되지 않고 이전의 세션을 가지고 있는 시점)
     @PostMapping("/cart/RedisToDb/{sessionId}/{customerLoginId}")
     public ResponseEntity<Void> SaveFromRedisToDb(@PathVariable("sessionId") String sessionId,
-        @PathVariable("customerLoginId") String customerLoginId) {
+                                                  @PathVariable("customerLoginId") String customerLoginId) {
 
         cartService.saveMergedCartToDb(sessionId, customerLoginId);
 
@@ -98,7 +98,7 @@ public class CartController {
     // SessionFixationProtectionEvent (인증을 성공하고 새로운 세션이 생성된 시점)
     @PostMapping("/cart/DbToRedis/{sessionId}/{customerLoginId}")
     public ResponseEntity<Void> saveFromDbToRedis(@PathVariable("sessionId") String sessionId,
-        @PathVariable("customerLoginId") String customerLoginId) {
+                                                  @PathVariable("customerLoginId") String customerLoginId) {
 
         cartService.transferCartFromDbToRedis(sessionId, customerLoginId);
 

@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import shop.S5G.shop.entity.Category;
 
 public record CategoryResponseDto (
-    Category parentCategory,
+    Long parentCategory,
     @NotNull
     String categoryName,
     @NotNull

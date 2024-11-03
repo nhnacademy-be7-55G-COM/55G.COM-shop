@@ -4,10 +4,11 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import shop.S5G.shop.dto.tag.MessageDto;
 import shop.S5G.shop.dto.tag.TagRequestDto;
 import shop.S5G.shop.dto.tag.TagResponseDto;
 import shop.S5G.shop.entity.Tag;
-import shop.S5G.shop.exception.TagException.TagBadRequestException;
+import shop.S5G.shop.exception.tag.TagBadRequestException;
 import shop.S5G.shop.service.tag.impl.TagServiceImpl;
 
 import java.util.List;
@@ -21,42 +22,40 @@ public class TagController {
     }
     //태그 등록
     @PostMapping("/tag")
-    public ResponseEntity addBook(@Valid @RequestBody TagRequestDto tagDto, BindingResult bindingResult) {
+    public ResponseEntity<MessageDto> addBook(@Valid @RequestBody TagRequestDto tagDto, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
             throw new TagBadRequestException("잘못된 입력입니다.");
         }
         tagServiceImpl.createtag(tagDto);
-        return ResponseEntity.ok().body("success");
+        return ResponseEntity.ok().body(new MessageDto("테그 등록 성공"));
     }
 
     //태그 목록 조회
     @GetMapping("/tag")
     public ResponseEntity<List<TagResponseDto>> getAllTags() {
-        List<TagResponseDto> tagResponseDtos = tagServiceImpl.allTag();
-        return ResponseEntity.ok().body(tagResponseDtos);
+        return ResponseEntity.ok().body(tagServiceImpl.allTag());
     }
 
     //태그 수정
     @PutMapping("/tag/{tagId}")
-    public ResponseEntity updateTag(@Valid @PathVariable("tagId") Long tagId, @Valid @RequestBody TagRequestDto tagdto, BindingResult bindingResult) {
+    public ResponseEntity<MessageDto> updateTag(@Valid @PathVariable("tagId") Long tagId, @Valid @RequestBody TagRequestDto tagDto, BindingResult bindingResult) {
         if(tagId <1L) {
         throw new TagBadRequestException("tagId must be grater than 0.");
         }
         if(bindingResult.hasErrors()) {
             throw new TagBadRequestException("잘못된 입력입니다.");
         }
-        Tag tag = new Tag(tagdto.tagName(), tagdto.active());
-        tagServiceImpl.updateTag(tagId, tag);
-        return ResponseEntity.ok().body("success");
+        tagServiceImpl.updateTag(tagId, tagDto);
+        return ResponseEntity.ok().body(new MessageDto("테그 수정 성공"));
     }
 
     //태그 삭제
     @DeleteMapping("/tag/{tagId}")
-    public ResponseEntity deleteTag(@Valid @PathVariable("tagId") Long tagId) {
+    public ResponseEntity<MessageDto> deleteTag(@Valid @PathVariable("tagId") Long tagId) {
         if(tagId <1L) {
             throw new TagBadRequestException("tagId must be grater than 0.");
         }
         tagServiceImpl.deleteTags(tagId);
-        return ResponseEntity.ok().body("success");
+        return ResponseEntity.ok().body(new MessageDto("테그 삭제 성공"));
     }
 }

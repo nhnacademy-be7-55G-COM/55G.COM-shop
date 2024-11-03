@@ -1,20 +1,25 @@
 package shop.S5G.shop.repository.book;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import shop.S5G.shop.dto.bookcategory.BookCategoryResponseDto;
 import shop.S5G.shop.entity.Book;
+import shop.S5G.shop.entity.BookStatus;
+import shop.S5G.shop.entity.Publisher;
 import shop.S5G.shop.entity.bookcategory.BookCategory;
 import shop.S5G.shop.entity.bookcategory.BookCategoryId;
 import shop.S5G.shop.entity.Category;
-import shop.S5G.shop.exception.BookException.BookResourceNotFoundException;
-import shop.S5G.shop.exception.bookcategory.BookCategoryResourceNotFoundException;
-import shop.S5G.shop.repository.CategoryRepository;
+import shop.S5G.shop.repository.bookstatus.BookStatusRepository;
+import shop.S5G.shop.repository.category.CategoryRepository;
 import shop.S5G.shop.repository.bookcategory.BookCategoryRepository;
+import shop.S5G.shop.repository.publisher.PublisherRepository;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @DataJpaTest
 class BookCategoryRepositoryTest {
@@ -23,6 +28,11 @@ class BookCategoryRepositoryTest {
     private final CategoryRepository categoryRepository;
     private final BookRepository bookRepository;
     @Autowired
+    private PublisherRepository publisherRepository;
+    @Autowired
+    private BookStatusRepository bookStatusRepository;
+
+    @Autowired
     public BookCategoryRepositoryTest(BookCategoryRepository bookCategoryRepository, CategoryRepository categoryRepository, BookRepository bookRepository) {
         this.bookCategoryRepository = bookCategoryRepository;
         this.categoryRepository = categoryRepository;
@@ -30,14 +40,17 @@ class BookCategoryRepositoryTest {
     }
 
     /**
-     * 도서카테고리 등록 test
+     * 도서 내 카테고리 등록 test
      */
     @Test
+    @DisplayName("도서 내 카테고리 등록 test")
     void addBookCategoryTest() {
+        Publisher publisher = new Publisher();
+        BookStatus bookStatus = new BookStatus();
+
         Book book1 = new Book(
-                1L,
-                22L,
-                222L,
+                publisher,
+                bookStatus,
                 "아낌없이 주는 나무",
                 "전래동화",
                 "이 책은 전래동화 입니다.",
@@ -51,18 +64,52 @@ class BookCategoryRepositoryTest {
                 LocalDateTime.of(2010, 5, 5, 15, 30)
         );
 
-        Category category1 = new Category(1L, null, "컴퓨터", true);
+        Category category1 = new Category( null, "컴퓨터", true);
 
-        Book save = bookRepository.save(book1);
-        Category save1 = categoryRepository.save(category1);
-
-        Book book2 = bookRepository.findById(save.getBookId()).orElseThrow(() -> new BookResourceNotFoundException("Book not found"));
-        Category category2 = categoryRepository.findById(save.getBookId()).orElseThrow(() -> new BookCategoryResourceNotFoundException("Book category not found"));
-
-        BookCategory bookCategory = new BookCategory(new BookCategoryId(1L, 1L), category2, book2);
+        BookCategory bookCategory = new BookCategory(new BookCategoryId(book1.getBookId(), category1.getCategoryId()), category1, book1);
 
         bookCategoryRepository.save(bookCategory);
         Assertions.assertEquals(1, bookCategoryRepository.count());
+    }
+
+    /**
+     * 도서 내 카테고리 조회 test
+     */
+    @Test
+    @DisplayName("도서 내 카테고리 조회 test")
+    void getBookCategoryTest() {
+        Publisher publisher = new Publisher();
+        BookStatus bookStatus = new BookStatus();
+
+        publisherRepository.save(publisher);
+        bookStatusRepository.save(bookStatus);
+
+        Book book1 = new Book(
+                publisher,
+                bookStatus,
+                "아낌없이 주는 나무",
+                "전래동화",
+                "이 책은 전래동화 입니다.",
+                LocalDateTime.of(2000, 10, 10, 10, 50),
+                "978-3-15-148410-2",
+                15000L,
+                new BigDecimal("5.5"),
+                true,
+                200,
+                2000L,
+                LocalDateTime.of(2010, 5, 5, 15, 30)
+        );
+
+        Category category1 = new Category( null, "컴퓨터", true);
+
+        Book saveBook = bookRepository.save(book1);
+        Category saveCategory = categoryRepository.save(category1);
+
+        BookCategory bookCategory = new BookCategory(new BookCategoryId(saveBook.getBookId(), saveCategory.getCategoryId()), saveCategory, saveBook);
+        BookCategory save = bookCategoryRepository.save(bookCategory);
+
+        List<BookCategoryResponseDto> categoryByBookId = bookCategoryRepository.findCategoryByBookId(saveBook.getBookId());
+        Assertions.assertEquals(category1.getCategoryId(), categoryByBookId.getFirst().categoryId());
     }
 
     /**
@@ -70,10 +117,15 @@ class BookCategoryRepositoryTest {
      */
     @Test
     void deleteBookCategoryTest() {
+        Publisher publisher = new Publisher();
+        BookStatus bookStatus = new BookStatus();
+
+        publisherRepository.save(publisher);
+        bookStatusRepository.save(bookStatus);
+
         Book book1 = new Book(
-                3L,
-                22L,
-                222L,
+                publisher,
+                bookStatus,
                 "아낌없이 주는 나무",
                 "전래동화",
                 "이 책은 전래동화 입니다.",
@@ -86,17 +138,15 @@ class BookCategoryRepositoryTest {
                 2000L,
                 LocalDateTime.of(2010, 5, 5, 15, 30)
         );
-        Category category1 = new Category(3L, null, "컴퓨터", true);
+        Category category1 = new Category(null, "컴퓨터", true);
 
-        Book book = bookRepository.save(book1);
-        Category category = categoryRepository.save(category1);
+        Book saveBook = bookRepository.save(book1);
+        Category saveCategory = categoryRepository.save(category1);
 
-        BookCategory bookCategory1 = new BookCategory(new BookCategoryId(3L, 3L), category, book);
+        BookCategory bookCategory = new BookCategory(new BookCategoryId(saveBook.getBookId(), saveCategory.getCategoryId()), saveCategory, saveBook);
+        BookCategory save = bookCategoryRepository.save(bookCategory);
 
-        BookCategory save1 = bookCategoryRepository.save(bookCategory1);
-        Assertions.assertEquals(1, bookCategoryRepository.count());
-
-        bookCategoryRepository.delete(save1);
+        bookCategoryRepository.delete(bookCategory);
         Assertions.assertEquals(0, bookCategoryRepository.count());
     }
 }

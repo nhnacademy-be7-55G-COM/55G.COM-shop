@@ -7,8 +7,8 @@ import shop.S5G.shop.entity.Tag;
 import java.util.List;
 
 public interface TagService {
-    public void createtag(TagRequestDto tagDto);
-    public List<TagResponseDto> allTag();
-    public void updateTag(Long tagId, Tag tag);
-    public void deleteTags(Long tagId);
+    void createtag(TagRequestDto tagDto);
+    List<TagResponseDto> allTag();
+    void updateTag(Long tagId, TagRequestDto tagDto);
+    void deleteTags(Long tagId);
 }

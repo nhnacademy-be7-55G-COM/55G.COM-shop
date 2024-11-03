@@ -8,7 +8,7 @@ import shop.S5G.shop.repository.bookcategory.qdsl.BookCategoryQuerydslRepository
 import java.util.List;
 
 public interface BookCategoryRepository extends JpaRepository<BookCategory, BookCategoryId>, BookCategoryQuerydslRepository {
-    List<Long> findCategoryIdByIdBookId(Long bookId);
+
 }
 
 

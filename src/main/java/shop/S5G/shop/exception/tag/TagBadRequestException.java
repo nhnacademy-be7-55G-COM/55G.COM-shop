@@ -1,4 +1,4 @@
-package shop.S5G.shop.exception.TagException;
+package shop.S5G.shop.exception.tag;
 
 import shop.S5G.shop.exception.BadRequestException;
 

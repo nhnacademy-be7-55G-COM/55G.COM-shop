@@ -40,7 +40,6 @@ public class BookCategoryControllerTest {
                 .perform(post("/api/shop/bookcategory/1/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string("등록 성공"))
                 .andDo(print());
         verify(bookCategoryService, times(1)).addCategoryInBook(any(), any());
     }

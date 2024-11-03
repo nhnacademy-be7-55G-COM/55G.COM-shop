@@ -1,11 +1,10 @@
 package shop.S5G.shop.dto.publisher;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
-
+import jakarta.validation.constraints.Size;
 
 public record PublisherRequestDto (
+    @Size(min = 1, max = 50)
     @NotNull
     String name,
 
