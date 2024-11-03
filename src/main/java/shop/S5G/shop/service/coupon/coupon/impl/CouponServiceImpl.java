@@ -1,5 +1,6 @@
 package shop.S5G.shop.service.coupon.coupon.impl;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -13,6 +14,7 @@ import shop.S5G.shop.dto.coupon.coupon.CouponRequestDto;
 import shop.S5G.shop.dto.coupon.coupon.CouponResponseDto;
 import shop.S5G.shop.entity.coupon.Coupon;
 import shop.S5G.shop.entity.coupon.CouponTemplate;
+import shop.S5G.shop.exception.coupon.CouponAlreadyDeletedException;
 import shop.S5G.shop.exception.coupon.CouponNotFoundException;
 import shop.S5G.shop.exception.coupon.CouponTemplateNotFoundException;
 import shop.S5G.shop.repository.coupon.coupon.CouponRepository;
@@ -35,7 +37,7 @@ public class CouponServiceImpl implements CouponService {
     @Override
     public void createCoupon(Integer couponCnt, CouponRequestDto couponRequestDto) {
 
-        if (Objects.isNull(couponCnt) || couponCnt < 0) {
+        if (Objects.isNull(couponCnt) || couponCnt <= 0) {
             throw new IllegalArgumentException("쿠폰 수량이 잘못 지정되었습니다.");
         }
 
@@ -93,17 +95,42 @@ public class CouponServiceImpl implements CouponService {
      * @param couponId
      */
     @Override
-    public void updateCoupon(Long couponId) {
+    public void updateCoupon(Long couponId, LocalDateTime expiredAt) {
 
         if (Objects.isNull(couponId) || couponId < 0) {
             throw new IllegalArgumentException("쿠폰 아이디가 잘못 지정되었습니다.");
         }
 
+        if (!couponRepository.existsById(couponId)) {
+            throw new CouponNotFoundException("해당 쿠폰이 존재하지 않습니다.");
+        }
+
+        if (!couponRepository.checkActiveCoupon(couponId)) {
+            throw new CouponAlreadyDeletedException("해당 쿠폰은 삭제된 쿠폰입니다.");
+        }
+
+        couponRepository.updateCouponExpiredDatetime(couponId, expiredAt);
     }
 
+    /**
+     * 쿠폰 삭제
+     * @param couponId
+     */
     @Override
     public void deleteCoupon(Long couponId) {
+        if (Objects.isNull(couponId) || couponId <= 0) {
+            throw new IllegalArgumentException("쿠폰 아이디의 값이 잘못 지정되었습니다.");
+        }
 
+        if (!couponRepository.existsById(couponId)) {
+            throw new CouponNotFoundException("해당 쿠폰은 존재하지 않는 쿠폰입니다.");
+        }
+
+        if (!couponRepository.checkActiveCoupon(couponId)) {
+            throw new CouponAlreadyDeletedException("해당 쿠폰은 삭제된 쿠폰입니다.");
+        }
+
+        couponRepository.deleteCouponById(couponId);
     }
 
     /**

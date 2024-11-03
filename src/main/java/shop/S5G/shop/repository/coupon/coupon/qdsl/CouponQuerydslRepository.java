@@ -14,4 +14,6 @@ public interface CouponQuerydslRepository {
     List<CouponResponseDto> findCoupons(Pageable pageable);
 
     void deleteCouponById(Long couponId);
+
+    boolean checkActiveCoupon(Long couponId);
 }

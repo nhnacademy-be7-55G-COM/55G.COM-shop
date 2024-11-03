@@ -1,5 +1,6 @@
 package shop.S5G.shop.service.coupon.coupon;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 import shop.S5G.shop.dto.coupon.coupon.CouponRequestDto;
@@ -13,7 +14,7 @@ public interface CouponService {
 
     List<CouponResponseDto> findCoupons(Pageable pageable);
 
-    void updateCoupon(Long couponId);
+    void updateCoupon(Long couponId, LocalDateTime expiredAt);
 
     void deleteCoupon(Long couponId);
 }
