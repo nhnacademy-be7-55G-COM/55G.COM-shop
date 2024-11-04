@@ -1,5 +1,6 @@
 package shop.S5G.shop.entity.coupon;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -26,6 +27,7 @@ public class CouponTemplate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "coupon_template_id")
     private Long couponTemplateId;
 
     @Setter
