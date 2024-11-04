@@ -37,12 +37,10 @@ for line in $docker_ps; do
   i=$((i+1))
 done
 
-EUREKA_SERVER=$(grep "defaultZone" application.yml | sed 's/.*defaultZone:[[:space:]]*//')
-echo "Eureka Server URL: ${EUREKA_SERVER}..."
 for ((i=1; i<${#ps_arr[@]}; i++)); do
     instance_id="shop-service-${i}"
 
-    curl -X POST ${EUREKA_SERVER}/apps/shop-service/${instance_id}/status?value=DOWN
+    curl -X POST http://localhost:$server_port/actuator/status
     sleep 30;
 
     echo "Removing container ${ps_arr[i]}..."
@@ -61,6 +59,11 @@ for ((i=1; i<${#ps_arr[@]}; i++)); do
            -v /logs:/logs \
            -v /var/55g/static:/static \
        $image_name-$container_postfix
+
+     until $(curl --output /dev/null --silent --head --fail http://localhost:$server_port/actuator/health); do
+         echo "Waiting for the application to be ready..."
+         sleep 5
+     done
 done
 
 echo "Pruning images..."
