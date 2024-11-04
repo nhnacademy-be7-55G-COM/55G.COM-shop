@@ -10,6 +10,7 @@ import shop.S5G.shop.dto.delivery.DeliveryCreateRequestDto;
 import shop.S5G.shop.dto.order.OrderCreateRequestDto;
 import shop.S5G.shop.dto.order.OrderCreateResponseDto;
 import shop.S5G.shop.dto.order.OrderDetailCreateRequestDto;
+import shop.S5G.shop.dto.order.OrderQueryRequestDto;
 import shop.S5G.shop.dto.order.OrderWithDetailResponseDto;
 import shop.S5G.shop.entity.Book;
 import shop.S5G.shop.entity.member.Customer;
@@ -109,5 +110,13 @@ public class OrderServiceImpl implements OrderService {
                 .build();
             orderDetailRepository.save(orderDetail);
         }
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<OrderWithDetailResponseDto> queryAllOrdersByCustomerIdBetweenDates(OrderQueryRequestDto queryRequest) {
+        return orderRepository.findOrdersByCustomerIdBetweenDates(
+            queryRequest.customerId(), queryRequest.startDate(), queryRequest.endDate()
+        );
     }
 }
