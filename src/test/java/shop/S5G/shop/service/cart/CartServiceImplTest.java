@@ -1,4 +1,4 @@
-package shop.S5G.shop.service;
+package shop.S5G.shop.service.cart;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -31,7 +31,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import shop.S5G.shop.entity.Book;
 import shop.S5G.shop.exception.BadRequestException;
 import shop.S5G.shop.exception.ResourceNotFoundException;
-import shop.S5G.shop.repository.BookRepository;
+
+import shop.S5G.shop.repository.book.BookRepository;
 import shop.S5G.shop.repository.cart.CartRedisRepository;
 import shop.S5G.shop.repository.cart.CartRepository;
 import shop.S5G.shop.service.cart.impl.CartServiceImpl;
@@ -47,9 +48,6 @@ class CartServiceImplTest {
 
     @Mock
     CartRedisRepository cartRedisRepository;
-
-    @Mock
-    BookService bookService;
 
     @InjectMocks
     CartServiceImpl cartServiceImpl;

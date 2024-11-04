@@ -17,10 +17,12 @@ import shop.S5G.shop.entity.cart.CartPk;
 import shop.S5G.shop.entity.member.Member;
 import shop.S5G.shop.exception.BadRequestException;
 import shop.S5G.shop.exception.ResourceNotFoundException;
-import shop.S5G.shop.repository.BookRepository;
+
+import shop.S5G.shop.repository.book.BookRepository;
 import shop.S5G.shop.repository.cart.CartRedisRepository;
 import shop.S5G.shop.repository.cart.CartRepository;
-import shop.S5G.shop.service.BookService;
+
+
 import shop.S5G.shop.service.cart.CartService;
 import shop.S5G.shop.service.member.MemberService;
 
@@ -31,7 +33,6 @@ public class CartServiceImpl implements CartService {
 
     private final CartRepository cartRepository;
     private final CartRedisRepository cartRedisRepository;
-    private final BookService bookService;
     private final MemberService memberService;
     private final BookRepository bookRepository;
 //     ----------- MySql && Redis 관련 -----------

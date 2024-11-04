@@ -46,7 +46,13 @@ class CartControllerTest {
     @Test
     void putBookTest() throws Exception {
 
-        String content = "{\"sessionId\":\"testSessionId\",\"bookId\":1,\"quantity\":3}";
+        String content = """
+            {
+                "sessionId": "testSessionId",
+                "bookId": 1,
+                "quantity": 3
+            }
+            """;
         mockMvc.perform(post("/api/shop/cart")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content))
@@ -57,7 +63,13 @@ class CartControllerTest {
 
     @Test
     void putBookValidationFailTest() throws Exception {
-        String content = "{\"sessionId\":\"\",\"bookId\":null,\"quantity\":3}";
+        String content = """
+                {
+                    "sessionId": "",
+                    "bookId": null,
+                    "quantity": 3
+                }
+            """;
         mockMvc.perform(post("/api/shop/cart")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content))
@@ -113,7 +125,12 @@ class CartControllerTest {
     @Test
     void deleteBookInCartTest() throws Exception {
         //given
-        String content = "{\"sessionId\":\"testSessionId\",\"bookId\":1}";
+        String content = """
+                {
+                    "sessionId": "testSessionId",
+                    "bookId": 1
+                }
+            """;
         //when
         mockMvc.perform(delete("/api/shop/cart")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -126,7 +143,13 @@ class CartControllerTest {
     @Test
     void deleteBookInCartValidationFailTest() throws Exception {
         //given
-        String content = "{\"sessionId\":\"\",\"bookId\":1}";
+
+        String content = """
+                {
+                    "sessionId": "",
+                    "bookId": 1
+                }
+            """;
         //when
         mockMvc.perform(delete("/api/shop/cart")
                 .contentType(MediaType.APPLICATION_JSON)
