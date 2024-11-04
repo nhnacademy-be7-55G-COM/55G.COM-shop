@@ -37,25 +37,31 @@ for line in $docker_ps; do
   i=$((i+1))
 done
 
+EUREKA_SERVER=$(grep "defaultZone" application.yml | sed 's/.*defaultZone:[[:space:]]*//')
+echo "Eureka Server URL: ${EUREKA_SERVER}..."
 for ((i=1; i<${#ps_arr[@]}; i++)); do
+    instance_id="shop-service-${i}"
+
+    curl -X POST ${EUREKA_SERVER}/apps/shop-service/${instance_id}/status?value=DOWN
+    sleep 30;
+
     echo "Removing container ${ps_arr[i]}..."
     docker stop ${ps_arr[i]}
     docker rm ${ps_arr[i]}
-done
 
-echo "Building docker image..."
-docker build -t $image_name-$container_postfix .
+    echo "Building docker image..."
+    docker build -t $image_name-$container_postfix .
 
-echo "Creating container for service..."
-docker run -d --name $container_name \
-       --network $network_bridge \
-       --env SPRING_PROFILE=$spring_env \
-       --env SERVER_PORT=$server_port \
-       --add-host host.docker.internal:host-gateway \
-       -p $server_port:$server_port \
-       -v /logs:/logs \
-       -v /var/55g/static:/static \
+    echo "Creating container for service..."
+    docker run -d --name $container_name \
+           --network $network_bridge \
+           --env SPRING_PROFILE=$spring_env \
+           --env SERVER_PORT=$server_port \
+           -p $server_port:$server_port \
+           -v /logs:/logs \
+           -v /var/55g/static:/static \
        $image_name-$container_postfix
+done
 
 echo "Pruning images..."
 docker image prune --force

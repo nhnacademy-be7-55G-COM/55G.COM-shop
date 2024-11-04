@@ -31,6 +31,10 @@ management:
       exposure:
         include: refresh,busrefresh
 
+eureka:
+  instance:
+    instance-id: shop-service-1
+
 ---
 spring:
   config:
