@@ -31,11 +31,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import shop.S5G.shop.entity.Book;
 import shop.S5G.shop.exception.BadRequestException;
 import shop.S5G.shop.exception.ResourceNotFoundException;
+
 import shop.S5G.shop.repository.book.BookRepository;
 import shop.S5G.shop.repository.cart.CartRedisRepository;
 import shop.S5G.shop.repository.cart.CartRepository;
 import shop.S5G.shop.service.cart.impl.CartServiceImpl;
-import shop.S5G.shop.service.book.BookService;
+
 
 
 @ExtendWith(MockitoExtension.class)
@@ -47,9 +48,6 @@ class CartServiceImplTest {
 
     @Mock
     CartRedisRepository cartRedisRepository;
-
-    @Mock
-    BookService bookService;
 
     @InjectMocks
     CartServiceImpl cartServiceImpl;
@@ -68,7 +66,7 @@ class CartServiceImplTest {
 
         //when
         assertThatThrownBy(() -> cartServiceImpl.putBook(123L, 1, "testSessionId"))
-                .isInstanceOf(ResourceNotFoundException.class);
+            .isInstanceOf(ResourceNotFoundException.class);
 
         //then
         verify(bookRepository, times(1)).findById(anyLong());
@@ -84,7 +82,7 @@ class CartServiceImplTest {
 
         //when
         assertThatCode(() -> cartServiceImpl.putBook(1L, 1, "testSessionId"))
-                .doesNotThrowAnyException();
+            .doesNotThrowAnyException();
 
 
         //then
@@ -99,7 +97,7 @@ class CartServiceImplTest {
 
         //when
         assertThatThrownBy(() -> cartServiceImpl.lookUpAllBooks(testSessionId)).isInstanceOf(
-                BadRequestException.class);
+            BadRequestException.class);
 
         //then
         verify(bookRepository, never()).findAllById(anyList());
@@ -109,9 +107,9 @@ class CartServiceImplTest {
 
     void setupForLookUpAllBooks() throws Exception {
         Book book1 = Book.builder().price(1000l).discountRate(BigDecimal.valueOf(0.1))
-                .stock(10).title("title1").build();
+            .stock(10).title("title1").build();
         Book book2 = Book.builder().price(2000l).discountRate(BigDecimal.valueOf(0.2))
-                .stock(20).title("title2").build();
+            .stock(20).title("title2").build();
 
         Field bookIdField = Book.class.getDeclaredField("bookId");
         bookIdField.setAccessible(true);
@@ -163,7 +161,7 @@ class CartServiceImplTest {
 
         //when
         assertThatCode(
-                () -> cartServiceImpl.putBookByMap(anyMap(), anyString())).doesNotThrowAnyException();
+            () -> cartServiceImpl.putBookByMap(anyMap(), anyString())).doesNotThrowAnyException();
 
         //then
         verify(cartRedisRepository, times(1)).putBookByMap(anyMap(), anyString());
@@ -176,7 +174,7 @@ class CartServiceImplTest {
 
         //when
         assertThatCode(() -> cartServiceImpl.reduceBookQuantity(anyLong(),
-                anyString())).doesNotThrowAnyException();
+            anyString())).doesNotThrowAnyException();
 
 
         //then
@@ -191,7 +189,7 @@ class CartServiceImplTest {
         doNothing().when(cartRedisRepository).deleteBookFromCart(anyLong(), anyString());
         //when
         assertThatCode(() -> cartServiceImpl.deleteBookFromCart(anyLong(),
-                anyString())).doesNotThrowAnyException();
+            anyString())).doesNotThrowAnyException();
 
         //then
         verify(cartRedisRepository).deleteBookFromCart(anyLong(), anyString());
@@ -229,7 +227,7 @@ class CartServiceImplTest {
         doNothing().when(cartRedisRepository).setCustomerId(anyString(), anyString());
         //when
         assertThatCode(
-                () -> cartServiceImpl.setCustomerId(anyString(), anyString())).doesNotThrowAnyException();
+            () -> cartServiceImpl.setCustomerId(anyString(), anyString())).doesNotThrowAnyException();
 
         //then
         verify(cartRedisRepository, times(1)).setCustomerId(anyString(), anyString());

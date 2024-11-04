@@ -4,6 +4,7 @@ package shop.S5G.shop.service.cart;
 import java.util.List;
 import java.util.Map;
 import shop.S5G.shop.dto.cart.response.CartBooksResponseDto;
+import shop.S5G.shop.dto.cart.response.CartDetailInfoResponseDto;
 import shop.S5G.shop.entity.cart.Cart;
 
 public interface CartService {
@@ -30,7 +31,7 @@ public interface CartService {
 
     // ----------- only Redis 관련 -----------
 
-
+    void controlQuantity(Long bookId, int change, String sessionId);
     void putBook(Long bookId, Integer quantity, String sessionId);
 
     void putBookByMap(Map<Long, Integer> books,String sessionId);
@@ -41,6 +42,7 @@ public interface CartService {
 
     List<CartBooksResponseDto> lookUpAllBooks(String sessionId);
 
+    CartDetailInfoResponseDto getTotalPriceAndDeliverFee(List<CartBooksResponseDto> cartBooks);
 
 
     void setLoginFlag(String sessionId);
