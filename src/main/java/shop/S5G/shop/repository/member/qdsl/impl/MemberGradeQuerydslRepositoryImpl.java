@@ -14,6 +14,8 @@ public class MemberGradeQuerydslRepositoryImpl extends QuerydslRepositorySupport
         super(MemberGrade.class);
     }
 
+
+
     @Override
     public void updateMemberGrade(long gradeId, MemberGradeRequestDto requestDto) {
         update(memberGrade)

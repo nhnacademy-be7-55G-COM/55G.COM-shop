@@ -87,7 +87,6 @@ public class MemberGradeServiceImpl implements MemberGradeService {
         if (!memberGradeRepository.existsById(gradeId)) {
             throw new MemberGradeNotFoundException("등급이 존재하지 않습니다.");
         }
-
         memberGradeRepository.inactiveMemberGrade(gradeId);
     }
 }

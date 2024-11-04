@@ -15,9 +15,12 @@ import shop.S5G.shop.entity.cart.Cart;
 import shop.S5G.shop.entity.cart.CartPk;
 import shop.S5G.shop.entity.member.Member;
 import shop.S5G.shop.exception.BadRequestException;
+import shop.S5G.shop.exception.ResourceNotFoundException;
+import shop.S5G.shop.exception.book.BookResourceNotFoundException;
+import shop.S5G.shop.repository.book.BookRepository;
 import shop.S5G.shop.repository.cart.CartRedisRepository;
 import shop.S5G.shop.repository.cart.CartRepository;
-import shop.S5G.shop.service.BookService;
+import shop.S5G.shop.service.book.BookService;
 import shop.S5G.shop.service.cart.CartService;
 import shop.S5G.shop.service.member.MemberService;
 
@@ -30,6 +33,7 @@ public class CartServiceImpl implements CartService {
     private final CartRedisRepository cartRedisRepository;
     private final BookService bookService;
     private final MemberService memberService;
+    private final BookRepository bookRepository;
 
 //     ----------- MySql && Redis 관련 -----------
 
@@ -53,19 +57,20 @@ public class CartServiceImpl implements CartService {
 
         // db 장바구니에 이미 같은 도서가 있는 경우는 개수를 합쳐준다.
         booksInDbCart.stream().forEach(cart -> cart.setQuantity(
-            cart.getQuantity() + booksInRedisCart.getOrDefault(cart.getBook().getBookId(), 0)));
+                cart.getQuantity() + booksInRedisCart.getOrDefault(cart.getBook().getBookId(), 0)));
 
         // db 장바구니에 같은 도서가 없는 경우에는 추가해준다.
         booksInRedisCart.forEach((bookId,quantity) ->{
             boolean isNotInDb = (booksInDbCart.stream()
-                .noneMatch(cart -> cart.getBook().getBookId().equals(bookId)));
+                    .noneMatch(cart -> cart.getBook().getBookId().equals(bookId)));
 
             if (isNotInDb) {
                 // Cart 객체를 생성하고 List 에 추가
-                Book book = bookService.getBookById(bookId);
-                Cart cart = new Cart(new CartPk(member.getId(), bookId), book, member, quantity);
+                bookRepository.findById(bookId).ifPresent(book -> {
+                    Cart cart = new Cart(new CartPk(member.getId(), bookId), book, member, quantity);
+                    booksInDbCart.add(cart);
+                });
 
-                booksInDbCart.add(cart);
             }
         });
         deleteOldCart(sessionId);
@@ -84,7 +89,7 @@ public class CartServiceImpl implements CartService {
         Map<Long, Integer> fromDbToRedis = new HashMap<>();
 
         booksInDbCart.stream()
-            .forEach(cart -> fromDbToRedis.put(cart.getBook().getBookId(), cart.getQuantity()));
+                .forEach(cart -> fromDbToRedis.put(cart.getBook().getBookId(), cart.getQuantity()));
 
         putBookByMap(fromDbToRedis, sessionId);
 
@@ -115,10 +120,13 @@ public class CartServiceImpl implements CartService {
         Map<Long, Integer> booksInRedisCart = getBooksInRedisCart(sessionId);
 
         booksInRedisCart.forEach((bookId,quantity) ->{
-            Book book = bookService.getBookById(bookId);
-            Cart cart = new Cart(new CartPk(member.getId(), bookId), book, member, quantity);
+            bookRepository.findById(bookId).ifPresent(book -> {
+                Cart cart = new Cart(new CartPk(member.getId(), bookId), book, member, quantity);
 
-            redisToDb.add(cart);
+                redisToDb.add(cart);
+
+            });
+
         });
 
         saveAll(redisToDb);
@@ -136,9 +144,11 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void putBook(Long bookId, Integer quantity, String sessionId) {
-
-        bookService.getBookById(bookId);
-        cartRedisRepository.putBook(bookId, quantity, sessionId);
+        if (bookRepository.findById(bookId).isPresent()) {
+            cartRedisRepository.putBook(bookId, quantity, sessionId);
+        }else {
+            throw new ResourceNotFoundException("해당 도서를 담는데 실패했습니다.");
+        }
     }
 
     @Override
@@ -170,15 +180,15 @@ public class CartServiceImpl implements CartService {
             return emptyList;
         }
 
-        List<Book> booksInfoInRedisCart = bookService.findAllByBookIds(
-            booksInRedisCart.keySet().stream().toList());
+        List<Book> booksInfoInRedisCart = bookRepository.findAllById(
+                booksInRedisCart.keySet().stream().toList());
 
         List<CartBooksResponseDto> cartBooks = booksInfoInRedisCart.stream()
-            .map(book -> new CartBooksResponseDto(book.getPrice(),
-                BigDecimal.valueOf(book.getPrice())
-                    .multiply(BigDecimal.valueOf(1).subtract(book.getDiscountRate())),
-                booksInRedisCart.get(book.getBookId()), book.getStock(), book.getTitle())
-            ).toList();
+                .map(book -> new CartBooksResponseDto(book.getPrice(),
+                        BigDecimal.valueOf(book.getPrice())
+                                .multiply(BigDecimal.valueOf(1).subtract(book.getDiscountRate())),
+                        booksInRedisCart.get(book.getBookId()), book.getStock(), book.getTitle())
+                ).toList();
 
         return cartBooks;
     }
@@ -223,7 +233,7 @@ public class CartServiceImpl implements CartService {
         Map<Object, Object> booksInRedisCart = cartRedisRepository.getBooksInRedisCart(sessionId);
 
         booksInRedisCart.entrySet().stream()
-            .forEach(entry -> result.put((Long) entry.getKey(), (Integer) entry.getValue()));
+                .forEach(entry -> result.put((Long) entry.getKey(), (Integer) entry.getValue()));
 
         return result;
 
