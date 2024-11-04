@@ -10,6 +10,7 @@ import shop.S5G.shop.dto.coupon.template.CouponTemplateRequestDto;
 import shop.S5G.shop.dto.coupon.template.CouponTemplateResponseDto;
 import shop.S5G.shop.entity.coupon.CouponPolicy;
 import shop.S5G.shop.entity.coupon.CouponTemplate;
+import shop.S5G.shop.entity.coupon.QCoupon;
 import shop.S5G.shop.entity.coupon.QCouponTemplate;
 
 public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupport implements CouponTemplateQuerydslRepository {
@@ -66,9 +67,17 @@ public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupp
 
     @Override
     public void deleteCouponTemplate(Long couponTemplateId) {
+
+        QCoupon coupon = QCoupon.coupon;
+
         update(couponTemplate)
             .set(couponTemplate.active, INACTIVE)
             .where(couponTemplate.couponTemplateId.eq(couponTemplateId))
+            .execute();
+
+        update(coupon)
+            .set(coupon.active, INACTIVE)
+            .where(coupon.couponTemplate.couponTemplateId.eq(couponTemplateId))
             .execute();
     }
 }
