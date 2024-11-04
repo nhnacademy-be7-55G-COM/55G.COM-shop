@@ -1,0 +1,8 @@
+### 쿠폰 생성
+POST localhost:8080/api/shop/admin/coupons
+Content-Type: application/json
+
+{
+  "couponTemplateId" : 1,
+  "expiredAt": ""
+}
