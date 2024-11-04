@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import shop.S5G.shop.dto.customer.CustomerRegistrationRequestDto;
+import shop.S5G.shop.dto.member.LoginResponseDto;
 import shop.S5G.shop.dto.member.MemberRegistrationRequestDto;
 import shop.S5G.shop.dto.member.MemberResponseDto;
 import shop.S5G.shop.dto.member.MemberUpdateRequestDto;
@@ -42,6 +43,16 @@ public class MemberServiceImpl implements MemberService {
         }
 
         return memberRepository.findByLoginIdAndStatus_TypeName(loginId, "ACTIVE");
+    }
+
+    @Override
+    public LoginResponseDto findLoginDto(String loginId) {
+        if (!memberRepository.existsByLoginIdAndStatus_TypeName(loginId, "ACTIVE")) {
+            throw new MemberNotFoundException("회원이 존재하지 않습니다");
+        }
+        Member member = memberRepository.findByLoginIdAndStatus_TypeName(loginId, "ACTIVE");
+
+        return new LoginResponseDto(member.getLoginId(), member.getPassword());
     }
 
     @Override
@@ -105,4 +116,5 @@ public class MemberServiceImpl implements MemberService {
         //TODO 추후 진행 예정
         throw new UnsupportedOperationException();
     }
+
 }
