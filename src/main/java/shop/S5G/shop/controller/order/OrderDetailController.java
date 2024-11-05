@@ -11,7 +11,6 @@ import shop.S5G.shop.dto.delivery.DeliveryResponseDto;
 import shop.S5G.shop.dto.order.OrderDetailInfoDto;
 import shop.S5G.shop.dto.order.OrderDetailWithBookResponseDto;
 import shop.S5G.shop.dto.refund.RefundHistoryResponseDto;
-import shop.S5G.shop.repository.order.RefundImageRepository;
 import shop.S5G.shop.service.order.DeliveryService;
 import shop.S5G.shop.service.order.OrderDetailService;
 import shop.S5G.shop.service.order.RefundHistoryService;
@@ -23,17 +22,14 @@ public class OrderDetailController {
     private final OrderDetailService orderDetailService;
     private final DeliveryService deliveryService;
     private final RefundHistoryService refundHistoryService;
-    private final RefundImageRepository refundImageRepository;
-
-    @GetMapping
-    public List<OrderDetailWithBookResponseDto> getOrderDetails(@PathVariable long orderId) {
-        return orderDetailService.findOrderDetailsByOrderId(orderId);
-    }
+//    private final RefundImageRepository refundImageRepository;
 
     // 하나의 주문에 대한 주문 상세, 환불내역, 배송지 모두 리턴하는 컨트롤러
     @GetMapping
-    public Object getOrderDetailAll(@PathVariable long orderId, @RequestParam String scope) {
-        if (scope.equals("all")) {
+    public Object getOrderDetailAll(@PathVariable long orderId, @RequestParam(required = false) String scope) {
+        if (scope == null) {
+            return orderDetailService.findOrderDetailsByOrderId(orderId);
+        } else if (scope.equals("all")) {
             List<OrderDetailWithBookResponseDto> orderDetails = orderDetailService.findOrderDetailsByOrderId(
                 orderId);
             DeliveryResponseDto delivery = deliveryService.findById(orderId);
@@ -47,6 +43,7 @@ public class OrderDetailController {
                 orderDetails, delivery, refunds
             );
         }
-        return getOrderDetails(orderId);
+        // TODO: 적절한 예외로 바꾸기
+        throw new IllegalArgumentException();
     }
 }

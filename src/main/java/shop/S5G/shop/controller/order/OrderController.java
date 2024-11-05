@@ -26,8 +26,11 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping
-    public List<OrderWithDetailResponseDto> queryAllOrders(@RequestParam long customerId) {
-        return orderService.queryAllOrdersByCustomerId(customerId);
+    public List<OrderWithDetailResponseDto> queryAllOrders(@RequestParam long customerId, @RequestParam(required = false) OrderQueryRequestDto queryRequest) {
+        if (queryRequest == null)
+            return orderService.queryAllOrdersByCustomerId(customerId);
+        else
+            return orderService.queryAllOrdersByCustomerIdBetweenDates(queryRequest);
     }
 
     @PostMapping
@@ -40,8 +43,4 @@ public class OrderController {
         );
     }
 
-    @GetMapping
-    public List<OrderWithDetailResponseDto> queryAllOrdersBetweenDates(@RequestParam OrderQueryRequestDto queryRequest) {
-        return orderService.queryAllOrdersByCustomerIdBetweenDates(queryRequest);
-    }
 }
