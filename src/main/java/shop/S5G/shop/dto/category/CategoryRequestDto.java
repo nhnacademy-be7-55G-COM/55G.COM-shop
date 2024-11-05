@@ -1,11 +1,16 @@
 package shop.S5G.shop.dto.category;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import shop.S5G.shop.entity.Category;
 
-@Getter @Setter
-public class CategoryRequestDto {
-    private Long parentCategory;
-    private String categoryName;
-    private boolean active;
+public record CategoryRequestDto (
+
+    Long parentCategory,
+    @NotNull
+    String categoryName,
+    @NotNull
+    boolean active
+){
 }

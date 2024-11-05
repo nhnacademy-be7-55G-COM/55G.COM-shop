@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
-@Setter
+//@Setter
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Tag {
@@ -15,16 +15,16 @@ public class Tag {
     private Long tagId;
     @Column(name = "tag_name")
     private String tagName;
+
+    @Setter
     private boolean active;
 
-    public Tag(String tagName, boolean active) {
-        this.tagId = tagId;
+    public Tag(String tagName) {
         this.tagName = tagName;
-        this.active = active;
+        this.active = true;
     }
 
-    public Tag(Long tagId, String tagName, boolean active) {
-        this.tagId = tagId;
+    public Tag(String tagName, boolean active) {
         this.tagName = tagName;
         this.active = active;
     }

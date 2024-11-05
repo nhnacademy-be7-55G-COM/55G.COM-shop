@@ -1,0 +1,28 @@
+### 쿠폰 템플릿 생성
+POST localhost:8080/api/shop/admin/coupons/template
+Content-Type: application/json
+
+{
+  "couponPolicyId" : 1,
+  "couponName" : "생일 쿠폰",
+  "couponDescription": "이 쿠폰은 생일자들을 위한 쿠폰입니다."
+}
+
+### 쿠폰 템플릿 조회
+GET localhost:8080/api/shop/admin/coupons/template/1
+
+### 쿠폰 템플릿 수정
+PATCH localhost:8080/api/shop/admin/coupons/template/1
+Content-Type: application/json
+
+{
+  "couponPolicyId" : 1,
+  "couponName" : "생일 쿠폰",
+  "couponDescription": "이 쿠폰은 이번 달 생일자들을 위한 쿠폰입니다."
+}
+
+### 쿠폰 템플릿 조회
+GET localhost:8080/api/shop/admin/coupons/template/1
+
+### 쿠폰 템플릭 삭제
+DELETE localhost:8080/api/shop/admin/coupons/template/1

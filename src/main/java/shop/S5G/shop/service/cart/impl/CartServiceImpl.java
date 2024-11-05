@@ -10,14 +10,19 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Service;
 import shop.S5G.shop.config.RedisConfig;
 import shop.S5G.shop.dto.cart.response.CartBooksResponseDto;
+import shop.S5G.shop.dto.cart.response.CartDetailInfoResponseDto;
 import shop.S5G.shop.entity.Book;
 import shop.S5G.shop.entity.cart.Cart;
 import shop.S5G.shop.entity.cart.CartPk;
 import shop.S5G.shop.entity.member.Member;
 import shop.S5G.shop.exception.BadRequestException;
+import shop.S5G.shop.exception.ResourceNotFoundException;
+
+import shop.S5G.shop.repository.book.BookRepository;
 import shop.S5G.shop.repository.cart.CartRedisRepository;
 import shop.S5G.shop.repository.cart.CartRepository;
-import shop.S5G.shop.service.BookService;
+
+
 import shop.S5G.shop.service.cart.CartService;
 import shop.S5G.shop.service.member.MemberService;
 
@@ -28,9 +33,8 @@ public class CartServiceImpl implements CartService {
 
     private final CartRepository cartRepository;
     private final CartRedisRepository cartRedisRepository;
-    private final BookService bookService;
     private final MemberService memberService;
-
+    private final BookRepository bookRepository;
 //     ----------- MySql && Redis 관련 -----------
 
     // 회원아이디를 이용해 Mysql 에 저장되어있는 Cart 리스트반환
@@ -45,6 +49,16 @@ public class CartServiceImpl implements CartService {
     // Redis 와 Mysql 에 저장되어있는 걸 합쳐서 Db 에 저장
     @Override
     public void saveMergedCartToDb(String sessionId,String customerLoginId) {
+
+        if (sessionId.isBlank()) {
+            throw new BadRequestException("SessionId Is Not Valid");
+        }
+
+        if (customerLoginId.isBlank()) {
+            throw new BadRequestException("CustomerLoginId Is Not Valid");
+        }
+
+
         Member member = memberService.findMember(customerLoginId);
 
         Map<Long, Integer> booksInRedisCart = getBooksInRedisCart(sessionId);
@@ -62,10 +76,11 @@ public class CartServiceImpl implements CartService {
 
             if (isNotInDb) {
                 // Cart 객체를 생성하고 List 에 추가
-                Book book = bookService.getBookById(bookId);
-                Cart cart = new Cart(new CartPk(member.getId(), bookId), book, member, quantity);
+                bookRepository.findById(bookId).ifPresent(book -> {
+                    Cart cart = new Cart(new CartPk(member.getId(), bookId), book, member, quantity);
+                    booksInDbCart.add(cart);
+                });
 
-                booksInDbCart.add(cart);
             }
         });
         deleteOldCart(sessionId);
@@ -75,6 +90,14 @@ public class CartServiceImpl implements CartService {
     // Db 에 있는 걸 Redis 로 복사해준다.
     @Override
     public void transferCartFromDbToRedis(String sessionId, String customerLoginId) {
+
+        if (sessionId.isBlank()) {
+            throw new BadRequestException("SessionId Is Not Valid");
+        }
+
+        if (customerLoginId.isBlank()) {
+            throw new BadRequestException("CustomerLoginId Is Not Valid");
+        }
 
         setLoginFlag(sessionId);
         setCustomerId(sessionId, customerLoginId);
@@ -115,10 +138,13 @@ public class CartServiceImpl implements CartService {
         Map<Long, Integer> booksInRedisCart = getBooksInRedisCart(sessionId);
 
         booksInRedisCart.forEach((bookId,quantity) ->{
-            Book book = bookService.getBookById(bookId);
-            Cart cart = new Cart(new CartPk(member.getId(), bookId), book, member, quantity);
+            bookRepository.findById(bookId).ifPresent(book -> {
+                Cart cart = new Cart(new CartPk(member.getId(), bookId), book, member, quantity);
 
-            redisToDb.add(cart);
+                redisToDb.add(cart);
+
+            });
+
         });
 
         saveAll(redisToDb);
@@ -132,13 +158,23 @@ public class CartServiceImpl implements CartService {
 
 
     // ----------- only Redis 관련 -----------
-
+    @Override
+    public void controlQuantity(Long bookId, int change, String sessionId) {
+        if (change > 0) {
+            putBook(bookId, 1, sessionId);
+        } else {
+            reduceBookQuantity(bookId, sessionId);
+        }
+    }
 
     @Override
     public void putBook(Long bookId, Integer quantity, String sessionId) {
 
-        bookService.getBookById(bookId);
-        cartRedisRepository.putBook(bookId, quantity, sessionId);
+        if (bookRepository.findById(bookId).isPresent()) {
+            cartRedisRepository.putBook(bookId, quantity, sessionId);
+        }else {
+            throw new ResourceNotFoundException("해당 도서를 담는데 실패했습니다.");
+        }
     }
 
     @Override
@@ -170,17 +206,27 @@ public class CartServiceImpl implements CartService {
             return emptyList;
         }
 
-        List<Book> booksInfoInRedisCart = bookService.findAllByBookIds(
+        List<Book> booksInfoInRedisCart = bookRepository.findAllById(
             booksInRedisCart.keySet().stream().toList());
 
         List<CartBooksResponseDto> cartBooks = booksInfoInRedisCart.stream()
-            .map(book -> new CartBooksResponseDto(book.getPrice(),
+            .map(book -> new CartBooksResponseDto(book.getBookId(), book.getPrice(),
                 BigDecimal.valueOf(book.getPrice())
                     .multiply(BigDecimal.valueOf(1).subtract(book.getDiscountRate())),
                 booksInRedisCart.get(book.getBookId()), book.getStock(), book.getTitle())
             ).toList();
 
         return cartBooks;
+    }
+    //TODO 이후 배달비 관련 테이블이 완성되면 배달비랑 조건 수정필요
+    @Override
+    public CartDetailInfoResponseDto getTotalPriceAndDeliverFee(
+        List<CartBooksResponseDto> cartBooks) {
+        BigDecimal totalPrice = cartBooks.stream().map(CartBooksResponseDto::discountedPrice)
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
+        int deliveryFee = 3000;
+        int freeShippingThreshold = 30000;
+        return new CartDetailInfoResponseDto(totalPrice, deliveryFee, freeShippingThreshold);
     }
 
 
