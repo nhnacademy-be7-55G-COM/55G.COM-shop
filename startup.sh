@@ -7,14 +7,14 @@ image_name="55g-shop-server"
 container_postfix="live"
 spring_env="live,docker"
 network_bridge="55g-live"
-server_port=8100
+server_port=(8100 8101)
 
 if [ "$profile" == "--dev" ]; then
 	container_name="55g-shop-dev"
 	spring_env="dev,docker"
 	container_postfix="dev"
 	network_bridge="55g-dev"
-	server_port=8200
+	server_port=(8200 8201)
 fi
 
 cd $ABSOLUTE_PATH
@@ -37,30 +37,31 @@ for line in $docker_ps; do
   i=$((i+1))
 done
 
+echo "Building docker image..."
+docker build -t $image_name-$container_postfix .
+
 for ((i=1; i<${#ps_arr[@]}; i++)); do
     instance_id="shop-service-${i}"
+    target_port=${server_port[i-1]}
 
-    curl -X POST http://localhost:$server_port/actuator/status
+    curl -X POST http://localhost:$target_port/actuator/status
     sleep 30;
 
     echo "Removing container ${ps_arr[i]}..."
     docker stop ${ps_arr[i]}
     docker rm ${ps_arr[i]}
 
-    echo "Building docker image..."
-    docker build -t $image_name-$container_postfix .
-
     echo "Creating container for service..."
     docker run -d --name $container_name \
            --network $network_bridge \
            --env SPRING_PROFILE=$spring_env \
-           --env SERVER_PORT=$server_port \
-           -p $server_port:$server_port \
+           --env SERVER_PORT=$target_port \
+           -p $target_port:$target_port \
            -v /logs:/logs \
            -v /var/55g/static:/static \
-       $image_name-$container_postfix
+           $image_name-$container_postfix
 
-     until $(curl --output /dev/null --silent --head --fail http://localhost:$server_port/actuator/health); do
+     until $(curl --output /dev/null --silent --head --fail http://localhost:$target_port/actuator/health); do
          echo "Waiting for the application to be ready..."
          sleep 5
      done
