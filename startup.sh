@@ -47,8 +47,8 @@ for ((i=1; i<${#ps_arr[@]}; i++)); do
     sleep 30;
 
     echo "Removing container ${ps_arr[i]}..."
-    docker stop ${ps_arr[i]}
-    docker rm ${ps_arr[i]}
+    docker stop $container_name-$i
+    docker rm $container_name-$i
 
     echo "Creating container for service..."
     docker run -d --name $container_name-$i \
