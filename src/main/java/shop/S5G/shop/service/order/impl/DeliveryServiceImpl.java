@@ -21,7 +21,7 @@ public class DeliveryServiceImpl implements shop.S5G.shop.service.order.Delivery
 
     @Transactional(readOnly = true)
     @Override
-    public DeliveryResponseDto findById(long orderId) {
+    public DeliveryResponseDto getDelivery(long orderId) {
         return deliveryRepository.findById(orderId).map(DeliveryResponseDto::of).orElseThrow(
             () -> new ResourceNotFoundException("orderId is not available")
         );

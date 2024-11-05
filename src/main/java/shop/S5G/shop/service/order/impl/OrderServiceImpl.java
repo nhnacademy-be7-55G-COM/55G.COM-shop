@@ -55,7 +55,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<OrderWithDetailResponseDto> queryAllOrdersByCustomerId(long customerId) {
+    public List<OrderWithDetailResponseDto> getAllOrdersWithDetail(long customerId) {
         return orderRepository.findOrdersByCustomerId(customerId);
     }
 
@@ -114,7 +114,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<OrderWithDetailResponseDto> queryAllOrdersByCustomerIdBetweenDates(OrderQueryRequestDto queryRequest) {
+    public List<OrderWithDetailResponseDto> getAllOrdersBetweenDates(OrderQueryRequestDto queryRequest) {
         return orderRepository.findOrdersByCustomerIdBetweenDates(
             queryRequest.customerId(), queryRequest.startDate(), queryRequest.endDate()
         );

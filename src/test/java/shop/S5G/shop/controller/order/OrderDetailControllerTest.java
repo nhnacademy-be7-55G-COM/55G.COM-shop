@@ -36,18 +36,18 @@ class OrderDetailControllerTest {
 
     @Test
     void fetchOrderDetailsEmptyTest() throws Exception{
-        when(orderDetailService.findOrderDetailsByOrderId(anyLong())).thenReturn(List.of());
+        when(orderDetailService.getOrderDetailsWithBook(anyLong())).thenReturn(List.of());
 
         mvc.perform(MockMvcRequestBuilders.get("/api/shop/orders/1"))
             .andExpect(status().isOk())
             .andExpect(content().string(org.hamcrest.Matchers.equalTo("[]")));
 
-        verify(orderDetailService, times(1)).findOrderDetailsByOrderId(1L);
+        verify(orderDetailService, times(1)).getOrderDetailsWithBook(1L);
     }
 
     @Test
     void fetchOrderDetailsErrorTest() throws Exception {
-        when(orderDetailService.findOrderDetailsByOrderId(anyLong())).thenThrow(
+        when(orderDetailService.getOrderDetailsWithBook(anyLong())).thenThrow(
             new OrderDetailsNotExistException("OrderDetails do not exist")
         );
 
@@ -55,6 +55,6 @@ class OrderDetailControllerTest {
             .andExpect(status().isNotFound())
             .andExpect(content().string(containsString("not exist")));
 
-        verify(orderDetailService, times(1)).findOrderDetailsByOrderId(1L);
+        verify(orderDetailService, times(1)).getOrderDetailsWithBook(1L);
     }
 }

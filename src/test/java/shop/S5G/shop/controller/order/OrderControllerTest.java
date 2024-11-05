@@ -41,14 +41,14 @@ class OrderControllerTest {
 
     @Test
     void fetchOrdersEmptyTest() throws Exception{
-        when(orderService.queryAllOrdersByCustomerId(anyLong())).thenReturn(List.of());
+        when(orderService.getAllOrdersWithDetail(anyLong())).thenReturn(List.of());
         mvc.perform(MockMvcRequestBuilders.get("/api/shop/orders")
             .param("customerId", "3")
         )
             .andExpect(status().isOk())
             .andExpect(content().string(containsString("[]")))
             .andDo(print());
-        verify(orderService, times(1)).queryAllOrdersByCustomerId(3L);
+        verify(orderService, times(1)).getAllOrdersWithDetail(3L);
     }
 
     @Test
@@ -58,7 +58,7 @@ class OrderControllerTest {
         );
         List<OrderWithDetailResponseDto> result =  List.of(dto, dto);
 
-        when(orderService.queryAllOrdersByCustomerId(anyLong())).thenReturn(result);
+        when(orderService.getAllOrdersWithDetail(anyLong())).thenReturn(result);
 
         mvc.perform(MockMvcRequestBuilders.get("/api/shop/orders")
                 .param("customerId", "3")
@@ -67,7 +67,7 @@ class OrderControllerTest {
             .andExpect(content().string(containsString("\"representTitle\":\"test title\"")))
             .andDo(print());
 
-        verify(orderService, times(1)).queryAllOrdersByCustomerId(3L);
+        verify(orderService, times(1)).getAllOrdersWithDetail(3L);
     }
 
     String validatedTestCase = """

@@ -14,11 +14,11 @@ public interface OrderService {
 
     Page<Order> findAllByCustomerId(long customerId, Pageable pageable);
 
-    List<OrderWithDetailResponseDto> queryAllOrdersByCustomerId(long customerId);
+    List<OrderWithDetailResponseDto> getAllOrdersWithDetail(long customerId);
 
     OrderCreateResponseDto createOrder(OrderCreateRequestDto requestDto);
 
     @Transactional(readOnly = true)
-    List<OrderWithDetailResponseDto> queryAllOrdersByCustomerIdBetweenDates(
+    List<OrderWithDetailResponseDto> getAllOrdersBetweenDates(
         OrderQueryRequestDto queryRequest);
 }

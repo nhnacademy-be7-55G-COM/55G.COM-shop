@@ -27,15 +27,15 @@ public class OrderDetailController {
     // 하나의 주문에 대한 주문 상세, 환불내역, 배송지 모두 리턴하는 컨트롤러
     @GetMapping
     public Object getOrderDetailAll(@PathVariable long orderId, @RequestParam(required = false) String scope) {
-        if (scope == null) {
-            return orderDetailService.findOrderDetailsByOrderId(orderId);
+        if (scope == null || scope.isEmpty()) {
+            return orderDetailService.getOrderDetailsWithBook(orderId);
         } else if (scope.equals("all")) {
-            List<OrderDetailWithBookResponseDto> orderDetails = orderDetailService.findOrderDetailsByOrderId(
+            List<OrderDetailWithBookResponseDto> orderDetails = orderDetailService.getOrderDetailsWithBook(
                 orderId);
-            DeliveryResponseDto delivery = deliveryService.findById(orderId);
+            DeliveryResponseDto delivery = deliveryService.getDelivery(orderId);
 
             List<RefundHistoryResponseDto> refunds = orderDetails.stream().map(
-                details -> refundHistoryService.getHistoryByOrderDetailId(details.orderDetailId())
+                details -> refundHistoryService.getRefundHistory(details.orderDetailId())
             ).toList();
 
             // TODO: 나중에 이미지도 추가해야함..

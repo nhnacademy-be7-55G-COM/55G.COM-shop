@@ -5,5 +5,5 @@ import shop.S5G.shop.dto.order.OrderDetailWithBookResponseDto;
 
 public interface OrderDetailService {
 
-    List<OrderDetailWithBookResponseDto> findOrderDetailsByOrderId(long orderId);
+    List<OrderDetailWithBookResponseDto> getOrderDetailsWithBook(long orderId);
 }

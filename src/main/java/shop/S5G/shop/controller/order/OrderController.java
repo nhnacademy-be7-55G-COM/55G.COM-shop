@@ -28,9 +28,9 @@ public class OrderController {
     @GetMapping
     public List<OrderWithDetailResponseDto> queryAllOrders(@RequestParam long customerId, @RequestParam(required = false) OrderQueryRequestDto queryRequest) {
         if (queryRequest == null)
-            return orderService.queryAllOrdersByCustomerId(customerId);
+            return orderService.getAllOrdersWithDetail(customerId);
         else
-            return orderService.queryAllOrdersByCustomerIdBetweenDates(queryRequest);
+            return orderService.getAllOrdersBetweenDates(queryRequest);
     }
 
     @PostMapping

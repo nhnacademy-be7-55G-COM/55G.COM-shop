@@ -16,7 +16,7 @@ public class RefundHistoryServiceImpl implements RefundHistoryService {
 
     @Transactional(readOnly = true)
     @Override
-    public RefundHistoryResponseDto getHistoryByOrderDetailId(long orderDetailId) {
+    public RefundHistoryResponseDto getRefundHistory(long orderDetailId) {
         return refundHistoryRepository.fetchRefundHistoryByOrderDetailId(orderDetailId);
     }
 
