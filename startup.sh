@@ -19,8 +19,6 @@ fi
 
 cd $ABSOLUTE_PATH
 
-docker_ps=$(docker ps --all --filter "name=${container_name}" | awk '{ print $1 }')
-
 docker_network_live_ps=$(docker network ls | grep '55g-live')
 if [ -z "$docker_network_live_ps" ]; then
   docker network create 55g-live
@@ -31,22 +29,16 @@ if [ -z "$docker_network_dev_ps" ]; then
   docker network create 55g-dev
 fi
 
-i=0
-for line in $docker_ps; do
-  ps_arr[i]=$line
-  i=$((i+1))
-done
-
 echo "Building docker image..."
 docker build -t $image_name-$container_postfix .
 
-for ((i=1; i<${#ps_arr[@]}; i++)); do
-    target_port=${server_port[i-1]}
+for ((i=0; i<${#server_port[@]}; i++)); do
+    target_port=${server_port[i]}
 
     curl -X POST http://localhost:$target_port/actuator/status
     sleep 30;
 
-    echo "Removing container ${ps_arr[i]}..."
+    echo "Removing container $container_name-$i..."
     docker stop $container_name-$i
     docker rm $container_name-$i
 
