@@ -41,7 +41,6 @@ echo "Building docker image..."
 docker build -t $image_name-$container_postfix .
 
 for ((i=1; i<${#ps_arr[@]}; i++)); do
-    instance_id="shop-service-${i}"
     target_port=${server_port[i-1]}
 
     curl -X POST http://localhost:$target_port/actuator/status
@@ -52,10 +51,11 @@ for ((i=1; i<${#ps_arr[@]}; i++)); do
     docker rm ${ps_arr[i]}
 
     echo "Creating container for service..."
-    docker run -d --name $container_name \
+    docker run -d --name $container_name-$i \
            --network $network_bridge \
            --env SPRING_PROFILE=$spring_env \
            --env SERVER_PORT=$target_port \
+           --add-host host.docker.internal:host-gateway \
            -p $target_port:$target_port \
            -v /logs:/logs \
            -v /var/55g/static:/static \
