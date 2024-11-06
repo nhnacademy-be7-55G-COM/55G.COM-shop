@@ -1,7 +1,7 @@
 package shop.S5G.shop.repository.book.qdsl;
 
-import shop.S5G.shop.dto.Book.BookRequestDto;
-import shop.S5G.shop.dto.Book.BookResponseDto;
+import shop.S5G.shop.dto.book.BookRequestDto;
+import shop.S5G.shop.dto.book.BookResponseDto;
 
 import java.util.List;
 

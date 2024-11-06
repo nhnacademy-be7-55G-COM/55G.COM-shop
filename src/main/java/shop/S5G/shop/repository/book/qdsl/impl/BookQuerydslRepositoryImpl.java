@@ -6,8 +6,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
-import shop.S5G.shop.dto.Book.BookRequestDto;
-import shop.S5G.shop.dto.Book.BookResponseDto;
+import shop.S5G.shop.dto.book.BookRequestDto;
+import shop.S5G.shop.dto.book.BookResponseDto;
 import shop.S5G.shop.entity.Book;
 import shop.S5G.shop.repository.book.qdsl.BookQuerydslRepository;
 

@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import shop.S5G.shop.dto.Book.BookRequestDto;
-import shop.S5G.shop.dto.Book.BookResponseDto;
+import shop.S5G.shop.dto.book.BookRequestDto;
+import shop.S5G.shop.dto.book.BookResponseDto;
 import shop.S5G.shop.entity.Book;
 import shop.S5G.shop.entity.BookStatus;
 import shop.S5G.shop.entity.Publisher;
@@ -32,14 +32,8 @@ public class BookServiceImpl implements BookService {
 
     //도서 등록
     public void createBook(BookRequestDto bookDto) {
-//        if (publisherRepository.existsById(bookDto.publisherId().getId())) {
-//            throw new PublisherResourceNotFoundException("도서에 해당하는 출판사가 존재하지 않습니다.");
-//        }
         Publisher publisher = publisherRepository.findById(bookDto.publisherId()).orElseThrow(() -> new PublisherResourceNotFoundException("해당 출판사를 찾을 수 없습니다."));
 
-//        if(statusRepository.existsById(bookDto.bookStatusId().getId())) {
-//            throw new BookStatusResourceNotFoundException("선택하신 도서 상태는 존재하지 않습니다.");
-//        }
         BookStatus bookStatus = statusRepository.findById(bookDto.bookStatusId()).orElseThrow(() -> new BookStatusResourceNotFoundException("해당 도서 상태를 찾을 수 없습니다."));
 
         Book book = new Book(

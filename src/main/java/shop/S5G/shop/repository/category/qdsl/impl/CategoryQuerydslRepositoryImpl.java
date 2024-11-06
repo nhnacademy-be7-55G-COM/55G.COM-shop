@@ -44,7 +44,7 @@ public class CategoryQuerydslRepositoryImpl extends QuerydslRepositorySupport im
         return jpaQueryFactory
                 .from(category)
                 .select(Projections.constructor(CategoryResponseDto.class,
-                        category.parentCategory,
+                        category.parentCategory.categoryName, //부모카테고리 이름 리턴
                         category.categoryName,
                         category.active))
                 .fetch();

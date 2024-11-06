@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -12,8 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import shop.S5G.shop.dto.Book.BookRequestDto;
-import shop.S5G.shop.dto.Book.BookResponseDto;
+import shop.S5G.shop.dto.book.BookRequestDto;
 import shop.S5G.shop.entity.Book;
 import shop.S5G.shop.entity.BookStatus;
 import shop.S5G.shop.entity.Publisher;
