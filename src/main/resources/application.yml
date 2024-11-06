@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: default
+    active: dev
 
   application:
     name: shop-service
@@ -30,10 +30,6 @@ management:
     web:
       exposure:
         include: refresh,busrefresh,health
-
-eureka:
-  instance:
-    instance-id: shop-service-1
 
 ---
 spring:
