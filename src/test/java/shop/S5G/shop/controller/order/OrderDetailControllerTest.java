@@ -13,14 +13,27 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import shop.S5G.shop.config.SecurityConfig;
+import shop.S5G.shop.config.TestSecurityConfig;
 import shop.S5G.shop.exception.order.OrderDetailsNotExistException;
+import shop.S5G.shop.filter.JwtAuthenticationFilter;
 import shop.S5G.shop.service.order.DeliveryService;
 import shop.S5G.shop.service.order.OrderDetailService;
 import shop.S5G.shop.service.order.RefundHistoryService;
 
-@WebMvcTest(OrderDetailController.class)
+@WebMvcTest(
+    value = OrderDetailController.class,
+    excludeFilters = @ComponentScan.Filter(
+        type= FilterType.ASSIGNABLE_TYPE,
+        classes = {SecurityConfig.class, JwtAuthenticationFilter.class}
+    )
+)
+@Import(TestSecurityConfig.class)
 class OrderDetailControllerTest {
     @Autowired
     MockMvc mvc;

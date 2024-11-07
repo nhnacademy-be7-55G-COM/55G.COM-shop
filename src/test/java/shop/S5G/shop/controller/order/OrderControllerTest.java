@@ -17,17 +17,31 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
+import shop.S5G.shop.config.SecurityConfig;
+import shop.S5G.shop.config.TestSecurityConfig;
 import shop.S5G.shop.dto.order.OrderCreateResponseDto;
 import shop.S5G.shop.dto.order.OrderWithDetailResponseDto;
 import shop.S5G.shop.exception.member.CustomerNotFoundException;
+import shop.S5G.shop.filter.JwtAuthenticationFilter;
 import shop.S5G.shop.service.order.OrderDetailService;
 import shop.S5G.shop.service.order.OrderService;
 
-@WebMvcTest(OrderController.class)
+@WebMvcTest(
+    value = OrderController.class,
+    excludeFilters = @ComponentScan.Filter(
+        type= FilterType.ASSIGNABLE_TYPE,
+        classes = {SecurityConfig.class, JwtAuthenticationFilter.class}
+    )
+)
+@Import(TestSecurityConfig.class)
+//@AutoConfigureMockMvc(addFilters = false)
 class OrderControllerTest {
     @Autowired
     MockMvc mvc;

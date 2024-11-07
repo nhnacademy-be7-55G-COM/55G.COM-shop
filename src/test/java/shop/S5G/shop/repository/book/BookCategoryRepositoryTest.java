@@ -1,5 +1,8 @@
 package shop.S5G.shop.repository.book;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,18 +11,14 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import shop.S5G.shop.dto.bookcategory.BookCategoryResponseDto;
 import shop.S5G.shop.entity.Book;
 import shop.S5G.shop.entity.BookStatus;
+import shop.S5G.shop.entity.Category;
 import shop.S5G.shop.entity.Publisher;
 import shop.S5G.shop.entity.bookcategory.BookCategory;
 import shop.S5G.shop.entity.bookcategory.BookCategoryId;
-import shop.S5G.shop.entity.Category;
+import shop.S5G.shop.repository.bookcategory.BookCategoryRepository;
 import shop.S5G.shop.repository.bookstatus.BookStatusRepository;
 import shop.S5G.shop.repository.category.CategoryRepository;
-import shop.S5G.shop.repository.bookcategory.BookCategoryRepository;
 import shop.S5G.shop.repository.publisher.PublisherRepository;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @DataJpaTest
 class BookCategoryRepositoryTest {
