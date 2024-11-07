@@ -65,7 +65,7 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findOrdersByCustomerId(customerId);
     }
 
-    // TODO: 포인트 사용, 재고처리에 대해 고민해야함.
+    // TODO: 포인트 사용, 재고처리에 대해 고민해야함. -> payment에서 해결할것.
     @Override
     public OrderCreateResponseDto createOrder(long customerId, OrderCreateRequestDto requestDto) {
         DeliveryCreateRequestDto deliveryDto = requestDto.delivery();
@@ -90,8 +90,6 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.save(
             new Order(customer, delivery, requestDto.netPrice(), requestDto.totalPrice())
         );
-
-        // TODO: Toss payment 결제
 
         // orderDetail 생성
         linkOrderDetails(order, requestDto.cartList());

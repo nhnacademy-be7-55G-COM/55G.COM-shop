@@ -11,7 +11,7 @@ import shop.S5G.shop.dto.delivery.DeliveryResponseDto;
 import shop.S5G.shop.dto.order.OrderDetailInfoDto;
 import shop.S5G.shop.dto.order.OrderDetailWithBookResponseDto;
 import shop.S5G.shop.dto.refund.RefundHistoryResponseDto;
-import shop.S5G.shop.service.order.DeliveryService;
+import shop.S5G.shop.service.delivery.DeliveryService;
 import shop.S5G.shop.service.order.OrderDetailService;
 import shop.S5G.shop.service.order.RefundHistoryService;
 

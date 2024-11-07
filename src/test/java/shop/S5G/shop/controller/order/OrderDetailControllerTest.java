@@ -22,7 +22,7 @@ import shop.S5G.shop.config.SecurityConfig;
 import shop.S5G.shop.config.TestSecurityConfig;
 import shop.S5G.shop.exception.order.OrderDetailsNotExistException;
 import shop.S5G.shop.filter.JwtAuthenticationFilter;
-import shop.S5G.shop.service.order.DeliveryService;
+import shop.S5G.shop.service.delivery.DeliveryService;
 import shop.S5G.shop.service.order.OrderDetailService;
 import shop.S5G.shop.service.order.RefundHistoryService;
 
