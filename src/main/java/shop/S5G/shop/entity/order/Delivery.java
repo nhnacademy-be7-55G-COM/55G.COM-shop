@@ -58,6 +58,7 @@ public class Delivery {
     @Length(max=30)
     private String receiverName;
 
+    // TODO: DELIVERY 수정
     public Delivery(String address, LocalDate receivedDate, int fee) {
         this.address = address;
         this.receivedDate = receivedDate;
