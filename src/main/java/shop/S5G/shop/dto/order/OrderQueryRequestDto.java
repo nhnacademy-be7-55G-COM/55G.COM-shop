@@ -5,9 +5,6 @@ import jakarta.validation.constraints.Past;
 import java.time.LocalDate;
 
 public record OrderQueryRequestDto(
-
-    long customerId,
-
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Past
     LocalDate startDate,

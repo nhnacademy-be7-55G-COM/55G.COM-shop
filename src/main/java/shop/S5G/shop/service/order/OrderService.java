@@ -16,9 +16,9 @@ public interface OrderService {
 
     List<OrderWithDetailResponseDto> getAllOrdersWithDetail(long customerId);
 
-    OrderCreateResponseDto createOrder(OrderCreateRequestDto requestDto);
+    OrderCreateResponseDto createOrder(long customerId, OrderCreateRequestDto requestDto);
 
     @Transactional(readOnly = true)
     List<OrderWithDetailResponseDto> getAllOrdersBetweenDates(
-        OrderQueryRequestDto queryRequest);
+        long customerId, OrderQueryRequestDto queryRequest);
 }

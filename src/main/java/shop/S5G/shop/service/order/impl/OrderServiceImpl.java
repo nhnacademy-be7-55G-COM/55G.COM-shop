@@ -16,18 +16,20 @@ import shop.S5G.shop.entity.Book;
 import shop.S5G.shop.entity.member.Customer;
 import shop.S5G.shop.entity.order.Delivery;
 import shop.S5G.shop.entity.order.DeliveryFee;
+import shop.S5G.shop.entity.order.DeliveryStatus;
 import shop.S5G.shop.entity.order.Order;
 import shop.S5G.shop.entity.order.OrderDetail;
 import shop.S5G.shop.entity.order.OrderDetailType;
 import shop.S5G.shop.entity.order.WrappingPaper;
-import shop.S5G.shop.exception.book.BookResourceNotFoundException;
 import shop.S5G.shop.exception.EssentialDataNotFoundException;
+import shop.S5G.shop.exception.book.BookResourceNotFoundException;
 import shop.S5G.shop.exception.member.CustomerNotFoundException;
 import shop.S5G.shop.exception.order.WrappingPaperDoesNotExistsException;
 import shop.S5G.shop.repository.book.BookRepository;
 import shop.S5G.shop.repository.member.CustomerRepository;
 import shop.S5G.shop.repository.order.DeliveryFeeRepository;
 import shop.S5G.shop.repository.order.DeliveryRepository;
+import shop.S5G.shop.repository.order.DeliveryStatusRepository;
 import shop.S5G.shop.repository.order.OrderDetailRepository;
 import shop.S5G.shop.repository.order.OrderDetailTypeRepository;
 import shop.S5G.shop.repository.order.OrderRepository;
@@ -46,6 +48,9 @@ public class OrderServiceImpl implements OrderService {
     private final BookRepository bookRepository;
     private final WrappingPaperRepository wrappingPaperRepository;
     private final OrderDetailTypeRepository orderDetailTypeRepository;
+    private final DeliveryStatusRepository deliveryStatusRepository;
+
+    private static final String INITIAL_STATE = "PREPARING";
 
     @Override
     @Transactional(readOnly = true)
@@ -61,18 +66,23 @@ public class OrderServiceImpl implements OrderService {
 
     // TODO: 포인트 사용, 재고처리에 대해 고민해야함.
     @Override
-    public OrderCreateResponseDto createOrder(OrderCreateRequestDto requestDto) {
+    public OrderCreateResponseDto createOrder(long customerId, OrderCreateRequestDto requestDto) {
         DeliveryCreateRequestDto deliveryDto = requestDto.delivery();
 
         DeliveryFee fee = deliveryFeeRepository.findById(deliveryDto.deliveryFeeId()).orElseThrow(
             () -> new EssentialDataNotFoundException("Cannot find delivery fee data")
         );
-        Delivery delivery = deliveryRepository.save(
-            new Delivery(deliveryDto.address(), deliveryDto.receivedDate(), (int)fee.getFee())
+
+        DeliveryStatus status = deliveryStatusRepository.findByName(INITIAL_STATE).orElseThrow(
+            () -> new EssentialDataNotFoundException("Delivery state is not exists for 'preparing' state")
         );
 
-        Customer customer = customerRepository.findById(requestDto.customerId()).orElseThrow(
-            () -> new CustomerNotFoundException("Customer not found given id: "+requestDto.customerId())
+        Delivery delivery = deliveryRepository.save(
+            new Delivery(deliveryDto.address(), deliveryDto.receivedDate(), (int)fee.getFee(), status, deliveryDto.receiverName())
+        );
+
+        Customer customer = customerRepository.findById(customerId).orElseThrow(
+            () -> new CustomerNotFoundException("Customer not found given id: "+customerId)
         );
 
         // order 생성
@@ -114,9 +124,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<OrderWithDetailResponseDto> getAllOrdersBetweenDates(OrderQueryRequestDto queryRequest) {
+    public List<OrderWithDetailResponseDto> getAllOrdersBetweenDates(
+        long customerId,
+        OrderQueryRequestDto queryRequest
+    ) {
         return orderRepository.findOrdersByCustomerIdBetweenDates(
-            queryRequest.customerId(), queryRequest.startDate(), queryRequest.endDate()
+            customerId, queryRequest.startDate(), queryRequest.endDate()
         );
     }
 }

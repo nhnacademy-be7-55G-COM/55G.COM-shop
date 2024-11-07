@@ -5,6 +5,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import shop.S5G.shop.dto.order.OrderCreateResponseDto;
 import shop.S5G.shop.dto.order.OrderQueryRequestDto;
 import shop.S5G.shop.dto.order.OrderWithDetailResponseDto;
 import shop.S5G.shop.exception.BadRequestException;
+import shop.S5G.shop.security.ShopMemberDetail;
 import shop.S5G.shop.service.order.OrderService;
 
 @RequiredArgsConstructor
@@ -26,21 +28,27 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping
-    public List<OrderWithDetailResponseDto> queryAllOrders(@RequestParam long customerId, @RequestParam(required = false) OrderQueryRequestDto queryRequest) {
+    public List<OrderWithDetailResponseDto> queryAllOrders(
+        @AuthenticationPrincipal ShopMemberDetail memberDetail,
+        @RequestParam(required = false) OrderQueryRequestDto queryRequest
+    ) {
         if (queryRequest == null)
-            return orderService.getAllOrdersWithDetail(customerId);
+            return orderService.getAllOrdersWithDetail(memberDetail.getCustomerId());
         else
-            return orderService.getAllOrdersBetweenDates(queryRequest);
+            return orderService.getAllOrdersBetweenDates(memberDetail.getCustomerId(), queryRequest);
     }
 
     @PostMapping
-    public ResponseEntity<OrderCreateResponseDto> createNewOrder(@Valid @RequestBody OrderCreateRequestDto requestDto, BindingResult result) {
+    public ResponseEntity<OrderCreateResponseDto> createNewOrder(
+        @AuthenticationPrincipal ShopMemberDetail memberDetail,
+        @Valid @RequestBody OrderCreateRequestDto requestDto,
+        BindingResult result
+    ) {
         if (result.hasErrors()) {
             throw new BadRequestException("Order creation failed: bad request");
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(
-            orderService.createOrder(requestDto)
+            orderService.createOrder(memberDetail.getCustomerId(), requestDto)
         );
     }
-
 }
