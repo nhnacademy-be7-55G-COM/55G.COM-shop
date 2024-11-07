@@ -3,15 +3,11 @@ package shop.S5G.shop.service.order.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import shop.S5G.shop.dto.delivery.DeliveryCreateRequestDto;
 import shop.S5G.shop.dto.delivery.DeliveryResponseDto;
 import shop.S5G.shop.dto.delivery.DeliveryUpdateRequestDto;
 import shop.S5G.shop.entity.order.Delivery;
-import shop.S5G.shop.entity.order.DeliveryFee;
 import shop.S5G.shop.entity.order.DeliveryStatus;
-import shop.S5G.shop.exception.BadRequestException;
 import shop.S5G.shop.exception.ResourceNotFoundException;
-import shop.S5G.shop.repository.order.DeliveryFeeRepository;
 import shop.S5G.shop.repository.order.DeliveryRepository;
 import shop.S5G.shop.repository.order.DeliveryStatusRepository;
 import shop.S5G.shop.service.order.DeliveryService;
@@ -21,7 +17,6 @@ import shop.S5G.shop.service.order.DeliveryService;
 @Service
 public class DeliveryServiceImpl implements DeliveryService {
     private final DeliveryRepository deliveryRepository;
-    private final DeliveryFeeRepository deliveryFeeRepository;
     private final DeliveryStatusRepository deliveryStatusRepository;
 
     @Transactional(readOnly = true)
@@ -30,15 +25,6 @@ public class DeliveryServiceImpl implements DeliveryService {
         return deliveryRepository.findByIdFetch(orderId).map(DeliveryResponseDto::of).orElseThrow(
             () -> new ResourceNotFoundException("orderId is not available")
         );
-    }
-
-    @Override
-    public long saveAndGetId(DeliveryCreateRequestDto request) {
-        DeliveryFee fee = deliveryFeeRepository.findById(request.deliveryFeeId()).orElseThrow(
-            () -> new BadRequestException("Can't find delivery fee")
-        );
-        // TODO: 타입 문제
-        return deliveryRepository.save(new Delivery(request.address(), request.receivedDate(), (int) fee.getFee())).getId();
     }
 
     @Override
@@ -68,7 +54,7 @@ public class DeliveryServiceImpl implements DeliveryService {
             () -> new ResourceNotFoundException("deliveryId is not available")
         );
         // 유저는 배송준비중인 상태에만 정보 수정 허용
-        // TOOD: 적절한 예외로 바꾸기
+        // TODO: 적절한 예외로 바꾸기
         if (updateRequest.status().equals("PREPARING"))
             throw new IllegalArgumentException();
         delivery.setAddress(updateRequest.address());
