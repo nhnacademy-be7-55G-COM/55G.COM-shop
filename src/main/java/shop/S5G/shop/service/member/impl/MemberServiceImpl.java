@@ -8,10 +8,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import shop.S5G.shop.dto.customer.CustomerRegistrationRequestDto;
+import shop.S5G.shop.dto.customer.CustomerResponseDto;
 import shop.S5G.shop.dto.member.LoginResponseDto;
+import shop.S5G.shop.dto.member.MemberDetailResponseDto;
 import shop.S5G.shop.dto.member.MemberRegistrationRequestDto;
 import shop.S5G.shop.dto.member.MemberResponseDto;
 import shop.S5G.shop.dto.member.MemberUpdateRequestDto;
+import shop.S5G.shop.dto.memberGrade.MemberGradeResponseDto;
+import shop.S5G.shop.dto.memberStatus.MemberStatusResponseDto;
 import shop.S5G.shop.entity.member.Customer;
 import shop.S5G.shop.entity.member.Member;
 import shop.S5G.shop.entity.member.MemberGrade;
@@ -37,7 +41,7 @@ public class MemberServiceImpl implements MemberService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public Member findMember(String loginId) {
+    public Member getMember(String loginId) {
         if (!memberRepository.existsByLoginIdAndStatus_TypeName(loginId, "ACTIVE")) {
             throw new MemberNotFoundException("회원이 존재하지 않습니다");
         }
@@ -46,7 +50,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public LoginResponseDto findLoginDto(String loginId) {
+    public LoginResponseDto getLoginDto(String loginId) {
         if (!memberRepository.existsByLoginIdAndStatus_TypeName(loginId, "ACTIVE")) {
             throw new MemberNotFoundException("회원이 존재하지 않습니다");
         }
@@ -88,23 +92,28 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberResponseDto findMemberDto(String loginId) {
+    public MemberDetailResponseDto getMemberDto(String loginId) {
         if (!memberRepository.existsByLoginIdAndStatus_TypeName(loginId, "ACTIVE")) {
             throw new MemberNotFoundException("회원이 존재하지 않습니다");
         }
         Member member = memberRepository.findByLoginIdAndStatus_TypeName(loginId, "ACTIVE");
+        CustomerResponseDto customer = customerService.getCustomer(member.getId());
 
-        return new MemberResponseDto(member.getId(), member.getStatus(), member.getGrade(),
+        return new MemberDetailResponseDto(member.getId(),
+            MemberStatusResponseDto.toDto(member.getStatus()),
+            MemberGradeResponseDto.toDto(member.getGrade()),
             member.getLoginId(),
-            member.getPassword(), member.getBirth(), member.getCreatedAt(),
+            member.getPassword(), member.getBirth(), customer.name(), customer.email(),
+            customer.phoneNumber(), member.getCreatedAt(),
             member.getLatestLoginAt(), member.getPoint());
     }
 
     @Override
     public List<MemberResponseDto> findAllMembers(Pageable pageable) {
         return memberRepository.findByStatus_TypeName("ACTIVE")
-            .stream().map(member -> new MemberResponseDto(member.getId(), member.getStatus(),
-                member.getGrade(),
+            .stream().map(member -> new MemberResponseDto(member.getId(),
+                MemberStatusResponseDto.toDto(member.getStatus()),
+                MemberGradeResponseDto.toDto(member.getGrade()),
                 member.getLoginId(),
                 member.getPassword(), member.getBirth(), member.getCreatedAt(),
                 member.getLatestLoginAt(), member.getPoint()))

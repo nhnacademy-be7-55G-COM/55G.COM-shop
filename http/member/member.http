@@ -17,7 +17,7 @@ Content-Type: application/json
 }
 
 ### member 생성
-POST http://localhost:8820/api/shop/member
+POST http://localhost:8100/api/shop/member
 Content-Type: application/json
 
 {

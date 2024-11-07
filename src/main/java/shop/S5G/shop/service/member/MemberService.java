@@ -4,6 +4,7 @@ package shop.S5G.shop.service.member;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 import shop.S5G.shop.dto.member.LoginResponseDto;
+import shop.S5G.shop.dto.member.MemberDetailResponseDto;
 import shop.S5G.shop.dto.member.MemberRegistrationRequestDto;
 import shop.S5G.shop.dto.member.MemberResponseDto;
 import shop.S5G.shop.dto.member.MemberUpdateRequestDto;
@@ -17,11 +18,11 @@ public interface MemberService {
 
     List<MemberResponseDto> findAllMembers(Pageable pageable);
 
-    MemberResponseDto findMemberDto(String loginId);
+    MemberDetailResponseDto getMemberDto(String loginId);
 
-    Member findMember(String loginId);
+    Member getMember(String loginId);
 
-    LoginResponseDto findLoginDto(String loginId);
+    LoginResponseDto getLoginDto(String loginId);
 
     void deleteById(Long memberId);
 }

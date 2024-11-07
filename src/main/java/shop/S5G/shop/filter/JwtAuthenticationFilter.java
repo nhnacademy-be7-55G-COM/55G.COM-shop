@@ -27,21 +27,29 @@ import shop.S5G.shop.util.JwtUtil;
 @RequiredArgsConstructor
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
     private final MemberService memberService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
         FilterChain filterChain) throws ServletException, IOException {
         try {
-            if(request.getHeader(HttpHeaders.AUTHORIZATION) == null) {
-                 filterChain.doFilter(request, response);
-                 return;
+            if (request.getHeader(HttpHeaders.AUTHORIZATION) == null) {
+                filterChain.doFilter(request, response);
+                return;
             }
 //            Claims claims = JwtUtil.getClaimsFromRequest(request);
-            Map<String, Object> claims = JwtUtil.decodePayload(request.getHeader(HttpHeaders.AUTHORIZATION).substring(7));
+            String token = request.getHeader(HttpHeaders.AUTHORIZATION).substring(7);
+
+            if (token.equals("ANONYMOUS")) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+
+            Map<String, Object> claims = JwtUtil.decodePayload(token);
             String loginId = (String) claims.get("loginId");
             String role = (String) claims.get("role");
-            long customerId = memberService.findMember(loginId).getId();
+            long customerId = memberService.getMember(loginId).getId();
 
             ShopMemberDetail detail = new ShopMemberDetail(loginId, role, customerId);
 
@@ -50,7 +58,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             );
             authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authToken);
-        }catch (AuthenticationException | MemberNotFoundException | MalformedJwtException e) {
+        } catch (AuthenticationException | MemberNotFoundException | MalformedJwtException e) {
             // do nothing
         }
         filterChain.doFilter(request, response);
@@ -60,7 +68,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         Claims claims = JwtUtil.getClaimsFromRequest(request);
         String loginId = claims.get("loginId", String.class);
         String role = claims.get("role", String.class);
-        long customerId = memberService.findMember(loginId).getId();
+        long customerId = memberService.getMember(loginId).getId();
 
         return new ShopMemberDetail(loginId, role, customerId);
     }
