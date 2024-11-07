@@ -1,6 +1,7 @@
 package shop.S5G.shop.repository.point.qdsl.impl;
 
 import static shop.S5G.shop.entity.member.QCustomer.customer;
+import static shop.S5G.shop.entity.member.QMember.member;
 import static shop.S5G.shop.entity.point.QPointHistory.pointHistory;
 import static shop.S5G.shop.entity.point.QPointSource.pointSource;
 
@@ -21,11 +22,12 @@ public class PointHistoryQuerydslRepositoryImpl extends QuerydslRepositorySuppor
     }
 
      @Override
-     public Page<PointHistoryResponseDto> findPointHistoryByCustomerId(long customerId, Pageable pageable) {
+     public Page<PointHistoryResponseDto> findPointHistoryByMemberId(long memberId, Pageable pageable) {
         List<PointHistoryResponseDto> list = from(pointHistory)
-            .innerJoin(pointHistory.customer, customer)
+            .innerJoin(pointHistory.member, member)
             .innerJoin(pointHistory.pointSource, pointSource)
-            .where(customer.customerId.eq(customerId).and(pointHistory.active.eq(true)))
+            .innerJoin(member.customer, customer)
+            .where(customer.customerId.eq(memberId).and(pointHistory.active.eq(true)))
             .orderBy(pointHistory.id.desc())
             .offset(pageable.getOffset()).limit(pageable.getPageSize())
             .select(Projections.constructor(
@@ -41,7 +43,7 @@ public class PointHistoryQuerydslRepositoryImpl extends QuerydslRepositorySuppor
         Long count = Objects.requireNonNull(
             from(pointHistory)
                 .where(
-                    pointHistory.customer.customerId.eq(customerId)
+                    pointHistory.member.id.eq(memberId)
                         .and(pointHistory.active.eq(true))
                 )
                 .select(pointHistory.count())

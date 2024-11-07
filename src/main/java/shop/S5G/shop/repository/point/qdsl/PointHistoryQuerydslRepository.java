@@ -6,5 +6,5 @@ import shop.S5G.shop.dto.point.PointHistoryResponseDto;
 
 public interface PointHistoryQuerydslRepository {
 
-    Page<PointHistoryResponseDto> findPointHistoryByCustomerId(long customerId, Pageable pageable);
+    Page<PointHistoryResponseDto> findPointHistoryByMemberId(long memberId, Pageable pageable);
 }

@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import shop.S5G.shop.entity.member.Customer;
+import shop.S5G.shop.entity.member.Member;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -34,7 +34,7 @@ public class PointHistory {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
-    private Customer customer;
+    private Member member;
 
     private long point;
 
@@ -44,9 +44,9 @@ public class PointHistory {
     @Setter
     private boolean active;
 
-    public PointHistory(PointSource source, Customer customer, long point, long remainingPoint) {
+    public PointHistory(PointSource source, Member member, long point, long remainingPoint) {
         pointSource = source;
-        this.customer = customer;
+        this.member = member;
         this.point = point;
         this.remainingPoint = remainingPoint;
         createdAt = LocalDateTime.now();
