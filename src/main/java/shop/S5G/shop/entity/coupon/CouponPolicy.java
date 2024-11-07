@@ -40,13 +40,12 @@ public class CouponPolicy {
 
     @Setter
     @NotNull
-    @Column(name = "condition")
+    @Column(name = "`condition`")
     private Long condition;
 
     @Setter
     @Column(name = "max_price")
     private Long maxPrice;
-
 
     @NotNull
     @Column(name = "duration")

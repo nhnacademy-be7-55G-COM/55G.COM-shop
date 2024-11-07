@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.Map;
+
 import org.springframework.http.HttpHeaders;
 import shop.S5G.shop.exception.AuthenticationException;
 
