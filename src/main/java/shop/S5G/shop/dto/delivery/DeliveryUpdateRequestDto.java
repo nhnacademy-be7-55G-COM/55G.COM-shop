@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 
 public record DeliveryUpdateRequestDto(
-    @Min(1)
+    @Min(1) // order ID
     long id,
 
     @Size(min=1, max=100)

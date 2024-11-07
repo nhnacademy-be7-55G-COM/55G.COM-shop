@@ -22,6 +22,7 @@ import shop.S5G.shop.entity.order.OrderDetail;
 import shop.S5G.shop.entity.order.OrderDetailType;
 import shop.S5G.shop.entity.order.WrappingPaper;
 import shop.S5G.shop.exception.EssentialDataNotFoundException;
+import shop.S5G.shop.exception.ResourceNotFoundException;
 import shop.S5G.shop.exception.book.BookResourceNotFoundException;
 import shop.S5G.shop.exception.member.CustomerNotFoundException;
 import shop.S5G.shop.exception.order.WrappingPaperDoesNotExistsException;
@@ -131,5 +132,11 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findOrdersByCustomerIdBetweenDates(
             customerId, queryRequest.startDate(), queryRequest.endDate()
         );
+    }
+
+    @Override
+    public void deactivateOrder(long orderId) {
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new ResourceNotFoundException("Given id is not available: "+orderId));
+        order.setActive(false);
     }
 }

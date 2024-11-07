@@ -21,7 +21,8 @@ public class DeliveryController {
     }
 
     @PutMapping
-    public DeliveryResponseDto userUpdateDelivery(@RequestBody DeliveryUpdateRequestDto updateRequest) {
+    public DeliveryResponseDto userUpdateDelivery(
+        @RequestBody DeliveryUpdateRequestDto updateRequest) {
         return deliveryService.userUpdateDelivery(updateRequest);
     }
 }

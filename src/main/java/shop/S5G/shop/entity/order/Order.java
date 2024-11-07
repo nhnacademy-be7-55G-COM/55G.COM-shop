@@ -17,6 +17,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import shop.S5G.shop.entity.member.Customer;
 
 
@@ -45,6 +46,8 @@ public class Order {
     private LocalDateTime orderedAt;
     private long netPrice;
     private long totalPrice;
+
+    @Setter
     private boolean active;
 
     public Order(Customer customer, Delivery delivery, long netPrice, long totalPrice) {
