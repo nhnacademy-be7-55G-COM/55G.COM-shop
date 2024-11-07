@@ -34,8 +34,10 @@ public class Delivery {
 
     @Column(name = "delivery_address")
     @Length(max = 100)
+    @Setter
     private String address;
 
+    @Setter
     private LocalDate receivedDate;
 
     @Setter
@@ -48,9 +50,20 @@ public class Delivery {
     @Setter
     private String invoiceNumber;
 
-    public Delivery(String address, LocalDate receivedDate, int fee) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "delivery_status_id")
+    @Setter
+    private DeliveryStatus status;
+
+    @Length(max=30)
+    private String receiverName;
+
+    // TODO: DELIVERY 수정
+    public Delivery(String address, LocalDate receivedDate, int fee, DeliveryStatus status, String receiverName) {
         this.address = address;
         this.receivedDate = receivedDate;
         this.fee = fee;
+        this.status=status;
+        this.receiverName = receiverName;
     }
 }
