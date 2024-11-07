@@ -1,12 +1,12 @@
 spring:
   profiles:
-    active: dev
+    active: default
 
   application:
     name: shop-service
 
   config:
-    import: optional:configserver:http://localhost:9050
+    import: optional:configserver:http://localhost:9000
 
   cloud:
     config:
