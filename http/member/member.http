@@ -29,9 +29,5 @@ Content-Type: application/json
   "phoneNumber": "01000000000"
 }
 
-### member 조회
-GET http://localhost:8100/api/shop/member/test
-Accept: application/json
-
 ### memberGrade 삭제
 DELETE http://localhost:8820/api/shop/member/grade/1

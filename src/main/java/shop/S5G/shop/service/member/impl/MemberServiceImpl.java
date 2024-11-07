@@ -8,7 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import shop.S5G.shop.dto.customer.CustomerRegistrationRequestDto;
+import shop.S5G.shop.dto.customer.CustomerResponseDto;
 import shop.S5G.shop.dto.member.LoginResponseDto;
+import shop.S5G.shop.dto.member.MemberDetailResponseDto;
 import shop.S5G.shop.dto.member.MemberRegistrationRequestDto;
 import shop.S5G.shop.dto.member.MemberResponseDto;
 import shop.S5G.shop.dto.member.MemberUpdateRequestDto;
@@ -90,17 +92,19 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberResponseDto getMemberDto(String loginId) {
+    public MemberDetailResponseDto getMemberDto(String loginId) {
         if (!memberRepository.existsByLoginIdAndStatus_TypeName(loginId, "ACTIVE")) {
             throw new MemberNotFoundException("회원이 존재하지 않습니다");
         }
         Member member = memberRepository.findByLoginIdAndStatus_TypeName(loginId, "ACTIVE");
+        CustomerResponseDto customer = customerService.getCustomer(member.getId());
 
-        return new MemberResponseDto(member.getId(),
+        return new MemberDetailResponseDto(member.getId(),
             MemberStatusResponseDto.toDto(member.getStatus()),
             MemberGradeResponseDto.toDto(member.getGrade()),
             member.getLoginId(),
-            member.getPassword(), member.getBirth(), member.getCreatedAt(),
+            member.getPassword(), member.getBirth(), customer.name(), customer.email(),
+            customer.phoneNumber(), member.getCreatedAt(),
             member.getLatestLoginAt(), member.getPoint());
     }
 

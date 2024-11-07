@@ -3,6 +3,7 @@ package shop.S5G.shop.controller.member;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,10 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import shop.S5G.shop.dto.member.LoginResponseDto;
+import shop.S5G.shop.dto.member.MemberDetailResponseDto;
 import shop.S5G.shop.dto.member.MemberRegistrationRequestDto;
-import shop.S5G.shop.dto.member.MemberResponseDto;
 import shop.S5G.shop.dto.tag.MessageDto;
 import shop.S5G.shop.exception.BadRequestException;
+import shop.S5G.shop.security.ShopMemberDetail;
 import shop.S5G.shop.service.member.MemberService;
 
 @RestController
@@ -42,9 +44,11 @@ public class MemberController {
         return ResponseEntity.ok().body(loginResponseDto);
     }
 
-    @GetMapping("/member/{loginId}")
-    public ResponseEntity<MemberResponseDto> getMember(@PathVariable String loginId) {
-        MemberResponseDto memberResponseDto = memberService.getMemberDto(loginId);
+    @GetMapping("/member")
+    public ResponseEntity<MemberDetailResponseDto> getMember(@AuthenticationPrincipal
+    ShopMemberDetail memberDetail) {
+        MemberDetailResponseDto memberResponseDto = memberService.getMemberDto(
+            memberDetail.getLoginId());
         return ResponseEntity.ok().body(memberResponseDto);
     }
 }
