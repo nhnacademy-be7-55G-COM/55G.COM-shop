@@ -17,11 +17,11 @@ public interface MemberService {
 
     List<MemberResponseDto> findAllMembers(Pageable pageable);
 
-    MemberResponseDto findMemberDto(String loginId);
+    MemberResponseDto getMemberDto(String loginId);
 
-    Member findMember(String loginId);
+    Member getMember(String loginId);
 
-    LoginResponseDto findLoginDto(String loginId);
+    LoginResponseDto getLoginDto(String loginId);
 
     void deleteById(Long memberId);
 }

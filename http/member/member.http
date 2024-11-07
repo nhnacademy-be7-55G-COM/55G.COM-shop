@@ -17,7 +17,7 @@ Content-Type: application/json
 }
 
 ### member 생성
-POST http://localhost:8820/api/shop/member
+POST http://localhost:8100/api/shop/member
 Content-Type: application/json
 
 {
@@ -28,6 +28,10 @@ Content-Type: application/json
   "loginId": "test",
   "phoneNumber": "01000000000"
 }
+
+### member 조회
+GET http://localhost:8100/api/shop/member/test
+Accept: application/json
 
 ### memberGrade 삭제
 DELETE http://localhost:8820/api/shop/member/grade/1

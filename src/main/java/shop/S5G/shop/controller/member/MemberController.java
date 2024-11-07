@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import shop.S5G.shop.dto.member.LoginResponseDto;
 import shop.S5G.shop.dto.member.MemberRegistrationRequestDto;
+import shop.S5G.shop.dto.member.MemberResponseDto;
 import shop.S5G.shop.dto.tag.MessageDto;
 import shop.S5G.shop.exception.BadRequestException;
 import shop.S5G.shop.service.member.MemberService;
@@ -35,9 +36,15 @@ public class MemberController {
     }
 
     @GetMapping("/member/login/{loginId}")
-    public ResponseEntity<LoginResponseDto> getMember(@PathVariable String loginId) {
+    public ResponseEntity<LoginResponseDto> getMemberLoginInfo(@PathVariable String loginId) {
 
-        LoginResponseDto loginResponseDto = memberService.findLoginDto(loginId);
+        LoginResponseDto loginResponseDto = memberService.getLoginDto(loginId);
         return ResponseEntity.ok().body(loginResponseDto);
+    }
+
+    @GetMapping("/member/{loginId}")
+    public ResponseEntity<MemberResponseDto> getMember(@PathVariable String loginId) {
+        MemberResponseDto memberResponseDto = memberService.getMemberDto(loginId);
+        return ResponseEntity.ok().body(memberResponseDto);
     }
 }
