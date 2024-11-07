@@ -35,7 +35,7 @@ class OrderDetailServiceImplTest {
         // countOrderDetailsByOrderId를 사용하지 않는 코드가 된다면 바뀔 여지가 있음.
         Mockito.when(orderDetailRepository.countOrderDetailsByOrderId(anyLong())).thenReturn(0L);
 
-        assertThatThrownBy(() -> service.findOrderDetailsByOrderId(1L))
+        assertThatThrownBy(() -> service.getOrderDetailsWithBook(1L))
             .isInstanceOf(OrderDetailsNotExistException.class)
             .hasMessageContaining("1");
 
@@ -51,7 +51,7 @@ class OrderDetailServiceImplTest {
         Mockito.when(orderDetailRepository.countOrderDetailsByOrderId(anyLong())).thenReturn(1L);
         Mockito.when(orderDetailRepository.queryAllDetailsByOrderId(anyLong())).thenReturn(list);
 
-        assertThatCode(() -> service.findOrderDetailsByOrderId(1L))
+        assertThatCode(() -> service.getOrderDetailsWithBook(1L))
             .doesNotThrowAnyException();
 
         Mockito.verify(orderDetailRepository, times(1)).countOrderDetailsByOrderId(1L);

@@ -21,10 +21,10 @@ class OrderServiceImplTest {
     OrderServiceImpl orderService;
 
     @Test
-    void queryAllOrdersByCustomerIdTest() {
+    void getAllOrdersWithDetailTest() {
 //        when(orderRepository.findOrdersByCustomerId(anyLong(), any(), )).thenReturn(Page.empty());
         Pageable pageable = mock(Pageable.class);
-        assertThatCode(() -> orderService.queryAllOrdersByCustomerId(1L))
+        assertThatCode(() -> orderService.getAllOrdersWithDetail(1L))
             .doesNotThrowAnyException();
 //        verify(orderRepository, times(1)).findOrdersByCustomerId(eq(1L), eq(pageable), );
     }
