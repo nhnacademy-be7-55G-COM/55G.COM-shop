@@ -16,6 +16,7 @@ import shop.s5g.shop.dto.member.MemberRegistrationRequestDto;
 import shop.s5g.shop.dto.member.MemberResponseDto;
 import shop.s5g.shop.dto.memberGrade.MemberGradeResponseDto;
 import shop.s5g.shop.dto.memberStatus.MemberStatusResponseDto;
+import shop.s5g.shop.dto.point.PointHistoryCreateRequestDto;
 import shop.s5g.shop.entity.member.Customer;
 import shop.s5g.shop.entity.member.Member;
 import shop.s5g.shop.entity.member.MemberGrade;
@@ -27,6 +28,7 @@ import shop.s5g.shop.service.member.CustomerService;
 import shop.s5g.shop.service.member.MemberGradeService;
 import shop.s5g.shop.service.member.MemberService;
 import shop.s5g.shop.service.member.MemberStatusService;
+import shop.s5g.shop.service.point.PointHistoryService;
 
 
 @Service
@@ -38,6 +40,7 @@ public class MemberServiceImpl implements MemberService {
     private final MemberStatusService memberStatusService;
     private final MemberGradeService memberGradeService;
     private final CustomerService customerService;
+    private final PointHistoryService pointHistoryService;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -85,7 +88,8 @@ public class MemberServiceImpl implements MemberService {
             .point(0L)
             .build();
 
-        memberRepository.save(member);
+        Member saved = memberRepository.save(member);
+        pointHistoryService.createPointHistory(saved.getId(), PointHistoryCreateRequestDto.REGISTER_POINT);
     }
 
     @Override

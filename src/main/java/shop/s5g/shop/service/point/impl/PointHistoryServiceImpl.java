@@ -53,7 +53,9 @@ public class PointHistoryServiceImpl implements PointHistoryService {
         );
 
         long offset = createRequest.pointOffset();
-        PointHistory pointHistory = new PointHistory(pointSource, member, offset, member.getPoint()+offset);
+        long result = member.getPoint() + offset;
+        PointHistory pointHistory = new PointHistory(pointSource, member, offset, result);
+        member.setPoint(result);
         PointHistory saved = pointHistoryRepository.save(pointHistory);
 
         return new PointHistoryCreateResponseDto(saved.getId(), saved.getRemainingPoint());
