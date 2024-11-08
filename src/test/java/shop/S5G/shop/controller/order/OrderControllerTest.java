@@ -3,6 +3,7 @@ package shop.S5G.shop.controller.order;
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -17,18 +18,32 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
+import shop.S5G.shop.annotation.WithCustomMockUser;
+import shop.S5G.shop.config.SecurityConfig;
+import shop.S5G.shop.config.TestSecurityConfig;
 import shop.S5G.shop.dto.order.OrderCreateResponseDto;
 import shop.S5G.shop.dto.order.OrderWithDetailResponseDto;
 import shop.S5G.shop.exception.member.CustomerNotFoundException;
-import shop.S5G.shop.exception.order.OrderDetailsNotExistException;
+import shop.S5G.shop.filter.JwtAuthenticationFilter;
 import shop.S5G.shop.service.order.OrderDetailService;
 import shop.S5G.shop.service.order.OrderService;
 
-@WebMvcTest(OrderController.class)
+@WebMvcTest(
+    value = OrderController.class,
+    excludeFilters = @ComponentScan.Filter(
+        type= FilterType.ASSIGNABLE_TYPE,
+        classes = {SecurityConfig.class, JwtAuthenticationFilter.class}
+    )
+)
+@Import(TestSecurityConfig.class)
+//@AutoConfigureMockMvc(addFilters = false)
 class OrderControllerTest {
     @Autowired
     MockMvc mvc;
@@ -41,62 +56,36 @@ class OrderControllerTest {
     ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
+    @WithCustomMockUser(loginId = "123", customerId = 1L, role = "ROLE_MEMBER")
     void fetchOrdersEmptyTest() throws Exception{
-        when(orderService.queryAllOrdersByCustomerId(anyLong())).thenReturn(List.of());
-        mvc.perform(MockMvcRequestBuilders.get("/api/shop/orders")
-            .param("customerId", "3")
-        )
+        when(orderService.getAllOrdersWithDetail(anyLong())).thenReturn(List.of());
+        mvc.perform(MockMvcRequestBuilders.get("/api/shop/orders"))
             .andExpect(status().isOk())
             .andExpect(content().string(containsString("[]")))
             .andDo(print());
-        verify(orderService, times(1)).queryAllOrdersByCustomerId(3L);
+        verify(orderService, times(1)).getAllOrdersWithDetail(1L);
     }
 
     @Test
+    @WithCustomMockUser(loginId = "123", customerId = 1L, role = "ROLE_MEMBER")
     void fetchOrdersTest() throws Exception {
         OrderWithDetailResponseDto dto = new OrderWithDetailResponseDto(
             1L, LocalDateTime.now(), 3000L, 5000L, "test title", 3, 4
         );
         List<OrderWithDetailResponseDto> result =  List.of(dto, dto);
 
-        when(orderService.queryAllOrdersByCustomerId(anyLong())).thenReturn(result);
+        when(orderService.getAllOrdersWithDetail(anyLong())).thenReturn(result);
 
-        mvc.perform(MockMvcRequestBuilders.get("/api/shop/orders")
-                .param("customerId", "3")
-            )
+        mvc.perform(MockMvcRequestBuilders.get("/api/shop/orders"))
             .andExpect(status().isOk())
             .andExpect(content().string(containsString("\"representTitle\":\"test title\"")))
             .andDo(print());
 
-        verify(orderService, times(1)).queryAllOrdersByCustomerId(3L);
+        verify(orderService, times(1)).getAllOrdersWithDetail(1L);
     }
 
-    @Test
-    void fetchOrderDetailsEmptyTest() throws Exception{
-        when(orderDetailService.findOrderDetailsByOrderId(anyLong())).thenReturn(List.of());
-
-        mvc.perform(MockMvcRequestBuilders.get("/api/shop/orders/1"))
-            .andExpect(status().isOk())
-            .andExpect(content().string(org.hamcrest.Matchers.equalTo("[]")));
-
-        verify(orderDetailService, times(1)).findOrderDetailsByOrderId(1L);
-    }
-
-    @Test
-    void fetchOrderDetailsErrorTest() throws Exception {
-        when(orderDetailService.findOrderDetailsByOrderId(anyLong())).thenThrow(
-            new OrderDetailsNotExistException("OrderDetails do not exist")
-        );
-
-        mvc.perform(MockMvcRequestBuilders.get("/api/shop/orders/1"))
-            .andExpect(status().isNotFound())
-            .andExpect(content().string(containsString("not exist")));
-
-        verify(orderDetailService, times(1)).findOrderDetailsByOrderId(1L);
-    }
     String validatedTestCase = """
         {
-            "customerId": 1,
             "delivery": {
                 "address": "테스트 주소",
                 "deliveryFeeId": 1,
@@ -118,7 +107,6 @@ class OrderControllerTest {
     // 비어있는 장바구니
     String failedTestCase = """
         {
-            "customerId": 1,
             "delivery": {
                 "address": "테스트 주소",
                 "deliveryFeeId": 1,
@@ -130,18 +118,20 @@ class OrderControllerTest {
         }
         """;
     @Test
+    @WithCustomMockUser(loginId = "123", customerId = 1L, role = "ROLE_MEMBER")
     void createNewOrderValidateFailTest() throws Exception{
         mvc.perform(MockMvcRequestBuilders.post("/api/shop/orders")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(failedTestCase)
             ).andExpect(status().isBadRequest());
-        verify(orderService, never()).createOrder(any());
+        verify(orderService, never()).createOrder(eq(1L), any());
     }
 
     @Test
+    @WithCustomMockUser(loginId = "123", customerId = 1L, role = "ROLE_MEMBER")
     void createNewOrderSuccessTest() throws Exception{
         OrderCreateResponseDto response = new OrderCreateResponseDto(1L);
-        when(orderService.createOrder(any())).thenReturn(response);
+        when(orderService.createOrder(anyLong(), any())).thenReturn(response);
 
         mvc.perform(MockMvcRequestBuilders.post("/api/shop/orders")
             .contentType(MediaType.APPLICATION_JSON)
@@ -151,12 +141,13 @@ class OrderControllerTest {
             .andExpect(content().string(containsString("\"orderId\":1")))
         ;
 
-        verify(orderService, times(1)).createOrder(any());
+        verify(orderService, times(1)).createOrder(eq(1L), any());
     }
 
     @Test
+    @WithCustomMockUser(loginId = "123", customerId = 1L, role = "ROLE_MEMBER")
     void createNewOrderExceptionTest() throws Exception {
-        when(orderService.createOrder(any())).thenThrow(CustomerNotFoundException.class);
+        when(orderService.createOrder(anyLong(), any())).thenThrow(CustomerNotFoundException.class);
 
         mvc.perform(MockMvcRequestBuilders.post("/api/shop/orders")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -165,6 +156,6 @@ class OrderControllerTest {
             .andExpect(status().isNotFound())
         ;
 
-        verify(orderService, times(1)).createOrder(any());
+        verify(orderService, times(1)).createOrder(eq(1L), any());
     }
 }

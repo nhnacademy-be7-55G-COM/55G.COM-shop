@@ -21,7 +21,7 @@ public class TossPaymentsAdapterCallerImpl implements TossPaymentsAdapterCaller 
     private final TossPaymentRepository paymentRepository;
 
     @Override
-    public TossPaymentsDto confirmPayment(long orderDataId, TossPaymentsConfirmRequestDto confirmRequest) {
+    public TossPaymentsDto confirmPayment(TossPaymentsConfirmRequestDto confirmRequest) {
         ResponseEntity<TossPaymentsDto> response = adapter.confirm(confirmRequest);
         // 근데 어차피 feignClient 는 20x, 30x가 아니면 알아서 예외를 반환해버림..
 //        if (!response.getStatusCode().is2xxSuccessful()) {
