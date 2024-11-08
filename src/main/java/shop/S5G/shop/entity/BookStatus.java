@@ -26,4 +26,8 @@ public class BookStatus {
     @Column(name = "type_name")
     @Length(max = 30)
     private String name;
+
+    public BookStatus(String name) {
+        this.name = name;
+    }
 }

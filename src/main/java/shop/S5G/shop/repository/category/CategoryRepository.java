@@ -5,4 +5,5 @@ import shop.S5G.shop.entity.Category;
 import shop.S5G.shop.repository.category.qdsl.CategoryQuerydslRepository;
 
 public interface CategoryRepository extends JpaRepository<Category, Long>, CategoryQuerydslRepository {
+    Category findByCategoryName(String s);
 }

@@ -5,10 +5,8 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
-import org.springframework.stereotype.Repository;
 import shop.S5G.shop.dto.bookcategory.BookCategoryResponseDto;
 import shop.S5G.shop.entity.bookcategory.BookCategory;
-import shop.S5G.shop.repository.bookcategory.BookCategoryRepository;
 import shop.S5G.shop.repository.bookcategory.qdsl.BookCategoryQuerydslRepository;
 
 import java.util.List;
@@ -19,13 +17,11 @@ public class BookCategoryQuerydslRepositoryImpl extends QuerydslRepositorySuppor
 
     private final JPAQueryFactory jpaQueryFactory;
 
-    public BookCategoryQuerydslRepositoryImpl(EntityManager em) {
+    public BookCategoryQuerydslRepositoryImpl(JPAQueryFactory jpaQueryFactory) {
         super(BookCategory.class);
-        this.jpaQueryFactory = new JPAQueryFactory(em);
+        this.jpaQueryFactory = jpaQueryFactory;
     }
 
-    @PersistenceContext
-    private EntityManager em;
 
     //bookId에 해당하는 category 리스트 리턴
     @Override
