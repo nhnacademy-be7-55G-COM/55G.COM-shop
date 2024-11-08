@@ -38,6 +38,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public CustomerResponseDto getCustomer(long customerId) {
         Customer customer = customerRepository.findById(customerId)
             .orElseThrow(() -> new CustomerNotFoundException("고객이 존재하지 않습니다."));

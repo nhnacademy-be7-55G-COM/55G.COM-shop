@@ -1,19 +1,19 @@
 package shop.S5G.shop.service.member.impl;
 
-import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import shop.S5G.shop.dto.customer.CustomerRegistrationRequestDto;
 import shop.S5G.shop.dto.customer.CustomerResponseDto;
+import shop.S5G.shop.dto.customer.CustomerUpdateRequestDto;
 import shop.S5G.shop.dto.member.LoginResponseDto;
 import shop.S5G.shop.dto.member.MemberDetailResponseDto;
 import shop.S5G.shop.dto.member.MemberRegistrationRequestDto;
 import shop.S5G.shop.dto.member.MemberResponseDto;
-import shop.S5G.shop.dto.member.MemberUpdateRequestDto;
 import shop.S5G.shop.dto.memberGrade.MemberGradeResponseDto;
 import shop.S5G.shop.dto.memberStatus.MemberStatusResponseDto;
 import shop.S5G.shop.entity.member.Customer;
@@ -41,6 +41,7 @@ public class MemberServiceImpl implements MemberService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
+    @Transactional(readOnly = true)
     public Member getMember(String loginId) {
         if (!memberRepository.existsByLoginIdAndStatus_TypeName(loginId, "ACTIVE")) {
             throw new MemberNotFoundException("회원이 존재하지 않습니다");
@@ -50,6 +51,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public LoginResponseDto getLoginDto(String loginId) {
         if (!memberRepository.existsByLoginIdAndStatus_TypeName(loginId, "ACTIVE")) {
             throw new MemberNotFoundException("회원이 존재하지 않습니다");
@@ -87,11 +89,12 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void updateMember(MemberUpdateRequestDto memberUpdateRequestDto) {
-        //TODO View 마이 페이지 구현 후 진행 예정
+    public void updateMember(CustomerUpdateRequestDto updateRequestDto) {
+
     }
 
     @Override
+    @Transactional(readOnly = true)
     public MemberDetailResponseDto getMemberDto(String loginId) {
         if (!memberRepository.existsByLoginIdAndStatus_TypeName(loginId, "ACTIVE")) {
             throw new MemberNotFoundException("회원이 존재하지 않습니다");
@@ -109,6 +112,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<MemberResponseDto> findAllMembers(Pageable pageable) {
         return memberRepository.findByStatus_TypeName("ACTIVE")
             .stream().map(member -> new MemberResponseDto(member.getId(),
@@ -124,6 +128,14 @@ public class MemberServiceImpl implements MemberService {
     public void deleteById(Long memberId) {
         //TODO 추후 진행 예정
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void updateLatestLoginAt(String loginId) {
+        if (!memberRepository.existsByLoginIdAndStatus_TypeName(loginId, "ACTIVE")) {
+            throw new MemberNotFoundException("회원이 존재하지 않습니다.");
+        }
+        memberRepository.updateLatestLoginAt(loginId, LocalDateTime.now());
     }
 
 }

@@ -11,16 +11,16 @@ public record MemberRegistrationRequestDto(
     String name,
 
     @NotNull
-    @Length(min = 1, max = 300)
+    @Length(min = 4, max = 300)
     @Email
     String email,
 
     @NotNull
-    @Length(min = 1, max = 30)
+    @Length(min = 4, max = 30)
     String loginId,
 
     @NotNull
-    @Length(max = 255)
+    @Length(min = 4, max = 30)
     String password,
 
     @NotNull
