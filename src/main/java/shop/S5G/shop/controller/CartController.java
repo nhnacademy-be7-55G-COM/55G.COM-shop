@@ -1,5 +1,10 @@
 package shop.S5G.shop.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import shop.S5G.shop.config.RedisConfig;
 import shop.S5G.shop.dto.cart.request.CartControlQuantityRequestDto;
 import shop.S5G.shop.dto.cart.request.CartDeleteBookRequestDto;
@@ -72,12 +78,15 @@ public class CartController {
 
     @GetMapping("/cart/guest")
     public ResponseEntity<Map<String, Object>> lookUpAllBooksWhenGuest(
-        @RequestBody @Validated CartSessionStorageDto cartSessionStorageDto,
-        BindingResult bindingResult) {
+        @RequestParam(value = "cartBookInfoList", required = false) String cartSessionStorage) throws JsonProcessingException {
 
-        if (bindingResult.hasErrors()) {
-            throw new BadRequestException("Field Error When looking up All Books In Cart");
-        }
+        byte[] decoded = Base64.getUrlDecoder()
+            .decode(URLDecoder.decode(cartSessionStorage, StandardCharsets.UTF_8));
+        String decodedCart = new String(decoded, StandardCharsets.UTF_8);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        CartSessionStorageDto cartSessionStorageDto = objectMapper.readValue(decodedCart,
+            CartSessionStorageDto.class);
 
         List<CartBooksResponseDto> cartBooks = cartService.lookUpAllBooksWhenGuest(
             cartSessionStorageDto);
