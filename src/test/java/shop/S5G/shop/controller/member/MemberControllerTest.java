@@ -27,13 +27,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import shop.S5G.shop.config.SecurityConfig;
 import shop.S5G.shop.config.TestSecurityConfig;
 import shop.S5G.shop.filter.JwtAuthenticationFilter;
+import shop.S5G.shop.service.member.CustomerService;
 import shop.S5G.shop.service.member.MemberService;
 
 @AutoConfigureRestDocs
 @WebMvcTest(
     value = MemberController.class,
     excludeFilters = @ComponentScan.Filter(
-        type= FilterType.ASSIGNABLE_TYPE,
+        type = FilterType.ASSIGNABLE_TYPE,
         classes = {SecurityConfig.class, JwtAuthenticationFilter.class}
     )
 )
@@ -46,13 +47,16 @@ class MemberControllerTest {
     @MockBean
     private MemberService memberService;
 
+    @MockBean
+    private CustomerService customerService;
+
     @Test
     @DisplayName("POST /api/shop/member - Register a new member")
     void registerMember() throws Exception {
         mockMvc.perform(post("/api/shop/member")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
-                    "{ \"name\": \"John Doe\", \"email\": \"john.doe@example.com\", \"loginId\": \"johnny\", \"password\": \"securepassword\", \"phoneNumber\": \"12345678901\", \"birthDate\": \"19900101\" }"))
+                    "{ \"name\": \"JohnDoe\", \"email\": \"john.doe@example.com\", \"loginId\": \"johnny\", \"password\": \"securepassword\", \"phoneNumber\": \"12345678901\", \"birthDate\": \"19900101\" }"))
             .andExpect(status().isOk())
             .andDo(print())
             .andDo(document("member-register",
@@ -62,13 +66,13 @@ class MemberControllerTest {
                         .attributes(key("constraints").value("NotNull, length 1-30")),
                     fieldWithPath("email").type(JsonFieldType.STRING)
                         .description("Email of the member")
-                        .attributes(key("constraints").value("NotNull, email, length 1-300")),
+                        .attributes(key("constraints").value("NotNull, email, length 4-300")),
                     fieldWithPath("loginId").type(JsonFieldType.STRING)
                         .description("Login ID of the member")
-                        .attributes(key("constraints").value("NotNull, length 1-30")),
+                        .attributes(key("constraints").value("NotNull, length 4-30")),
                     fieldWithPath("password").type(JsonFieldType.STRING)
                         .description("Password of the member")
-                        .attributes(key("constraints").value("NotNull, length 1-255")),
+                        .attributes(key("constraints").value("NotNull, length 4-255")),
                     fieldWithPath("phoneNumber").type(JsonFieldType.STRING)
                         .description("Phone number of the member")
                         .attributes(key("constraints").value("NotNull, length 11")),
@@ -101,10 +105,10 @@ class MemberControllerTest {
                         .attributes(key("constraints").value("NotNull, email, length 1-300")),
                     fieldWithPath("loginId").type(JsonFieldType.STRING)
                         .description("Login ID of the member")
-                        .attributes(key("constraints").value("NotNull, length 1-30")),
+                        .attributes(key("constraints").value("NotNull, length 4-30")),
                     fieldWithPath("password").type(JsonFieldType.STRING)
                         .description("Password of the member")
-                        .attributes(key("constraints").value("NotNull, length 1-255")),
+                        .attributes(key("constraints").value("NotNull, length 4-30")),
                     fieldWithPath("phoneNumber").type(JsonFieldType.STRING)
                         .description("Phone number of the member")
                         .attributes(key("constraints").value("NotNull, length 11")),
