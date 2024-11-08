@@ -73,11 +73,11 @@ class CartControllerTest {
     void putBookValidationFailTest() throws Exception {
         String content = """
                 {
-                    "sessionId": "",
                     "bookId": null,
                     "quantity": 3
                 }
             """;
+
         mockMvc.perform(post("/api/shop/cart")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content))
@@ -137,10 +137,10 @@ class CartControllerTest {
         //given
         String content = """
                 {
-                    "sessionId": "testSessionId",
-                    "bookId": 1
+                   "bookId": 1
                 }
             """;
+
         //when
         mockMvc.perform(delete("/api/shop/cart")
                 .contentType(MediaType.APPLICATION_JSON)

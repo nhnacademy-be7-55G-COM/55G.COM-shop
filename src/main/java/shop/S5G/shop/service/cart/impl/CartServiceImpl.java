@@ -47,7 +47,7 @@ public class CartServiceImpl implements CartService {
     @Transactional(readOnly = true)
     @Override
     public List<Cart> getBooksInDbByCustomerId(String customerLoginId) {
-        Member member = memberService.findMember(customerLoginId);
+        Member member = memberService.getMember(customerLoginId);
 
         return cartRepository.findAllByCartPk_CustomerId(member.getId());
     }
@@ -91,7 +91,7 @@ public class CartServiceImpl implements CartService {
         }
 
 
-        Member member = memberService.findMember(customerLoginId);
+        Member member = memberService.getMember(customerLoginId);
         Map<Long, Integer> booksInRedisCart = getBooksInRedisCart(customerLoginId);
         List<Cart> booksInDbCart = getBooksInDbByCustomerId(customerLoginId);
 

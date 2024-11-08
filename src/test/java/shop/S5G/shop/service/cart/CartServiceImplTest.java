@@ -77,7 +77,7 @@ class CartServiceImplTest {
         List<Cart> cart = new ArrayList<>();
         cart.add(new Cart(new CartPk(member.getId(), book1.getBookId()), book1, member, quantity));
 
-        when(memberService.findMember(customerId)).thenReturn(member);
+        when(memberService.getMember(customerId)).thenReturn(member);
         when(cartRepository.findAllByCartPk_CustomerId(member.getId())).thenReturn(cart);
 
         //when
@@ -104,7 +104,7 @@ class CartServiceImplTest {
         booksInDb.add(new Cart(new CartPk(member.getId(), book1.getBookId()), book1, member, quantity));
 
         when(cartRedisRepository.getLoginFlag(customerId)).thenReturn(null);
-        when(memberService.findMember(customerId)).thenReturn(member);
+        when(memberService.getMember(customerId)).thenReturn(member);
         when(cartRepository.findAllByCartPk_CustomerId(member.getId())).thenReturn(booksInDb);
         doNothing().when(cartRedisRepository).setLoginFlag(anyString());
         doNothing().when(cartRedisRepository).putBook(anyLong(), anyInt(), anyString());
