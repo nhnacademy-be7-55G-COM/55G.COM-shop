@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -27,6 +28,7 @@ import shop.S5G.shop.dto.cart.response.CartBooksResponseDto;
 import shop.S5G.shop.dto.cart.response.CartDetailInfoResponseDto;
 import shop.S5G.shop.dto.tag.MessageDto;
 import shop.S5G.shop.exception.BadRequestException;
+import shop.S5G.shop.security.ShopMemberDetail;
 import shop.S5G.shop.service.cart.CartService;
 
 @ConditionalOnBean(RedisConfig.class)
@@ -39,8 +41,9 @@ public class CartController {
     //담기
     @PostMapping("/cart")
     public ResponseEntity<MessageDto> putBook(@RequestBody @Validated CartPutRequestDto cartPutRequestDto,
-        BindingResult bindingResult) {
-        String customerLoginId = "testCustomerLoginId";
+        BindingResult bindingResult,@AuthenticationPrincipal ShopMemberDetail shopMemberDetail) {
+        String customerLoginId = shopMemberDetail.getLoginId();
+
         if (bindingResult.hasErrors()) {
             throw new BadRequestException("Field Error When Putting Book In Cart");
         }
@@ -53,9 +56,9 @@ public class CartController {
 
     // 조회 (장바구니상세페이지 접근)
     @GetMapping("/cart")
-    public ResponseEntity<Map<String,Object>> lookUpAllBooks() {
+    public ResponseEntity<Map<String,Object>> lookUpAllBooks(@AuthenticationPrincipal ShopMemberDetail shopMemberDetail) {
 
-        String customerLoginId = "testCustomerLoginId";
+        String customerLoginId = shopMemberDetail.getLoginId();
 
         List<CartBooksResponseDto> cartBooks = cartService.lookUpAllBooks(customerLoginId);
         CartDetailInfoResponseDto cartTotalPriceAndDeliverFee = cartService.getTotalPriceAndDeliverFee(
@@ -89,16 +92,17 @@ public class CartController {
     }
 
 
-
     // 장바구니 상세페이지에서 +,- 버튼으로 수량조절
     @PatchMapping("/cart/controlQuantity")
     public ResponseEntity<Void> controlQuantity(@RequestBody @Validated
-    CartControlQuantityRequestDto controlQuantityReqDto, BindingResult bindingResult) {
+    CartControlQuantityRequestDto controlQuantityReqDto, BindingResult bindingResult,
+        @AuthenticationPrincipal ShopMemberDetail shopMemberDetail) {
+
         if (bindingResult.hasErrors()) {
             throw new BadRequestException("Field Error When Controlling Book Quantity In Cart");
         }
 
-        String customerLoginId = "testCustomerLoginId";
+        String customerLoginId = shopMemberDetail.getLoginId();
 
         cartService.controlQuantity(controlQuantityReqDto.bookId(), controlQuantityReqDto.change(),
             customerLoginId);
@@ -111,12 +115,12 @@ public class CartController {
     @DeleteMapping("/cart")
     public ResponseEntity<MessageDto> deleteBookInCart(
         @RequestBody @Validated CartDeleteBookRequestDto deleteBookReq,
-        BindingResult bindingResult) {
+        BindingResult bindingResult, @AuthenticationPrincipal ShopMemberDetail shopMemberDetail) {
 
         if (bindingResult.hasErrors()) {
             throw new BadRequestException("Field Error When Deleting Book In Cart");
         }
-        String customerLoginId = "testCustomerLoginId";
+        String customerLoginId = shopMemberDetail.getLoginId();
 
         cartService.deleteBookFromCart(deleteBookReq.bookId(), customerLoginId);
 
@@ -127,11 +131,11 @@ public class CartController {
     @PostMapping("/cart/login")
     public ResponseEntity<Void> mergedCartToRedis(
         @RequestBody @Validated CartLoginRequestDto cartLoginRequestDto,
-        BindingResult bindingResult) {
+        BindingResult bindingResult,@AuthenticationPrincipal ShopMemberDetail shopMemberDetail) {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException("Field Error When Converting Cart From SessionStorage To Redis");
         }
-        String customerLoginId = "testCustomerLoginId";
+        String customerLoginId = shopMemberDetail.getLoginId();
 
         cartService.saveMergedCartToRedis(customerLoginId, cartLoginRequestDto.cartBookInfoList());
 
