@@ -17,6 +17,7 @@ public class MemberQuerydslRepositoryImpl extends QuerydslRepositorySupport impl
         super(Member.class);
     }
 
+    @Deprecated
     @Override
     public void updateLatestLoginAt(String loginId, LocalDateTime lastLoginAt) {
         update(member)

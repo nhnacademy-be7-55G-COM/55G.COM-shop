@@ -7,11 +7,11 @@ public record TossPaymentsConfirmRequestDto(
     String orderId,
     Long amount
 ) {
-    public static TossPaymentsConfirmRequestDto of(Map<String, String> body) {
+    public static TossPaymentsConfirmRequestDto of(Map<String, Object> body) {
         return new TossPaymentsConfirmRequestDto(
-            body.get("paymentKey"),
-            body.get("orderId"),
-            Long.valueOf(body.get("amount"))
+            (String) body.get("paymentKey"),
+            (String) body.get("orderId"),
+            ((Number) body.get("amount")).longValue()
         );
     }
 }
