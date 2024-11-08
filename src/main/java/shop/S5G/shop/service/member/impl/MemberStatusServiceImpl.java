@@ -43,8 +43,7 @@ public class MemberStatusServiceImpl implements MemberStatusService {
         MemberStatus memberStatus = memberStatusRepository.findById(memberStatusId)
             .orElseThrow(() -> new MemberStatusNotFoundException("조회하려는 상태가 존재하지 않습니다"));
 
-        return new MemberStatusResponseDto(memberStatus.getMemberStatusId(),
-            memberStatus.getTypeName());
+        return MemberStatusResponseDto.toDto(memberStatus);
     }
 
     @Transactional(readOnly = true)
@@ -52,10 +51,8 @@ public class MemberStatusServiceImpl implements MemberStatusService {
     public List<MemberStatusResponseDto> getAllMemberStatus() {
         return memberStatusRepository.findAll()
             .stream()
-            .map(memberStatus -> new MemberStatusResponseDto(
-                memberStatus.getMemberStatusId(),
-                memberStatus.getTypeName()
-            ))
+            .map(MemberStatusResponseDto::toDto
+            )
             .toList();
     }
 

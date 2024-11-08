@@ -46,8 +46,7 @@ public class MemberGradeServiceImpl implements MemberGradeService {
             throw new MemberGradeNotFoundException(name + "이 존재하지 않습니다.");
         }
         MemberGrade grade = memberGradeRepository.findByGradeName(name);
-        return new MemberGradeResponseDto(grade.getMemberGradeId(), grade.getGradeName(),
-            grade.getGradeCondition(), grade.getPoint());
+        return MemberGradeResponseDto.toDto(grade);
     }
 
     @Override
@@ -64,8 +63,7 @@ public class MemberGradeServiceImpl implements MemberGradeService {
         MemberGrade grade = memberGradeRepository.findById(id)
             .orElseThrow(() -> new MemberGradeNotFoundException("등급이 존재하지 않습니다"));
 
-        return new MemberGradeResponseDto(grade.getMemberGradeId(), grade.getGradeName(),
-            grade.getGradeCondition(), grade.getPoint());
+        return MemberGradeResponseDto.toDto(grade);
     }
 
     @Transactional(readOnly = true)
@@ -73,12 +71,8 @@ public class MemberGradeServiceImpl implements MemberGradeService {
     public List<MemberGradeResponseDto> getActiveGrades() {
         return memberGradeRepository.findByActive(true)
             .stream()
-            .map(memberGrade ->
-                new MemberGradeResponseDto(
-                    memberGrade.getMemberGradeId()
-                    , memberGrade.getGradeName()
-                    , memberGrade.getGradeCondition()
-                    , memberGrade.getPoint()))
+            .map(MemberGradeResponseDto::toDto
+            )
             .toList();
     }
 

@@ -13,19 +13,17 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Entity
-@Table(name = "refund_type")
-public class RefundType {
+@Table(name = "delivery_status")
+public class DeliveryStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "refund_type_id")
+    @Column(name = "delivery_status_id")
     private long id;
 
-    @Column(name = "refund_type_name")
+    @Column(name = "type_name")
     @Length(max = 20)
     private String name;
-
-    private boolean active;
 }

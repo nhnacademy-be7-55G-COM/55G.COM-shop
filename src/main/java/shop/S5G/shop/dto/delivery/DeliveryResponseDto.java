@@ -9,7 +9,9 @@ public record DeliveryResponseDto(
     LocalDate receivedDate,
     LocalDate shippingDate,
     int fee,
-    String invoiceNumber
+    String invoiceNumber,
+    String receiverName,
+    String status
 ) {
     public static DeliveryResponseDto of(Delivery delivery) {
         return new DeliveryResponseDto(
@@ -18,7 +20,9 @@ public record DeliveryResponseDto(
             delivery.getReceivedDate(),
             delivery.getShippingDate(),
             delivery.getFee(),
-            delivery.getInvoiceNumber()
+            delivery.getInvoiceNumber(),
+            delivery.getReceiverName(),
+            delivery.getStatus().getName()
         );
     }
 }

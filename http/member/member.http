@@ -1,5 +1,5 @@
 ### memberGrade 생성
-POST http://localhost:8820/api/shop/member/grade
+POST http://localhost:8100/api/shop/member/grade
 Content-Type: application/json
 
 {
@@ -9,7 +9,7 @@ Content-Type: application/json
 }
 
 ### memberStatus 생성
-POST http://localhost:8820/api/shop/member/status
+POST http://localhost:8100/api/shop/member/status
 Content-Type: application/json
 
 {
@@ -17,7 +17,7 @@ Content-Type: application/json
 }
 
 ### member 생성
-POST http://localhost:8820/api/shop/member
+POST http://localhost:8100/api/shop/member
 Content-Type: application/json
 
 {

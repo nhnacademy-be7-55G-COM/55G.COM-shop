@@ -1,4 +1,4 @@
-package shop.S5G.shop.entity.order;
+package shop.S5G.shop.entity.refund;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
+import shop.S5G.shop.entity.order.OrderDetail;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

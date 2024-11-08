@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import shop.S5G.shop.dto.payments.TossPaymentsConfirmRequestDto;
 import shop.S5G.shop.dto.tag.MessageDto;
@@ -20,9 +19,9 @@ public class PaymentsController {
     private final TossPaymentsAdapterCaller paymentsCaller;
 
     @PostMapping("/confirm")
-    public MessageDto confirmPayment(@RequestParam long orderRelationId, @RequestBody Map<String, String> payment) {
-        log.trace("Payment confirm request for Order: {}", orderRelationId);
-        paymentsCaller.confirmPayment(orderRelationId, TossPaymentsConfirmRequestDto.of(payment));
+    public MessageDto confirmPayment(@RequestBody Map<String, String> payment) {
+//        log.trace("Payment confirm request for Order: {}", orderRelationId);
+        paymentsCaller.confirmPayment(TossPaymentsConfirmRequestDto.of(payment));
         // Not implemented yet.
         return new MessageDto("confirmed");
     }

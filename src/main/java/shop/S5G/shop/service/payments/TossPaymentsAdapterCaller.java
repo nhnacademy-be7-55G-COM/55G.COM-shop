@@ -6,7 +6,7 @@ import shop.S5G.shop.dto.payments.TossPaymentsDto;
 
 public interface TossPaymentsAdapterCaller {
 
-    TossPaymentsDto confirmPayment(long orderDataId, TossPaymentsConfirmRequestDto confirmRequest);
+    TossPaymentsDto confirmPayment(TossPaymentsConfirmRequestDto confirmRequest);
 
     TossPaymentsDto cancelPayment(String paymentKey, TossPaymentsCancelRequestDto cancelRequest);
 }
