@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doNothing;
@@ -28,7 +27,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import shop.S5G.shop.dto.cart.request.CartBookInfoRequestDto;
 import shop.S5G.shop.entity.Book;
+import shop.S5G.shop.entity.cart.Cart;
+import shop.S5G.shop.entity.cart.CartPk;
+import shop.S5G.shop.entity.member.Member;
 import shop.S5G.shop.exception.BadRequestException;
 import shop.S5G.shop.exception.ResourceNotFoundException;
 
@@ -36,18 +39,22 @@ import shop.S5G.shop.repository.book.BookRepository;
 import shop.S5G.shop.repository.cart.CartRedisRepository;
 import shop.S5G.shop.repository.cart.CartRepository;
 import shop.S5G.shop.service.cart.impl.CartServiceImpl;
-
+import shop.S5G.shop.service.member.MemberService;
 
 
 @ExtendWith(MockitoExtension.class)
 class CartServiceImplTest {
     @Mock
     CartRepository cartRepository;
+
     @Mock
     BookRepository bookRepository;
 
     @Mock
     CartRedisRepository cartRedisRepository;
+
+    @Mock
+    MemberService memberService;
 
     @InjectMocks
     CartServiceImpl cartServiceImpl;
@@ -55,7 +62,94 @@ class CartServiceImplTest {
     Map<Object, Object> booksInRedisCart = new HashMap<>();
     List<Book> booksInfoInRedisCart = new ArrayList<>();
 
+    @Test
+    void getBooksInDbByCustomerIdTest() throws Exception {
+        //given
+        String customerId = "testCustomerId";
+        Member member = Member.builder().id(1l).build();
 
+        Book book1 = mock(Book.class);
+        Integer quantity = 1;
+        Field bookIdField = Book.class.getDeclaredField("bookId");
+        bookIdField.setAccessible(true);
+        bookIdField.set(book1,1l);
+
+        List<Cart> cart = new ArrayList<>();
+        cart.add(new Cart(new CartPk(member.getId(), book1.getBookId()), book1, member, quantity));
+
+        when(memberService.getMember(customerId)).thenReturn(member);
+        when(cartRepository.findAllByCartPk_CustomerId(member.getId())).thenReturn(cart);
+
+        //when
+        List<Cart> booksInDb = cartServiceImpl.getBooksInDbByCustomerId(customerId);
+        //then
+        Assertions.assertEquals(booksInDb, cart);
+    }
+
+
+    @Test
+    void saveMergedCartToRedisWhenNormalLogoutTest() throws Exception{
+        //given
+        String customerId = "testCustomerId";
+
+        Member member = Member.builder().id(1l).build();
+
+        Book book1 = mock(Book.class);
+        Integer quantity = 1;
+        Field bookIdField = Book.class.getDeclaredField("bookId");
+        bookIdField.setAccessible(true);
+        bookIdField.set(book1,1l);
+
+        List<Cart> booksInDb = new ArrayList<>();
+        booksInDb.add(new Cart(new CartPk(member.getId(), book1.getBookId()), book1, member, quantity));
+
+        when(cartRedisRepository.getLoginFlag(customerId)).thenReturn(null);
+        when(memberService.getMember(customerId)).thenReturn(member);
+        when(cartRepository.findAllByCartPk_CustomerId(member.getId())).thenReturn(booksInDb);
+        doNothing().when(cartRedisRepository).setLoginFlag(anyString());
+        doNothing().when(cartRedisRepository).putBook(anyLong(), anyInt(), anyString());
+
+        //when
+        assertThatCode(() -> cartServiceImpl.saveMergedCartToRedis(customerId,
+            List.of(new CartBookInfoRequestDto(book1.getBookId(), quantity))));
+
+        //then
+        verify(cartRedisRepository, times(2)).putBook(book1.getBookId(), quantity, customerId);
+        verify(cartRedisRepository,times(1)).setLoginFlag(customerId);
+
+    }
+
+    @Test
+    void saveMergedCartToRedisWhenAbnormalLogoutTest() throws Exception{
+        //given
+        String customerId = "testCustomerId";
+
+
+        Book book1 = mock(Book.class);
+        Integer quantity = 1;
+        Field bookIdField = Book.class.getDeclaredField("bookId");
+        bookIdField.setAccessible(true);
+        bookIdField.set(book1,1l);
+
+
+
+        when(cartRedisRepository.getLoginFlag(customerId)).thenReturn(true);
+        doNothing().when(cartRedisRepository).putBook(anyLong(), anyInt(), anyString());
+
+        //when
+        assertThatCode(() -> cartServiceImpl.saveMergedCartToRedis(customerId,
+            List.of(new CartBookInfoRequestDto(book1.getBookId(), quantity))));
+
+        //then
+        verify(cartRedisRepository, times(1)).putBook(book1.getBookId(), quantity, customerId);
+
+
+    }
+
+    @Test
+    void FromRedisToDbTest() {
+
+    }
 
 
     @Test
@@ -93,10 +187,10 @@ class CartServiceImplTest {
     @Test
     void lookUpAllBooksExceptionTest() {
         //given
-        String testSessionId = " ";
+        String customerLoginId = "";
 
         //when
-        assertThatThrownBy(() -> cartServiceImpl.lookUpAllBooks(testSessionId)).isInstanceOf(
+        assertThatThrownBy(() -> cartServiceImpl.lookUpAllBooks(customerLoginId)).isInstanceOf(
             BadRequestException.class);
 
         //then
@@ -125,14 +219,14 @@ class CartServiceImplTest {
     void lookUpAllBooksTest() throws Exception{
         setupForLookUpAllBooks();
         //given
-        String testSessionId = "testSessionId";
+        String customerLoginId = "testCustomerLoginId";
 
         when(bookRepository.findAllById(anyList())).thenReturn(booksInfoInRedisCart);
         when(cartRedisRepository.getBooksInRedisCart(anyString())).thenReturn(booksInRedisCart);
 
 
         //when
-        assertThatCode(() -> cartServiceImpl.lookUpAllBooks(testSessionId)).doesNotThrowAnyException();
+        assertThatCode(() -> cartServiceImpl.lookUpAllBooks(customerLoginId)).doesNotThrowAnyException();
 
         //then
         verify(bookRepository,times(1)).findAllById(anyList());
@@ -154,18 +248,7 @@ class CartServiceImplTest {
     }
 
 
-    @Test
-    void putBookByMap() {
-        //given
-        doNothing().when(cartRedisRepository).putBookByMap(anyMap(), anyString());
 
-        //when
-        assertThatCode(
-            () -> cartServiceImpl.putBookByMap(anyMap(), anyString())).doesNotThrowAnyException();
-
-        //then
-        verify(cartRedisRepository, times(1)).putBookByMap(anyMap(), anyString());
-    }
 
     @Test
     void reduceBookQuantityTest() {
@@ -221,30 +304,8 @@ class CartServiceImplTest {
         verify(cartRedisRepository, times(1)).deleteLoginFlag(anyString());
     }
 
-    @Test
-    void setCustomerIdTest() {
-        //given
-        doNothing().when(cartRedisRepository).setCustomerId(anyString(), anyString());
-        //when
-        assertThatCode(
-            () -> cartServiceImpl.setCustomerId(anyString(), anyString())).doesNotThrowAnyException();
 
-        //then
-        verify(cartRedisRepository, times(1)).setCustomerId(anyString(), anyString());
-    }
 
-    @Test
-    void deleteCustomerIdTest() {
-        //given
-        doNothing().when(cartRedisRepository).deleteCustomerId(anyString());
-
-        //when
-        assertThatCode(() -> cartServiceImpl.deleteCustomerId(anyString())).doesNotThrowAnyException();
-
-        //then
-        verify(cartRedisRepository, times(1)).deleteCustomerId(anyString());
-
-    }
 
     @Test
     void deleteOldCartTest() {
