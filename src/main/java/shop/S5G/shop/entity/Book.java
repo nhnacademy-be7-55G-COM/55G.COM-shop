@@ -15,6 +15,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Getter
@@ -31,6 +32,8 @@ public class Book {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_status_id")
     private BookStatus bookStatusId;
+
+    @Length(max=255)
     private String title;
     @Column(columnDefinition = "TEXT")
     private String chapter;
