@@ -14,6 +14,7 @@ public class MemberQuerydslRepositoryImpl extends QuerydslRepositorySupport impl
         super(Member.class);
     }
 
+    @Deprecated
     @Override
     public Optional<Member> findByIdAndActiveIsTrue(long memberId) {
         return Optional.ofNullable(

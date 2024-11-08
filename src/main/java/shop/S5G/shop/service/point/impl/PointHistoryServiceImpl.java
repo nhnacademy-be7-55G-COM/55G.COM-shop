@@ -48,7 +48,7 @@ public class PointHistoryServiceImpl implements PointHistoryService {
             () -> new EssentialDataNotFoundException("PointSource does not exist: " + createRequest.pointSourceName())
         );
 
-        Member member = memberRepository.findByIdAndActiveIsTrue(memberId).orElseThrow(
+        Member member = memberRepository.findByIdAndStatus_TypeName(memberId, MemberRepository.ACTIVE_STATUS).orElseThrow(
             () -> new MemberNotFoundException("Member does not exist or non active: " + memberId)
         );
 
