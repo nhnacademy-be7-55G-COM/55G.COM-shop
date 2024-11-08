@@ -3,7 +3,10 @@ package shop.S5G.shop.service.book.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import shop.S5G.shop.dto.book.BookPageableResponseDto;
 import shop.S5G.shop.dto.book.BookRequestDto;
 import shop.S5G.shop.dto.book.BookResponseDto;
 import shop.S5G.shop.entity.Book;
@@ -23,6 +26,7 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final PublisherRepository publisherRepository;
     private final BookStatusRepository statusRepository;
+
     @Autowired
     public BookServiceImpl(BookRepository bookRepository, PublisherRepository publisherRepository, BookStatusRepository statusRepository) {
         this.bookRepository = bookRepository;
@@ -58,16 +62,22 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findAllBookList();
     }
 
+    //도서 전체 조회 페이징
+    @Override
+    public Page<BookPageableResponseDto> allBookPageable(Pageable pageable) {
+        return bookRepository.findAllBookPage(pageable);
+    }
+
     //도서 상세 조회
     public BookResponseDto getBookById(Long bookId) {
-        if(!bookRepository.existsById(bookId)) {
-             throw new BookResourceNotFoundException("Book with id " + bookId + " not found");
+        if (!bookRepository.existsById(bookId)) {
+            throw new BookResourceNotFoundException("Book with id " + bookId + " not found");
         }
         return bookRepository.getBookDetail(bookId);
     }
 
     //도서 수정
-    public void updateBooks(Long bookId, BookRequestDto bookDto){
+    public void updateBooks(Long bookId, BookRequestDto bookDto) {
         if (!bookRepository.existsById(bookId)) {
             throw new BookResourceNotFoundException(bookId + " 도서는 존재하지 않습니다.");
         }
@@ -76,7 +86,7 @@ public class BookServiceImpl implements BookService {
 
     //도서 삭제
     public void deleteBooks(Long bookId) {
-        if(!bookRepository.existsById(bookId)) {
+        if (!bookRepository.existsById(bookId)) {
             throw new BookResourceNotFoundException("Book with id " + bookId + " not found");
         }
         bookRepository.deleteById(bookId);

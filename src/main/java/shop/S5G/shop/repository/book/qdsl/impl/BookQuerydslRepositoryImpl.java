@@ -1,11 +1,17 @@
 package shop.S5G.shop.repository.book.qdsl.impl;
 
+import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
+import shop.S5G.shop.dto.book.BookPageableResponseDto;
 import shop.S5G.shop.dto.book.BookRequestDto;
 import shop.S5G.shop.dto.book.BookResponseDto;
 import shop.S5G.shop.entity.Book;
@@ -15,6 +21,7 @@ import java.util.List;
 
 import static com.querydsl.jpa.JPAExpressions.select;
 import static shop.S5G.shop.entity.QBook.book;
+import static shop.S5G.shop.entity.QBookImage.bookImage;
 
 @Repository
 public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implements BookQuerydslRepository {
@@ -71,6 +78,44 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
                 ))
                 .from(book)
                 .fetch();
+    }
+
+    //모든 도서 Page<BookPageableResponseDto>타입으로 리턴
+    @Override
+    public Page<BookPageableResponseDto> findAllBookPage(Pageable pageable) {
+        JPAQuery<BookPageableResponseDto> query = jpaQueryFactory
+                .select(Projections.constructor(BookPageableResponseDto.class,
+                        book.bookId,
+                        book.publisherId,
+                        book.bookStatusId,
+                        book.title,
+                        book.chapter,
+                        book.description,
+                        book.publishedDate,
+                        book.isbn,
+                        book.price,
+                        book.discountRate,
+                        book.isPacked,
+                        book.stock,
+                        book.views,
+                        book.createdAt,
+                        bookImage.imageName
+                        ))
+                .from(book)
+                .leftJoin(bookImage)
+                .on( bookImage.book.bookId.eq(book.bookId))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize());
+
+        List<BookPageableResponseDto> content = query.fetch();
+
+        Long totalCount = jpaQueryFactory
+                .select(book.count())
+                .from(book)
+                .fetchOne();
+
+        long total = (totalCount != null) ? totalCount : 0L;
+        return new PageImpl<>(content, pageable, total);
     }
 
     // 도서 상세 BookResponseDto타입으로 리턴
