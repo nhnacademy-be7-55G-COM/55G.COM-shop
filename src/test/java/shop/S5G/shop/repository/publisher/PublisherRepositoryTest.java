@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.context.annotation.Import;
+import shop.S5G.shop.config.QueryFactoryConfig;
 import shop.S5G.shop.dto.publisher.PublisherRequestDto;
 import shop.S5G.shop.dto.publisher.PublisherResponseDto;
 import shop.S5G.shop.entity.Publisher;
@@ -13,6 +15,7 @@ import shop.S5G.shop.exception.publisher.PublisherResourceNotFoundException;
 import shop.S5G.shop.repository.publisher.qdsl.impl.PublisherQuerydslRepositoryImpl;
 
 @DataJpaTest
+@Import(QueryFactoryConfig.class)
 public class PublisherRepositoryTest {
 
     @Autowired

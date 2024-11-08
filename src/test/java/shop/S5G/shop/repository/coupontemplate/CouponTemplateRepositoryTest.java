@@ -11,7 +11,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
+import shop.S5G.shop.config.QueryFactoryConfig;
 import shop.S5G.shop.dto.coupon.template.CouponTemplateRequestDto;
 import shop.S5G.shop.dto.coupon.template.CouponTemplateResponseDto;
 import shop.S5G.shop.entity.coupon.CouponPolicy;
@@ -21,6 +23,7 @@ import shop.S5G.shop.repository.coupon.template.CouponTemplateRepository;
 
 @DataJpaTest
 @ActiveProfiles("local")
+@Import(QueryFactoryConfig.class)
 class CouponTemplateRepositoryTest {
 
     @Autowired

@@ -7,6 +7,7 @@ import shop.S5G.shop.entity.member.Member;
 import shop.S5G.shop.repository.member.qdsl.MemberQuerydslRepository;
 
 public interface MemberRepository extends JpaRepository<Member, Long>, MemberQuerydslRepository {
+  
     static final String ACTIVE_STATUS = "ACTIVE";
 
     boolean existsByLoginIdAndStatus_TypeName(String loginId, String typeName);

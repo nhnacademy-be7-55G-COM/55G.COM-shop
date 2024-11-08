@@ -9,14 +9,17 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
+import shop.S5G.shop.config.QueryFactoryConfig;
 import shop.S5G.shop.dto.order.OrderWithDetailResponseDto;
 
 @DataJpaTest
 @ActiveProfiles({"test", "embed-db"})
 @Slf4j
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Import(QueryFactoryConfig.class)
 class OrderRepositoryTest {
     @Autowired
     OrderRepository orderRepository;

@@ -3,7 +3,9 @@ package shop.S5G.shop.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Qualifier;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,7 +15,9 @@ import shop.S5G.shop.dto.order.OrderCreateRequestDto;
 import shop.S5G.shop.dto.payments.TossPaymentsDto;
 import shop.S5G.shop.dto.tag.MessageDto;
 import shop.S5G.shop.security.ShopMemberDetail;
+
 import shop.S5G.shop.service.payments.AbstractPaymentManager;
+
 
 @RequestMapping("/api/shop/payment")
 @RestController
@@ -43,6 +47,7 @@ public class PaymentsController {
         @RequestBody Map<String, Object> body
     ) {
         log.trace("Payment confirm request received: [customerId={}, loginId={}]", memberDetail.getCustomerId(), memberDetail.getLoginId());
+
 //        log.trace("Payment confirm request for Order: {}", orderRelationId);
         long orderDataId = ((Number) body.get("orderDataId")).longValue();
         OrderCreateRequestDto order = extractOrderRequest(body);

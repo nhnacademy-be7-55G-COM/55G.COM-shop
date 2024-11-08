@@ -4,6 +4,8 @@ import java.util.List;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -15,8 +17,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import shop.S5G.shop.dto.Book.BookRequestDto;
-import shop.S5G.shop.dto.Book.BookResponseDto;
+import shop.S5G.shop.dto.book.BookPageableResponseDto;
+import shop.S5G.shop.dto.book.BookRequestDto;
+import shop.S5G.shop.dto.book.BookResponseDto;
 import shop.S5G.shop.dto.tag.MessageDto;
 import shop.S5G.shop.exception.book.BookBadRequestException;
 import shop.S5G.shop.service.book.impl.BookServiceImpl;
@@ -45,6 +48,12 @@ public class BookController {
     @GetMapping("/books")
     public ResponseEntity<List<BookResponseDto>> getAllBooks() {
         return ResponseEntity.ok().body(bookServiceImpl.allBook());
+    }
+
+    //도서 목록 조회 pageable
+    @GetMapping("/books/pageable")
+    public ResponseEntity<Page<BookPageableResponseDto>> getAllBooksPageable(Pageable pageable) {
+        return ResponseEntity.ok().body(bookServiceImpl.allBookPageable(pageable));
     }
 
     //도서 상세 조회
