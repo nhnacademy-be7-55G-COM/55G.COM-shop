@@ -20,9 +20,9 @@ public class PublisherQuerydslRepositoryImpl extends QuerydslRepositorySupport i
 
     private final JPAQueryFactory jpaQueryFactory;
 
-    public PublisherQuerydslRepositoryImpl(EntityManager em) {
+    public PublisherQuerydslRepositoryImpl(JPAQueryFactory jpaQueryFactory) {
         super(Publisher.class);
-        this.jpaQueryFactory = new JPAQueryFactory(em);
+        this.jpaQueryFactory = jpaQueryFactory;
     }
 
     @PersistenceContext

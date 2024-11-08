@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.context.annotation.Import;
+import shop.S5G.shop.config.QueryFactoryConfig;
 import shop.S5G.shop.dto.book.BookRequestDto;
 import shop.S5G.shop.entity.Book;
 import shop.S5G.shop.entity.BookStatus;
@@ -21,24 +23,22 @@ import shop.S5G.shop.repository.bookstatus.BookStatusRepository;
 import shop.S5G.shop.repository.publisher.PublisherRepository;
 
 @DataJpaTest
+@Import(QueryFactoryConfig.class)
 class BookRepositoryTest {
 
     private final BookRepository bookRepository;
     private final PublisherRepository publisherRepository;
     private final BookStatusRepository bookStatusRepository;
-    private final BookQuerydslRepositoryImpl bookQuerydslRepository;
     @Autowired
     private TestEntityManager testEntityManager;
 
     @Autowired
     public BookRepositoryTest(BookRepository bookRepository,
                               PublisherRepository publisherRepository,
-                              BookStatusRepository bookStatusRepository,
-                              BookQuerydslRepositoryImpl bookQuerydslRepository) {
+                              BookStatusRepository bookStatusRepository) {
         this.bookRepository = bookRepository;
         this.publisherRepository = publisherRepository;
         this.bookStatusRepository = bookStatusRepository;
-        this.bookQuerydslRepository = bookQuerydslRepository;
     }
 
     /**

@@ -2,8 +2,6 @@ package shop.S5G.shop.repository.tag.qdsl.impl;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 import shop.S5G.shop.dto.tag.TagRequestDto;
@@ -20,13 +18,10 @@ public class TagQuerydslRepositoryImpl extends QuerydslRepositorySupport impleme
 
     private final JPAQueryFactory jpaQueryFactory;
 
-    public TagQuerydslRepositoryImpl(EntityManager em) {
+    public TagQuerydslRepositoryImpl(JPAQueryFactory jpaQueryFactory) {
         super(Tag.class);
-        this.jpaQueryFactory = new JPAQueryFactory(em);
+        this.jpaQueryFactory = jpaQueryFactory;
     }
-
-    @PersistenceContext
-    private EntityManager em;
 
     //모든 테그 조회
     @Override

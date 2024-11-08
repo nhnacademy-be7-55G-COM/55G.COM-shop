@@ -2,8 +2,6 @@ package shop.S5G.shop.repository.category.qdsl.impl;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 import shop.S5G.shop.dto.category.CategoryResponseDto;
@@ -20,13 +18,10 @@ public class CategoryQuerydslRepositoryImpl extends QuerydslRepositorySupport im
 
     private final JPAQueryFactory jpaQueryFactory;
 
-    public CategoryQuerydslRepositoryImpl(EntityManager em) {
+    public CategoryQuerydslRepositoryImpl(JPAQueryFactory jpaQueryFactory) {
         super(Category.class);
-        this.jpaQueryFactory = new JPAQueryFactory(em);
+        this.jpaQueryFactory = jpaQueryFactory;
     }
-
-    @PersistenceContext
-    private EntityManager em;
 
     //카테고리 수정
     @Override

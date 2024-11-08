@@ -17,13 +17,11 @@ public class BookCategoryQuerydslRepositoryImpl extends QuerydslRepositorySuppor
 
     private final JPAQueryFactory jpaQueryFactory;
 
-    public BookCategoryQuerydslRepositoryImpl(EntityManager em) {
+    public BookCategoryQuerydslRepositoryImpl(JPAQueryFactory jpaQueryFactory) {
         super(BookCategory.class);
-        this.jpaQueryFactory = new JPAQueryFactory(em);
+        this.jpaQueryFactory = jpaQueryFactory;
     }
 
-    @PersistenceContext
-    private EntityManager em;
 
     //bookId에 해당하는 category 리스트 리턴
     @Override

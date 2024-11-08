@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.context.annotation.Import;
+import shop.S5G.shop.config.QueryFactoryConfig;
 import shop.S5G.shop.dto.tag.TagRequestDto;
 import shop.S5G.shop.dto.tag.TagResponseDto;
 import shop.S5G.shop.entity.Tag;
@@ -15,6 +17,7 @@ import shop.S5G.shop.repository.tag.qdsl.impl.TagQuerydslRepositoryImpl;
 import java.util.List;
 
 @DataJpaTest
+@Import(QueryFactoryConfig.class)
 public class TagRepositoryTest {
     @Autowired
     private TagRepository tagRepository;

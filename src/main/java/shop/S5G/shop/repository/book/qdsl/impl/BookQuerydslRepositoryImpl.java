@@ -1,11 +1,8 @@
 package shop.S5G.shop.repository.book.qdsl.impl;
 
-import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -28,13 +25,10 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
 
     private final JPAQueryFactory jpaQueryFactory;
 
-    public BookQuerydslRepositoryImpl(EntityManager em) {
+    public BookQuerydslRepositoryImpl(JPAQueryFactory jpaQueryFactory) {
         super(Book.class);
-        this.jpaQueryFactory = new JPAQueryFactory(em);
+        this.jpaQueryFactory = jpaQueryFactory;
     }
-
-    @PersistenceContext
-    private EntityManager em;
 
     // 도서 수정
     @Override

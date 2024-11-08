@@ -8,6 +8,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
+import shop.S5G.shop.config.QueryFactoryConfig;
 import shop.S5G.shop.dto.bookcategory.BookCategoryResponseDto;
 import shop.S5G.shop.entity.Book;
 import shop.S5G.shop.entity.BookStatus;
@@ -21,6 +23,7 @@ import shop.S5G.shop.repository.category.CategoryRepository;
 import shop.S5G.shop.repository.publisher.PublisherRepository;
 
 @DataJpaTest
+@Import(QueryFactoryConfig.class)
 class BookCategoryRepositoryTest {
 
     private final BookCategoryRepository bookCategoryRepository;

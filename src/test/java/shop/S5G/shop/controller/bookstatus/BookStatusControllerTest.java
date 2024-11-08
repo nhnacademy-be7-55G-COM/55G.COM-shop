@@ -6,15 +6,28 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
+import shop.S5G.shop.config.SecurityConfig;
+import shop.S5G.shop.config.TestSecurityConfig;
 import shop.S5G.shop.controller.book.BookStatusController;
+import shop.S5G.shop.filter.JwtAuthenticationFilter;
 import shop.S5G.shop.service.bookstatus.impl.BookStatusServiceImpl;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(BookStatusController.class)
+@WebMvcTest(
+        value = BookStatusController.class,
+        excludeFilters = @ComponentScan.Filter(
+                type = FilterType.ASSIGNABLE_TYPE,
+                classes = {SecurityConfig.class, JwtAuthenticationFilter.class}
+        )
+)
+@Import(TestSecurityConfig.class)
 public class BookStatusControllerTest {
 
     @Autowired

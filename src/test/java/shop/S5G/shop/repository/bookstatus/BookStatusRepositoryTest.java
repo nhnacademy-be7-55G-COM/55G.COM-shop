@@ -5,18 +5,18 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
+import shop.S5G.shop.config.QueryFactoryConfig;
 import shop.S5G.shop.dto.bookstatus.BookStatusResponseDto;
 import shop.S5G.shop.entity.BookStatus;
-import shop.S5G.shop.repository.bookstatus.qdsl.impl.BookStatusQuerydslRepositoryImpl;
 
 import java.util.List;
 
 @DataJpaTest
+@Import(QueryFactoryConfig.class)
 public class BookStatusRepositoryTest {
     @Autowired
     private BookStatusRepository bookStatusRepository;
-    @Autowired
-    private BookStatusQuerydslRepositoryImpl bookStatusQuerydslRepository;
 
     /**
      * 도서상태 전체 조회 test
