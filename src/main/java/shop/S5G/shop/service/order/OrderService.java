@@ -21,4 +21,6 @@ public interface OrderService {
     @Transactional(readOnly = true)
     List<OrderWithDetailResponseDto> getAllOrdersBetweenDates(
         long customerId, OrderQueryRequestDto queryRequest);
+
+    void deactivateOrder(long orderId);
 }

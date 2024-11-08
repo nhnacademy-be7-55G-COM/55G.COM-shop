@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import shop.S5G.shop.dto.delivery.DeliveryResponseDto;
 import shop.S5G.shop.dto.delivery.DeliveryUpdateRequestDto;
-import shop.S5G.shop.service.order.DeliveryService;
+import shop.S5G.shop.service.delivery.DeliveryService;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/shop/delivery")
@@ -21,7 +21,8 @@ public class DeliveryController {
     }
 
     @PutMapping
-    public DeliveryResponseDto userUpdateDelivery(@RequestBody DeliveryUpdateRequestDto updateRequest) {
+    public DeliveryResponseDto userUpdateDelivery(
+        @RequestBody DeliveryUpdateRequestDto updateRequest) {
         return deliveryService.userUpdateDelivery(updateRequest);
     }
 }

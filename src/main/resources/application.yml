@@ -31,6 +31,10 @@ management:
       exposure:
         include: refresh,busrefresh,health
 
+payment:
+  toss:
+    secretkey: secret
+
 ---
 spring:
   config:

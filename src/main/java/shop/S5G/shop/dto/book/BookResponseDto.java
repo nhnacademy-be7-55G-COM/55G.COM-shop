@@ -1,6 +1,4 @@
-package shop.S5G.shop.dto.Book;
-
-import shop.S5G.shop.entity.Publisher;
+package shop.S5G.shop.dto.book;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

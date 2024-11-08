@@ -25,6 +25,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.DisabledIf;
 import org.springframework.test.web.servlet.MockMvc;
+import shop.S5G.shop.annotation.WithCustomMockUser;
 import shop.S5G.shop.config.RedisConfig;
 import shop.S5G.shop.config.SecurityConfig;
 import shop.S5G.shop.config.TestSecurityConfig;
@@ -52,32 +53,34 @@ class CartControllerTest {
     CartService cartService;
 
     @Test
+    @WithCustomMockUser(loginId = "123", role = "ROLE_MEMBER", customerId = 2L)
     void putBookTest() throws Exception {
 
         String content = """
             {
-                "sessionId": "testSessionId",
                 "bookId": 1,
                 "quantity": 3
             }
             """;
+
         mockMvc.perform(post("/api/shop/cart")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content))
             .andExpect(status().isCreated());
 
-        verify(cartService, times(1)).putBook(1l, 3, "testSessionId");
+        verify(cartService, times(1)).putBook(1l, 3, "123");
     }
 
     @Test
+    @WithCustomMockUser(loginId = "123", role = "ROLE_MEMBER", customerId = 2L)
     void putBookValidationFailTest() throws Exception {
         String content = """
                 {
-                    "sessionId": "",
                     "bookId": null,
                     "quantity": 3
                 }
             """;
+
         mockMvc.perform(post("/api/shop/cart")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content))
@@ -86,11 +89,10 @@ class CartControllerTest {
     }
 
     @Test
+    @WithCustomMockUser(loginId = "123", role = "ROLE_MEMBER", customerId = 2L)
     void lookUpAllBooksTest() throws Exception {
 
         //given
-        String sessionId = "testSessionId";
-
         CartBooksResponseDto cartBooksRes1 = new CartBooksResponseDto(1l, 100L,
             BigDecimal.valueOf(90l), 3, 10, "title1");
         CartBooksResponseDto cartBooksRes2 = new CartBooksResponseDto(2l, 200L,
@@ -104,10 +106,10 @@ class CartControllerTest {
             cartBook.stream().map(CartBooksResponseDto::discountedPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add), 3000, 30000);
 
-        when(cartService.lookUpAllBooks(sessionId)).thenReturn(cartBook);
+        when(cartService.lookUpAllBooks("123")).thenReturn(cartBook);
         when(cartService.getTotalPriceAndDeliverFee(cartBook)).thenReturn(cartDetailInfoRes);
 
-        mockMvc.perform(get("/api/shop/cart/testSessionId"))
+        mockMvc.perform(get("/api/shop/cart"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$['books'][0].bookId").value(1l))
             .andExpect(jsonPath("$['books'][0].price").value(100l))
@@ -126,19 +128,21 @@ class CartControllerTest {
             .andExpect(jsonPath("$['feeInfo'].freeShippingThreshold").value(30000));
 
 
-        verify(cartService, times(1)).lookUpAllBooks(sessionId);
+        verify(cartService, times(1)).lookUpAllBooks("123");
+        verify(cartService, times(1)).getTotalPriceAndDeliverFee(cartBook);
     }
 
 
     @Test
+    @WithCustomMockUser(loginId = "123", role = "ROLE_MEMBER", customerId = 2L)
     void deleteBookInCartTest() throws Exception {
         //given
         String content = """
                 {
-                    "sessionId": "testSessionId",
-                    "bookId": 1
+                   "bookId": 1
                 }
             """;
+
         //when
         mockMvc.perform(delete("/api/shop/cart")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -149,15 +153,16 @@ class CartControllerTest {
     }
 
     @Test
+    @WithCustomMockUser(loginId = "123", role = "ROLE_MEMBER", customerId = 2L)
     void deleteBookInCartValidationFailTest() throws Exception {
         //given
 
         String content = """
                 {
-                    "sessionId": "",
-                    "bookId": 1
+                    "bookId": null
                 }
             """;
+
         //when
         mockMvc.perform(delete("/api/shop/cart")
                 .contentType(MediaType.APPLICATION_JSON)

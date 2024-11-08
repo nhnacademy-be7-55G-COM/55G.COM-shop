@@ -7,8 +7,7 @@ import lombok.Getter;
 
 
 public record CartPutRequestDto(
-    @NotBlank
-    String sessionId,
+
 
     @NotNull
     Long bookId,

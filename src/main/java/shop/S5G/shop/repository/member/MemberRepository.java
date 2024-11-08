@@ -13,6 +13,7 @@ public interface MemberRepository extends JpaRepository<Member, Long>, MemberQue
 
     List<Member> findByStatus_TypeName(String typeName);
 
+    // TODO: active 체크 필요함.
     boolean existsByLoginId(String loginId);
 
 }
