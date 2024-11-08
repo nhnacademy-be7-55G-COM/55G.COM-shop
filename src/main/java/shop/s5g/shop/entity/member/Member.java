@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
@@ -41,6 +42,7 @@ public class Member {
     private String birth;
     private LocalDateTime createdAt;
     private LocalDateTime latestLoginAt;
+    @Setter
     private Long point;
 
 }
