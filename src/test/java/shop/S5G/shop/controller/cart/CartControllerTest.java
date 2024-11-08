@@ -48,17 +48,17 @@ class CartControllerTest {
 
         String content = """
             {
-                "sessionId": "testSessionId",
                 "bookId": 1,
                 "quantity": 3
             }
             """;
+        String customerLoginId = "testCustomerLoginId";
         mockMvc.perform(post("/api/shop/cart")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content))
             .andExpect(status().isCreated());
 
-        verify(cartService, times(1)).putBook(1l, 3, "testSessionId");
+        verify(cartService, times(1)).putBook(1l, 3, customerLoginId);
     }
 
     @Test
@@ -81,7 +81,8 @@ class CartControllerTest {
     void lookUpAllBooksTest() throws Exception {
 
         //given
-        String sessionId = "testSessionId";
+        String customerLoginId = "testCustomerLoginId";
+
 
         CartBooksResponseDto cartBooksRes1 = new CartBooksResponseDto(1l, 100L,
             BigDecimal.valueOf(90l), 3, 10, "title1");
@@ -96,10 +97,10 @@ class CartControllerTest {
             cartBook.stream().map(CartBooksResponseDto::discountedPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add), 3000, 30000);
 
-        when(cartService.lookUpAllBooks(sessionId)).thenReturn(cartBook);
+        when(cartService.lookUpAllBooks(customerLoginId)).thenReturn(cartBook);
         when(cartService.getTotalPriceAndDeliverFee(cartBook)).thenReturn(cartDetailInfoRes);
 
-        mockMvc.perform(get("/api/shop/cart/testSessionId"))
+        mockMvc.perform(get("/api/shop/cart"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$['books'][0].bookId").value(1l))
             .andExpect(jsonPath("$['books'][0].price").value(100l))
@@ -118,7 +119,8 @@ class CartControllerTest {
             .andExpect(jsonPath("$['feeInfo'].freeShippingThreshold").value(30000));
 
 
-        verify(cartService, times(1)).lookUpAllBooks(sessionId);
+        verify(cartService, times(1)).lookUpAllBooks(customerLoginId);
+        verify(cartService, times(1)).getTotalPriceAndDeliverFee(cartBook);
     }
 
 
@@ -146,10 +148,10 @@ class CartControllerTest {
 
         String content = """
                 {
-                    "sessionId": "",
-                    "bookId": 1
+                    "bookId": null
                 }
             """;
+
         //when
         mockMvc.perform(delete("/api/shop/cart")
                 .contentType(MediaType.APPLICATION_JSON)

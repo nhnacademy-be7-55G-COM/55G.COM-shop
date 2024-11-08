@@ -5,8 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Range;
 
 public record CartControlQuantityRequestDto(
-    @NotBlank
-    String sessionId,
 
     @NotNull
     Long bookId,

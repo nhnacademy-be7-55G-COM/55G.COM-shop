@@ -5,10 +5,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import shop.S5G.shop.config.RedisConfig;
+import shop.S5G.shop.dto.cart.request.CartBookInfoRequestDto;
+import shop.S5G.shop.dto.cart.request.CartSessionStorageDto;
 import shop.S5G.shop.dto.cart.response.CartBooksResponseDto;
 import shop.S5G.shop.dto.cart.response.CartDetailInfoResponseDto;
 import shop.S5G.shop.entity.Book;
@@ -35,24 +40,51 @@ public class CartServiceImpl implements CartService {
     private final CartRedisRepository cartRedisRepository;
     private final MemberService memberService;
     private final BookRepository bookRepository;
-//     ----------- MySql && Redis 관련 -----------
+
+
 
     // 회원아이디를 이용해 Mysql 에 저장되어있는 Cart 리스트반환
+    @Transactional(readOnly = true)
     @Override
     public List<Cart> getBooksInDbByCustomerId(String customerLoginId) {
         Member member = memberService.findMember(customerLoginId);
-        Long customerId = member.getId();
 
-        return cartRepository.findAllByCartPk_CustomerId(customerId);
+        return cartRepository.findAllByCartPk_CustomerId(member.getId());
     }
 
-    // Redis 와 Mysql 에 저장되어있는 걸 합쳐서 Db 에 저장
+    // 로그인 했을 때 세션스토리지와 db에 있는 걸 합쳐서 레디스에 옮김
+    @Transactional
     @Override
-    public void saveMergedCartToDb(String sessionId,String customerLoginId) {
+    public void saveMergedCartToRedis(String customerLoginId,List<CartBookInfoRequestDto> cartBookInfoListInSession) {
 
-        if (sessionId.isBlank()) {
-            throw new BadRequestException("SessionId Is Not Valid");
+        // 정상로그아웃을 했을 경우에는 해당회원의 레디스 loginFlag 를 삭제한다.
+        // 근데 만약 loginFlag 가 존재한다면 비정상로그아웃으로 간주하고 db에 있는 걸 안 가져오고 레디스에 세션 스토리지 내용만 추가하는 방법 고려
+
+        if (Objects.isNull(getLoginFlag(customerLoginId))) {    // null 이라는 것은 정상 로드아웃이 되었다는 것
+            List<Cart> booksInDb = getBooksInDbByCustomerId(customerLoginId);
+
+            // db에 있는 걸 레디스로 저장
+            booksInDb.forEach(cart -> {
+                cartRedisRepository.putBook(cart.getBook().getBookId(), cart.getQuantity(),
+                    customerLoginId);
+            });
+            setLoginFlag(customerLoginId);
         }
+
+
+        // 세션 스토리지에 있는 걸 레디스로 저장
+        cartBookInfoListInSession.forEach(cartBookInfo ->{
+            cartRedisRepository.putBook(cartBookInfo.bookId(), cartBookInfo.quantity(),
+                customerLoginId);
+        });
+
+    }
+
+    // 로그아웃할 때 레디스에 있는 걸 db 에 저장한다.
+    @Transactional
+    @Override
+    public void FromRedisToDb(String customerLoginId) {
+
 
         if (customerLoginId.isBlank()) {
             throw new BadRequestException("CustomerLoginId Is Not Valid");
@@ -60,146 +92,87 @@ public class CartServiceImpl implements CartService {
 
 
         Member member = memberService.findMember(customerLoginId);
-
-        Map<Long, Integer> booksInRedisCart = getBooksInRedisCart(sessionId);
+        Map<Long, Integer> booksInRedisCart = getBooksInRedisCart(customerLoginId);
         List<Cart> booksInDbCart = getBooksInDbByCustomerId(customerLoginId);
 
 
-        // db 장바구니에 이미 같은 도서가 있는 경우는 개수를 합쳐준다.
-        booksInDbCart.stream().forEach(cart -> cart.setQuantity(
-            cart.getQuantity() + booksInRedisCart.getOrDefault(cart.getBook().getBookId(), 0)));
-
-        // db 장바구니에 같은 도서가 없는 경우에는 추가해준다.
         booksInRedisCart.forEach((bookId,quantity) ->{
-            boolean isNotInDb = (booksInDbCart.stream()
-                .noneMatch(cart -> cart.getBook().getBookId().equals(bookId)));
+            booksInDbCart.stream().filter(cart ->
+                cart.getBook().getBookId().equals(bookId)
+            ).findFirst().ifPresentOrElse(
+                cart -> {
+                    cart.setQuantity(cart.getQuantity() + quantity);
+                },
+                () ->{
+                    bookRepository.findById(bookId).ifPresent(book -> {
+                        booksInDbCart.add(
+                            new Cart(new CartPk(member.getId(), bookId), book, member, quantity));
+                    });
 
-            if (isNotInDb) {
-                // Cart 객체를 생성하고 List 에 추가
-                bookRepository.findById(bookId).ifPresent(book -> {
-                    Cart cart = new Cart(new CartPk(member.getId(), bookId), book, member, quantity);
-                    booksInDbCart.add(cart);
-                });
+                }
+            );
 
-            }
         });
-        deleteOldCart(sessionId);
+
         saveAll(booksInDbCart);
+        deleteOldCart(customerLoginId);
+        deleteLoginFlag(customerLoginId);
     }
 
-    // Db 에 있는 걸 Redis 로 복사해준다.
-    @Override
-    public void transferCartFromDbToRedis(String sessionId, String customerLoginId) {
 
-        if (sessionId.isBlank()) {
-            throw new BadRequestException("SessionId Is Not Valid");
-        }
-
-        if (customerLoginId.isBlank()) {
-            throw new BadRequestException("CustomerLoginId Is Not Valid");
-        }
-
-        setLoginFlag(sessionId);
-        setCustomerId(sessionId, customerLoginId);
-
-        List<Cart> booksInDbCart = getBooksInDbByCustomerId(customerLoginId);
-
-        Map<Long, Integer> fromDbToRedis = new HashMap<>();
-
-        booksInDbCart.stream()
-            .forEach(cart -> fromDbToRedis.put(cart.getBook().getBookId(), cart.getQuantity()));
-
-        putBookByMap(fromDbToRedis, sessionId);
-
-    }
-
+    @Transactional
     @Override
     public void saveAll(List<Cart> mergedCart) {
         cartRepository.saveAll(mergedCart);
     }
 
 
+
+    @Transactional
     @Override
-    public void sessionExpirationInitializing(String sessionId, String customerLoginId) {
-        saveRedisToDb(sessionId, customerLoginId);
+    public void controlQuantity(Long bookId, int change, String customerLoginId) {
 
-        deleteOldCart(sessionId);
-        deleteCustomerId(sessionId);
-        deleteLoginFlag(sessionId);
-    }
-
-    // 현재 회원 Db 장바구니를 비우고 redis 에 있는 걸 Db 에 채운다
-    @Override
-    public void saveRedisToDb(String sessionId, String customerLoginId) {
-        List<Cart> redisToDb = new ArrayList<>();
-        Member member = memberService.findMember(customerLoginId);
-        deleteAllFromDbCartByCustomerId(member.getId());
-
-        Map<Long, Integer> booksInRedisCart = getBooksInRedisCart(sessionId);
-
-        booksInRedisCart.forEach((bookId,quantity) ->{
-            bookRepository.findById(bookId).ifPresent(book -> {
-                Cart cart = new Cart(new CartPk(member.getId(), bookId), book, member, quantity);
-
-                redisToDb.add(cart);
-
-            });
-
-        });
-
-        saveAll(redisToDb);
-    }
-
-    @Override
-    public void deleteAllFromDbCartByCustomerId(Long customerId) {
-        cartRepository.deleteAllByCartPk_CustomerId(customerId);
-    }
-
-
-
-    // ----------- only Redis 관련 -----------
-    @Override
-    public void controlQuantity(Long bookId, int change, String sessionId) {
         if (change > 0) {
-            putBook(bookId, 1, sessionId);
+            putBook(bookId, 1, customerLoginId);
         } else {
-            reduceBookQuantity(bookId, sessionId);
+            reduceBookQuantity(bookId, customerLoginId);
         }
     }
 
+    @Transactional
     @Override
-    public void putBook(Long bookId, Integer quantity, String sessionId) {
+    public void putBook(Long bookId, Integer quantity, String customerLoginId) {
 
         if (bookRepository.findById(bookId).isPresent()) {
-            cartRedisRepository.putBook(bookId, quantity, sessionId);
+            cartRedisRepository.putBook(bookId, quantity, customerLoginId);
         }else {
             throw new ResourceNotFoundException("해당 도서를 담는데 실패했습니다.");
         }
     }
 
-    @Override
-    public void putBookByMap(Map<Long, Integer> books,String sessionId) {
-        cartRedisRepository.putBookByMap(books, sessionId);
-    }
 
     @Override
-    public void reduceBookQuantity(Long bookId, String sessionId) {
-        cartRedisRepository.reduceBookQuantity(bookId, sessionId);
+    // 필요함 근데 레디스관련이라  Transactional 필요없음
+    public void reduceBookQuantity(Long bookId, String customerLoginId) {
+        cartRedisRepository.reduceBookQuantity(bookId, customerLoginId);
     }
 
-    @Override
-    public void deleteBookFromCart(Long bookId, String sessionId) {
-        cartRedisRepository.deleteBookFromCart(bookId, sessionId);
-    }
 
     @Override
-    public List<CartBooksResponseDto> lookUpAllBooks(String sessionId) {
-        if (sessionId.isBlank()) {
+    // 필요함 근데 레디스관련이라  Transactional 필요없음
+    public void deleteBookFromCart(Long bookId, String customerLoginId) {
+        cartRedisRepository.deleteBookFromCart(bookId, customerLoginId);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<CartBooksResponseDto> lookUpAllBooks(String customerLoginId) {
+
+        if (customerLoginId.isBlank()) {
             throw new BadRequestException("SessionId Is Not Valid");
         }
 
-
-        Map<Long, Integer> booksInRedisCart = getBooksInRedisCart(sessionId);
+        Map<Long, Integer> booksInRedisCart = getBooksInRedisCart(customerLoginId);
 
         if (booksInRedisCart.isEmpty()) {
             List<CartBooksResponseDto> emptyList = new ArrayList<>();
@@ -218,10 +191,40 @@ public class CartServiceImpl implements CartService {
 
         return cartBooks;
     }
+
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<CartBooksResponseDto> lookUpAllBooksWhenGuest(CartSessionStorageDto cartSessionStorageDto) {
+
+
+        Map<Long, Integer> booksInSessionStorage = cartSessionStorageDto.cartBookInfoList().stream().collect(
+            Collectors.toMap(CartBookInfoRequestDto::bookId, CartBookInfoRequestDto::quantity));
+
+        if (booksInSessionStorage.isEmpty()) {
+            List<CartBooksResponseDto> emptyList = new ArrayList<>();
+            return emptyList;
+        }
+
+        List<Book> booksInfo = bookRepository.findAllById(booksInSessionStorage.keySet());
+
+        List<CartBooksResponseDto> cartBooks = booksInfo.stream()
+            .map(book -> new CartBooksResponseDto(book.getBookId(), book.getPrice(),
+                BigDecimal.valueOf(book.getPrice())
+                    .multiply(BigDecimal.valueOf(1).subtract(book.getDiscountRate())),
+                booksInSessionStorage.get(book.getBookId()), book.getStock(), book.getTitle())
+            ).toList();
+
+        return cartBooks;
+    }
+
+
     //TODO 이후 배달비 관련 테이블이 완성되면 배달비랑 조건 수정필요
     @Override
+    // 필요함 근데 Transactional 필요없음
     public CartDetailInfoResponseDto getTotalPriceAndDeliverFee(
         List<CartBooksResponseDto> cartBooks) {
+
         BigDecimal totalPrice = cartBooks.stream().map(CartBooksResponseDto::discountedPrice)
             .reduce(BigDecimal.ZERO, BigDecimal::add);
         int deliveryFee = 3000;
@@ -232,43 +235,30 @@ public class CartServiceImpl implements CartService {
 
 
     @Override
-    public void setLoginFlag(String sessionId) {
-        cartRedisRepository.setLoginFlag(sessionId);
+    // 필요함 근데 Transactional 필요없음
+    public void setLoginFlag(String customerLoginId) {
+        cartRedisRepository.setLoginFlag(customerLoginId);
     }
     @Override
-    public Boolean getLoginFlag(String sessionId) {
-        return cartRedisRepository.getLoginFlag(sessionId);
-    }
-
-    @Override
-    public void deleteLoginFlag(String sessionId) {
-        cartRedisRepository.deleteLoginFlag(sessionId);
+    // 필요함 근데 Transactional 필요없음
+    public Boolean getLoginFlag(String customerLoginId) {
+        return cartRedisRepository.getLoginFlag(customerLoginId);
     }
 
     @Override
-    public void setCustomerId(String sessionId, String customerLoginId) {
-        cartRedisRepository.setCustomerId(sessionId,customerLoginId);
+    // 필요함 근데 Transactional 필요없음
+    public void deleteLoginFlag(String customerLoginId) {
+        cartRedisRepository.deleteLoginFlag(customerLoginId);
     }
 
     @Override
-    public String getCustomerId(String sessionId) {
-        return cartRedisRepository.getCustomerId(sessionId);
-    }
-
-    @Override
-    public void deleteCustomerId(String sessionId) {
-        cartRedisRepository.deleteCustomerId(sessionId);
-    }
-
-
-
-    @Override
-    public Map<Long, Integer> getBooksInRedisCart(String sessionId) {
+    // 필요함 근데 Transactional 필요없음
+    public Map<Long, Integer> getBooksInRedisCart(String customerLoginId) {
         Map<Long, Integer> result = new HashMap<>();
 
-        Map<Object, Object> booksInRedisCart = cartRedisRepository.getBooksInRedisCart(sessionId);
+        Map<Object, Object> booksInRedisCart = cartRedisRepository.getBooksInRedisCart(customerLoginId);
 
-        booksInRedisCart.entrySet().stream()
+        booksInRedisCart.entrySet()
             .forEach(entry -> result.put((Long) entry.getKey(), (Integer) entry.getValue()));
 
         return result;
@@ -278,8 +268,9 @@ public class CartServiceImpl implements CartService {
 
 
     @Override
-    public void deleteOldCart(String sessionId) {
-        cartRedisRepository.deleteOldCart(sessionId);
+    // 필요함 근데 Transactional 필요없음
+    public void deleteOldCart(String customerLoginId) {
+        cartRedisRepository.deleteOldCart(customerLoginId);
 
     }
 
