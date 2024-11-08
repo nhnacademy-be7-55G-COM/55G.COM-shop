@@ -2,8 +2,10 @@ package shop.S5G.shop.config;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.codec.binary.Base64;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -16,8 +18,11 @@ import shop.S5G.shop.filter.JwtAuthenticationFilter;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 @Configuration
 public class SecurityConfig {
+    @Value("${payment.toss.secretkey}")
+    private String secretKey;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception{
@@ -41,7 +46,6 @@ public class SecurityConfig {
 
     @Bean("tossPaymentsSecretKey")
     public String tossPaymentsSecretKey() {
-        return "Basic " + Base64.encodeBase64String(("***REMOVED***"+":").getBytes());
-//        return Base64.encodeBase64String(("This is Secret Key"+":").getBytes());
+        return "Basic " + Base64.encodeBase64String((secretKey+":").getBytes());
     }
 }

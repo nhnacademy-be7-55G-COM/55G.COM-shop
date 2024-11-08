@@ -2,6 +2,7 @@ package shop.S5G.shop.repository.order.qdsl.impl;
 
 import static shop.S5G.shop.entity.order.QDelivery.delivery;
 import static shop.S5G.shop.entity.order.QDeliveryStatus.deliveryStatus;
+import static shop.S5G.shop.entity.order.QOrder.order;
 
 import java.util.Optional;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
@@ -18,7 +19,8 @@ public class DeliveryQuerydslRepositoryImpl extends QuerydslRepositorySupport im
         return Optional.ofNullable(
             from(delivery)
                 .join(delivery.status, deliveryStatus).fetchJoin()
-                .where(delivery.id.eq(orderId))
+                .join(order.delivery, delivery)
+                .where(order.id.eq(orderId))
                 .fetchOne()
         );
     }

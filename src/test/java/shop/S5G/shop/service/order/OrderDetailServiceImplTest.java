@@ -3,7 +3,6 @@ package shop.S5G.shop.service.order;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -40,7 +39,7 @@ class OrderDetailServiceImplTest {
             .hasMessageContaining("1");
 
         Mockito.verify(orderDetailRepository, never()).queryAllDetailsByOrderId(anyLong());
-        Mockito.verify(orderDetailRepository, times(1)).countOrderDetailsByOrderId(eq(1L));
+        Mockito.verify(orderDetailRepository, times(1)).countOrderDetailsByOrderId(1L);
     }
 
     @Test

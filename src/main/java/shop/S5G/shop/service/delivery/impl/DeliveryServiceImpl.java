@@ -1,4 +1,4 @@
-package shop.S5G.shop.service.order.impl;
+package shop.S5G.shop.service.delivery.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,7 +10,7 @@ import shop.S5G.shop.entity.order.DeliveryStatus;
 import shop.S5G.shop.exception.ResourceNotFoundException;
 import shop.S5G.shop.repository.order.DeliveryRepository;
 import shop.S5G.shop.repository.order.DeliveryStatusRepository;
-import shop.S5G.shop.service.order.DeliveryService;
+import shop.S5G.shop.service.delivery.DeliveryService;
 
 @Transactional
 @RequiredArgsConstructor

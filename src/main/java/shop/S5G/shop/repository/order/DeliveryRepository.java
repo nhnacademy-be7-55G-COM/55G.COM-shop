@@ -6,4 +6,5 @@ import shop.S5G.shop.repository.order.qdsl.DeliveryQuerydslRepository;
 
 public interface DeliveryRepository extends JpaRepository<Delivery, Long>,
     DeliveryQuerydslRepository {
+
 }

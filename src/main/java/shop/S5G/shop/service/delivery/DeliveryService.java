@@ -1,4 +1,4 @@
-package shop.S5G.shop.service.order;
+package shop.S5G.shop.service.delivery;
 
 import shop.S5G.shop.dto.delivery.DeliveryResponseDto;
 import shop.S5G.shop.dto.delivery.DeliveryUpdateRequestDto;
