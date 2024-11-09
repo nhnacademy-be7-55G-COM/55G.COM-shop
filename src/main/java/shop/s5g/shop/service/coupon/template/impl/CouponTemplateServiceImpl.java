@@ -1,7 +1,9 @@
 package shop.s5g.shop.service.coupon.template.impl;
 
+import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateRequestDto;
@@ -112,5 +114,15 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
         }
 
         couponTemplateRepository.deleteCouponTemplate(couponTemplateId);
+    }
+
+    /**
+     * 쿠폰 템플릿 조회 - Pageable
+     * @param pageable
+     * @return List<CouponTemplateResponseDto>
+     */
+    @Override
+    public List<CouponTemplateResponseDto> findCouponTemplates(Pageable pageable) {
+        return couponTemplateRepository.findCouponTemplates(pageable);
     }
 }

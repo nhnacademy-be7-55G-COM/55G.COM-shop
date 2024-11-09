@@ -5,6 +5,8 @@ import static shop.s5g.shop.entity.coupon.QCouponTemplate.couponTemplate;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
+import java.util.List;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateRequestDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateResponseDto;
@@ -25,6 +27,11 @@ public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupp
         this.jpaQueryFactory = new JPAQueryFactory(em);
     }
 
+    /**
+     * 특정 쿠폰 템플릿 찾기 쿼리 dsl
+     * @param couponTemplateId
+     * @return CouponTemplateResponseDto
+     */
     @Override
     public CouponTemplateResponseDto findCouponTemplateById(Long couponTemplateId) {
 
@@ -42,6 +49,12 @@ public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupp
             .fetchOne();
     }
 
+    /**
+     * 쿠폰 템플릿 업데이트 쿼리 dsl
+     * @param couponTemplateId
+     * @param couponPolicy
+     * @param couponTemplateRequestDto
+     */
     @Override
     public void updateCouponTemplate(Long couponTemplateId, CouponPolicy couponPolicy, CouponTemplateRequestDto couponTemplateRequestDto) {
         update(couponTemplate)
@@ -53,6 +66,11 @@ public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupp
             .execute();
     }
 
+    /**
+     * 쿠폰 템플릿 삭제 여부 확인 쿼리 dsl
+     * @param couponTemplateId
+     * @return boolean
+     */
     @Override
     public boolean checkActiveCouponTemplate(Long couponTemplateId) {
 
@@ -65,6 +83,10 @@ public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupp
             .fetchOne());
     }
 
+    /**
+     * 쿠폰 템플릿 삭제 쿼리 dsl
+     * @param couponTemplateId
+     */
     @Override
     public void deleteCouponTemplate(Long couponTemplateId) {
 
@@ -79,5 +101,26 @@ public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupp
             .set(coupon.active, INACTIVE)
             .where(coupon.couponTemplate.couponTemplateId.eq(couponTemplateId))
             .execute();
+    }
+
+    /**
+     * 쿠폰 템플릿 찾기 쿼리 dsl
+     * @param pageable
+     * @return List<CouponTemplateResponseDto>
+     */
+    @Override
+    public List<CouponTemplateResponseDto> findCouponTemplates(Pageable pageable) {
+
+        QCouponTemplate couponTemplate = QCouponTemplate.couponTemplate;
+        
+        return jpaQueryFactory
+            .select(Projections.constructor(CouponTemplateResponseDto.class,
+                couponTemplate.couponPolicy,
+                couponTemplate.couponName,
+                couponTemplate.couponDescription))
+            .from(couponTemplate)
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetch();
     }
 }
