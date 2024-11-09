@@ -1,4 +1,4 @@
-package shop.s5g.shop.entity.order;
+package shop.s5g.shop.entity.delivery;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,7 +1,7 @@
 package shop.s5g.shop.dto.delivery;
 
 import java.time.LocalDate;
-import shop.s5g.shop.entity.order.Delivery;
+import shop.s5g.shop.entity.delivery.Delivery;
 
 public record DeliveryResponseDto(
     long id,
