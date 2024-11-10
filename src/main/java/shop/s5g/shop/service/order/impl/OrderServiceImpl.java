@@ -79,7 +79,7 @@ public class OrderServiceImpl implements OrderService {
         );
 
         Delivery delivery = deliveryRepository.save(
-            new Delivery(deliveryDto.address(), deliveryDto.receivedDate(), (int)fee.getFee(), status, deliveryDto.receiverName())
+            new Delivery(deliveryDto.address(), deliveryDto.receivedDate(), status, fee, deliveryDto.receiverName())
         );
 
         Customer customer = customerRepository.findById(customerId).orElseThrow(
@@ -101,10 +101,10 @@ public class OrderServiceImpl implements OrderService {
             Book book = bookRepository.findById(detail.bookId()).orElseThrow(
                 () -> new BookResourceNotFoundException("Book not found: "+detail.bookId())
             );
-            WrappingPaper wrappingPaper = wrappingPaperRepository.findById(detail.wrappingPaperId()).orElseThrow(
+            WrappingPaper wrappingPaper = detail.wrappingPaperId() == null ? null : wrappingPaperRepository.findById(detail.wrappingPaperId()).orElseThrow(
                 () -> new WrappingPaperDoesNotExistsException(detail.wrappingPaperId())
             );
-            OrderDetailType type = orderDetailTypeRepository.findByName("WAIT").orElseThrow(
+            OrderDetailType type = orderDetailTypeRepository.findByName("COMPLETE").orElseThrow(
                 () -> new EssentialDataNotFoundException("Order detail type error")
             );
 

@@ -59,11 +59,12 @@ public class Delivery {
     private String receiverName;
 
     // TODO: DELIVERY 수정
-    public Delivery(String address, LocalDate receivedDate, int fee, DeliveryStatus status, String receiverName) {
+    public Delivery(String address, LocalDate receivedDate, DeliveryStatus status, DeliveryFee deliveryFee, String receiverName) {
         this.address = address;
         this.receivedDate = receivedDate;
-        this.fee = fee;
+        this.fee = (int) deliveryFee.getFee();
         this.status=status;
         this.receiverName = receiverName;
+        this.deliveryFee = deliveryFee;
     }
 }
