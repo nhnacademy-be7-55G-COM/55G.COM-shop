@@ -41,7 +41,10 @@ public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupp
         return jpaQueryFactory
             .select(Projections.constructor(
                 CouponTemplateResponseDto.class,
-                couponTemplate.couponPolicy,
+                couponTemplate.couponPolicy.discountPrice,
+                couponTemplate.couponPolicy.condition,
+                couponTemplate.couponPolicy.maxPrice,
+                couponTemplate.couponPolicy.duration,
                 couponTemplate.couponName,
                 couponTemplate.couponDescription
             ))

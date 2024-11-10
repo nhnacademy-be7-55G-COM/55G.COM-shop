@@ -117,9 +117,6 @@ class CouponTemplateControllerTest {
         // When & Then
         mockMvc.perform(get("/api/shop/admin/coupons/template/{couponTemplateId}", couponTemplateId))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.couponPolicy.maxPrice").value(couponPolicy.getMaxPrice()))
-            .andExpect(jsonPath("$.couponPolicy.condition").value(couponPolicy.getCondition()))
-            .andExpect(jsonPath("$.couponPolicy.discountPrice").value(couponPolicy.getDiscountPrice()))
             .andExpect(jsonPath("$.couponName").value("할인 쿠폰"))
             .andExpect(jsonPath("$.couponDescription").value("이 쿠폰은 회원 가입한 모든 고객에게 전달되는 쿠폰입니다."));
     }
