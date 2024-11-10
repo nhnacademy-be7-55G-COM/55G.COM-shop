@@ -9,11 +9,12 @@ import shop.s5g.shop.dto.wrappingpaper.WrappingPaperResponseDto;
 import shop.s5g.shop.entity.order.WrappingPaper;
 import shop.s5g.shop.exception.order.WrappingPaperDoesNotExistsException;
 import shop.s5g.shop.repository.order.WrappingPaperRepository;
+import shop.s5g.shop.service.order.WrappingPaperService;
 
 @Transactional
 @RequiredArgsConstructor
 @Service
-public class WrappingPaperServiceImpl implements shop.s5g.shop.service.order.WrappingPaperService {
+public class WrappingPaperServiceImpl implements WrappingPaperService {
     private final WrappingPaperRepository wrappingPaperRepository;
 
     @Override
@@ -24,7 +25,14 @@ public class WrappingPaperServiceImpl implements shop.s5g.shop.service.order.Wra
     @Transactional(readOnly = true)
     @Override
     public List<WrappingPaperResponseDto> getAllActivePaper() {
-        return wrappingPaperRepository.queryByActive(true).stream().map(WrappingPaperResponseDto::of).toList();
+        return wrappingPaperRepository.queryByActive(true).stream()
+            .map(WrappingPaperResponseDto::of).toList();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<WrappingPaperResponseDto> getAllPapers() {
+        return wrappingPaperRepository.findAll().stream().map(WrappingPaperResponseDto::of).toList();
     }
 
     @Override

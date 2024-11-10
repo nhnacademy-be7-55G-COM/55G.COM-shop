@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import shop.s5g.shop.dto.wrappingpaper.WrappingPaperRequestDto;
 import shop.s5g.shop.dto.wrappingpaper.WrappingPaperResponseDto;
@@ -25,8 +26,12 @@ public class WrappingPaperController {
     private final WrappingPaperService wrappingPaperService;
 
     @GetMapping
-    public List<WrappingPaperResponseDto> fetchActivePapers() {
-        return wrappingPaperService.getAllActivePaper();
+    public List<WrappingPaperResponseDto> fetchPapers(@RequestParam(required = false) String scope) {
+        if (scope == null || scope.isEmpty())
+            return wrappingPaperService.getAllActivePaper();
+        else if (scope.equals("all"))
+            return wrappingPaperService.getAllPapers();
+        throw new BadRequestException("Request Param was wrong");
     }
 
     @GetMapping("/{paperId}")
