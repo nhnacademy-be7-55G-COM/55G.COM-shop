@@ -105,7 +105,10 @@ class CouponTemplateControllerTest {
 
         when(couponTemplateService.findCouponTemplate(couponTemplateId)).thenReturn(
             new CouponTemplateResponseDto(
-                couponPolicy,
+                couponPolicy.getDiscountPrice(),
+                couponPolicy.getCondition(),
+                couponPolicy.getMaxPrice(),
+                couponPolicy.getDuration(),
                 "할인 쿠폰",
                 "이 쿠폰은 회원 가입한 모든 고객에게 전달되는 쿠폰입니다."
             )
