@@ -17,7 +17,15 @@ spring:
     port: 5672
     username: guest
     password: guest
-
+  jpa:
+    database: mysql
+    hibernate.ddl-auto: none
+    show-sql: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://133.186.241.167:3306/nhn_academy_142
+    username: nhn_academy_142
+    password: qW1dglvk!
 rabbitmq:
   host: localhost
 
