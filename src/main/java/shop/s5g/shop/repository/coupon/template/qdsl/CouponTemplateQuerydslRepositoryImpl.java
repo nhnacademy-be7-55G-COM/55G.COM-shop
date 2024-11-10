@@ -13,6 +13,7 @@ import shop.s5g.shop.dto.coupon.template.CouponTemplateResponseDto;
 import shop.s5g.shop.entity.coupon.CouponPolicy;
 import shop.s5g.shop.entity.coupon.CouponTemplate;
 import shop.s5g.shop.entity.coupon.QCoupon;
+import shop.s5g.shop.entity.coupon.QCouponPolicy;
 import shop.s5g.shop.entity.coupon.QCouponTemplate;
 
 public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupport implements CouponTemplateQuerydslRepository {
@@ -109,18 +110,23 @@ public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupp
      * @return List<CouponTemplateResponseDto>
      */
     @Override
-    public List<CouponTemplateResponseDto> findCouponTemplates(Pageable pageable) {
+    public List<CouponTemplateResponseDto> findCouponTemplatesByPageable(Pageable pageable) {
 
         QCouponTemplate couponTemplate = QCouponTemplate.couponTemplate;
-        
-        return jpaQueryFactory
+        QCouponPolicy couponPolicy = QCouponPolicy.couponPolicy;
+
+        return from(couponTemplate)
+            .innerJoin(couponTemplate.couponPolicy, couponPolicy)
+            .where(couponTemplate.active.eq(true))
             .select(Projections.constructor(CouponTemplateResponseDto.class,
-                couponTemplate.couponPolicy,
+                couponPolicy.discountPrice,
+                couponPolicy.condition,
+                couponPolicy.maxPrice,
+                couponPolicy.duration,
                 couponTemplate.couponName,
                 couponTemplate.couponDescription))
-            .from(couponTemplate)
-            .offset(pageable.getOffset())
-            .limit(pageable.getPageSize())
+            //.limit(pageable.getSize())
+            //.offset(pageable.getOffset())
             .fetch();
     }
 }

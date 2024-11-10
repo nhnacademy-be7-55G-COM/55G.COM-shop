@@ -16,5 +16,5 @@ public interface CouponTemplateQuerydslRepository {
 
     void deleteCouponTemplate(Long couponTemplateId);
 
-    List<CouponTemplateResponseDto> findCouponTemplates(Pageable pageable);
+    List<CouponTemplateResponseDto> findCouponTemplatesByPageable(Pageable pageable);
 }
