@@ -1,13 +1,20 @@
 package shop.s5g.shop.dto.delivery;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record DeliveryFeeUpdateRequestDto(
+    @Min(1)
     long id,
+    @Min(0)
     long fee,
+    @Min(0)
     long condition,
+    @Min(0)
     int refundFee,
-    @Size(max=20)
+    @NotNull
+    @Size(min=1, max=20)
     String name
 ) {
 

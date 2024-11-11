@@ -25,6 +25,12 @@ import shop.s5g.shop.service.order.WrappingPaperService;
 public class WrappingPaperController {
     private final WrappingPaperService wrappingPaperService;
 
+    /**
+     * 포장지 리스트를 반환하는 API
+     * @param scope scope가 없거나 비어있으면 ACTIVE = true인 리스트만 가져옴
+     *              scope="all" 인 경우, ACTIVE에 상관없이 리스트를 가져옴.
+     * @return 포장지 리스트 반환.
+     */
     @GetMapping
     public List<WrappingPaperResponseDto> fetchPapers(@RequestParam(required = false) String scope) {
         if (scope == null || scope.isEmpty())

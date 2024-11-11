@@ -8,7 +8,7 @@ public record DeliveryResponseDto(
     String address,
     LocalDate receivedDate,
     LocalDate shippingDate,
-    int fee,
+    long fee,
     String invoiceNumber,
     String receiverName,
     String status
