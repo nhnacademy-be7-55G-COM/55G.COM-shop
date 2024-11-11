@@ -49,6 +49,18 @@ public class CouponBookController {
     }
 
     /**
+     * 책에 적용된 쿠폰 모두 조회 - API
+     * @param pageable
+     * @return Page<CouponBookResponseDto>
+     */
+    @GetMapping("/books")
+    public ResponseEntity<Page<CouponBookResponseDto>> findAllCouponBooks(Pageable pageable) {
+        Page<CouponBookResponseDto> couponBookList = couponBookService.findCouponBooks(pageable);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(couponBookList);
+    }
+
+    /**
      * 특정 책에 적용된 쿠폰 템플릿 조회 - API
      * @param bookId
      * @param pageable
