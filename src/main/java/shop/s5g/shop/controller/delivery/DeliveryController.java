@@ -1,4 +1,4 @@
-package shop.s5g.shop.controller;
+package shop.s5g.shop.controller.delivery;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

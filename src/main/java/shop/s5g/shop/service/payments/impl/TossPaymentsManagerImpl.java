@@ -9,6 +9,8 @@ import shop.s5g.shop.adapter.TossPaymentsAdapter;
 import shop.s5g.shop.dto.payments.TossPaymentsCancelRequestDto;
 import shop.s5g.shop.dto.payments.TossPaymentsConfirmRequestDto;
 import shop.s5g.shop.dto.payments.TossPaymentsDto;
+import shop.s5g.shop.entity.Payment;
+import shop.s5g.shop.entity.order.Order;
 import shop.s5g.shop.repository.order.OrderRepository;
 import shop.s5g.shop.repository.payments.TossPaymentRepository;
 import shop.s5g.shop.service.payments.AbstractPaymentManager;
@@ -21,7 +23,7 @@ public class TossPaymentsManagerImpl extends AbstractPaymentManager {
     private final TossPaymentRepository paymentRepository;
 
     @Override
-    protected Object confirmPaymentAdapter(Map<String, Object> request) {
+    protected Object confirmPaymentAdapter(long orderDataId, Map<String, Object> request) {
         TossPaymentsConfirmRequestDto confirmDto = TossPaymentsConfirmRequestDto.of(request);
 
         ResponseEntity<TossPaymentsDto> response = adapter.confirm(confirmDto);
@@ -31,11 +33,11 @@ public class TossPaymentsManagerImpl extends AbstractPaymentManager {
 //        }
 
         // TODO: 적절한 예외로 바꾸기!
-//        Order order = orderRepository.findById(orderDataId).orElseThrow(
-//            () -> new RuntimeException()
-//        );
+        Order order = orderRepository.findById(orderDataId).orElseThrow(
+            () -> new RuntimeException()
+        );
 //
-//        paymentRepository.save(new Payment(order, confirmRequest.paymentKey(), "KRW", confirmRequest.amount(), confirmRequest.orderId()));
+        paymentRepository.save(new Payment(order, confirmDto.paymentKey(), "KRW", confirmDto.amount(), confirmDto.orderId()));
 
         return response.getBody();
     }
