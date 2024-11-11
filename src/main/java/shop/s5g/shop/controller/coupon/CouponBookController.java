@@ -66,7 +66,7 @@ public class CouponBookController {
      * @param pageable
      * @return Page<CouponTemplateResponseDto>
      */
-    @GetMapping("/book/{bookId}")
+    @GetMapping("/books/{bookId}")
     public ResponseEntity<Page<CouponTemplateResponseDto>> getCouponBooksByBookId(@PathVariable("bookId") Long bookId,
         Pageable pageable) {
 
@@ -81,7 +81,7 @@ public class CouponBookController {
      * @param pageable
      * @return Page<CouponBookDetailsForBookDto>
      */
-    @GetMapping("/book/{templateId}")
+    @GetMapping("/books/{templateId}")
     public ResponseEntity<Page<CouponBookDetailsForBookDto>> getCouponBooksByTemplateId(@PathVariable("templateId") Long templateId,
         Pageable pageable) {
 
