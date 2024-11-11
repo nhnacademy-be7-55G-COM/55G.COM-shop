@@ -40,7 +40,7 @@ public class Book {
     private LocalDateTime publishedDate;
     private String isbn;
     private Long price;
-    @Column(name = "discount_rate")
+    @Column(name = "discount_rate", precision = 10, scale = 2)
     private BigDecimal discountRate;
     @Column(name = "is_packed")
     private boolean isPacked;

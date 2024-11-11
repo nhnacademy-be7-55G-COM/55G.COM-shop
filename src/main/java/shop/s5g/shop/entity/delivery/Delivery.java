@@ -44,7 +44,7 @@ public class Delivery {
     private LocalDate shippingDate;
 
     @Column(name = "delivery_fee")
-    private int fee;    // TODO: DeliveryFee.fee 랑 타입이 맞지 않음.
+    private long fee;
 
     @Length(max = 20)
     @Setter
