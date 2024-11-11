@@ -12,6 +12,8 @@ public interface WrappingPaperService {
     @Transactional(readOnly = true)
     List<WrappingPaperResponseDto> getAllActivePaper();
 
+    List<WrappingPaperResponseDto> getAllPapers();
+
     void deactivateById(long id);
 
     @Transactional(readOnly = true)

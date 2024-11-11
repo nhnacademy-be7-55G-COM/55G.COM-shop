@@ -86,7 +86,10 @@ class CouponTemplateServiceImplTest {
         Long couponTemplateId = 1L;
 
         CouponTemplateResponseDto couponTemplateResponseDto = new CouponTemplateResponseDto(
-            couponPolicy,
+            couponPolicy.getDiscountPrice(),
+            couponPolicy.getCondition(),
+            couponPolicy.getMaxPrice(),
+            couponPolicy.getDuration(),
             "생일 쿠폰",
             "이 쿠폰은 생일자를 위한 쿠폰입니다."
         );
@@ -108,7 +111,6 @@ class CouponTemplateServiceImplTest {
         assertThat(templateDto).isNotNull();
         assertThat(templateDto.couponName()).isEqualTo(couponTemplateResponseDto.couponName());
         assertThat(templateDto.couponDescription()).isEqualTo(couponTemplateResponseDto.couponDescription());
-        assertThat(templateDto.couponPolicy()).isEqualTo(couponTemplateResponseDto.couponPolicy());
 
         verify(couponTemplateRepository, times(1)).existsById(couponTemplateId);
         verify(couponTemplateRepository, times(1)).checkActiveCouponTemplate(couponTemplateId);

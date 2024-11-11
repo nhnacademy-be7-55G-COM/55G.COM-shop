@@ -1,7 +1,7 @@
-package shop.s5g.shop.repository.order.qdsl;
+package shop.s5g.shop.repository.delivery.qdsl;
 
 import java.util.Optional;
-import shop.s5g.shop.entity.order.Delivery;
+import shop.s5g.shop.entity.delivery.Delivery;
 
 public interface DeliveryQuerydslRepository {
 

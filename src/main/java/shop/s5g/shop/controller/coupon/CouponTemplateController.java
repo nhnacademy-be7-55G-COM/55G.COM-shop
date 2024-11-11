@@ -1,7 +1,9 @@
 package shop.s5g.shop.controller.coupon;
 
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -77,7 +79,7 @@ public class CouponTemplateController {
     }
 
     /**
-     * 쿠폰 정책 조회 - GET
+     * 쿠폰 템플릿 조회 - GET
      * @param couponTemplateId
      * @return couponTemplateResponseDto
      */
@@ -89,6 +91,19 @@ public class CouponTemplateController {
 
         return ResponseEntity.status(HttpStatus.OK)
             .body(couponTemplateResponseDto);
+    }
+
+    /**
+     * 쿠폰 템플릿 조회 - Pageable
+     * @param pageable
+     * @return List<CouponTemplateResponseDto>
+     */
+    @GetMapping("/templates")
+    public ResponseEntity<List<CouponTemplateResponseDto>> findCouponTemplates(Pageable pageable) {
+        List<CouponTemplateResponseDto> couponTemplateResponseDtoList = couponTemplateService.findCouponTemplates(pageable);
+
+        return ResponseEntity.status(HttpStatus.OK)
+            .body(couponTemplateResponseDtoList);
     }
 
     /**

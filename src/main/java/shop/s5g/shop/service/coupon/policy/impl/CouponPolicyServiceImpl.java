@@ -34,9 +34,7 @@ public class CouponPolicyServiceImpl implements CouponPolicyService {
             couponPolicyRequestDto.duration()
         );
 
-        CouponPolicy saveCouponPolicy =  couponPolicyRepository.save(couponPolicy);
-
-        return saveCouponPolicy;
+        return couponPolicyRepository.save(couponPolicy);
     }
 
     /**

@@ -4,7 +4,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import shop.s5g.shop.dto.delivery.DeliveryStatusView;
-import shop.s5g.shop.repository.order.DeliveryStatusRepository;
+import shop.s5g.shop.repository.delivery.DeliveryStatusRepository;
 
 @Service
 @RequiredArgsConstructor

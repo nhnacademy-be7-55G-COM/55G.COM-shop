@@ -13,15 +13,21 @@ VALUES (1, '테스트 종이', 2000, true, '12313');
 insert into customer (customer_id, password, name, phone_number, email, active)
 values (1, '1234', 'asdf', '01012345678', 'example@nhnacademy.com', true);
 
-insert into delivery_fee (delivery_fee_id, fee, `condition`, refund_delivery_fee, name)
+insert into delivery_fee (delivery_fee_id, fee, "condition", refund_delivery_fee, name)
 VALUES
     (1, 5000, 0, 5000, '일반'),
     (2, 0, 30000, 5000, '3만원 이상');
 
-insert into delivery (delivery_id, delivery_fee_id, delivery_address, received_date, shipping_date, delivery_fee, invoice_number)
+insert into delivery_status (delivery_status_id, type_name)
 VALUES
-    (1, 1, '테스트 주소1', '2024-10-30', '2024-10-31', 5000, '12345678'),
-    (2, 2, '테스트 주소2', '2024-10-30', '2024-10-31', 5000, '23456789');
+    (1, 'PREPARING'),
+    (2, 'SHIPPING'),
+    (3, 'DELIVERED');
+
+insert into delivery (delivery_id, delivery_fee_id, delivery_address, delivery_status_id, received_date, shipping_date, delivery_fee, invoice_number, receiver_name)
+VALUES
+    (1, 1, '테스트 주소1', 1, '2024-10-30', '2024-10-31', 5000, '12345678', 'ㅁㄴㅇㄹ'),
+    (2, 2, '테스트 주소2', 1, '2024-10-30', '2024-10-31', 5000, '23456789', 'ㅋㅌㅊㅍ');
 
 insert into order_detail_type (order_detail_type_id, type_name) VALUES (1, '타입타입');
 

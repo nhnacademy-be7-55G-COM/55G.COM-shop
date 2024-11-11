@@ -34,5 +34,6 @@ public class PointPolicy {
     @Length(max = 50)
     private String name;
 
+    @Column(precision = 10, scale = 2)
     private BigDecimal value;
 }
