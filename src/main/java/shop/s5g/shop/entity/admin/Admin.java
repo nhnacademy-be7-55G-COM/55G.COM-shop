@@ -11,7 +11,6 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Getter
@@ -25,11 +24,14 @@ public class Admin {
     private Long adminId;
 
     @NotBlank
-    @Length(min = 5, max = 30)
     @Column(unique = true)
     private String id;
 
     @NotBlank
-    @Length(min = 8, max = 30)
     private String password;
+
+    public Admin(String id, String password) {
+        this.id = id;
+        this.password = password;
+    }
 }
