@@ -2,11 +2,6 @@ spring:
   profiles:
     active: default
 
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/55g
-    username: root
-    password:
 
   application:
     name: shop-service
@@ -114,6 +109,14 @@ logging:
     shop.s5g: trace
     root: info
 
+---
+spring:
+  config:
+    activate:
+      on-profile: local-db-ws
 
-
-
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/55g
+    username: root
+    password:
