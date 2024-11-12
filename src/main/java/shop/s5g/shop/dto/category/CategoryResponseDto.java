@@ -2,11 +2,13 @@ package shop.s5g.shop.dto.category;
 
 import jakarta.validation.constraints.NotNull;
 
-public record CategoryResponseDto (
-    String parentCategoryName,
-    @NotNull
-    String categoryName,
-    @NotNull
-    boolean active
-){
+public record CategoryResponseDto(
+        @NotNull
+        Long categoryId,
+        Long parentCategoryId,
+        @NotNull
+        String categoryName,
+        @NotNull
+        boolean active
+) {
 }

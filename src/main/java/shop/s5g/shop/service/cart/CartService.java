@@ -15,7 +15,7 @@ public interface CartService {
 
     void saveAll(List<Cart> mergedCart);
 
-    void saveMergedCartToRedis(String customerLoginId,List<CartBookInfoRequestDto> cartBookInfoList);
+    int saveMergedCartToRedis(String customerLoginId,List<CartBookInfoRequestDto> cartBookInfoList);
 
     void FromRedisToDb(String customerLoginId);
 

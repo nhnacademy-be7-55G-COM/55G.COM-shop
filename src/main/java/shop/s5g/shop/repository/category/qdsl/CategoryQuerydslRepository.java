@@ -9,4 +9,8 @@ public interface CategoryQuerydslRepository {
     void updatesCategory(Long categoryId, CategoryUpdateRequestDto categoryDto);
     List<CategoryResponseDto> getAllCategory();
     void inactiveCategory(Long categoryId);
+
+    List<CategoryResponseDto> getChild_Category(Long categoryId);
+
+    List<CategoryResponseDto> getKoreaBook();
 }

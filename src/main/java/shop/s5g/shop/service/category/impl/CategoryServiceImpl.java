@@ -36,6 +36,18 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.getAllCategory();
     }
 
+    //자식 카테고리 조회
+    @Override
+    public List<CategoryResponseDto> getChildCategory(Long categoryId) {
+        return categoryRepository.getChild_Category(categoryId);
+    }
+
+    //국내도서 하위 카테고리
+    @Override
+    public List<CategoryResponseDto> getKoreaBooks() {
+        return categoryRepository.getKoreaBook();
+    }
+
     //카테고리 수정
     public void updateCategory(Long categoryId, CategoryUpdateRequestDto categoryDto) {
         if(categoryRepository.findById(categoryId).isPresent()) {

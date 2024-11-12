@@ -2,6 +2,7 @@ spring:
   profiles:
     active: default
 
+
   application:
     name: shop-service
 
@@ -18,6 +19,8 @@ spring:
     username: guest
     password: guest
 
+server:
+  port: 8000
 rabbitmq:
   host: localhost
 
@@ -76,6 +79,8 @@ spring:
       on-profile: embed-db
 
 
+
+
   jpa:
     database: h2
 ---
@@ -101,5 +106,17 @@ spring:
 
 logging:
   level:
-    shop.S5G: trace
+    shop.s5g: trace
     root: info
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local-db-ws
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/55g
+    username: root
+    password:
