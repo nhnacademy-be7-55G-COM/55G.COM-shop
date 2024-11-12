@@ -24,6 +24,7 @@ public record BookPageableResponseDto(
         boolean isPacked,
         @NotNull
         int stock,
+        long views,
         @NotNull
         LocalDateTime createdAt,
         String imageName

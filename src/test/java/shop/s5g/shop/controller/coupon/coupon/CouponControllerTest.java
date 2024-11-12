@@ -1,4 +1,4 @@
-package shop.S5G.shop.controller.coupon.coupon;
+package shop.s5g.shop.controller.coupon.coupon;
 
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

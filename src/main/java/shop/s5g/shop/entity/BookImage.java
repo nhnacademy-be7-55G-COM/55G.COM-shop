@@ -20,4 +20,9 @@ public class BookImage {
 
     @Column(name = "image_name")
     private String imageName;
+
+    public BookImage(Book book, String imageName) {
+        this.book = book;
+        this.imageName = imageName;
+    }
 }
