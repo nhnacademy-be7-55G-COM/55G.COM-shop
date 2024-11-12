@@ -89,7 +89,8 @@ public class MemberServiceImpl implements MemberService {
             .build();
 
         Member saved = memberRepository.save(member);
-        pointHistoryService.createPointHistory(saved.getId(), PointHistoryCreateRequestDto.REGISTER_POINT);
+        pointHistoryService.createPointHistory(saved.getId(),
+            PointHistoryCreateRequestDto.REGISTER_POINT);
     }
 
     @Override
@@ -130,7 +131,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void deleteById(Long memberId) {
-        //TODO 추후 진행 예정
+        if (!memberRepository.existsById(memberId)) {
+            throw new MemberNotFoundException("회원이 존재하지 않습니다.");
+        }
         throw new UnsupportedOperationException();
     }
 
