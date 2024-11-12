@@ -19,7 +19,7 @@ public class DeliveryQuerydslRepositoryImpl extends QuerydslRepositorySupport im
         return Optional.ofNullable(
             from(delivery)
                 .join(delivery.status, deliveryStatus).fetchJoin()
-                .join(order.delivery, delivery)
+                .join(delivery.order, order)
                 .where(order.id.eq(orderId))
                 .fetchOne()
         );
