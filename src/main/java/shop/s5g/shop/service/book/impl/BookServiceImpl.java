@@ -1,12 +1,13 @@
 package shop.s5g.shop.service.book.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import shop.s5g.shop.dto.book.BookPageableResponseDto;
+import shop.s5g.shop.dto.book.BookDetailResponseDto;
 import shop.s5g.shop.dto.book.BookRequestDto;
 import shop.s5g.shop.dto.book.BookResponseDto;
 import shop.s5g.shop.entity.Book;
@@ -69,9 +70,10 @@ public class BookServiceImpl implements BookService {
     }
 
     //도서 상세 조회
-    public BookResponseDto getBookById(Long bookId) {
-        if (!bookRepository.existsById(bookId)) {
-            throw new BookResourceNotFoundException("Book with id " + bookId + " not found");
+    public BookDetailResponseDto getBookById(Long bookId) {
+        // TODO: 코드 간소화
+        if(!bookRepository.existsById(bookId)) {
+             throw new BookResourceNotFoundException("Book with id " + bookId + " not found");
         }
         return bookRepository.getBookDetail(bookId);
     }

@@ -1,23 +1,36 @@
 package shop.s5g.shop.repository.book.qdsl.impl;
 
+import com.querydsl.core.types.ConstantImpl;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.util.ArrayList;
+import java.util.Stack;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
+import shop.s5g.shop.dto.book.BookDetailResponseDto;
 import shop.s5g.shop.dto.book.BookPageableResponseDto;
 import shop.s5g.shop.dto.book.BookRequestDto;
 import shop.s5g.shop.dto.book.BookResponseDto;
-import shop.s5g.shop.entity.Book;
+import shop.s5g.shop.dto.bookAuthor.BookAuthorResponseDto;
+import shop.s5g.shop.dto.bookCategory.BookDetailCategoryResponseDto;
+import shop.s5g.shop.entity.*;
+import shop.s5g.shop.entity.bookCategory.BookCategory;
 import shop.s5g.shop.repository.book.qdsl.BookQuerydslRepository;
 
 import java.util.List;
 
-import static com.querydsl.jpa.JPAExpressions.select;
+import static shop.s5g.shop.entity.QAuthor.author;
+import static shop.s5g.shop.entity.QAuthorType.authorType;
 import static shop.s5g.shop.entity.QBook.book;
+import static shop.s5g.shop.entity.QBookAuthor.bookAuthor;
+import static shop.s5g.shop.entity.QBookStatus.bookStatus;
+import static shop.s5g.shop.entity.QCategory.category;
+import static shop.s5g.shop.entity.QPublisher.publisher;
+import static shop.s5g.shop.entity.bookCategory.QBookCategory.bookCategory;
 import static shop.s5g.shop.entity.QBookImage.bookImage;
 
 @Repository
@@ -114,10 +127,48 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
 
     // 도서 상세 BookResponseDto타입으로 리턴
     @Override
-    public BookResponseDto getBookDetail(long bookId) {
-        return select(Projections.fields(BookResponseDto.class,
-                book.publisherId,
-                book.bookStatusId,
+    public BookDetailResponseDto getBookDetail(long bookId) {
+        List<BookAuthorResponseDto> authorList = from(bookAuthor)
+            .join(bookAuthor.author, author)
+            .join(bookAuthor.authorType, authorType)
+            .where(bookAuthor.book.bookId.eq(bookId))
+            .select(Projections.constructor(BookAuthorResponseDto.class,
+                author.authorId,
+                author.name,
+                authorType.authorTypeId,
+                authorType.typeName))
+            .fetch();
+
+        BookCategory bookCategoryQuery = from(bookCategory)
+            .join(bookCategory.category, category)
+            .join(bookCategory.book, book)
+            .where(bookCategory.book.bookId.eq(bookId))
+            .select(Projections.constructor(BookCategory.class,
+                category,
+                book
+            ))
+            .fetchOne();
+
+        List<BookDetailCategoryResponseDto> categoryList=new ArrayList<>();
+        Stack<BookDetailCategoryResponseDto> categoryStack=new Stack<>();
+        Category subCategory=bookCategoryQuery.getCategory();
+        while(subCategory!=null){
+            categoryStack.push(new BookDetailCategoryResponseDto(subCategory.getCategoryId(),
+                subCategory.getCategoryName()));
+            subCategory=subCategory.getParentCategory();
+        }
+        while(!categoryStack.isEmpty()){
+            categoryList.add(categoryStack.pop());
+        }
+
+        return from(book)
+            .join(book.publisher, publisher)
+            .join(book.bookStatus, bookStatus)
+            .where(book.bookId.eq(bookId))
+            .select(Projections.constructor(BookDetailResponseDto.class,
+                book.bookId,
+                publisher.name,
+                bookStatus.name,
                 book.title,
                 book.chapter,
                 book.description,
@@ -128,10 +179,10 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
                 book.isPacked,
                 book.stock,
                 book.views,
-                book.createdAt
-        ))
-                .from(book)
-                .where(book.bookId.eq(bookId))
-                .fetchOne();
+                book.createdAt,
+                ConstantImpl.create(authorList),
+                ConstantImpl.create(categoryList)
+            ))
+            .fetchOne();
     }
 }
