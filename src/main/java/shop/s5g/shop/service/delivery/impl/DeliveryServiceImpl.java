@@ -5,11 +5,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.delivery.DeliveryResponseDto;
 import shop.s5g.shop.dto.delivery.DeliveryUpdateRequestDto;
-import shop.s5g.shop.entity.order.Delivery;
-import shop.s5g.shop.entity.order.DeliveryStatus;
+import shop.s5g.shop.entity.delivery.Delivery;
+import shop.s5g.shop.entity.delivery.DeliveryStatus;
 import shop.s5g.shop.exception.ResourceNotFoundException;
-import shop.s5g.shop.repository.order.DeliveryRepository;
-import shop.s5g.shop.repository.order.DeliveryStatusRepository;
+import shop.s5g.shop.repository.delivery.DeliveryRepository;
+import shop.s5g.shop.repository.delivery.DeliveryStatusRepository;
 import shop.s5g.shop.service.delivery.DeliveryService;
 
 @Transactional

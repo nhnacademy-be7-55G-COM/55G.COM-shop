@@ -7,8 +7,4 @@ public class EssentialDataNotFoundException extends RuntimeException {
         super(message);
     }
 
-    @Override
-    public synchronized Throwable fillInStackTrace() {
-        return super.fillInStackTrace();
-    }
 }

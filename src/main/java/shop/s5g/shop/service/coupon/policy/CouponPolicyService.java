@@ -11,8 +11,8 @@ public interface CouponPolicyService {
 
     void updateCouponPolicy(Long couponPolicyId, CouponPolicyRequestDto couponPolicyRequestDto);
 
-    CouponPolicyResponseDto findByCouponPolicyId(Long couponPolicyId);
+    CouponPolicyResponseDto getByCouponPolicyId(Long couponPolicyId);
 
-    List<CouponPolicyResponseDto> findByAllCouponPolicies();
+    List<CouponPolicyResponseDto> getAllCouponPolices();
 
 }

@@ -37,4 +37,12 @@ public class OrderDetailQuerydslRepositoryImpl extends QuerydslRepositorySupport
                 )
             ).fetch();
     }
+
+    @Override
+    public List<OrderDetail> fetchOrderDetailsByOrderId(long orderId) {
+        return from(orderDetail)
+            .join(orderDetail.book, book).fetchJoin()
+            .where(orderDetail.order.id.eq(orderId))
+            .fetch();
+    }
 }
