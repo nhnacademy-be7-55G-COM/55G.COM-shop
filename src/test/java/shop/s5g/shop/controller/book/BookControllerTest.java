@@ -67,7 +67,7 @@ class BookControllerTest {
 
     @Test
     void addBook() throws Exception {
-        mockMvc.perform(post("/api/shop/book")
+        mockMvc.perform(post("/api/shop/books")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content))
                 .andExpect(status().isOk())
@@ -82,7 +82,7 @@ class BookControllerTest {
     @DisplayName("도서 등록 실패 test")
     void addBookErrorTest() throws Exception {
         this.mockMvc
-                .perform(post("/api/shop/book")
+                .perform(post("/api/shop/books")
                         //bad request
                         .content("{\n" +
                                 "  \"publisherId\": 22,\n" +
@@ -111,7 +111,7 @@ class BookControllerTest {
     @DisplayName("도서 수정 test")
     void updateBookTest() throws Exception {
         this.mockMvc
-                .perform(put("/api/shop/book/{bookId}", 1)
+                .perform(put("/api/shop/books/{bookId}", 1)
                         .content("{\n" +
                                 "  \"publisherId\": 22,\n" +
                                 "  \"bookStatusId\": 222,\n" +
@@ -138,7 +138,7 @@ class BookControllerTest {
     @DisplayName("도서 삭제 test")
     void deleteBookTest() throws Exception {
         this.mockMvc
-                .perform(delete("/api/shop/book/{bookId}", 1)
+                .perform(delete("/api/shop/books/{bookId}", 1)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print());
@@ -149,7 +149,7 @@ class BookControllerTest {
     @Test
     void deleteBookErrorTest() throws Exception {
         this.mockMvc
-                .perform(delete("/api/shop/book/{bookId}", "A")
+                .perform(delete("/api/shop/books/{bookId}", "A")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andDo(print());

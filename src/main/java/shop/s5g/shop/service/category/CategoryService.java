@@ -1,5 +1,6 @@
 package shop.s5g.shop.service.category;
 
+import jakarta.validation.Valid;
 import shop.s5g.shop.dto.category.CategoryRequestDto;
 import shop.s5g.shop.dto.category.CategoryResponseDto;
 import shop.s5g.shop.dto.category.CategoryUpdateRequestDto;
@@ -11,4 +12,8 @@ public interface CategoryService {
     public List<CategoryResponseDto> allCategory();
     public void updateCategory(Long categoryId, CategoryUpdateRequestDto categoryDto);
     public void deleteCategory(Long categoryId);
+
+    List<CategoryResponseDto> getChildCategory(Long categoryId);
+
+    List<CategoryResponseDto> getKoreaBooks();
 }
