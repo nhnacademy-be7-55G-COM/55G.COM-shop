@@ -57,7 +57,7 @@ public class CouponBookController {
     public ResponseEntity<Page<CouponBookResponseDto>> findAllCouponBooks(Pageable pageable) {
         Page<CouponBookResponseDto> couponBookList = couponBookService.findCouponBooks(pageable);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(couponBookList);
+        return ResponseEntity.status(HttpStatus.OK).body(couponBookList);
     }
 
     /**
