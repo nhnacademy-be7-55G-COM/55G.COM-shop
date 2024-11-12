@@ -13,6 +13,9 @@ import shop.s5g.shop.entity.Publisher;
 import shop.s5g.shop.entity.QPublisher;
 import shop.s5g.shop.repository.publisher.qdsl.PublisherQuerydslRepository;
 
+import java.util.List;
+
+import static com.querydsl.jpa.JPAExpressions.select;
 import static shop.s5g.shop.entity.QPublisher.publisher;
 
 @Repository
@@ -25,21 +28,41 @@ public class PublisherQuerydslRepositoryImpl extends QuerydslRepositorySupport i
         this.jpaQueryFactory = jpaQueryFactory;
     }
 
-    @PersistenceContext
-    private EntityManager em;
-
     //출판사 조회
     @Override
-    public PublisherResponseDto getPublisher(Long publisherId) {
+    public PublisherResponseDto getPublisher(Long id) {
 
-        QPublisher publisher1 = QPublisher.publisher;
-        return new JPAQuery<>(em)
+//        QPublisher publisher1 = QPublisher.publisher;
+//        return new JPAQuery<>(em)
+//                .select(Projections.constructor(PublisherResponseDto.class,
+//                        publisher1.id,
+//                        publisher1.name,
+//                        publisher1.active))
+//                .from(publisher1)
+//                .where(publisher1.id.eq(publisherId))
+//                .fetchFirst();
+        return jpaQueryFactory.select(Projections.constructor(PublisherResponseDto.class,
+                publisher.id,
+                publisher.name,
+                publisher.active
+                ))
+                .from(publisher)
+                .where(publisher.id.eq(id))
+                .fetchOne();
+    }
+
+    //모든 출판사 조회
+    @Override
+    public List<PublisherResponseDto> getAllPublisher() {
+        return jpaQueryFactory
                 .select(Projections.constructor(PublisherResponseDto.class,
-                        publisher1.name,
-                        publisher1.active))
-                .from(publisher1)
-                .where(publisher1.id.eq(publisherId))
-                .fetchFirst();
+                        publisher.id,
+                        publisher.name,
+                        publisher.active
+                        ))
+                .where(publisher.active.eq(true))
+                .from(publisher)
+                .fetch();
     }
 
     //출판사 수정
@@ -47,7 +70,6 @@ public class PublisherQuerydslRepositoryImpl extends QuerydslRepositorySupport i
     public void updatePublisher(Long publisherId, PublisherRequestDto publisherRequestDto) {
         jpaQueryFactory.update(publisher)
                 .set(publisher.name, publisherRequestDto.name())
-                .set(publisher.active, publisherRequestDto.active())
                 .where(publisher.id.eq(publisherId))
                 .execute();
     }

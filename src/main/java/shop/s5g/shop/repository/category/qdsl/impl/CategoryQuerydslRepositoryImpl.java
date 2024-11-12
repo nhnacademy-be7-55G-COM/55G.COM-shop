@@ -39,9 +39,39 @@ public class CategoryQuerydslRepositoryImpl extends QuerydslRepositorySupport im
         return jpaQueryFactory
                 .from(category)
                 .select(Projections.constructor(CategoryResponseDto.class,
-                        category.parentCategory.categoryName, //부모카테고리 이름 리턴
+                        category.categoryId,
+                        category.parentCategory.categoryId, //부모카테고리 이름 리턴
                         category.categoryName,
                         category.active))
+                .where(category.active.eq(true))
+                .fetch();
+    }
+
+    //자식 카테고리 조회
+    @Override
+    public List<CategoryResponseDto> getChild_Category(Long categoryId) {
+        return jpaQueryFactory
+                .from(category)
+                .select(Projections.constructor(CategoryResponseDto.class,
+                        category.categoryId,
+                        category.parentCategory.categoryId,
+                        category.categoryName,
+                        category.active))
+                .where(category.parentCategory.categoryId.eq(categoryId))
+                .fetch();
+    }
+
+    //국내도서 하위 카테고리 조회
+    @Override
+    public List<CategoryResponseDto> getKoreaBook() {
+        return jpaQueryFactory
+                .from(category)
+                .select(Projections.constructor(CategoryResponseDto.class,
+                        category.categoryId,
+                        category.parentCategory.categoryId,
+                        category.categoryName,
+                        category.active))
+                .where(category.parentCategory.isNull())
                 .fetch();
     }
 

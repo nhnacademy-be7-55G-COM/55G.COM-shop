@@ -79,7 +79,7 @@ public class CouponPolicyController {
      */
     @GetMapping("/policy/{couponPolicyId}")
     public ResponseEntity<CouponPolicyResponseDto> findCouponPolicyById(@PathVariable("couponPolicyId") Long couponPolicyId) {
-        CouponPolicyResponseDto couponPolicyResponseDto = couponPolicyService.findByCouponPolicyId(couponPolicyId);
+        CouponPolicyResponseDto couponPolicyResponseDto = couponPolicyService.getByCouponPolicyId(couponPolicyId);
 
         return ResponseEntity.status(HttpStatus.OK).body(couponPolicyResponseDto);
     }
@@ -90,7 +90,7 @@ public class CouponPolicyController {
      */
     @GetMapping("/policy")
     public ResponseEntity<List<CouponPolicyResponseDto>> findAllCouponPolicy() {
-        List<CouponPolicyResponseDto> couponPolicyResponseDtoList = couponPolicyService.findByAllCouponPolicies();
+        List<CouponPolicyResponseDto> couponPolicyResponseDtoList = couponPolicyService.getAllCouponPolices();
 
         return ResponseEntity.status(HttpStatus.OK).body(couponPolicyResponseDtoList);
     }

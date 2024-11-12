@@ -38,6 +38,19 @@ public class CategoryController {
         return ResponseEntity.ok().body(categoryResponseDto);
     }
 
+    //자식 카테고리 조회
+    @GetMapping("/category/childCategory/{categoryId}")
+    public ResponseEntity<List<CategoryResponseDto>> getChildCategories(@Valid @PathVariable("categoryId") Long categoryId) {
+        categoryServiceImpl.getChildCategory(categoryId);
+        return ResponseEntity.ok().build();
+    }
+
+    //국내도서 하위 카테고리 조회
+    @GetMapping("/category/korea")
+    public ResponseEntity<List<CategoryResponseDto>> getKoreaCategories() {
+        return ResponseEntity.ok().body(categoryServiceImpl.getKoreaBooks());
+    }
+
     //카테고리 수정
     @PutMapping("/category/{categoryId}")
     public ResponseEntity<MessageDto> updateCategory(@Valid @PathVariable("categoryId") Long categoryId, @Valid @RequestBody CategoryUpdateRequestDto categoryDto, BindingResult bindingResult) {
@@ -51,6 +64,8 @@ public class CategoryController {
         categoryServiceImpl.updateCategory(categoryId, categoryDto);
         return ResponseEntity.ok().body(new MessageDto("카테고리 수정 성공"));
     }
+
+
 
     //카테고리 삭제
     @DeleteMapping("/category/{categoryId}")

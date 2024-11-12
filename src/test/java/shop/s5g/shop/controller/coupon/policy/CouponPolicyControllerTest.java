@@ -118,7 +118,7 @@ class CouponPolicyControllerTest {
         // Given
         Long couponPolicyId = 1L;
 
-        when(couponPolicyService.findByCouponPolicyId(couponPolicyId)).thenReturn(new CouponPolicyResponseDto(
+        when(couponPolicyService.getByCouponPolicyId(couponPolicyId)).thenReturn(new CouponPolicyResponseDto(
             new BigDecimal("0.5"),
             20000L,
             2000L,
@@ -147,7 +147,7 @@ class CouponPolicyControllerTest {
             new CouponPolicyResponseDto(new BigDecimal("10"), 50000L, 2000L, 30)
         );
 
-        when(couponPolicyService.findByAllCouponPolicies()).thenReturn(couponPolicyResponseDtoList);
+        when(couponPolicyService.getAllCouponPolices()).thenReturn(couponPolicyResponseDtoList);
 
         // When & Then
         mockMvc.perform(get("/api/shop/admin/coupons/policy"))

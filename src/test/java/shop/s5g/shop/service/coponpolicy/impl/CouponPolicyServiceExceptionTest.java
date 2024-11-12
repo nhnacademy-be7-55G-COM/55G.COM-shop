@@ -81,11 +81,11 @@ class CouponPolicyServiceExceptionTest {
         Long invalidId = -1L;
 
         // When & Then - couponPolicyId가 0 이하인 경우
-        assertThatThrownBy(() -> couponPolicyService.findByCouponPolicyId(invalidId))
+        assertThatThrownBy(() -> couponPolicyService.getByCouponPolicyId(invalidId))
             .isInstanceOf(IllegalArgumentException.class);
 
         // When & Then - couponPolicyId가 null 인 경우
-        assertThatThrownBy(() -> couponPolicyService.findByCouponPolicyId(null))
+        assertThatThrownBy(() -> couponPolicyService.getByCouponPolicyId(null))
             .isInstanceOf(IllegalArgumentException.class);
 
     }
@@ -97,7 +97,7 @@ class CouponPolicyServiceExceptionTest {
         Long notFoundId = 999L;
 
         // When & Then
-        assertThatThrownBy(() -> couponPolicyService.findByCouponPolicyId(notFoundId))
+        assertThatThrownBy(() -> couponPolicyService.getByCouponPolicyId(notFoundId))
             .isInstanceOf(CouponPolicyNotFoundException.class)
             .hasMessageContaining(notFoundId + ", 아이디는 존재하지 않는 쿠폰 정책입니다");
 
