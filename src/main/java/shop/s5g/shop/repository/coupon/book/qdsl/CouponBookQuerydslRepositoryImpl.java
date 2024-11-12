@@ -110,6 +110,7 @@ public class CouponBookQuerydslRepositoryImpl extends QuerydslRepositorySupport 
             .innerJoin(couponTemplate.couponPolicy, couponPolicy);
 
         long total = countQuery.fetchCount();
+
         List<CouponBookResponseDto> content = query
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
