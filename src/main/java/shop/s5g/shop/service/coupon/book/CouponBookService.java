@@ -13,13 +13,13 @@ public interface CouponBookService {
     void createCouponBook(CouponBookRequestDto couponBookRequestDto);
 
     // read
-    CouponBookResponseDto findCouponBook(CouponBookRequestDto couponBookRequestDto);
+    CouponBookResponseDto getCouponBook(CouponBookRequestDto couponBookRequestDto);
 
-    Page<CouponBookResponseDto> findCouponBooks(Pageable pageable);
+    Page<CouponBookResponseDto> getCouponBooks(Pageable pageable);
 
-    Page<CouponTemplateResponseDto> findCouponBooksByBookId(Long bookId, Pageable pageable);
+    Page<CouponTemplateResponseDto> getCouponBooksByBookId(Long bookId, Pageable pageable);
 
-    Page<CouponBookDetailsForBookDto> findCouponBooksByTemplateId(Long templateId, Pageable pageable);
+    Page<CouponBookDetailsForBookDto> getCouponBooksByTemplateId(Long templateId, Pageable pageable);
 
     // update 가 필요한 것인가??
 

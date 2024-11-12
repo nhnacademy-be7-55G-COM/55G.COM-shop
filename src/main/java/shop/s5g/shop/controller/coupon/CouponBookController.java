@@ -55,7 +55,7 @@ public class CouponBookController {
      */
     @GetMapping("/books")
     public ResponseEntity<Page<CouponBookResponseDto>> findAllCouponBooks(Pageable pageable) {
-        Page<CouponBookResponseDto> couponBookList = couponBookService.findCouponBooks(pageable);
+        Page<CouponBookResponseDto> couponBookList = couponBookService.getCouponBooks(pageable);
 
         return ResponseEntity.status(HttpStatus.OK).body(couponBookList);
     }
@@ -70,7 +70,7 @@ public class CouponBookController {
     public ResponseEntity<Page<CouponTemplateResponseDto>> getCouponBooksByBookId(@PathVariable("bookId") Long bookId,
         Pageable pageable) {
 
-        Page<CouponTemplateResponseDto> templateList = couponBookService.findCouponBooksByBookId(bookId, pageable);
+        Page<CouponTemplateResponseDto> templateList = couponBookService.getCouponBooksByBookId(bookId, pageable);
 
         return ResponseEntity.status(HttpStatus.OK).body(templateList);
     }
@@ -85,7 +85,7 @@ public class CouponBookController {
     public ResponseEntity<Page<CouponBookDetailsForBookDto>> getCouponBooksByTemplateId(@PathVariable("templateId") Long templateId,
         Pageable pageable) {
 
-        Page<CouponBookDetailsForBookDto> bookList = couponBookService.findCouponBooksByTemplateId(templateId, pageable);
+        Page<CouponBookDetailsForBookDto> bookList = couponBookService.getCouponBooksByTemplateId(templateId, pageable);
 
         return ResponseEntity.status(HttpStatus.OK).body(bookList);
     }

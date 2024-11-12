@@ -68,7 +68,7 @@ public class CouponPolicyServiceImpl implements CouponPolicyService {
      */
     @Override
     @Transactional(readOnly = true)
-    public CouponPolicyResponseDto findByCouponPolicyId(Long couponPolicyId) {
+    public CouponPolicyResponseDto getByCouponPolicyId(Long couponPolicyId) {
 
         if (Objects.isNull(couponPolicyId) || couponPolicyId <= 0) {
             throw new IllegalArgumentException();
@@ -91,7 +91,7 @@ public class CouponPolicyServiceImpl implements CouponPolicyService {
      */
     @Override
     @Transactional(readOnly = true)
-    public List<CouponPolicyResponseDto> findByAllCouponPolicies() {
+    public List<CouponPolicyResponseDto> getAllCouponPolices() {
 
         return couponPolicyRepository.findAll()
             .stream()

@@ -67,7 +67,7 @@ public class CouponBookServiceImpl implements CouponBookService {
      * @return CouponBookResponseDto
      */
     @Override
-    public CouponBookResponseDto findCouponBook(CouponBookRequestDto couponBookRequestDto) {
+    public CouponBookResponseDto getCouponBook(CouponBookRequestDto couponBookRequestDto) {
         return couponBookRepository.findCouponBook(couponBookRequestDto);
     }
 
@@ -77,7 +77,7 @@ public class CouponBookServiceImpl implements CouponBookService {
      * @return Page<CouponBookResponseDto>
      */
     @Override
-    public Page<CouponBookResponseDto> findCouponBooks(Pageable pageable) {
+    public Page<CouponBookResponseDto> getCouponBooks(Pageable pageable) {
         return couponBookRepository.findCouponBooks(pageable);
     }
 
@@ -88,7 +88,7 @@ public class CouponBookServiceImpl implements CouponBookService {
      * @return Page<CouponTemplateResponseDto>
      */
     @Override
-    public Page<CouponTemplateResponseDto> findCouponBooksByBookId(Long bookId, Pageable pageable) {
+    public Page<CouponTemplateResponseDto> getCouponBooksByBookId(Long bookId, Pageable pageable) {
 
         if (Objects.isNull(bookId) || bookId <= 0) {
             throw new IllegalArgumentException("잘못된 책 아이디 값 요청입니다.");
@@ -104,7 +104,7 @@ public class CouponBookServiceImpl implements CouponBookService {
      * @return Page<CouponBookDetailsForBookDto>
      */
     @Override
-    public Page<CouponBookDetailsForBookDto> findCouponBooksByTemplateId(Long templateId,
+    public Page<CouponBookDetailsForBookDto> getCouponBooksByTemplateId(Long templateId,
         Pageable pageable) {
 
         if (Objects.isNull(templateId) || templateId <= 0) {

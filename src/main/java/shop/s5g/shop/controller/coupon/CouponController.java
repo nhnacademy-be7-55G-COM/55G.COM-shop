@@ -79,7 +79,7 @@ public class CouponController {
      */
     @GetMapping("/coupons")
     public ResponseEntity<List<CouponResponseDto>> findCoupons(Pageable pageable) {
-        List<CouponResponseDto> couponList = couponService.findCoupons(pageable);
+        List<CouponResponseDto> couponList = couponService.getCoupons(pageable);
 
         return ResponseEntity.status(HttpStatus.OK).body(couponList);
     }
@@ -91,7 +91,7 @@ public class CouponController {
      */
     @GetMapping("/coupons/{couponId}")
     public ResponseEntity<CouponResponseDto> findCoupon(@PathVariable("couponId") Long couponId) {
-        CouponResponseDto couponResponseDto = couponService.findCoupon(couponId);
+        CouponResponseDto couponResponseDto = couponService.getCoupon(couponId);
 
         return ResponseEntity.status(HttpStatus.OK).body(couponResponseDto);
     }

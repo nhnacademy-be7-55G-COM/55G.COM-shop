@@ -3,7 +3,6 @@ package shop.s5g.shop.repository.coupon.book.qdsl;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import jakarta.persistence.EntityManager;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -23,9 +22,9 @@ public class CouponBookQuerydslRepositoryImpl extends QuerydslRepositorySupport 
 
     private final JPAQueryFactory jpaQueryFactory;
 
-    public CouponBookQuerydslRepositoryImpl(EntityManager em) {
+    public CouponBookQuerydslRepositoryImpl(JPAQueryFactory jpaQueryFactory) {
         super(CouponBook.class);
-        this. jpaQueryFactory = new JPAQueryFactory(em);
+        this. jpaQueryFactory = jpaQueryFactory;
     }
 
     QCouponBook couponBook = QCouponBook.couponBook;
