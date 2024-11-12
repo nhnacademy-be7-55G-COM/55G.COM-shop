@@ -1,6 +1,7 @@
 package shop.s5g.shop.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -18,7 +19,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,23 +43,25 @@ import shop.s5g.shop.service.cart.CartService;
 public class CartController {
 
     private final CartService cartService;
+
     //담기
     @PostMapping("/cart")
     public ResponseEntity<MessageDto> putBook(@RequestBody @Validated CartPutRequestDto cartPutRequestDto,
         BindingResult bindingResult,@AuthenticationPrincipal ShopMemberDetail shopMemberDetail) {
-        String customerLoginId = shopMemberDetail.getLoginId();
 
         if (bindingResult.hasErrors()) {
             throw new BadRequestException("Field Error When Putting Book In Cart");
         }
 
+        String customerLoginId = shopMemberDetail.getLoginId();
+
         cartService.putBook(cartPutRequestDto.bookId(), cartPutRequestDto.quantity(),
             customerLoginId);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(new MessageDto("장바구니에 물품이 담겼습니다."));
+        return ResponseEntity.status(HttpStatus.OK).body(new MessageDto("장바구니에 물품이 담겼습니다."));
     }
 
-    // 조회 (장바구니상세페이지 접근)
+    // 조회 (회원 장바구니상세페이지 접근)
     @GetMapping("/cart")
     public ResponseEntity<Map<String,Object>> lookUpAllBooks(@AuthenticationPrincipal ShopMemberDetail shopMemberDetail) {
 
@@ -75,6 +77,7 @@ public class CartController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    // 조회 (비회원 장바구니상세페이지 접근)
     @GetMapping("/cart/guest")
     public ResponseEntity<Map<String, Object>> lookUpAllBooksWhenGuest(
         @RequestParam(value = "cartBookInfoList", required = false) String cartSessionStorage) throws JsonProcessingException {
@@ -85,7 +88,7 @@ public class CartController {
 
         ObjectMapper objectMapper = new ObjectMapper();
         CartSessionStorageDto cartSessionStorageDto = objectMapper.readValue(decodedCart,
-            CartSessionStorageDto.class);
+            new TypeReference<CartSessionStorageDto>() {});
 
         List<CartBooksResponseDto> cartBooks = cartService.lookUpAllBooksWhenGuest(
             cartSessionStorageDto);
@@ -101,7 +104,7 @@ public class CartController {
 
 
     // 장바구니 상세페이지에서 +,- 버튼으로 수량조절
-    @PatchMapping("/cart/controlQuantity")
+    @PostMapping("/cart/controlQuantity")
     public ResponseEntity<Void> controlQuantity(@RequestBody @Validated
     CartControlQuantityRequestDto controlQuantityReqDto, BindingResult bindingResult,
         @AuthenticationPrincipal ShopMemberDetail shopMemberDetail) {
@@ -119,7 +122,7 @@ public class CartController {
     }
 
 
-    // 특정도서 전체삭제
+    // 특정도서 수량전체삭제
     @DeleteMapping("/cart")
     public ResponseEntity<MessageDto> deleteBookInCart(
         @RequestBody @Validated CartDeleteBookRequestDto deleteBookReq,
@@ -135,9 +138,9 @@ public class CartController {
         return ResponseEntity.status(HttpStatus.OK).body(new MessageDto("선택상품을 삭제했습니다."));
     }
 
-    // 로그인 했을 때 세션스토리지와 db를 합쳐 레디스에 저장할 컨트롤러
+    // 로그인 했을 때 로컬스토리지와 db를 합쳐 레디스에 저장할 컨트롤러
     @PostMapping("/cart/login")
-    public ResponseEntity<Void> mergedCartToRedis(
+    public ResponseEntity<Map<String,Integer>> mergedCartToRedis(
         @RequestBody @Validated CartLoginRequestDto cartLoginRequestDto,
         BindingResult bindingResult,@AuthenticationPrincipal ShopMemberDetail shopMemberDetail) {
         if (bindingResult.hasErrors()) {
@@ -145,7 +148,16 @@ public class CartController {
         }
         String customerLoginId = shopMemberDetail.getLoginId();
 
-        cartService.saveMergedCartToRedis(customerLoginId, cartLoginRequestDto.cartBookInfoList());
+        int cartCount = cartService.saveMergedCartToRedis(customerLoginId, cartLoginRequestDto.cartBookInfoList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of("cartCount", cartCount));
+    }
+
+    @PostMapping("/cart/logout")
+    public ResponseEntity<Void> RedisToDbWhenLogout(
+        @AuthenticationPrincipal ShopMemberDetail shopMemberDetail) {
+        String customerLoginId = shopMemberDetail.getLoginId();
+        cartService.FromRedisToDb(customerLoginId);
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }
