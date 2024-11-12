@@ -55,7 +55,7 @@ public class PublisherRepositoryTest {
     @DisplayName("출판사 수정 test")
     void updatePublisherTest() {
         Publisher publisher = new Publisher("한빛", true);
-        PublisherRequestDto newPublisher = new PublisherRequestDto("창비", true);
+        PublisherRequestDto newPublisher = new PublisherRequestDto("창비");
 
         Publisher save = publisherRepository.save(publisher);
         publisherRepository.updatePublisher(save.getId(), newPublisher);

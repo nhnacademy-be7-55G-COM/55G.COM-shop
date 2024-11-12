@@ -11,6 +11,8 @@ import shop.s5g.shop.dto.tag.MessageDto;
 import shop.s5g.shop.exception.publisher.PublisherBadRequestException;
 import shop.s5g.shop.service.publisher.PublisherService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/shop")
 public class PublisherController {
@@ -34,12 +36,18 @@ public class PublisherController {
 
     //출판사 조회
     @GetMapping("/publisher/{publisherId}")
-    public ResponseEntity<PublisherResponseDto> findPublisher(@Valid @PathVariable("publisherId") Long publisherId) {
-        if (publisherId < 1) {
+    public ResponseEntity<PublisherResponseDto> findPublisher(@Valid @PathVariable("publisherId") Long id) {
+        if (id < 1) {
             throw new PublisherBadRequestException("출판사 Id는 1보다 커야 합니다.");
         }
-        PublisherResponseDto publisherResponseDto = publisherService.getPublisher(publisherId);
+        PublisherResponseDto publisherResponseDto = publisherService.getPublisher(id);
         return ResponseEntity.ok().body(publisherResponseDto);
+    }
+
+    //모든 출판사 조회
+    @GetMapping("/publisher")
+    public ResponseEntity<List<PublisherResponseDto>> getAllPublisher() {
+        return ResponseEntity.ok().body(publisherService.getAllPublisher());
     }
 
     //출판사 수정

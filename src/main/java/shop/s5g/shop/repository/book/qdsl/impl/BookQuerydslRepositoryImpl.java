@@ -1,6 +1,9 @@
 package shop.s5g.shop.repository.book.qdsl.impl;
 
+import com.querydsl.core.types.Expression;
+import com.querydsl.core.types.Path;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
@@ -80,8 +83,8 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
         JPAQuery<BookPageableResponseDto> query = jpaQueryFactory
                 .select(Projections.constructor(BookPageableResponseDto.class,
                         book.bookId,
-                        book.publisherId,
-                        book.bookStatusId,
+                        book.publisherId.id,
+                        book.bookStatusId.id,
                         book.title,
                         book.chapter,
                         book.description,
@@ -99,7 +102,15 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
                 .leftJoin(bookImage)
                 .on( bookImage.book.bookId.eq(book.bookId))
                 .offset(pageable.getOffset())
-                .limit(pageable.getPageSize());
+                .limit(pageable.getPageSize())
+                ;
+
+        query = switch(pageable.getSort().toString().split(":")[0]) {
+            case "title" -> query.orderBy(book.title.desc());
+            case "price" -> query.orderBy(book.price.desc());
+            case "publishedDate" -> query.orderBy(book.publishedDate.desc());
+            default -> throw new IllegalArgumentException("Unknown sort type: " + pageable.getSort());
+        };
 
         List<BookPageableResponseDto> content = query.fetch();
 

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import shop.s5g.shop.dto.PageResponseDto;
 import shop.s5g.shop.dto.book.BookPageableResponseDto;
 import shop.s5g.shop.dto.book.BookRequestDto;
 import shop.s5g.shop.dto.book.BookResponseDto;
