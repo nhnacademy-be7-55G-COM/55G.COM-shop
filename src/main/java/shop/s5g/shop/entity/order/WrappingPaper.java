@@ -39,6 +39,7 @@ public class WrappingPaper {
         this.name = name;
         this.price = price;
         this.imageName = imageName;
+        active = true;
     }
 
 //    public static WrappingPaper of(WrappingPaperRequestDto dto) {

@@ -14,9 +14,9 @@ import shop.s5g.shop.dto.order.OrderQueryRequestDto;
 import shop.s5g.shop.dto.order.OrderWithDetailResponseDto;
 import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.member.Customer;
-import shop.s5g.shop.entity.order.Delivery;
-import shop.s5g.shop.entity.order.DeliveryFee;
-import shop.s5g.shop.entity.order.DeliveryStatus;
+import shop.s5g.shop.entity.delivery.Delivery;
+import shop.s5g.shop.entity.delivery.DeliveryFee;
+import shop.s5g.shop.entity.delivery.DeliveryStatus;
 import shop.s5g.shop.entity.order.Order;
 import shop.s5g.shop.entity.order.OrderDetail;
 import shop.s5g.shop.entity.order.OrderDetailType;
@@ -28,9 +28,9 @@ import shop.s5g.shop.exception.member.CustomerNotFoundException;
 import shop.s5g.shop.exception.order.WrappingPaperDoesNotExistsException;
 import shop.s5g.shop.repository.book.BookRepository;
 import shop.s5g.shop.repository.member.CustomerRepository;
-import shop.s5g.shop.repository.order.DeliveryFeeRepository;
-import shop.s5g.shop.repository.order.DeliveryRepository;
-import shop.s5g.shop.repository.order.DeliveryStatusRepository;
+import shop.s5g.shop.repository.delivery.DeliveryFeeRepository;
+import shop.s5g.shop.repository.delivery.DeliveryRepository;
+import shop.s5g.shop.repository.delivery.DeliveryStatusRepository;
 import shop.s5g.shop.repository.order.OrderDetailRepository;
 import shop.s5g.shop.repository.order.OrderDetailTypeRepository;
 import shop.s5g.shop.repository.order.OrderRepository;
@@ -79,7 +79,7 @@ public class OrderServiceImpl implements OrderService {
         );
 
         Delivery delivery = deliveryRepository.save(
-            new Delivery(deliveryDto.address(), deliveryDto.receivedDate(), (int)fee.getFee(), status, deliveryDto.receiverName())
+            new Delivery(deliveryDto.address(), deliveryDto.receivedDate(), status, fee, deliveryDto.receiverName())
         );
 
         Customer customer = customerRepository.findById(customerId).orElseThrow(
@@ -101,10 +101,10 @@ public class OrderServiceImpl implements OrderService {
             Book book = bookRepository.findById(detail.bookId()).orElseThrow(
                 () -> new BookResourceNotFoundException("Book not found: "+detail.bookId())
             );
-            WrappingPaper wrappingPaper = wrappingPaperRepository.findById(detail.wrappingPaperId()).orElseThrow(
+            WrappingPaper wrappingPaper = detail.wrappingPaperId() == null ? null : wrappingPaperRepository.findById(detail.wrappingPaperId()).orElseThrow(
                 () -> new WrappingPaperDoesNotExistsException(detail.wrappingPaperId())
             );
-            OrderDetailType type = orderDetailTypeRepository.findByName("WAIT").orElseThrow(
+            OrderDetailType type = orderDetailTypeRepository.findByName("COMPLETE").orElseThrow(
                 () -> new EssentialDataNotFoundException("Order detail type error")
             );
 

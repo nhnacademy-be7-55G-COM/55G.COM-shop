@@ -50,13 +50,11 @@ public class PaymentsController {
 
 //        log.trace("Payment confirm request for Order: {}", orderRelationId);
         long orderDataId = ((Number) body.get("orderDataId")).longValue();
-        OrderCreateRequestDto order = extractOrderRequest(body);
         Map<String, Object> paymentInfo = extractPaymentInfo(body);
 
         paymentManager.confirmPayment(
             memberDetail.getCustomerId(),
             orderDataId,
-            order,
             paymentInfo,
             TossPaymentsDto.class
         );

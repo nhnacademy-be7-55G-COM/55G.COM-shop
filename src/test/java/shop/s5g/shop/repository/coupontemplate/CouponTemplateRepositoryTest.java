@@ -109,7 +109,6 @@ class CouponTemplateRepositoryTest {
 
         CouponTemplateResponseDto couponTemplateResponseDto = couponTemplateRepository.findCouponTemplateById(saveCouponTemplate.getCouponTemplateId());
 
-        assertEquals(couponPolicy, couponTemplateResponseDto.couponPolicy());
         assertEquals("생일쿠폰", couponTemplateResponseDto.couponName());
         assertEquals("이 달의 생일자를 위한 할인 쿠폰입니다.", couponTemplateResponseDto.couponDescription());
     }

@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import shop.s5g.shop.entity.delivery.Delivery;
 import shop.s5g.shop.entity.member.Customer;
 
 

@@ -35,7 +35,7 @@ public class CouponPolicy {
     @Setter
     @Min(0)
     @NotNull
-    @Column(name = "discount_price")
+    @Column(name = "discount_price", precision = 10, scale = 2)
     private BigDecimal discountPrice;
 
     @Setter
