@@ -19,6 +19,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class Book {
 
     @Id
@@ -27,10 +28,10 @@ public class Book {
     private Long bookId;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "publisher_id")
-    private Publisher publisherId;
+    private Publisher publisher;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_status_id")
-    private BookStatus bookStatusId;
+    private BookStatus bookStatus;
     private String title;
     @Column(columnDefinition = "TEXT")
     private String chapter;
@@ -44,17 +45,36 @@ public class Book {
     private BigDecimal discountRate;
     @Column(name = "is_packed")
     private boolean isPacked;
-
     @Setter
     private int stock;
     private Long views;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @Builder
-    public Book(Publisher publisherId, BookStatus bookStatusId, String title, String chapter, String description, LocalDateTime publishedDate, String isbn, Long price, BigDecimal discountRate, boolean isPacked, int stock, Long views, LocalDateTime createdAt){
-        this.publisherId = publisherId;
-        this.bookStatusId = bookStatusId;
+    public Book(Publisher publisher, BookStatus bookStatus, String title, String chapter,
+        String description, LocalDateTime publishedDate, String isbn, Long price,
+        BigDecimal discountRate, boolean isPacked, int stock, Long views, LocalDateTime createdAt) {
+        this.publisher = publisher;
+        this.bookStatus = bookStatus;
+        this.title = title;
+        this.chapter = chapter;
+        this.description = description;
+        this.publishedDate = publishedDate;
+        this.isbn = isbn;
+        this.price = price;
+        this.discountRate = discountRate;
+        this.isPacked = isPacked;
+        this.stock = stock;
+        this.views = views;
+        this.createdAt = createdAt;
+    }
+
+    public Book(Long bookId, Publisher publisher, BookStatus bookStatus, String title,
+        String chapter, String description, LocalDateTime publishedDate, String isbn, Long price,
+        BigDecimal discountRate, boolean isPacked, int stock, Long views, LocalDateTime createdAt) {
+        this.bookId = bookId;
+        this.publisher = publisher;
+        this.bookStatus = bookStatus;
         this.title = title;
         this.chapter = chapter;
         this.description = description;
