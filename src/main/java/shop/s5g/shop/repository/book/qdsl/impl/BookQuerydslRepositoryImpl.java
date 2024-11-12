@@ -109,7 +109,7 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
             case "title" -> query.orderBy(book.title.desc());
             case "price" -> query.orderBy(book.price.desc());
             case "publishedDate" -> query.orderBy(book.publishedDate.desc());
-            default -> throw new IllegalArgumentException("Unknown sort type: " + pageable.getSort());
+            default -> query.orderBy(book.title.asc());
         };
 
         List<BookPageableResponseDto> content = query.fetch();
