@@ -65,7 +65,7 @@ public class CouponServiceImpl implements CouponService {
      * @return CouponResponseDto
      */
     @Override
-    public CouponResponseDto findCoupon(Long couponId) {
+    public CouponResponseDto getCoupon(Long couponId) {
 
         if (Objects.isNull(couponId) || couponId < 0) {
             throw new IllegalArgumentException("쿠폰 아이디가 잘못 지정되었습니다.");
@@ -86,7 +86,7 @@ public class CouponServiceImpl implements CouponService {
      * @return List<CouponResponseDto>
      */
     @Override
-    public List<CouponResponseDto> findCoupons(Pageable pageable) {
+    public List<CouponResponseDto> getCoupons(Pageable pageable) {
         return couponRepository.findCoupons(pageable);
     }
 

@@ -110,7 +110,7 @@ class CouponPolicyServiceImplTest {
         when(couponPolicyRepository.findById(couponPolicyId)).thenReturn(Optional.of(testCouponPolicy));
 
         // When
-        CouponPolicyResponseDto couponPolicyResponseDto = couponPolicyService.findByCouponPolicyId(couponPolicyId);
+        CouponPolicyResponseDto couponPolicyResponseDto = couponPolicyService.getByCouponPolicyId(couponPolicyId);
 
         // Then
         assertThat(couponPolicyResponseDto).isNotNull();
@@ -134,7 +134,7 @@ class CouponPolicyServiceImplTest {
         when(couponPolicyRepository.findAll()).thenReturn(testCouponPolicies);
 
         // When
-        List<CouponPolicyResponseDto> couponPolicyList = couponPolicyService.findByAllCouponPolicies();
+        List<CouponPolicyResponseDto> couponPolicyList = couponPolicyService.getAllCouponPolices();
 
         // Then
         assertThat(couponPolicyList).isNotNull();
