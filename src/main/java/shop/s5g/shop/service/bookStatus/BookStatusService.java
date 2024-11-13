@@ -1,6 +1,6 @@
-package shop.s5g.shop.service.bookstatus;
+package shop.s5g.shop.service.bookStatus;
 
-import shop.s5g.shop.dto.bookstatus.BookStatusResponseDto;
+import shop.s5g.shop.dto.bookStatus.BookStatusResponseDto;
 
 import java.util.List;
 

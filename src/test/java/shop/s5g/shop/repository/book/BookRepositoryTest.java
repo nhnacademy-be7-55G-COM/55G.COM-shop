@@ -22,7 +22,7 @@ import shop.s5g.shop.entity.BookImage;
 import shop.s5g.shop.entity.BookStatus;
 import shop.s5g.shop.entity.Publisher;
 import shop.s5g.shop.exception.book.BookResourceNotFoundException;
-import shop.s5g.shop.repository.bookstatus.BookStatusRepository;
+import shop.s5g.shop.repository.bookStatus.BookStatusRepository;
 import shop.s5g.shop.repository.publisher.PublisherRepository;
 
 @DataJpaTest

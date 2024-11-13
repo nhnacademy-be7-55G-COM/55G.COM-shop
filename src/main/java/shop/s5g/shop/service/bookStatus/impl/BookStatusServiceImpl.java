@@ -1,10 +1,10 @@
-package shop.s5g.shop.service.bookstatus.impl;
+package shop.s5g.shop.service.bookStatus.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import shop.s5g.shop.dto.bookstatus.BookStatusResponseDto;
-import shop.s5g.shop.repository.bookstatus.BookStatusRepository;
-import shop.s5g.shop.service.bookstatus.BookStatusService;
+import shop.s5g.shop.dto.bookStatus.BookStatusResponseDto;
+import shop.s5g.shop.repository.bookStatus.BookStatusRepository;
+import shop.s5g.shop.service.bookStatus.BookStatusService;
 
 import java.util.List;
 

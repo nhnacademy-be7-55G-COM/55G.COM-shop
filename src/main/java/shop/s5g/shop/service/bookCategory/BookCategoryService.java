@@ -1,4 +1,4 @@
-package shop.s5g.shop.service.bookcategory;
+package shop.s5g.shop.service.bookCategory;
 
 import shop.s5g.shop.dto.bookCategory.BookCategoryResponseDto;
 

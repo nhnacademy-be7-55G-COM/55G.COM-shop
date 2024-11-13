@@ -14,7 +14,7 @@ import shop.s5g.shop.config.SecurityConfig;
 import shop.s5g.shop.config.TestSecurityConfig;
 import shop.s5g.shop.controller.book.BookStatusController;
 import shop.s5g.shop.filter.JwtAuthenticationFilter;
-import shop.s5g.shop.service.bookstatus.impl.BookStatusServiceImpl;
+import shop.s5g.shop.service.bookStatus.impl.BookStatusServiceImpl;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;

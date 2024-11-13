@@ -1,6 +1,6 @@
-package shop.s5g.shop.repository.bookstatus.qdsl;
+package shop.s5g.shop.repository.bookStatus.qdsl;
 
-import shop.s5g.shop.dto.bookstatus.BookStatusResponseDto;
+import shop.s5g.shop.dto.bookStatus.BookStatusResponseDto;
 
 import java.util.List;
 

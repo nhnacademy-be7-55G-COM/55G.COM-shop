@@ -1,4 +1,4 @@
-package shop.s5g.shop.service.bookcategory.impl;
+package shop.s5g.shop.service.bookCategory.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,8 +12,8 @@ import shop.s5g.shop.exception.category.CategoryResourceNotFoundException;
 import shop.s5g.shop.exception.bookcategory.BookCategoryBadRequestException;
 import shop.s5g.shop.repository.book.BookRepository;
 import shop.s5g.shop.repository.category.CategoryRepository;
-import shop.s5g.shop.repository.bookcategory.BookCategoryRepository;
-import shop.s5g.shop.service.bookcategory.BookCategoryService;
+import shop.s5g.shop.repository.bookCategory.BookCategoryRepository;
+import shop.s5g.shop.service.bookCategory.BookCategoryService;
 
 import java.util.List;
 

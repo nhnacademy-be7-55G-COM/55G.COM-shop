@@ -1,11 +1,11 @@
-package shop.s5g.shop.repository.bookcategory.qdsl.impl;
+package shop.s5g.shop.repository.bookCategory.qdsl.impl;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import shop.s5g.shop.dto.bookCategory.BookCategoryResponseDto;
 import shop.s5g.shop.entity.bookCategory.BookCategory;
-import shop.s5g.shop.repository.bookcategory.qdsl.BookCategoryQuerydslRepository;
+import shop.s5g.shop.repository.bookCategory.qdsl.BookCategoryQuerydslRepository;
 
 import java.util.List;
 

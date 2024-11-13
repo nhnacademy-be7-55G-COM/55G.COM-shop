@@ -19,7 +19,7 @@ import shop.s5g.shop.exception.book.BookResourceNotFoundException;
 import shop.s5g.shop.exception.bookstatus.BookStatusResourceNotFoundException;
 import shop.s5g.shop.exception.publisher.PublisherResourceNotFoundException;
 import shop.s5g.shop.repository.book.BookRepository;
-import shop.s5g.shop.repository.bookstatus.BookStatusRepository;
+import shop.s5g.shop.repository.bookStatus.BookStatusRepository;
 import shop.s5g.shop.repository.publisher.PublisherRepository;
 import shop.s5g.shop.service.book.BookService;
 

@@ -1,11 +1,11 @@
-package shop.s5g.shop.repository.bookstatus.qdsl.impl;
+package shop.s5g.shop.repository.bookStatus.qdsl.impl;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
-import shop.s5g.shop.dto.bookstatus.BookStatusResponseDto;
+import shop.s5g.shop.dto.bookStatus.BookStatusResponseDto;
 import shop.s5g.shop.entity.BookStatus;
-import shop.s5g.shop.repository.bookstatus.qdsl.BookStatusQuerydslRepository;
+import shop.s5g.shop.repository.bookStatus.qdsl.BookStatusQuerydslRepository;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package shop.s5g.shop.repository.bookcategory.qdsl;
+package shop.s5g.shop.repository.bookCategory.qdsl;
 
 import shop.s5g.shop.dto.bookCategory.BookCategoryResponseDto;
 

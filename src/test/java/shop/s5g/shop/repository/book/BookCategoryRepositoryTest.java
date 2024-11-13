@@ -17,8 +17,8 @@ import shop.s5g.shop.entity.Category;
 import shop.s5g.shop.entity.Publisher;
 import shop.s5g.shop.entity.bookCategory.BookCategory;
 import shop.s5g.shop.entity.bookCategory.BookCategoryId;
-import shop.s5g.shop.repository.bookcategory.BookCategoryRepository;
-import shop.s5g.shop.repository.bookstatus.BookStatusRepository;
+import shop.s5g.shop.repository.bookCategory.BookCategoryRepository;
+import shop.s5g.shop.repository.bookStatus.BookStatusRepository;
 import shop.s5g.shop.repository.category.CategoryRepository;
 import shop.s5g.shop.repository.publisher.PublisherRepository;
 

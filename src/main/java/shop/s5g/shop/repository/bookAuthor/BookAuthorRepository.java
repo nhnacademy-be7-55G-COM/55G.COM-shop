@@ -1,4 +1,4 @@
-package shop.s5g.shop.repository;
+package shop.s5g.shop.repository.bookAuthor;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
