@@ -21,7 +21,7 @@ public class OrderDetailQuerydslRepositoryImpl extends QuerydslRepositorySupport
     public List<OrderDetailWithBookResponseDto> queryAllDetailsByOrderId(long orderId) {
         return from(orderDetail)
             .innerJoin(orderDetail.book, book)
-            .innerJoin(orderDetail.wrappingPaper, wrappingPaper)
+            .leftJoin(orderDetail.wrappingPaper, wrappingPaper)
             .innerJoin(orderDetail.orderDetailType, orderDetailType)
 //            .innerJoin(bookImage.bookId, book)
             .where(orderDetail.order.id.eq(orderId))
