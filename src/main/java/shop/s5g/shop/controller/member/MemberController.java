@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import shop.s5g.shop.dto.customer.CustomerUpdateRequestDto;
+import shop.s5g.shop.dto.member.IdCheckResponseDto;
 import shop.s5g.shop.dto.member.LoginResponseDto;
 import shop.s5g.shop.dto.member.MemberDetailResponseDto;
 import shop.s5g.shop.dto.member.MemberRegistrationRequestDto;
+import shop.s5g.shop.dto.member.PasswordChangeRequestDto;
 import shop.s5g.shop.dto.tag.MessageDto;
 import shop.s5g.shop.exception.BadRequestException;
 import shop.s5g.shop.security.ShopMemberDetail;
@@ -76,4 +79,29 @@ public class MemberController {
 
         return ResponseEntity.ok().body(new MessageDto("회원 정보가 변경되었습니다."));
     }
+
+    @DeleteMapping("/member")
+    public ResponseEntity<MessageDto> deleteMember(
+        @AuthenticationPrincipal ShopMemberDetail memberDetail) {
+        memberService.deleteById(memberDetail.getCustomerId());
+        customerService.deleteCustomer(memberDetail.getCustomerId());
+        return ResponseEntity.ok().body(new MessageDto("탈퇴 처리가 완료됐습니다."));
+    }
+
+    @PostMapping("/checkId/{loginId}")
+    public ResponseEntity<IdCheckResponseDto> checkId(@PathVariable String loginId) {
+        IdCheckResponseDto responseDto = memberService.isExistsByLoginId(loginId);
+        return ResponseEntity.ok().body(responseDto);
+    }
+
+    @PostMapping("/member/password")
+    public ResponseEntity<MessageDto> changePassword(
+        @RequestBody PasswordChangeRequestDto requestDto,
+        @AuthenticationPrincipal ShopMemberDetail memberDetail) {
+        memberService.changePassword(memberDetail.getCustomerId(), requestDto.oldPassword(),
+            requestDto.newPassword());
+
+        return ResponseEntity.ok().body(new MessageDto("비밀번호 변경 성공"));
+    }
+
 }

@@ -7,8 +7,9 @@ import shop.s5g.shop.entity.member.Member;
 import shop.s5g.shop.repository.member.qdsl.MemberQuerydslRepository;
 
 public interface MemberRepository extends JpaRepository<Member, Long>, MemberQuerydslRepository {
-  
+
     static final String ACTIVE_STATUS = "ACTIVE";
+    static final String WITHDRAWAL_STATUS = "WITHDRAWAL";
 
     boolean existsByLoginIdAndStatus_TypeName(String loginId, String typeName);
 
@@ -20,4 +21,5 @@ public interface MemberRepository extends JpaRepository<Member, Long>, MemberQue
     boolean existsByLoginId(String loginId);
 
     Optional<Member> findByIdAndStatus_TypeName(long memberId, String typeName);
+
 }
