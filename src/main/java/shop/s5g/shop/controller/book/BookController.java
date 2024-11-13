@@ -25,15 +25,26 @@ import shop.s5g.shop.dto.book.BookResponseDto;
 import shop.s5g.shop.dto.tag.MessageDto;
 import shop.s5g.shop.exception.book.BookBadRequestException;
 import shop.s5g.shop.service.book.impl.BookServiceImpl;
+import shop.s5g.shop.dto.book.BookDetailResponseDto;
+import shop.s5g.shop.dto.book.BookRequestDto;
+import shop.s5g.shop.dto.book.BookResponseDto;
+import shop.s5g.shop.dto.tag.MessageDto;
+import shop.s5g.shop.exception.book.BookBadRequestException;
+//import shop.s5g.shop.service.BookServiceImpl;
+import shop.s5g.shop.service.book.BookService;
 
 @Slf4j
 @RestController
 @RequestMapping("/api/shop")
 public class BookController {
 
-    private final BookServiceImpl bookServiceImpl;
-    public BookController(BookServiceImpl bookServiceImpl) {
-        this.bookServiceImpl = bookServiceImpl;
+    private final BookService bookService;
+//    private final BookServiceImpl bookServiceImpl;
+//    public BookController(BookServiceImpl bookServiceImpl) {
+//        this.bookServiceImpl = bookServiceImpl;
+//    }
+    public BookController(BookService bookService){
+        this.bookService=bookService;
     }
 
     //도서 등록
@@ -42,31 +53,31 @@ public class BookController {
         if(bindingResult.hasErrors()) {
             throw new BookBadRequestException("잘못된 입력입니다.");
         }
-        bookServiceImpl.createBook(bookDto);
+        bookService.createBook(bookDto);
         return ResponseEntity.ok().body(new MessageDto("도서 등록 성공"));
     }
 
     //도서 목록 조회
     @GetMapping("/books")
     public ResponseEntity<List<BookResponseDto>> getAllBooks() {
-        return ResponseEntity.ok().body(bookServiceImpl.allBook());
+        return ResponseEntity.ok().body(bookService.allBook());
     }
 
     //도서 목록 조회 pageable
     @GetMapping("/books/pageable")
     public ResponseEntity<PageResponseDto<BookPageableResponseDto>> getAllBooksPageable(Pageable pageable) {
         log.trace("/books/pageable says: Pageable={}", pageable);
-        return ResponseEntity.ok().body(PageResponseDto.of(bookServiceImpl.allBookPageable(pageable)));
+        return ResponseEntity.ok().body(PageResponseDto.of(bookService.allBookPageable(pageable)));
     }
 
     //도서 상세 조회
-    @GetMapping("/books/{bookId}")
-    public ResponseEntity<BookResponseDto> getBookById(@Valid @PathVariable("bookId") Long bookId) {
+    @GetMapping("/book/{bookId}")
+    public ResponseEntity<BookDetailResponseDto> getBookById(@Valid @PathVariable("bookId") Long bookId) {
         if (bookId < 1) {
             throw new BookBadRequestException("도서 Id는 1보다 커야 합니다");
         }
-        BookResponseDto bookResponseDto = bookServiceImpl.getBookById(bookId);
-        return ResponseEntity.ok().body(bookResponseDto);
+        BookDetailResponseDto bookDetailResponseDto = bookService.getBookById(bookId);
+        return ResponseEntity.ok().body(bookDetailResponseDto);
     }
 
     //도서 수정
@@ -81,7 +92,7 @@ public class BookController {
         }
 
 
-        bookServiceImpl.updateBooks(bookId, bookdto);
+        bookService.updateBooks(bookId, bookdto);
         return ResponseEntity.ok().body(new MessageDto("도서 수정 성공"));
     }
 
@@ -91,7 +102,7 @@ public class BookController {
         if (bookId < 1) {
             throw new BookBadRequestException("도서 Id는 1보다 커야 합니다");
         }
-        bookServiceImpl.deleteBooks(bookId);
+        bookService.deleteBooks(bookId);
         return ResponseEntity.ok().body(new MessageDto("도서 삭제 성공"));
     }
 }

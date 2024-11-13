@@ -10,9 +10,9 @@ public interface CouponService {
 
     void createCoupon(Integer couponCnt, CouponRequestDto couponRequestDto);
 
-    CouponResponseDto findCoupon(Long couponId);
+    CouponResponseDto getCoupon(Long couponId);
 
-    List<CouponResponseDto> findCoupons(Pageable pageable);
+    List<CouponResponseDto> getCoupons(Pageable pageable);
 
     void updateCoupon(Long couponId, LocalDateTime expiredAt);
 

@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 
 public record CouponTemplateResponseDto(
 
+    Long couponTemplateId,
+
     BigDecimal discountPrice,
 
     Long condition,

@@ -9,6 +9,7 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.GenericToStringSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
@@ -34,7 +35,7 @@ public class RedisConfig {
         sessionRedisTemplate.setConnectionFactory(redisConnectionFactory);
         sessionRedisTemplate.setKeySerializer(new StringRedisSerializer());
         sessionRedisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-        sessionRedisTemplate.setHashKeySerializer(new StringRedisSerializer());
+        sessionRedisTemplate.setHashKeySerializer(new GenericToStringSerializer<>(Long.class));
         sessionRedisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
         return sessionRedisTemplate;
     }

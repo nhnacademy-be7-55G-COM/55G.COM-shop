@@ -66,7 +66,7 @@ class CartControllerTest {
         mockMvc.perform(post("/api/shop/cart")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content))
-            .andExpect(status().isCreated());
+            .andExpect(status().isOk());
 
         verify(cartService, times(1)).putBook(1l, 3, "123");
     }

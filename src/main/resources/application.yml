@@ -2,7 +2,6 @@ spring:
   profiles:
     active: default
 
-
   application:
     name: shop-service
 
@@ -19,8 +18,11 @@ spring:
     username: guest
     password: guest
 
-server:
-  port: 8000
+  elasticsearch:
+    url: url
+    username: username
+    password: password
+
 rabbitmq:
   host: localhost
 

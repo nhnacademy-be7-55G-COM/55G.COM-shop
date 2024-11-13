@@ -1,6 +1,10 @@
 package shop.s5g.shop.service.category.impl;
 
+import java.util.Objects;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import shop.s5g.shop.dto.category.CategoryRequestDto;
 import shop.s5g.shop.dto.category.CategoryResponseDto;
@@ -16,6 +20,7 @@ import java.util.List;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
+
     @Autowired
     public CategoryServiceImpl(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
@@ -32,8 +37,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     //모든 카테고리 조회
-    public List<CategoryResponseDto> allCategory() {
-        return categoryRepository.getAllCategory();
+    public Page<CategoryResponseDto> allCategory(Pageable pageable) {
+        return categoryRepository.getAllCategory(pageable);
     }
 
     //자식 카테고리 조회
@@ -46,6 +51,27 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryResponseDto> getKoreaBooks() {
         return categoryRepository.getKoreaBook();
+    }
+
+    // 아이디로 조회
+    @Override
+    public CategoryResponseDto getCategory(Long categoryId) {
+
+        if (Objects.isNull(categoryId) || categoryId <= 0) {
+            throw new IllegalArgumentException("잘못된 요청입니다.");
+        }
+
+        Category category = categoryRepository.findById(categoryId)
+            .orElseThrow(() -> new CategoryResourceNotFoundException("해당 카테고리는 존재하지 않습니다."));
+
+        Long parentCategoryId = (category.getParentCategory() != null) ? category.getParentCategory().getCategoryId() : null;
+
+        return new CategoryResponseDto(
+            category.getCategoryId(),
+            parentCategoryId,
+            category.getCategoryName(),
+            category.isActive()
+        );
     }
 
     //카테고리 수정

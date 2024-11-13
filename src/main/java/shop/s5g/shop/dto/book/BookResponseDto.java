@@ -6,9 +6,10 @@ import java.time.LocalDateTime;
 //@Builder
 public interface BookResponseDto {
     Long getBookId();
+
     Long getPublisherId();
 
-    Long getBookStatusId();
+    Long getBookStatus();
 
     String getTitle();
 
