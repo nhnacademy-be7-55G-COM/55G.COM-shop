@@ -14,6 +14,7 @@ import shop.s5g.shop.entity.coupon.CouponPolicy;
 import shop.s5g.shop.entity.coupon.CouponTemplate;
 import shop.s5g.shop.entity.coupon.QCoupon;
 import shop.s5g.shop.entity.coupon.QCouponBook;
+import shop.s5g.shop.entity.coupon.QCouponCategory;
 import shop.s5g.shop.entity.coupon.QCouponPolicy;
 import shop.s5g.shop.entity.coupon.QCouponTemplate;
 
@@ -42,6 +43,7 @@ public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupp
         return jpaQueryFactory
             .select(Projections.constructor(
                 CouponTemplateResponseDto.class,
+                couponTemplate.couponTemplateId,
                 couponTemplate.couponPolicy.discountPrice,
                 couponTemplate.couponPolicy.condition,
                 couponTemplate.couponPolicy.maxPrice,
@@ -97,6 +99,7 @@ public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupp
 
         QCoupon coupon = QCoupon.coupon;
         QCouponBook couponBook = QCouponBook.couponBook;
+        QCouponCategory couponCategory = QCouponCategory.couponCategory;
 
         // 쿠폰 템플릿 상태 변환
         update(couponTemplate)
@@ -113,6 +116,11 @@ public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupp
         // 관련된 책에 적용된 쿠폰 삭제
         delete(couponBook)
             .where(couponBook.couponTemplate.couponTemplateId.eq(couponTemplateId))
+            .execute();
+
+        // 관련된 카테고리에 적용된 쿠폰 삭제
+        delete(couponCategory)
+            .where(couponCategory.couponTemplate.couponTemplateId.eq(couponTemplateId))
             .execute();
     }
 
@@ -131,6 +139,7 @@ public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupp
             .innerJoin(couponTemplate.couponPolicy, couponPolicy)
             .where(couponTemplate.active.eq(true))
             .select(Projections.constructor(CouponTemplateResponseDto.class,
+                couponTemplate.couponTemplateId,
                 couponPolicy.discountPrice,
                 couponPolicy.condition,
                 couponPolicy.maxPrice,
