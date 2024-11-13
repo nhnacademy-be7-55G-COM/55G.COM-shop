@@ -2,10 +2,10 @@ package shop.s5g.shop.service.bookcategory.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import shop.s5g.shop.dto.bookcategory.BookCategoryResponseDto;
+import shop.s5g.shop.dto.bookCategory.BookCategoryResponseDto;
 import shop.s5g.shop.entity.Book;
-import shop.s5g.shop.entity.bookcategory.BookCategory;
-import shop.s5g.shop.entity.bookcategory.BookCategoryId;
+import shop.s5g.shop.entity.bookCategory.BookCategory;
+import shop.s5g.shop.entity.bookCategory.BookCategoryId;
 import shop.s5g.shop.entity.Category;
 import shop.s5g.shop.exception.book.BookResourceNotFoundException;
 import shop.s5g.shop.exception.category.CategoryResourceNotFoundException;

@@ -1,4 +1,4 @@
-package shop.s5g.shop.dto.bookcategory;
+package shop.s5g.shop.dto.bookCategory;
 
 import jakarta.validation.constraints.NotNull;
 
