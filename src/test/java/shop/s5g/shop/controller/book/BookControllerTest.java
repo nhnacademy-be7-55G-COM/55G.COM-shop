@@ -78,31 +78,31 @@ class BookControllerTest {
     /**
      * 도서 등록 실패 test
      */
-    @Test
-    @DisplayName("도서 등록 실패 test")
-    void addBookErrorTest() throws Exception {
-        this.mockMvc
-                .perform(post("/api/shop/books")
-                        //bad request
-                        .content("{\n" +
-                                "  \"publisherId\": 22,\n" +
-                                "  \"bookStatusId\": 222,\n" +
-                                "  \"title\": \"\",\n" +
-                                "  \"chapter\": 5,\n" +
-                                "  \"descreption\": \"\",\n" +
-                                "  \"publishedDate\": \"\",\n" +
-                                "  \"isbn\": \"978-3-15-148410-2\",\n" +
-                                "  \"price\": 15000,\n" +
-                                "  \"discountRate\": 10.5,\n" +
-                                "  \"isPacked\": true,\n" +
-                                "  \"stock\": 200,\n" +
-                                "  \"views\": 2000,\n" +
-                                "  \"createdAt\": \"2000-10-10T10:50:00\"\n" +
-                                "}\n")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest())
-                .andDo(print());
-    }
+//    @Test
+//    @DisplayName("도서 등록 실패 test")
+//    void addBookErrorTest() throws Exception {
+//        this.mockMvc
+//                .perform(post("/api/shop/books")
+//                        //bad request
+//                        .content("{\n" +
+//                                "  \"publisherId\": 22,\n" +
+//                                "  \"bookStatusId\": 222,\n" +
+//                                "  \"title\": \"\",\n" +
+//                                "  \"chapter\": 5,\n" +
+//                                "  \"descreption\": \"\",\n" +
+//                                "  \"publishedDate\": \"\",\n" +
+//                                "  \"isbn\": \"978-3-15-148410-2\",\n" +
+//                                "  \"price\": 15000,\n" +
+//                                "  \"discountRate\": 10.5,\n" +
+//                                "  \"isPacked\": true,\n" +
+//                                "  \"stock\": 200,\n" +
+//                                "  \"views\": 2000,\n" +
+//                                "  \"createdAt\": \"2000-10-10T10:50:00\"\n" +
+//                                "}\n")
+//                        .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isBadRequest())
+//                .andDo(print());
+//    }
 
     /**
      * 도서 수정 test

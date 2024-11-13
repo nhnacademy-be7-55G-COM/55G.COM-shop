@@ -1,4 +1,4 @@
-package shop.s5g.shop.entity.bookcategory;
+package shop.s5g.shop.entity.bookCategory;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
