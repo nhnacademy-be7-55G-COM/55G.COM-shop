@@ -37,14 +37,13 @@ public abstract class AbstractPaymentManager {
     @Transactional
     public <T> T confirmPayment(
         long memberId,
-        long orderDataId,       // TODO: orderDataId로 링크해야함.
+        long orderDataId,
         Map<String, Object> request,
         Class<T> responseType
     ) {
-        long accPrice = 0L; // TODO: 포인트 적립률을 가져와야함!
+        long accPrice = 0L;
         List<OrderDetail> details = orderDetailRepository.fetchOrderDetailsByOrderId(orderDataId);
 
-        // TODO: book 데이터가 생기면 활성화.
         for (OrderDetail detail: details) {
 
             Book book = bookRepository.findById(detail.getBook().getBookId()).orElseThrow(
