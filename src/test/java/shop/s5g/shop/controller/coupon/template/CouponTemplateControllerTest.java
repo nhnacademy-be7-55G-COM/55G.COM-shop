@@ -105,6 +105,7 @@ class CouponTemplateControllerTest {
 
         when(couponTemplateService.findCouponTemplate(couponTemplateId)).thenReturn(
             new CouponTemplateResponseDto(
+                1L,
                 couponPolicy.getDiscountPrice(),
                 couponPolicy.getCondition(),
                 couponPolicy.getMaxPrice(),

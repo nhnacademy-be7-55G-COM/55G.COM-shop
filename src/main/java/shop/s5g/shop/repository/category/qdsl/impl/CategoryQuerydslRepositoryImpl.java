@@ -2,6 +2,9 @@ package shop.s5g.shop.repository.category.qdsl.impl;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 import shop.s5g.shop.dto.category.CategoryResponseDto;
@@ -35,16 +38,29 @@ public class CategoryQuerydslRepositoryImpl extends QuerydslRepositorySupport im
 
     //모든 카테고리 조회
     @Override
-    public List<CategoryResponseDto> getAllCategory() {
-        return jpaQueryFactory
-                .from(category)
-                .select(Projections.constructor(CategoryResponseDto.class,
-                        category.categoryId,
-                        category.parentCategory.categoryId, //부모카테고리 이름 리턴
-                        category.categoryName,
-                        category.active))
-                .where(category.active.eq(true))
-                .fetch();
+    public Page<CategoryResponseDto> getAllCategory(Pageable pageable) {
+
+        List<CategoryResponseDto> categories = jpaQueryFactory
+            .from(category)
+            .select(Projections.constructor(CategoryResponseDto.class,
+                category.categoryId,
+                category.parentCategory.categoryId, //부모카테고리 ID
+                category.categoryName,
+                category.active))
+            .where(category.active.eq(true))
+            .offset(pageable.getOffset())  // 페이징의 offset 적용
+            .limit(pageable.getPageSize()) // 페이징의 limit 적용
+            .fetch();
+
+        Long total = jpaQueryFactory
+            .from(category)
+            .select(category.count())
+            .where(category.active.eq(true))
+            .fetchOne();
+
+        total = (total != null) ? total : 0L;
+
+        return new PageImpl<>(categories, pageable, total);
     }
 
     //자식 카테고리 조회

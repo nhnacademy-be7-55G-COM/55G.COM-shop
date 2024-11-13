@@ -86,6 +86,7 @@ class CouponTemplateServiceImplTest {
         Long couponTemplateId = 1L;
 
         CouponTemplateResponseDto couponTemplateResponseDto = new CouponTemplateResponseDto(
+            couponTemplateId,
             couponPolicy.getDiscountPrice(),
             couponPolicy.getCondition(),
             couponPolicy.getMaxPrice(),

@@ -1,15 +1,15 @@
 package shop.s5g.shop.dto.order;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Past;
 import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public record OrderQueryRequestDto(
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Past
     LocalDate startDate,
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     LocalDate endDate
 ) {
 
