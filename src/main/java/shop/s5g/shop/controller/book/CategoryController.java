@@ -40,9 +40,8 @@ public class CategoryController {
 
     //자식 카테고리 조회
     @GetMapping("/category/childCategory/{categoryId}")
-    public ResponseEntity<List<CategoryResponseDto>> getChildCategories(@Valid @PathVariable("categoryId") Long categoryId) {
-        categoryServiceImpl.getChildCategory(categoryId);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<List<CategoryResponseDto>> getChildCategories(@Valid @PathVariable("categoryId") long categoryId) {
+        return ResponseEntity.ok().body(categoryServiceImpl.getChildCategory(categoryId));
     }
 
     //국내도서 하위 카테고리 조회

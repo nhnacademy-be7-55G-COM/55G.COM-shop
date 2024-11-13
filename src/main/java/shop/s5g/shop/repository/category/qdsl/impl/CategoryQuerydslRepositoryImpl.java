@@ -49,7 +49,7 @@ public class CategoryQuerydslRepositoryImpl extends QuerydslRepositorySupport im
 
     //자식 카테고리 조회
     @Override
-    public List<CategoryResponseDto> getChild_Category(Long categoryId) {
+    public List<CategoryResponseDto> getChild_Category(long categoryId) {
         return jpaQueryFactory
                 .from(category)
                 .select(Projections.constructor(CategoryResponseDto.class,

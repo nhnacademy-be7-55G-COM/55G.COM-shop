@@ -13,7 +13,7 @@ public interface CategoryService {
     public void updateCategory(Long categoryId, CategoryUpdateRequestDto categoryDto);
     public void deleteCategory(Long categoryId);
 
-    List<CategoryResponseDto> getChildCategory(Long categoryId);
+    List<CategoryResponseDto> getChildCategory(long categoryId);
 
     List<CategoryResponseDto> getKoreaBooks();
 }

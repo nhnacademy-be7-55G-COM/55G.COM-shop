@@ -38,7 +38,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     //자식 카테고리 조회
     @Override
-    public List<CategoryResponseDto> getChildCategory(Long categoryId) {
+    public List<CategoryResponseDto> getChildCategory(long categoryId) {
         return categoryRepository.getChild_Category(categoryId);
     }
 
