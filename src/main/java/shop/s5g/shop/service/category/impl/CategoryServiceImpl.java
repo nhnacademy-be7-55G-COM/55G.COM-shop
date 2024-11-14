@@ -29,10 +29,10 @@ public class CategoryServiceImpl implements CategoryService {
     //카테고리 등록
     public void createCategory(CategoryRequestDto categoryDto) {
 
-        //이름으로 카테고리 조회
-        Category p_category = categoryRepository.findByCategoryName(categoryDto.categoryName());
+        Category category1 = categoryRepository.findById(categoryDto.parentCategoryId())
+                .orElseThrow(() -> new CategoryResourceNotFoundException("카테고리가 존재하지 않습니다."));
 
-        Category category = new Category(p_category, categoryDto.categoryName(), categoryDto.active());
+        Category category = new Category(category1, categoryDto.categoryName(), true);
         categoryRepository.save(category);
     }
 

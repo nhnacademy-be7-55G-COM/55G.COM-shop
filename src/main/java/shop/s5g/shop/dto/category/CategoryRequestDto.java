@@ -6,8 +6,6 @@ public record CategoryRequestDto (
 
     String categoryName,
     @NotNull
-    long parentCategoryId,
-    @NotNull
-    boolean active
+    long parentCategoryId
 ){
 }
