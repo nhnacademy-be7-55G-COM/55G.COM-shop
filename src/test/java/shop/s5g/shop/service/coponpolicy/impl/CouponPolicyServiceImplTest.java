@@ -121,25 +121,4 @@ class CouponPolicyServiceImplTest {
 
         verify(couponPolicyRepository, times(1)).findById(couponPolicyId);
     }
-
-    @Test
-    @DisplayName("모든 쿠폰 정책 조회 - 서비스")
-    void findCouponPolies() {
-        // Given
-        List<CouponPolicy> testCouponPolicies = Arrays.asList(
-            new CouponPolicy(1L, new BigDecimal("0.1"), 50000L, 2000L, 30),
-            new CouponPolicy(2L, new BigDecimal("0.3"), 25000L, 2500L, 90)
-        );
-
-        when(couponPolicyRepository.findAll()).thenReturn(testCouponPolicies);
-
-        // When
-        List<CouponPolicyResponseDto> couponPolicyList = couponPolicyService.getAllCouponPolices();
-
-        // Then
-        assertThat(couponPolicyList).isNotNull();
-        assertThat(couponPolicyList.size()).isEqualTo(testCouponPolicies.size());
-
-        verify(couponPolicyRepository, times(1)).findAll();
-    }
 }

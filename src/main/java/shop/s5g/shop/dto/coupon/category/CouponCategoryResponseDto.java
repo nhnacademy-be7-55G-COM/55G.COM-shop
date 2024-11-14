@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 
 public record CouponCategoryResponseDto(
 
+    Long categoryId,
+
     String categoryName,
 
     BigDecimal discountPrice,

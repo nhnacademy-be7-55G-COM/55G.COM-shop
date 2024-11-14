@@ -81,7 +81,7 @@ class CouponTemplateServiceImplTest {
 
     @Test
     @DisplayName("쿠폰 템플릿 조회 - read")
-    void findCouponTemplate() {
+    void getCouponTemplate() {
         // Given
         Long couponTemplateId = 1L;
 
@@ -106,7 +106,7 @@ class CouponTemplateServiceImplTest {
         when(couponTemplateRepository.findCouponTemplateById(couponTemplateId)).thenReturn(couponTemplateResponseDto);
 
         // When
-        CouponTemplateResponseDto templateDto = couponTemplateService.findCouponTemplate(couponTemplateId);
+        CouponTemplateResponseDto templateDto = couponTemplateService.getCouponTemplate(couponTemplateId);
 
         // Then
         assertThat(templateDto).isNotNull();

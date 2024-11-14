@@ -8,10 +8,12 @@ import shop.s5g.shop.dto.book.BookRequestDto;
 import shop.s5g.shop.dto.book.BookResponseDto;
 
 import java.util.List;
+import shop.s5g.shop.entity.BookStatus;
 
 public interface BookQuerydslRepository {
     void updateBook(long bookId, BookRequestDto bookDto);
     List<BookResponseDto> findAllBookList();
     BookDetailResponseDto getBookDetail(long bookId);
     Page<BookPageableResponseDto> findAllBookPage(Pageable pageable);
+    String findBookStatus(Long bookId);
 }

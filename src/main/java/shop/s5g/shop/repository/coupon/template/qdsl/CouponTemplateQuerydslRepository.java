@@ -1,6 +1,7 @@
 package shop.s5g.shop.repository.coupon.template.qdsl;
 
 import java.util.List;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateRequestDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateResponseDto;
@@ -17,4 +18,7 @@ public interface CouponTemplateQuerydslRepository {
     void deleteCouponTemplate(Long couponTemplateId);
 
     List<CouponTemplateResponseDto> findCouponTemplatesByPageable(Pageable pageable);
+
+    Page<CouponTemplateResponseDto> findUnusedCouponTemplates(Pageable pageable);
+
 }

@@ -140,6 +140,24 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
         return new PageImpl<>(content, pageable, total);
     }
 
+    /**
+     * 특정 책의 상태 조회
+     * @param bookId
+     * @return String
+     */
+    @Override
+    public String findBookStatus(Long bookId) {
+
+        return jpaQueryFactory
+            .select(bookStatus.name)
+            .from(book)
+            .innerJoin(bookStatus)
+            .on(book.bookStatus.id.eq(bookStatus.id))
+            .where(book.bookId.eq(bookId))
+            .fetchOne();
+
+    }
+
     // 도서 상세 BookResponseDto타입으로 리턴
     @Override
     public BookDetailResponseDto getBookDetail(long bookId) {

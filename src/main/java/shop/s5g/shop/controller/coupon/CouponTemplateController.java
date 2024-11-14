@@ -3,6 +3,8 @@ package shop.s5g.shop.controller.coupon;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties.Http;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import shop.s5g.shop.dto.PageResponseDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateRequestDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateResponseDto;
 import shop.s5g.shop.dto.tag.MessageDto;
@@ -87,23 +90,36 @@ public class CouponTemplateController {
     public ResponseEntity<CouponTemplateResponseDto> findCouponTemplate(
         @PathVariable("couponTemplateId") Long couponTemplateId
     ) {
-        CouponTemplateResponseDto couponTemplateResponseDto = couponTemplateService.findCouponTemplate(couponTemplateId);
+        CouponTemplateResponseDto couponTemplateResponseDto = couponTemplateService.getCouponTemplate(couponTemplateId);
 
         return ResponseEntity.status(HttpStatus.OK)
             .body(couponTemplateResponseDto);
     }
 
     /**
-     * 쿠폰 템플릿 조회 - Pageable
+     * 쿠폰 템플릿 조회 - Pageable API
      * @param pageable
      * @return List<CouponTemplateResponseDto>
      */
     @GetMapping("/templates")
-    public ResponseEntity<List<CouponTemplateResponseDto>> findCouponTemplates(Pageable pageable) {
-        List<CouponTemplateResponseDto> couponTemplateResponseDtoList = couponTemplateService.findCouponTemplates(pageable);
+    public ResponseEntity<List<CouponTemplateResponseDto>> getCouponTemplates(Pageable pageable) {
+        List<CouponTemplateResponseDto> couponTemplateResponseDtoList = couponTemplateService.getCouponTemplates(pageable);
 
         return ResponseEntity.status(HttpStatus.OK)
             .body(couponTemplateResponseDtoList);
+    }
+
+    /**
+     * 사용되지 않은 쿠폰 템플릿 조회 - Pageable API
+     * @param pageable
+     * @return PageResponseDto<CouponTemplateResponseDto>
+     */
+    @GetMapping("/templates/unused")
+    public ResponseEntity<PageResponseDto<CouponTemplateResponseDto>> getCouponTemplatesUnused(Pageable pageable) {
+        Page<CouponTemplateResponseDto> unUsedTemplateList = couponTemplateService.getCouponTemplatesUnused(pageable);
+
+        return ResponseEntity.status(HttpStatus.OK)
+            .body(PageResponseDto.of(unUsedTemplateList));
     }
 
     /**

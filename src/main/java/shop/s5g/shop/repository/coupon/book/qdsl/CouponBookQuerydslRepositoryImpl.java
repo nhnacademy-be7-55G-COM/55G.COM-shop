@@ -1,9 +1,9 @@
 package shop.s5g.shop.repository.coupon.book.qdsl;
 
 import com.querydsl.core.types.Projections;
-import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
+import java.util.Objects;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +21,7 @@ import shop.s5g.shop.entity.coupon.QCouponTemplate;
 public class CouponBookQuerydslRepositoryImpl extends QuerydslRepositorySupport implements CouponBookQuerydslRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
+    private static final boolean ACTIVE = true;
 
     public CouponBookQuerydslRepositoryImpl(JPAQueryFactory jpaQueryFactory) {
         super(CouponBook.class);
@@ -80,14 +81,14 @@ public class CouponBookQuerydslRepositoryImpl extends QuerydslRepositorySupport 
     }
 
     /**
-     * 책 쿠폰 조회 - Pageable
+     * CouponBook 조회 - Pageable
      * @param pageable
      * @return Page<CouponBookResponseDto>
      */
     @Override
     public Page<CouponBookResponseDto> findCouponBooks(Pageable pageable) {
 
-        JPQLQuery<CouponBookResponseDto> query = jpaQueryFactory
+        List<CouponBookResponseDto> bookList = jpaQueryFactory
             .select(Projections.constructor(CouponBookResponseDto.class,
                 book.title,
                 couponPolicy.discountPrice,
@@ -97,25 +98,25 @@ public class CouponBookQuerydslRepositoryImpl extends QuerydslRepositorySupport 
                 couponTemplate.couponName,
                 couponTemplate.couponDescription))
             .from(couponBook)
-            .innerJoin(couponBook.book, book)
-            .innerJoin(couponBook.couponTemplate, couponTemplate)
-            .innerJoin(couponTemplate.couponPolicy, couponPolicy);
-
-        JPQLQuery<Long> countQuery = jpaQueryFactory
-            .select(couponBook.count())
-            .from(couponBook)
-            .innerJoin(couponBook.book, book)
-            .innerJoin(couponBook.couponTemplate, couponTemplate)
-            .innerJoin(couponTemplate.couponPolicy, couponPolicy);
-
-        long total = countQuery.fetchCount();
-
-        List<CouponBookResponseDto> content = query
-            .offset(pageable.getOffset())
+            .innerJoin(book)
+            .on(couponBook.book.bookId.eq(book.bookId))
+            .innerJoin(couponTemplate)
+            .on(couponBook.couponTemplate.couponTemplateId.eq(couponTemplate.couponTemplateId))
+            .innerJoin(couponPolicy)
+            .on(couponTemplate.couponPolicy.couponPolicyId.eq(couponPolicy.couponPolicyId))
+            .where(couponTemplate.active.eq(ACTIVE))
             .limit(pageable.getPageSize())
+            .offset(pageable.getOffset())
             .fetch();
 
-        return new PageImpl<>(content, pageable, total);
+        Long totalCnt = jpaQueryFactory
+            .select(couponBook.count())
+            .from(couponBook)
+            .fetchOne();
+
+        long total = (Objects.isNull(totalCnt)) ? 0L : totalCnt;
+
+        return new PageImpl<>(bookList, pageable, total);
     }
 
     /**
@@ -127,8 +128,9 @@ public class CouponBookQuerydslRepositoryImpl extends QuerydslRepositorySupport 
     @Override
     public Page<CouponTemplateResponseDto> findCouponBooksByBookId(Long bookId, Pageable pageable) {
 
-        JPQLQuery<CouponTemplateResponseDto> query = jpaQueryFactory
+        List<CouponTemplateResponseDto> templateList = jpaQueryFactory
             .select(Projections.constructor(CouponTemplateResponseDto.class,
+                couponTemplate.couponTemplateId,
                 couponPolicy.discountPrice,
                 couponPolicy.condition,
                 couponPolicy.maxPrice,
@@ -136,27 +138,23 @@ public class CouponBookQuerydslRepositoryImpl extends QuerydslRepositorySupport 
                 couponTemplate.couponName,
                 couponTemplate.couponDescription))
             .from(couponBook)
-            .where(couponBook.book.bookId.eq(bookId))
-            .innerJoin(couponBook.book, book)
-            .innerJoin(couponBook.couponTemplate, couponTemplate)
-            .innerJoin(couponTemplate.couponPolicy, couponPolicy);
-
-        JPQLQuery<Long> countQuery = jpaQueryFactory
-            .select(couponBook.count())
-            .from(couponBook)
-            .where(couponBook.book.bookId.eq(bookId))
-            .innerJoin(couponBook.book, book)
-            .innerJoin(couponBook.couponTemplate, couponTemplate)
-            .innerJoin(couponTemplate.couponPolicy, couponPolicy);
-
-        long total = countQuery.fetchCount();
-        List<CouponTemplateResponseDto> content = query
-            .offset(pageable.getOffset())
+            .innerJoin(couponTemplate)
+            .on(couponBook.couponTemplate.couponTemplateId.eq(couponTemplate.couponTemplateId))
+            .innerJoin(couponPolicy)
+            .on(couponTemplate.couponPolicy.couponPolicyId.eq(couponPolicy.couponPolicyId))
+            .where(couponTemplate.active.eq(ACTIVE))
             .limit(pageable.getPageSize())
+            .offset(pageable.getOffset())
             .fetch();
 
-        return new PageImpl<>(content, pageable, total);
+        Long totalCnt = jpaQueryFactory
+            .select(couponBook.count())
+            .from(couponBook)
+            .fetchOne();
 
+        long total = (Objects.isNull(totalCnt)) ? 0L : totalCnt;
+
+        return new PageImpl<>(templateList, pageable, total);
     }
 
     /**
@@ -169,29 +167,23 @@ public class CouponBookQuerydslRepositoryImpl extends QuerydslRepositorySupport 
     public Page<CouponBookDetailsForBookDto> findCouponBooksByCouponTemplateId(Long couponTemplateId,
         Pageable pageable) {
 
-        JPQLQuery<CouponBookDetailsForBookDto> query = jpaQueryFactory
+        List<CouponBookDetailsForBookDto> detailsForBookList = jpaQueryFactory
             .select(Projections.constructor(CouponBookDetailsForBookDto.class,
                 book.title))
             .from(couponBook)
-            .where(couponBook.couponTemplate.couponTemplateId.eq(couponTemplateId))
-            .innerJoin(couponBook.book, book)
-            .innerJoin(couponBook.couponTemplate, couponTemplate)
-            .innerJoin(couponTemplate.couponPolicy, couponPolicy);
-
-        JPQLQuery<Long> countQuery = jpaQueryFactory
-            .select(couponBook.count())
-            .from(couponBook)
-            .where(couponBook.couponTemplate.couponTemplateId.eq(couponTemplateId))
-            .innerJoin(couponBook.book, book)
-            .innerJoin(couponBook.couponTemplate, couponTemplate)
-            .innerJoin(couponTemplate.couponPolicy, couponPolicy);
-
-        long total = countQuery.fetchCount();
-        List<CouponBookDetailsForBookDto> content = query
-            .offset(pageable.getOffset())
+            .innerJoin(book)
+            .on(couponBook.book.bookId.eq(book.bookId))
             .limit(pageable.getPageSize())
+            .offset(pageable.getOffset())
             .fetch();
 
-        return new PageImpl<>(content, pageable, total);
+        Long totalCnt = jpaQueryFactory
+            .select(couponBook.count())
+            .from(couponBook)
+            .fetchOne();
+
+        long total = (Objects.isNull(totalCnt)) ? 0L : totalCnt;
+
+        return new PageImpl<>(detailsForBookList, pageable, total);
     }
 }

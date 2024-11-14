@@ -64,10 +64,10 @@ class CouponTemplateServiceExceptionTest {
         Long invalidId = -1L;
 
         // When & Then
-        assertThatThrownBy(() -> couponTemplateService.findCouponTemplate(invalidId))
+        assertThatThrownBy(() -> couponTemplateService.getCouponTemplate(invalidId))
             .isInstanceOf(IllegalArgumentException.class);
 
-        assertThatThrownBy(() -> couponTemplateService.findCouponTemplate(nullId))
+        assertThatThrownBy(() -> couponTemplateService.getCouponTemplate(nullId))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -80,7 +80,7 @@ class CouponTemplateServiceExceptionTest {
         when(couponTemplateRepository.existsById(notFoundId)).thenReturn(false);
 
         // When & Then
-        assertThatThrownBy(() -> couponTemplateService.findCouponTemplate(notFoundId))
+        assertThatThrownBy(() -> couponTemplateService.getCouponTemplate(notFoundId))
             .isInstanceOf(CouponTemplateNotFoundException.class)
             .hasMessage("쿠폰 템플릿이 존재하지 않습니다.");
 
@@ -98,7 +98,7 @@ class CouponTemplateServiceExceptionTest {
         when(couponTemplateRepository.checkActiveCouponTemplate(deletedId)).thenReturn(false);
 
         // When & Then
-        assertThatThrownBy(() -> couponTemplateService.findCouponTemplate(deletedId))
+        assertThatThrownBy(() -> couponTemplateService.getCouponTemplate(deletedId))
             .isInstanceOf(CouponPolicyNotFoundException.class)
             .hasMessage("삭제된 쿠폰 템플릿입니다.");
 
