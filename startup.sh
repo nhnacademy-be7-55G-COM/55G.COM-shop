@@ -47,7 +47,7 @@ for ((i=0; i<${#server_port[@]}; i++)); do
            --network $network_bridge \
            --env SPRING_PROFILE=$spring_env \
            --env SERVER_PORT=$target_port \
-           --add-host host.docker.internal:host-gateway \
+           --memory="300m" \
            -p $target_port:$target_port \
            -v /logs:/logs \
            -v /var/55g/static:/static \
