@@ -7,21 +7,14 @@ import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.point.PointHistoryCreateRequestDto;
 import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.order.OrderDetail;
-import shop.s5g.shop.exception.book.BookResourceNotFoundException;
-import shop.s5g.shop.repository.book.BookRepository;
+import shop.s5g.shop.exception.order.OrderDoesNotProceedException;
 import shop.s5g.shop.repository.order.OrderDetailRepository;
 import shop.s5g.shop.service.point.PointHistoryService;
 
 public abstract class AbstractPaymentManager {
-    private BookRepository bookRepository;
     private PointHistoryService pointHistoryService;
 //    private OrderRepository orderRepository;
     private OrderDetailRepository orderDetailRepository;
-
-    @Autowired
-    public void setBookRepository(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
-    }
 
     @Autowired
     public void setPointHistoryService(PointHistoryService pointHistoryService) {
@@ -45,12 +38,13 @@ public abstract class AbstractPaymentManager {
         List<OrderDetail> details = orderDetailRepository.fetchOrderDetailsByOrderId(orderDataId);
 
         for (OrderDetail detail: details) {
-
-            Book book = bookRepository.findById(detail.getBook().getBookId()).orElseThrow(
-                () -> new BookResourceNotFoundException("book does not exist: " +detail.getBook().getBookId())
-            );
+            Book book = detail.getBook();
 
             // TODO: stock - quantity가 음수인지 아닌지는 프론트에서도 판단해야함!
+            int rest = book.getStock() - detail.getQuantity();
+            if (rest < 0) {
+                throw new OrderDoesNotProceedException("재고가 부족함!");
+            }
             book.setStock(book.getStock() - detail.getQuantity());
 
             accPrice += detail.getAccumulationPrice();

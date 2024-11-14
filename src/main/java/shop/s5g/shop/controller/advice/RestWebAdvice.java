@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import shop.s5g.shop.dto.tag.MessageDto;
+import shop.s5g.shop.exception.AlreadyDeletedRecordException;
 import shop.s5g.shop.exception.AlreadyExistsException;
 import shop.s5g.shop.exception.AuthenticationException;
 import shop.s5g.shop.exception.BadRequestException;
@@ -44,4 +45,10 @@ public class RestWebAdvice {
     public ResponseEntity<MessageDto> handleAuthenticationException(AuthenticationException e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new MessageDto(e.getMessage()));
     }
+
+    @ExceptionHandler(AlreadyDeletedRecordException.class)
+    public ResponseEntity<MessageDto> handleAlreadyDeletedRecordException(AlreadyDeletedRecordException e) {
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new MessageDto(e.getMessage()));
+    }
+
 }
