@@ -1,8 +1,11 @@
 package shop.s5g.shop.controller.order;
 
 import jakarta.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -26,18 +29,22 @@ import shop.s5g.shop.service.order.OrderService;
 @RequiredArgsConstructor
 @RequestMapping("/api/shop/orders")
 @RestController
+@Slf4j
 public class OrderController {
     private final OrderService orderService;
 
     @GetMapping
     public List<OrderWithDetailResponseDto> queryAllOrders(
         @AuthenticationPrincipal ShopMemberDetail memberDetail,
-        @RequestParam(required = false) OrderQueryRequestDto queryRequest
+        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate
     ) {
-        if (queryRequest == null)
+        if (startDate == null || endDate == null)
             return orderService.getAllOrdersWithDetail(memberDetail.getCustomerId());
-        else
-            return orderService.getAllOrdersBetweenDates(memberDetail.getCustomerId(), queryRequest);
+        else {
+            return orderService.getAllOrdersBetweenDates(memberDetail.getCustomerId(),
+                new OrderQueryRequestDto(startDate, endDate));
+        }
     }
 
     @PostMapping

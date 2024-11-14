@@ -1,6 +1,6 @@
 package shop.s5g.shop.service.bookcategory;
 
-import shop.s5g.shop.dto.bookcategory.BookCategoryResponseDto;
+import shop.s5g.shop.dto.bookCategory.BookCategoryResponseDto;
 
 import java.util.List;
 

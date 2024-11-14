@@ -1,4 +1,4 @@
-package shop.s5g.shop.entity.bookcategory;
+package shop.s5g.shop.entity.bookCategory;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,5 +24,10 @@ public class BookCategory {
     @JoinColumn(name = "book_id")
     @MapsId("bookId")
     private Book book;
+
+    public BookCategory(Category category,Book book){
+        this.category=category;
+        this.book=book;
+    }
 
 }

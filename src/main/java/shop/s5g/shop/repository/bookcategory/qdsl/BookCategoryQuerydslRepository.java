@@ -1,6 +1,6 @@
 package shop.s5g.shop.repository.bookcategory.qdsl;
 
-import shop.s5g.shop.dto.bookcategory.BookCategoryResponseDto;
+import shop.s5g.shop.dto.bookCategory.BookCategoryResponseDto;
 
 import java.util.List;
 

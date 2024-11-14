@@ -4,6 +4,7 @@ package shop.s5g.shop.service.member;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 import shop.s5g.shop.dto.customer.CustomerUpdateRequestDto;
+import shop.s5g.shop.dto.member.IdCheckResponseDto;
 import shop.s5g.shop.dto.member.LoginResponseDto;
 import shop.s5g.shop.dto.member.MemberDetailResponseDto;
 import shop.s5g.shop.dto.member.MemberRegistrationRequestDto;
@@ -27,4 +28,8 @@ public interface MemberService {
     void deleteById(Long memberId);
 
     void updateLatestLoginAt(String loginId);
+
+    IdCheckResponseDto isExistsByLoginId(String loginId);
+
+    void changePassword(Long customerId, String oldPassword, String newPassword);
 }
