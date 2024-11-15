@@ -3,7 +3,7 @@ package shop.s5g.shop.service.bookStatus.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import shop.s5g.shop.dto.book.status.BookStatusResponseDto;
-import shop.s5g.shop.repository.bookStatus.BookStatusRepository;
+import shop.s5g.shop.repository.book.status.BookStatusRepository;
 import shop.s5g.shop.service.bookStatus.BookStatusService;
 
 import java.util.List;

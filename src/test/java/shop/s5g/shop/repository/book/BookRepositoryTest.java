@@ -23,7 +23,7 @@ import shop.s5g.shop.entity.BookImage;
 import shop.s5g.shop.entity.BookStatus;
 import shop.s5g.shop.entity.Publisher;
 import shop.s5g.shop.exception.book.BookResourceNotFoundException;
-import shop.s5g.shop.repository.bookStatus.BookStatusRepository;
+import shop.s5g.shop.repository.book.status.BookStatusRepository;
 import shop.s5g.shop.repository.publisher.PublisherRepository;
 
 @DataJpaTest
@@ -68,6 +68,7 @@ class BookRepositoryTest {
                 true,
                 200,
                 2000L,
+                LocalDateTime.of(2010, 5, 5, 15, 30),
                 LocalDateTime.of(2010, 5, 5, 15, 30)
         );
 
@@ -180,6 +181,7 @@ class BookRepositoryTest {
                 true,
                 200,
                 30000L,
+                LocalDateTime.of(2010, 5, 5, 15, 30),
                 LocalDateTime.of(2010, 5, 5, 15, 30)
         );
 
@@ -219,6 +221,7 @@ class BookRepositoryTest {
                 true,
                 200,
                 30000L,
+                LocalDateTime.of(2010, 5, 5, 15, 30),
                 LocalDateTime.of(2010, 5, 5, 15, 30)
         );
         BookRequestDto book2 = new BookRequestDto(
@@ -235,6 +238,7 @@ class BookRepositoryTest {
                 true,
                 200,
                 30000L,
+                LocalDateTime.of(2010, 5, 5, 15, 30),
                 LocalDateTime.of(2010, 5, 5, 15, 30)
         );
 
@@ -269,6 +273,7 @@ class BookRepositoryTest {
                 true,
                 200,
                 30000L,
+                LocalDateTime.of(2010, 5, 5, 15, 30),
                 LocalDateTime.of(2010, 5, 5, 15, 30)
         );
         bookRepository.save(book);

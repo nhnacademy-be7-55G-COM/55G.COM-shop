@@ -2,6 +2,7 @@ package shop.s5g.shop.service.book.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +22,7 @@ import shop.s5g.shop.exception.book.BookResourceNotFoundException;
 import shop.s5g.shop.exception.bookstatus.BookStatusResourceNotFoundException;
 import shop.s5g.shop.exception.publisher.PublisherResourceNotFoundException;
 import shop.s5g.shop.repository.book.BookRepository;
-import shop.s5g.shop.repository.bookStatus.BookStatusRepository;
+import shop.s5g.shop.repository.book.status.BookStatusRepository;
 import shop.s5g.shop.repository.publisher.PublisherRepository;
 import shop.s5g.shop.service.book.BookService;
 
@@ -34,7 +35,8 @@ public class BookServiceImpl implements BookService {
     private final BookStatusRepository statusRepository;
 
     @Autowired
-    public BookServiceImpl(BookRepository bookRepository, PublisherRepository publisherRepository, BookStatusRepository statusRepository) {
+    public BookServiceImpl(BookRepository bookRepository, PublisherRepository publisherRepository,
+        BookStatusRepository statusRepository) {
         this.bookRepository = bookRepository;
         this.publisherRepository = publisherRepository;
         this.statusRepository = statusRepository;
@@ -42,25 +44,29 @@ public class BookServiceImpl implements BookService {
 
     //도서 등록
     public void createBook(BookRequestDto bookDto) {
-        Publisher publisher = publisherRepository.findById(bookDto.publisherId()).orElseThrow(() -> new PublisherResourceNotFoundException("해당 출판사를 찾을 수 없습니다."));
+        Publisher publisher = publisherRepository.findById(bookDto.publisherId())
+            .orElseThrow(() -> new PublisherResourceNotFoundException("해당 출판사를 찾을 수 없습니다."));
 
-        BookStatus bookStatus = statusRepository.findById(bookDto.bookStatusId()).orElseThrow(() -> new BookStatusResourceNotFoundException("해당 도서 상태를 찾을 수 없습니다."));
+        BookStatus bookStatus = statusRepository.findById(bookDto.bookStatusId())
+            .orElseThrow(() -> new BookStatusResourceNotFoundException("해당 도서 상태를 찾을 수 없습니다."));
 
         Book book = new Book(
-                publisher,
-                bookStatus,
-                bookDto.title(),
-                bookDto.chapter(),
-                bookDto.description(),
-                LocalDateTime.parse(bookDto.publishedDate()),
-                bookDto.isbn(),
-                bookDto.price(),
-                bookDto.discountRate(),
-                bookDto.isPacked(),
-                bookDto.stock(),
-                bookDto.views(),
-                bookDto.createdAt());
-        bookRepository.save(book);
+            publisher,
+            bookStatus,
+            bookDto.title(),
+            bookDto.chapter(),
+            bookDto.description(),
+            LocalDateTime.parse(bookDto.publishedDate()),
+            bookDto.isbn(),
+            bookDto.price(),
+            bookDto.discountRate(),
+            bookDto.isPacked(),
+            bookDto.stock(),
+            bookDto.views(),
+            LocalDateTime.now(),
+            LocalDateTime.now()
+        );
+        book = bookRepository.save(book);
     }
 
     //모든 도서 리스트 조회
@@ -77,8 +83,8 @@ public class BookServiceImpl implements BookService {
     //도서 상세 조회
     public BookDetailResponseDto getBookById(Long bookId) {
         // TODO: 코드 간소화
-        if(!bookRepository.existsById(bookId)) {
-             throw new BookResourceNotFoundException("Book with id " + bookId + " not found");
+        if (!bookRepository.existsById(bookId)) {
+            throw new BookResourceNotFoundException("Book with id " + bookId + " not found");
         }
         return bookRepository.getBookDetail(bookId);
     }
@@ -86,9 +92,32 @@ public class BookServiceImpl implements BookService {
     //도서 수정
     public void updateBooks(Long bookId, BookRequestDto bookDto) {
         if (!bookRepository.existsById(bookId)) {
-            throw new BookResourceNotFoundException(bookId + " 도서는 존재하지 않습니다.");
+            throw new BookResourceNotFoundException("책이 존재하지 않습니다.");
         }
-        bookRepository.updateBook(bookId, bookDto);
+
+        Publisher publisher = publisherRepository.findById(bookDto.publisherId())
+            .orElseThrow(() -> new PublisherResourceNotFoundException("해당 출판사를 찾을 수 없습니다."));
+
+        BookStatus bookStatus = statusRepository.findById(bookDto.bookStatusId())
+            .orElseThrow(() -> new BookStatusResourceNotFoundException("해당 도서 상태를 찾을 수 없습니다."));
+
+        Book book = new Book(
+            publisher,
+            bookStatus,
+            bookDto.title(),
+            bookDto.chapter(),
+            bookDto.description(),
+            LocalDateTime.parse(bookDto.publishedDate()),
+            bookDto.isbn(),
+            bookDto.price(),
+            bookDto.discountRate(),
+            bookDto.isPacked(),
+            bookDto.stock(),
+            bookDto.views(),
+            bookDto.createdAt(),
+            LocalDateTime.now()
+        );
+        bookRepository.save(book);
     }
 
     //도서 삭제

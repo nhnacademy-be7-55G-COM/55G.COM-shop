@@ -22,7 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import shop.s5g.shop.config.SecurityConfig;
 import shop.s5g.shop.config.TestSecurityConfig;
 import shop.s5g.shop.filter.JwtAuthenticationFilter;
-import shop.s5g.shop.service.bookCategory.impl.BookCategoryServiceImpl;
+import shop.s5g.shop.service.book.category.impl.BookCategoryServiceImpl;
 
 
 @WebMvcTest(

@@ -1,4 +1,4 @@
-package shop.s5g.shop.repository.bookStatus.qdsl;
+package shop.s5g.shop.repository.book.status.qdsl;
 
 import shop.s5g.shop.dto.book.status.BookStatusResponseDto;
 
