@@ -17,6 +17,7 @@ import java.math.BigDecimal;
  */
 public record CouponPolicyRequestDto(
 
+    @Min(0)
     @NotNull
     @Digits(integer = 6, fraction = 2)
     BigDecimal discountPrice,
@@ -30,7 +31,8 @@ public record CouponPolicyRequestDto(
     Long maxPrice,
 
     @NotNull
-    @DecimalMin(value = "1")
+    @Min(1)
+    @Max(365)
     Integer duration
 ) {
 

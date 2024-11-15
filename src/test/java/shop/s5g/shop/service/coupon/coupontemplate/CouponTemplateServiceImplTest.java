@@ -1,4 +1,4 @@
-package shop.s5g.shop.service.coupontemplate;
+package shop.s5g.shop.service.coupon.coupontemplate;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;

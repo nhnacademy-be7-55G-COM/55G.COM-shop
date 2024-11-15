@@ -11,7 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.coupon.policy.CouponPolicyRequestDto;
 import shop.s5g.shop.dto.coupon.policy.CouponPolicyResponseDto;
 import shop.s5g.shop.entity.coupon.CouponPolicy;
+import shop.s5g.shop.exception.ErrorCode;
 import shop.s5g.shop.exception.coupon.CouponPolicyNotFoundException;
+import shop.s5g.shop.exception.coupon.CouponPolicyValidationException;
 import shop.s5g.shop.repository.coupon.policy.CouponPolicyRepository;
 import shop.s5g.shop.service.coupon.policy.CouponPolicyService;
 
@@ -49,6 +51,8 @@ public class CouponPolicyServiceImpl implements CouponPolicyService {
      */
     @Override
     public void updateCouponPolicy(Long couponPolicyId, CouponPolicyRequestDto couponPolicyRequestDto) {
+
+        //TODO (young) : 에러 처리 수정 예정
         if (Objects.isNull(couponPolicyId) || couponPolicyId <= 0) {
             throw new IllegalArgumentException();
         }
@@ -77,6 +81,7 @@ public class CouponPolicyServiceImpl implements CouponPolicyService {
     @Transactional(readOnly = true)
     public CouponPolicyResponseDto getByCouponPolicyId(Long couponPolicyId) {
 
+        //TODO (young) : 에러 처리 수정 예정
         if (Objects.isNull(couponPolicyId) || couponPolicyId <= 0) {
             throw new IllegalArgumentException();
         }
@@ -113,34 +118,22 @@ public class CouponPolicyServiceImpl implements CouponPolicyService {
         BigDecimal discountPrice = couponPolicyRequestDto.discountPrice();
         Long condition = couponPolicyRequestDto.condition();
         Long maxPrice = couponPolicyRequestDto.maxPrice();
-        Integer duration = couponPolicyRequestDto.duration();
 
-        if (discountPrice.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("음수나 0이 될 수 없습니다.");
-        }
-
-        if (condition < 10000 || condition > 500000) {
-            throw new IllegalArgumentException("조건 금액은 만원 이상 50만원 이하까지만 가능합니다.");
-        }
-
+        //TODO (young) : 에러 처리 수정 예정
         if (discountPrice.compareTo(BigDecimal.ONE) < 0) {
             if (discountPrice.compareTo(new BigDecimal("0.8")) > 0) {
-                throw new IllegalArgumentException("할인은 최대 80%까지 가능합니다.");
+                throw new CouponPolicyValidationException(ErrorCode.DISCOUNT_EXCEEDS_80_PERCENT);
             }
         } else {
             if (discountPrice.compareTo(BigDecimal.valueOf(1000)) < 0 || discountPrice.compareTo(BigDecimal.valueOf(condition).multiply(BigDecimal.valueOf(0.8))) > 0) {
-                throw new IllegalArgumentException("할인은 최소 1,000원, 최대 조건의 80%까지 가능합니다.");
+                throw new CouponPolicyValidationException(ErrorCode.DISCOUNT_INVALID_RANGE);
             }
         }
 
         if (Objects.nonNull(maxPrice)) {
             if (maxPrice > (condition / 2)) {
-                throw new IllegalArgumentException("최대 할인은 조건 금액과 할인률을 나눈 가격까지만 측정 가능합니다.");
+                throw new CouponPolicyValidationException(ErrorCode.MAX_PRICE_EXCEEDS_LIMIT);
             }
-        }
-
-        if (duration < 1 || duration > 366) {
-            throw new IllegalArgumentException("할인 기간은 1일에서 365일 사이의 값이어야 합니다.");
         }
     }
 }
