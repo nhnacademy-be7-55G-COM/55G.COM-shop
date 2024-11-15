@@ -65,7 +65,7 @@ class CartServiceImplTest {
     @Test
     void getBooksInDbByCustomerIdTest() throws Exception {
         //given
-        String customerId = "testCustomerId";
+        String customerLoginId = "testCustomerId";
         Member member = Member.builder().id(1l).build();
 
         Book book1 = mock(Book.class);
@@ -77,11 +77,11 @@ class CartServiceImplTest {
         List<Cart> cart = new ArrayList<>();
         cart.add(new Cart(new CartPk(member.getId(), book1.getBookId()), book1, member, quantity));
 
-        when(memberService.getMember(customerId)).thenReturn(member);
+        when(memberService.getMember(customerLoginId)).thenReturn(member);
         when(cartRepository.findAllByCartPk_CustomerId(member.getId())).thenReturn(cart);
 
         //when
-        List<Cart> booksInDb = cartServiceImpl.getBooksInDbByCustomerId(customerId);
+        List<Cart> booksInDb = cartServiceImpl.getBooksInDbByCustomerId(customerLoginId);
         //then
         Assertions.assertEquals(booksInDb, cart);
     }

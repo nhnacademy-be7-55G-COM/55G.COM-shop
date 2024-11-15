@@ -28,6 +28,7 @@ import shop.s5g.shop.repository.cart.CartRedisRepository;
 import shop.s5g.shop.repository.cart.CartRepository;
 
 
+import shop.s5g.shop.repository.member.MemberRepository;
 import shop.s5g.shop.service.cart.CartService;
 import shop.s5g.shop.service.member.MemberService;
 
@@ -268,6 +269,15 @@ public class CartServiceImpl implements CartService {
 
     }
 
+    @Transactional
+    public void removeAccount(String customerLoginId) {
+
+        deleteOldCart(customerLoginId);
+        cartRepository.deleteAllByCartPk_CustomerId(
+            memberService.getMember(customerLoginId).getId());
+        deleteLoginFlag(customerLoginId);
+
+    }
 
 
 

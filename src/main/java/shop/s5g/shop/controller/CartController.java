@@ -50,7 +50,7 @@ public class CartController {
         BindingResult bindingResult,@AuthenticationPrincipal ShopMemberDetail shopMemberDetail) {
 
         if (bindingResult.hasErrors()) {
-            throw new BadRequestException("Field Error When Putting Book In Cart");
+            throw new BadRequestException("해당 도서를 담는데 실패했습니다.");
         }
 
         String customerLoginId = shopMemberDetail.getLoginId();
@@ -143,8 +143,9 @@ public class CartController {
     public ResponseEntity<Map<String,Integer>> mergedCartToRedis(
         @RequestBody @Validated CartLoginRequestDto cartLoginRequestDto,
         BindingResult bindingResult,@AuthenticationPrincipal ShopMemberDetail shopMemberDetail) {
+
         if (bindingResult.hasErrors()) {
-            throw new BadRequestException("Field Error When Converting Cart From SessionStorage To Redis");
+            throw new BadRequestException("Failed When Converting Cart");
         }
         String customerLoginId = shopMemberDetail.getLoginId();
 
@@ -162,7 +163,15 @@ public class CartController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @PostMapping("/cart/removeAccount")
+    public ResponseEntity<Void> removeAccount(
+        @AuthenticationPrincipal ShopMemberDetail shopMemberDetail) {
 
+        String customerLoginId = shopMemberDetail.getLoginId();
+        cartService.removeAccount(customerLoginId);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 
 
 

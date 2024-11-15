@@ -93,17 +93,17 @@ class RedisRepositoryTest {
     }
 
     @Test
-    void putBookTest() {
-        Long bookId = 1l;
-        Integer quantity = 1;
+    void getBooksInRedisCartTest()  {
+
         String customerLoginId = "TestCustomerLoginId";
 
-
-        cartRedisRepository.putBook(bookId, quantity, customerLoginId);
+        Map<Long, Integer> books = new HashMap<>(Map.of(1l, 1, 2l, 2));
+        cartRedisRepository.putBookByMap(books, customerLoginId);
 
         Assertions.assertThat(
-                redisTemplate.opsForHash().get(CartRedisRepository.CART + customerLoginId, bookId))
-            .isEqualTo(1);
+                cartRedisRepository.getBooksInRedisCart(customerLoginId))
+            .isEqualTo(books);
+
     }
 
     @Test
@@ -137,20 +137,21 @@ class RedisRepositoryTest {
             .isEqualTo(books);
     }
 
-
     @Test
-    void getBooksInRedisCartTest()  {
-
+    void putBookTest() {
+        Long bookId = 1l;
+        Integer quantity = 1;
         String customerLoginId = "TestCustomerLoginId";
 
-        Map<Long, Integer> books = new HashMap<>(Map.of(1l, 1, 2l, 2));
-        cartRedisRepository.putBookByMap(books, customerLoginId);
+
+        cartRedisRepository.putBook(bookId, quantity, customerLoginId);
 
         Assertions.assertThat(
-                cartRedisRepository.getBooksInRedisCart(customerLoginId))
-            .isEqualTo(books);
-
+                redisTemplate.opsForHash().get(CartRedisRepository.CART + customerLoginId, bookId))
+            .isEqualTo(quantity);
     }
+
+
 
     @Test
     void reduceBookQuantityTest() {
