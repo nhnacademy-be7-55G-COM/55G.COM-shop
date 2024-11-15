@@ -28,11 +28,10 @@ public class OrderQuerydslRepositoryImpl extends QuerydslRepositorySupport
             .where(
                 order.customer.customerId.eq(id)
                     .and(order.orderedAt.before(toDate.atTime(23, 59, 59, 999))
-                        .and(order.orderedAt.after(fromDate.atTime(0, 0))))
+                    .and(order.orderedAt.after(fromDate.atTime(0, 0))))
+                    .and(order.active.eq(true))
             )
             .groupBy(order.id)
-//            .offset(pageable.getOffset())
-//            .limit(pageable.getPageSize())
             .orderBy(order.id.desc())
             .select(Projections.constructor(OrderWithDetailResponseDto.class,
                 order.id, order.orderedAt, order.netPrice, order.totalPrice,
@@ -40,23 +39,12 @@ public class OrderQuerydslRepositoryImpl extends QuerydslRepositorySupport
             ).fetch();
     }
 
-//
-//        Long count = Objects.requireNonNull(
-//            from(order)
-//            .where(order.customer.customerId.eq(id))
-//            .select(order.count())
-//            .fetchOne()     // fetchCount()는 5.x 버전에서 deprecated.
-//        );
-
-//        return new PageImpl<>(list, fromDate, count);
-//        return List.of();
-
     @Override
     public List<OrderWithDetailResponseDto> findOrdersByCustomerId(long id) {
         return from(order)
             .innerJoin(order.orderDetails, orderDetail)
             .innerJoin(orderDetail.book, book)
-            .where(order.customer.customerId.eq(id))
+            .where(order.customer.customerId.eq(id).and(order.active.eq(true)))
             .groupBy(order.id)
             .orderBy(order.id.desc())
             .select(Projections.constructor(OrderWithDetailResponseDto.class,

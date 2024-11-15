@@ -1,5 +1,6 @@
 package shop.s5g.shop.service.coupon.category.impl;
 
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -57,12 +58,17 @@ public class CouponCategoryServiceImpl implements CouponCategoryService {
 
     @Override
     public Page<CouponCategoryResponseDto> getAllCouponCategories(Pageable pageable) {
-        return null;
+        return couponCategoryRepository.findAllCouponCategories(pageable);
     }
 
     @Override
     public Page<CouponCategoryDetailsForCategoryDto> getCategoriesByCouponTemplateId(
         Long couponTemplateId, Pageable pageable) {
-        return null;
+
+        if (Objects.isNull(couponTemplateId) || couponTemplateId <= 0) {
+            throw new IllegalArgumentException("옳바르지 않은 템플릿 아이디입니다.");
+        }
+
+        return couponCategoryRepository.findCategoryByCouponTemplateId(couponTemplateId, pageable);
     }
 }

@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import shop.s5g.shop.config.RedisConfig;
+import shop.s5g.shop.dto.cart.request.CartBookInfoRequestDto;
 import shop.s5g.shop.dto.cart.request.CartControlQuantityRequestDto;
 import shop.s5g.shop.dto.cart.request.CartDeleteBookRequestDto;
 import shop.s5g.shop.dto.cart.request.CartLoginRequestDto;
@@ -147,6 +148,7 @@ public class CartController {
     public ResponseEntity<Map<String, Integer>> mergedCartToRedis(
         @RequestBody @Validated CartLoginRequestDto cartLoginRequestDto,
         BindingResult bindingResult, @AuthenticationPrincipal ShopMemberDetail shopMemberDetail) {
+
         if (bindingResult.hasErrors()) {
             throw new BadRequestException("Failed When Converting Cart");
         }
@@ -179,7 +181,15 @@ public class CartController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @GetMapping("/cart/cartWhenPurchase")
+    public ResponseEntity<List<CartBookInfoRequestDto>> getBooksInRedisWhenPurchase(
+        @AuthenticationPrincipal ShopMemberDetail shopMemberDetail) {
 
+        String customerLoginId = shopMemberDetail.getLoginId();
+        List<CartBookInfoRequestDto> booksWhenPurchase = cartService.getBooksWhenPurchase(
+            customerLoginId);
 
+        return ResponseEntity.status(HttpStatus.OK).body(booksWhenPurchase);
+    }
 
 }

@@ -11,6 +11,7 @@ import shop.s5g.shop.dto.delivery.DeliveryResponseDto;
 import shop.s5g.shop.dto.order.OrderDetailInfoDto;
 import shop.s5g.shop.dto.order.OrderDetailWithBookResponseDto;
 import shop.s5g.shop.dto.refund.RefundHistoryResponseDto;
+import shop.s5g.shop.exception.BadRequestException;
 import shop.s5g.shop.service.delivery.DeliveryService;
 import shop.s5g.shop.service.order.OrderDetailService;
 import shop.s5g.shop.service.order.RefundHistoryService;
@@ -22,7 +23,6 @@ public class OrderDetailController {
     private final OrderDetailService orderDetailService;
     private final DeliveryService deliveryService;
     private final RefundHistoryService refundHistoryService;
-//    private final RefundImageRepository refundImageRepository;
 
     // 하나의 주문에 대한 주문 상세, 환불내역, 배송지 모두 리턴하는 컨트롤러
     @GetMapping
@@ -43,7 +43,6 @@ public class OrderDetailController {
                 orderDetails, delivery, refunds
             );
         }
-        // TODO: 적절한 예외로 바꾸기
-        throw new IllegalArgumentException();
+        throw new BadRequestException("다음 인자는 잘못된 인자입니다: scope="+scope);
     }
 }

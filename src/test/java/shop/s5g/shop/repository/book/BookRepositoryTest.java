@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import shop.s5g.shop.config.QueryFactoryConfig;
+import shop.s5g.shop.config.TestQueryFactoryConfig;
 import shop.s5g.shop.dto.book.BookRequestDto;
 import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.BookImage;
@@ -26,7 +27,7 @@ import shop.s5g.shop.repository.bookstatus.BookStatusRepository;
 import shop.s5g.shop.repository.publisher.PublisherRepository;
 
 @DataJpaTest
-@Import(QueryFactoryConfig.class)
+@Import(TestQueryFactoryConfig.class)
 class BookRepositoryTest {
 
     private final BookRepository bookRepository;

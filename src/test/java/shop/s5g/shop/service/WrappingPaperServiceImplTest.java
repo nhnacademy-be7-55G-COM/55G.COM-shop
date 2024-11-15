@@ -78,4 +78,25 @@ class WrappingPaperServiceImplTest {
 
         verify(wrappingPaperRepository, times(1)).findById(1L);
     }
+
+    @Test
+    void getPaperByIdSuccessTest() {
+        when(wrappingPaperRepository.findById(anyLong())).thenReturn(Optional.of(paper));
+
+        // 반환 값에 대한 평가는 static 메소드 테스트에서
+        assertThatCode(() -> service.getPaperById(1L)).doesNotThrowAnyException();
+
+        verify(wrappingPaperRepository, times(1)).findById(anyLong());
+    }
+
+    @Test
+    void getPaperByIdFailTest() {
+        when(wrappingPaperRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> service.getPaperById(1L))
+            .isInstanceOf(ResourceNotFoundException.class)
+            .hasMessageContaining(String.valueOf(1L));
+
+        verify(wrappingPaperRepository, times(1)).findById(1L);
+    }
 }

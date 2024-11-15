@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import shop.s5g.shop.dto.PageResponseDto;
+import shop.s5g.shop.dto.book.BookPageableResponseDto;
 import shop.s5g.shop.dto.book.BookDetailResponseDto;
 import shop.s5g.shop.dto.book.BookPageableResponseDto;
 import shop.s5g.shop.dto.book.BookRequestDto;
@@ -23,6 +26,7 @@ import shop.s5g.shop.repository.publisher.PublisherRepository;
 import shop.s5g.shop.service.book.BookService;
 
 @Service
+@Transactional
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
