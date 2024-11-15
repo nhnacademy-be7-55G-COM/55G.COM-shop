@@ -12,9 +12,31 @@ spring:
     config:
       label: main
 
+  rabbitmq:
+    host: host
+    port: 0
+    username: username
+    password: password
+
+  elasticsearch:
+    url: url
+    username: username
+    password: password
+
 redis:
-  host: localhost
-  port: 6379
+  host: host
+  port: 1
+  password: password
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,busrefresh,health
+
+payment:
+  toss:
+    secretkey: secret
 
 ---
 spring:
@@ -23,9 +45,6 @@ spring:
       on-profile: live
 
     import: optional:configserver:http://55g-config-live:9000
-
-redis:
-  postfix: live
 
 ---
 # on profile 'dev'
@@ -36,19 +55,12 @@ spring:
 
     import: optional:configserver:http://55g-config-dev:9050
 
-redis:
-  postfix: dev
-
 ---
 # on profile 'docker'
 spring:
   config:
     activate:
       on-profile: docker
-
-redis:
-  host: redis-${redis.postfix}
-  port: 6379
 
 ---
 spring:
@@ -71,9 +83,27 @@ spring:
         generate_statistics: true
         use_sql_comments: true
         highlight_sql: true
+  cloud:
+    openfeign:
+      client:
+        config:
+          default:
+            logger-level: full
 
 
 logging:
   level:
-    shop.S5G: trace
+    shop.s5g: trace
     root: info
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local-db-ws
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/55g
+    username: root
+    password:

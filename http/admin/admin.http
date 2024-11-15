@@ -1,0 +1,9 @@
+### admin 생성
+POST http://localhost:8100/api/shop/admin/register
+Content-Type: application/json
+Authorization: Bearer ANONYMOUS
+
+{
+  "id": "testadmin",
+  "password": "testadmin123"
+}
