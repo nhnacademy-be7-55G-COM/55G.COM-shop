@@ -8,7 +8,6 @@ import shop.s5g.shop.dto.book.BookRequestDto;
 import shop.s5g.shop.dto.book.BookResponseDto;
 
 import java.util.List;
-import shop.s5g.shop.entity.BookStatus;
 import shop.s5g.shop.dto.book.BookSimpleResponseDto;
 
 public interface BookQuerydslRepository {
