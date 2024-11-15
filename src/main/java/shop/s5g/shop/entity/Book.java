@@ -49,11 +49,13 @@ public class Book {
     private Long views;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     @Builder
     public Book(Publisher publisher, BookStatus bookStatus, String title, String chapter,
         String description, LocalDateTime publishedDate, String isbn, Long price,
-        BigDecimal discountRate, boolean isPacked, int stock, Long views, LocalDateTime createdAt) {
+        BigDecimal discountRate, boolean isPacked, int stock, Long views, LocalDateTime createdAt,
+        LocalDateTime updatedAt) {
         this.publisher = publisher;
         this.bookStatus = bookStatus;
         this.title = title;
@@ -67,5 +69,6 @@ public class Book {
         this.stock = stock;
         this.views = views;
         this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 }
