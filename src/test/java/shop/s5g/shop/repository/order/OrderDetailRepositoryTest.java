@@ -10,11 +10,12 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import shop.s5g.shop.config.QueryFactoryConfig;
+import shop.s5g.shop.config.TestQueryFactoryConfig;
 import shop.s5g.shop.dto.order.OrderDetailWithBookResponseDto;
 
 @DataJpaTest
 @ActiveProfiles({"embed-db", "test"})
-@Import(QueryFactoryConfig.class)
+@Import(TestQueryFactoryConfig.class)
 class OrderDetailRepositoryTest {
     @Autowired
     OrderDetailRepository orderDetailRepository;

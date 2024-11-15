@@ -13,13 +13,14 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import shop.s5g.shop.config.QueryFactoryConfig;
+import shop.s5g.shop.config.TestQueryFactoryConfig;
 import shop.s5g.shop.dto.order.OrderWithDetailResponseDto;
 
 @DataJpaTest
 @ActiveProfiles({"test", "embed-db"})
 @Slf4j
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@Import(QueryFactoryConfig.class)
+@Import(TestQueryFactoryConfig.class)
 class OrderRepositoryTest {
     @Autowired
     OrderRepository orderRepository;

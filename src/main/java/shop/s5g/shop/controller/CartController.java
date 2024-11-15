@@ -163,8 +163,10 @@ public class CartController {
     @PostMapping("/cart/logout")
     public ResponseEntity<Void> RedisToDbWhenLogout(
         @AuthenticationPrincipal ShopMemberDetail shopMemberDetail) {
-        String customerLoginId = shopMemberDetail.getLoginId();
-        cartService.FromRedisToDb(customerLoginId);
+        if (shopMemberDetail.getRole().equals("ROLE_MEMBER")) {
+            String customerLoginId = shopMemberDetail.getLoginId();
+            cartService.FromRedisToDb(customerLoginId);
+        }
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }

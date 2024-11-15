@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import shop.s5g.shop.config.QueryFactoryConfig;
+import shop.s5g.shop.config.TestQueryFactoryConfig;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateRequestDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateResponseDto;
 import shop.s5g.shop.entity.coupon.CouponPolicy;
@@ -23,7 +24,7 @@ import shop.s5g.shop.repository.coupon.template.CouponTemplateRepository;
 
 @DataJpaTest
 @ActiveProfiles("local")
-@Import(QueryFactoryConfig.class)
+@Import(TestQueryFactoryConfig.class)
 class CouponTemplateRepositoryTest {
 
     @Autowired
