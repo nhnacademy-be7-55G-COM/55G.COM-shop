@@ -163,7 +163,15 @@ public class CartController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @PostMapping("/cart/removeAccount")
+    public ResponseEntity<Void> removeAccount(
+        @AuthenticationPrincipal ShopMemberDetail shopMemberDetail) {
 
+        String customerLoginId = shopMemberDetail.getLoginId();
+        cartService.removeAccount(customerLoginId);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 
 
 

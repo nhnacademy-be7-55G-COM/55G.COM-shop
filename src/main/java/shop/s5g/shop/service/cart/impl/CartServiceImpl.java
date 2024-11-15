@@ -28,6 +28,7 @@ import shop.s5g.shop.repository.cart.CartRedisRepository;
 import shop.s5g.shop.repository.cart.CartRepository;
 
 
+import shop.s5g.shop.repository.member.MemberRepository;
 import shop.s5g.shop.service.cart.CartService;
 import shop.s5g.shop.service.member.MemberService;
 
@@ -40,7 +41,7 @@ public class CartServiceImpl implements CartService {
     private final CartRedisRepository cartRedisRepository;
     private final MemberService memberService;
     private final BookRepository bookRepository;
-
+    private final MemberRepository memberRepository;
 
 
     // 회원아이디를 이용해 Mysql 에 저장되어있는 Cart 리스트반환
@@ -268,6 +269,15 @@ public class CartServiceImpl implements CartService {
 
     }
 
+    @Transactional
+    public void removeAccount(String customerLoginId) {
+
+        deleteOldCart(customerLoginId);
+        cartRepository.deleteAllByCartPk_CustomerId(
+            memberService.getMember(customerLoginId).getId());
+        deleteLoginFlag(customerLoginId);
+
+    }
 
 
 
