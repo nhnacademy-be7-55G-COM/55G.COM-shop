@@ -42,9 +42,9 @@ public class PublisherQuerydslRepositoryImpl extends QuerydslRepositorySupport i
 //                .where(publisher1.id.eq(publisherId))
 //                .fetchFirst();
         return jpaQueryFactory.select(Projections.constructor(PublisherResponseDto.class,
-                publisher.id,
-                publisher.name,
-                publisher.active
+                        publisher.id,
+                        publisher.name,
+                        publisher.active
                 ))
                 .from(publisher)
                 .where(publisher.id.eq(id))
@@ -59,7 +59,7 @@ public class PublisherQuerydslRepositoryImpl extends QuerydslRepositorySupport i
                         publisher.id,
                         publisher.name,
                         publisher.active
-                        ))
+                ))
                 .where(publisher.active.eq(true))
                 .from(publisher)
                 .fetch();
@@ -68,7 +68,7 @@ public class PublisherQuerydslRepositoryImpl extends QuerydslRepositorySupport i
     //출판사 수정
     @Override
     public void updatePublisher(Long publisherId, PublisherRequestDto publisherRequestDto) {
-        jpaQueryFactory.update(publisher)
+        update(publisher)
                 .set(publisher.name, publisherRequestDto.name())
                 .where(publisher.id.eq(publisherId))
                 .execute();

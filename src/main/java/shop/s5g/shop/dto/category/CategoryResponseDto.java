@@ -2,8 +2,8 @@ package shop.s5g.shop.dto.category;
 
 public record CategoryResponseDto(
 
-        Long categoryId,
-        Long parentCategoryId,
+        long categoryId,
+        long parentCategoryId,
         String categoryName,
         boolean active
 ) {
