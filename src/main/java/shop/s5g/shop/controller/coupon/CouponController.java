@@ -73,18 +73,6 @@ public class CouponController {
     }
 
     /**
-     * 쿠폰 목록 조회 API
-     * @param pageable
-     * @return List<CouponResponseDto>
-     */
-    @GetMapping("/coupons")
-    public ResponseEntity<List<CouponResponseDto>> findCoupons(Pageable pageable) {
-        List<CouponResponseDto> couponList = couponService.getCoupons(pageable);
-
-        return ResponseEntity.status(HttpStatus.OK).body(couponList);
-    }
-
-    /**
      * 특정 쿠폰 조회 API
      * @param couponId
      * @return CouponResponseDto
