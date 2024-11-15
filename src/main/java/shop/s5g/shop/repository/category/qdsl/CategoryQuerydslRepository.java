@@ -12,7 +12,7 @@ public interface CategoryQuerydslRepository {
     Page<CategoryResponseDto> getAllCategory(Pageable pageable);
     void inactiveCategory(Long categoryId);
 
-    List<CategoryResponseDto> getChild_Category(Long categoryId);
+    List<CategoryResponseDto> getChild_Category(long categoryId);
 
     List<CategoryResponseDto> getKoreaBook();
 }

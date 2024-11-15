@@ -2,6 +2,7 @@ package shop.s5g.shop.service.publisher.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.publisher.PublisherRequestDto;
 import shop.s5g.shop.dto.publisher.PublisherResponseDto;
 import shop.s5g.shop.entity.Publisher;
@@ -13,6 +14,7 @@ import shop.s5g.shop.service.publisher.PublisherService;
 import java.util.List;
 
 @Service
+@Transactional
 public class PublisherServiceImpl implements PublisherService {
 
     private final PublisherRepository publisherRepository;
@@ -33,6 +35,7 @@ public class PublisherServiceImpl implements PublisherService {
 
     //출판사 조회
     @Override
+    @Transactional(readOnly = true)
     public PublisherResponseDto getPublisher(Long id) {
         if(!publisherRepository.existsById(id)) {
             throw new PublisherResourceNotFoundException("해당 출판사는 존재하지 않습니다.");
@@ -43,6 +46,7 @@ public class PublisherServiceImpl implements PublisherService {
 
     //모든 출판사 조회
     @Override
+    @Transactional(readOnly = true)
     public List<PublisherResponseDto> getAllPublisher() {
         return publisherRepository.getAllPublisher();
     }

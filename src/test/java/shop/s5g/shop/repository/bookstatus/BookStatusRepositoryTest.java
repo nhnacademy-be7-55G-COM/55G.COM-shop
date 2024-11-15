@@ -7,13 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import shop.s5g.shop.config.QueryFactoryConfig;
+import shop.s5g.shop.config.TestQueryFactoryConfig;
 import shop.s5g.shop.dto.bookstatus.BookStatusResponseDto;
 import shop.s5g.shop.entity.BookStatus;
 
 import java.util.List;
 
 @DataJpaTest
-@Import(QueryFactoryConfig.class)
+@Import(TestQueryFactoryConfig.class)
 public class BookStatusRepositoryTest {
     @Autowired
     private BookStatusRepository bookStatusRepository;

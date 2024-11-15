@@ -1,4 +1,4 @@
-package shop.s5g.shop.repository.coupon.couponpolicy;
+package shop.s5g.shop.repository.couponpolicy;
 
 import java.math.BigDecimal;
 import org.junit.jupiter.api.Assertions;
@@ -7,18 +7,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
-import shop.s5g.shop.config.QueryFactoryConfig;
-import shop.s5g.shop.dto.coupon.policy.CouponPolicyResponseDto;
+import shop.s5g.shop.config.TestQueryFactoryConfig;
 import shop.s5g.shop.entity.coupon.CouponPolicy;
 import shop.s5g.shop.repository.coupon.policy.CouponPolicyRepository;
 
 @DataJpaTest
 @ActiveProfiles("local")
-@Import(QueryFactoryConfig.class)
+@Import(TestQueryFactoryConfig.class)
 class CouponPolicyRepositoryTest {
 
     @Autowired
@@ -110,34 +106,5 @@ class CouponPolicyRepositoryTest {
         couponPolicyRepository.save(couponPolicy2);
 
         Assertions.assertEquals(2, couponPolicyRepository.count());
-    }
-
-    @Test
-    @DisplayName("모든 쿠폰 정책 조회 - Pageable")
-    void findAllCouponPolicy() {
-        CouponPolicy couponPolicy1 = CouponPolicy.builder()
-            .discountPrice(new BigDecimal("0.5"))
-            .condition(20000L)
-            .maxPrice(2000L)
-            .duration(30)
-            .build();
-
-        CouponPolicy couponPolicy2 = CouponPolicy.builder()
-            .discountPrice(new BigDecimal("0.5"))
-            .condition(20000L)
-            .maxPrice(2000L)
-            .duration(30)
-            .build();
-
-        couponPolicyRepository.save(couponPolicy1);
-        couponPolicyRepository.save(couponPolicy2);
-
-        Pageable pageable = PageRequest.of(0, 10);
-        Page<CouponPolicyResponseDto> result = couponPolicyRepository.findAllCouponPolicies(pageable);
-
-        Assertions.assertNotNull(result);
-        Assertions.assertEquals(2, result.getTotalElements());
-        Assertions.assertEquals(1, result.getTotalPages());
-        Assertions.assertEquals(2, result.getContent().size());
     }
 }

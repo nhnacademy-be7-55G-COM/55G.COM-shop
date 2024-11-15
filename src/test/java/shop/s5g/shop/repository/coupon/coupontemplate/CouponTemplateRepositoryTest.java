@@ -19,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import shop.s5g.shop.config.QueryFactoryConfig;
+import shop.s5g.shop.config.TestQueryFactoryConfig;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateRequestDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateResponseDto;
 import shop.s5g.shop.entity.Book;
@@ -40,7 +41,7 @@ import shop.s5g.shop.repository.publisher.PublisherRepository;
 
 @DataJpaTest
 @ActiveProfiles("local")
-@Import(QueryFactoryConfig.class)
+@Import(TestQueryFactoryConfig.class)
 class CouponTemplateRepositoryTest {
 
     @Autowired
