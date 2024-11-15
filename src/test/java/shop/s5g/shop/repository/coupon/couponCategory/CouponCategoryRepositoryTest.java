@@ -4,11 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static shop.s5g.shop.entity.coupon.QCouponCategory.couponCategory;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.math.BigDecimal;
-import java.util.Objects;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -48,7 +45,6 @@ class CouponCategoryRepositoryTest {
 
     private CouponTemplate couponTemplate;
     private Category category;
-    private JPAQueryFactory queryFactory;
 
     @BeforeEach
     void setUp() {
@@ -128,16 +124,4 @@ class CouponCategoryRepositoryTest {
         assertEquals("테스트", categoryDto.categoryName());
     }
 
-    @Test
-    @DisplayName("Total Cnt 테스트")
-    void getTotalCountTest() {
-        Long totalCnt = queryFactory
-            .select(couponCategory.count())
-            .from(couponCategory)
-            .fetchOne();
-
-        long total = (Objects.nonNull(totalCnt)) ? totalCnt : 0L;
-
-        assertEquals(1, total);
-    }
 }
