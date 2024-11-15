@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import shop.s5g.shop.config.RedisConfig;
+import shop.s5g.shop.dto.cart.request.CartBookInfoRequestDto;
 import shop.s5g.shop.dto.cart.request.CartControlQuantityRequestDto;
 import shop.s5g.shop.dto.cart.request.CartDeleteBookRequestDto;
 import shop.s5g.shop.dto.cart.request.CartLoginRequestDto;
@@ -46,8 +47,9 @@ public class CartController {
 
     //담기
     @PostMapping("/cart")
-    public ResponseEntity<MessageDto> putBook(@RequestBody @Validated CartPutRequestDto cartPutRequestDto,
-        BindingResult bindingResult,@AuthenticationPrincipal ShopMemberDetail shopMemberDetail) {
+    public ResponseEntity<MessageDto> putBook(
+        @RequestBody @Validated CartPutRequestDto cartPutRequestDto,
+        BindingResult bindingResult, @AuthenticationPrincipal ShopMemberDetail shopMemberDetail) {
 
         if (bindingResult.hasErrors()) {
             throw new BadRequestException("해당 도서를 담는데 실패했습니다.");
@@ -63,7 +65,8 @@ public class CartController {
 
     // 조회 (회원 장바구니상세페이지 접근)
     @GetMapping("/cart")
-    public ResponseEntity<Map<String,Object>> lookUpAllBooks(@AuthenticationPrincipal ShopMemberDetail shopMemberDetail) {
+    public ResponseEntity<Map<String, Object>> lookUpAllBooks(
+        @AuthenticationPrincipal ShopMemberDetail shopMemberDetail) {
 
         String customerLoginId = shopMemberDetail.getLoginId();
 
@@ -80,7 +83,8 @@ public class CartController {
     // 조회 (비회원 장바구니상세페이지 접근)
     @GetMapping("/cart/guest")
     public ResponseEntity<Map<String, Object>> lookUpAllBooksWhenGuest(
-        @RequestParam(value = "cartBookInfoList", required = false) String cartSessionStorage) throws JsonProcessingException {
+        @RequestParam(value = "cartBookInfoList", required = false) String cartSessionStorage)
+        throws JsonProcessingException {
 
         byte[] decoded = Base64.getUrlDecoder()
             .decode(URLDecoder.decode(cartSessionStorage, StandardCharsets.UTF_8));
@@ -88,7 +92,8 @@ public class CartController {
 
         ObjectMapper objectMapper = new ObjectMapper();
         CartSessionStorageDto cartSessionStorageDto = objectMapper.readValue(decodedCart,
-            new TypeReference<CartSessionStorageDto>() {});
+            new TypeReference<CartSessionStorageDto>() {
+            });
 
         List<CartBooksResponseDto> cartBooks = cartService.lookUpAllBooksWhenGuest(
             cartSessionStorageDto);
@@ -140,16 +145,17 @@ public class CartController {
 
     // 로그인 했을 때 로컬스토리지와 db를 합쳐 레디스에 저장할 컨트롤러
     @PostMapping("/cart/login")
-    public ResponseEntity<Map<String,Integer>> mergedCartToRedis(
+    public ResponseEntity<Map<String, Integer>> mergedCartToRedis(
         @RequestBody @Validated CartLoginRequestDto cartLoginRequestDto,
-        BindingResult bindingResult,@AuthenticationPrincipal ShopMemberDetail shopMemberDetail) {
+        BindingResult bindingResult, @AuthenticationPrincipal ShopMemberDetail shopMemberDetail) {
 
         if (bindingResult.hasErrors()) {
             throw new BadRequestException("Failed When Converting Cart");
         }
         String customerLoginId = shopMemberDetail.getLoginId();
 
-        int cartCount = cartService.saveMergedCartToRedis(customerLoginId, cartLoginRequestDto.cartBookInfoList());
+        int cartCount = cartService.saveMergedCartToRedis(customerLoginId,
+            cartLoginRequestDto.cartBookInfoList());
 
         return ResponseEntity.status(HttpStatus.OK).body(Map.of("cartCount", cartCount));
     }
@@ -173,7 +179,15 @@ public class CartController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @GetMapping("/cart/cartWhenPurchase")
+    public ResponseEntity<List<CartBookInfoRequestDto>> getBooksInRedisWhenPurchase(
+        @AuthenticationPrincipal ShopMemberDetail shopMemberDetail) {
 
+        String customerLoginId = shopMemberDetail.getLoginId();
+        List<CartBookInfoRequestDto> booksWhenPurchase = cartService.getBooksWhenPurchase(
+            customerLoginId);
 
+        return ResponseEntity.status(HttpStatus.OK).body(booksWhenPurchase);
+    }
 
 }
