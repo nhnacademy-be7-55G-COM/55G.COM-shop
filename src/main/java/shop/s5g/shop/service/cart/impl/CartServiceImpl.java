@@ -41,7 +41,7 @@ public class CartServiceImpl implements CartService {
     private final CartRedisRepository cartRedisRepository;
     private final MemberService memberService;
     private final BookRepository bookRepository;
-    private final MemberRepository memberRepository;
+
 
 
     // 회원아이디를 이용해 Mysql 에 저장되어있는 Cart 리스트반환
