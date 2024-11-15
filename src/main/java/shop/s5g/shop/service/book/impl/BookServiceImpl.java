@@ -2,7 +2,6 @@ package shop.s5g.shop.service.book.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,8 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.PageResponseDto;
 import shop.s5g.shop.dto.book.BookPageableResponseDto;
 import shop.s5g.shop.dto.book.BookDetailResponseDto;
+import shop.s5g.shop.dto.book.BookPageableResponseDto;
 import shop.s5g.shop.dto.book.BookRequestDto;
 import shop.s5g.shop.dto.book.BookResponseDto;
+import shop.s5g.shop.dto.book.BookSimpleResponseDto;
 import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.BookStatus;
 import shop.s5g.shop.entity.Publisher;
@@ -96,5 +97,10 @@ public class BookServiceImpl implements BookService {
             throw new BookResourceNotFoundException("Book with id " + bookId + " not found");
         }
         bookRepository.deleteById(bookId);
+    }
+
+    @Override
+    public List<BookSimpleResponseDto> getSimpleBooks(List<Long> bookIdList) {
+        return bookRepository.findSimpleBooksByIdList(bookIdList);
     }
 }
