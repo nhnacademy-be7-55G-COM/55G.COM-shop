@@ -10,7 +10,14 @@ VALUES (1, 1, 1, 'login', '1q2w3e4r!', '19990909', now(), now(), 10000);
 insert into point_source (point_source_id, point_source_name)
 VALUES
     (1, '회원가입'),
-    (2, '구매');
+    (2, '구매'),
+    (3, '리뷰');
+
+insert into point_policy (point_policy_id, point_source_id, name, "value")
+VALUES
+    (1, 1, '회원가입', 5000.0),
+    (2, 2, '구매적립', 0.01),
+    (3, 3, '리뷰', 500.0);
 
 insert into point_history (point_history_id, point_source_id, customer_id, point, remaining_point, created_at, active)
 VALUES
