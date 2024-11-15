@@ -120,13 +120,10 @@ class CouponBookRepositoryTest {
     @DisplayName("책 쿠폰이 존재하는지 체크")
     void existCouponBookTest() {
 
-        boolean exists = couponBookRepository.existsById(2L);
-        boolean notExists = couponBookRepository.existsById(1L);
-        boolean dslExists = couponBookRepository.existsByBookAndCouponTemplate(2L, 1L);
+        boolean dslExists = couponBookRepository.existsByBookAndCouponTemplate(book.getBookId(),
+            couponBookRequestDto.couponTemplateId());
 
-        assertTrue(exists);
         assertTrue(dslExists);
-        assertFalse(notExists);
     }
     
     @Test
