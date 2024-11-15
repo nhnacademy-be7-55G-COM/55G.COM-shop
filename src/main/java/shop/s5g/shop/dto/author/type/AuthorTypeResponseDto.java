@@ -1,4 +1,4 @@
-package shop.s5g.shop.dto.authorType;
+package shop.s5g.shop.dto.author.type;
 
 public record AuthorTypeResponseDto(
     long authorTypeId,

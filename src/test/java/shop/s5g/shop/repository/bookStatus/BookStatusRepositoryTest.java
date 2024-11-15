@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import shop.s5g.shop.config.QueryFactoryConfig;
-import shop.s5g.shop.dto.bookStatus.BookStatusResponseDto;
+import shop.s5g.shop.dto.book.status.BookStatusResponseDto;
 import shop.s5g.shop.entity.BookStatus;
 
 import java.util.List;

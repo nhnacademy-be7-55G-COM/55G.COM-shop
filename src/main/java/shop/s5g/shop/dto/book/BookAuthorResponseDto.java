@@ -1,4 +1,4 @@
-package shop.s5g.shop.dto.bookAuthor;
+package shop.s5g.shop.dto.book;
 
 public record BookAuthorResponseDto(
     long authorId,

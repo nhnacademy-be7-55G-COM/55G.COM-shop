@@ -1,4 +1,4 @@
-package shop.s5g.shop.dto.bookCategory;
+package shop.s5g.shop.dto.book.category;
 
 public record BookDetailCategoryResponseDto(
     long categoryId,
