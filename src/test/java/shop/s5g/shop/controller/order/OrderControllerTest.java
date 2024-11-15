@@ -4,32 +4,40 @@ import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
+import shop.s5g.shop.advice.AuthenticationAdvice;
 import shop.s5g.shop.annotation.WithCustomMockUser;
 import shop.s5g.shop.config.SecurityConfig;
 import shop.s5g.shop.config.TestSecurityConfig;
+import shop.s5g.shop.controller.advice.RestWebAdvice;
 import shop.s5g.shop.dto.order.OrderCreateResponseDto;
 import shop.s5g.shop.dto.order.OrderWithDetailResponseDto;
+import shop.s5g.shop.exception.ResourceNotFoundException;
 import shop.s5g.shop.exception.member.CustomerNotFoundException;
 import shop.s5g.shop.filter.JwtAuthenticationFilter;
 import shop.s5g.shop.service.order.OrderDetailService;
@@ -42,8 +50,8 @@ import shop.s5g.shop.service.order.OrderService;
         classes = {SecurityConfig.class, JwtAuthenticationFilter.class}
     )
 )
-@Import(TestSecurityConfig.class)
-//@AutoConfigureMockMvc(addFilters = false)
+@Import({TestSecurityConfig.class, AuthenticationAdvice.class})
+@EnableAspectJAutoProxy
 class OrderControllerTest {
     @Autowired
     MockMvc mvc;
@@ -53,7 +61,9 @@ class OrderControllerTest {
 
     @MockBean
     OrderDetailService orderDetailService;
-    ObjectMapper objectMapper = new ObjectMapper();
+
+    @SpyBean
+    RestWebAdvice advice;
 
     @Test
     @WithCustomMockUser(loginId = "123", customerId = 1L, role = "ROLE_MEMBER")
@@ -157,5 +167,50 @@ class OrderControllerTest {
         ;
 
         verify(orderService, times(1)).createOrder(eq(1L), any());
+    }
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+    @Test
+    @WithCustomMockUser(loginId = "123", customerId = 1L, role = "ROLE_MEMBER")
+    void fetchOrdersBetweenDatesTest() throws Exception{
+        OrderWithDetailResponseDto dto = new OrderWithDetailResponseDto(
+            1L, LocalDateTime.now(), 3000L, 5000L, "test title", 3, 4
+        );
+        LocalDate startDate = LocalDate.now().minusDays(1);
+        LocalDate endDate = LocalDate.now();
+
+        when(orderService.getAllOrdersBetweenDates(anyLong(), any())).thenReturn(List.of(dto));
+
+        mvc.perform(MockMvcRequestBuilders.get("/api/shop/orders")
+            .queryParam("startDate", startDate.format(formatter))
+            .queryParam("endDate", endDate.format(formatter))
+        ).andExpect(jsonPath("$[0].representTitle").value("test title"));
+    }
+
+    @Test
+    void deleteOrderFailTest() throws Exception {
+        doThrow(ResourceNotFoundException.class).when(orderService).deactivateOrder(anyLong());
+        mvc.perform(MockMvcRequestBuilders.delete("/api/shop/orders/1"))
+            .andExpect(status().isNotFound());
+
+        verify(orderService, times(1)).deactivateOrder(1L);
+        verify(advice, times(1)).handleResourceNotFoundException(any());
+    }
+    @Test
+    void deleteOrderSuccessTest() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.delete("/api/shop/orders/1"))
+            .andExpect(status().isNoContent());
+
+        verify(orderService, times(1)).deactivateOrder(1L);
+        verify(advice, never()).handleResourceNotFoundException(any());
+    }
+
+    @Test
+    void unauthorizedTest() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/api/shop/orders"))
+            .andExpect(status().isUnauthorized());
+        verify(advice, times(1)).handleAuthenticationException(any());
+        verify(orderService, never()).getAllOrdersWithDetail(anyLong());
     }
 }
