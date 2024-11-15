@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import shop.s5g.shop.config.QueryFactoryConfig;
+import shop.s5g.shop.config.TestQueryFactoryConfig;
 import shop.s5g.shop.dto.tag.TagRequestDto;
 import shop.s5g.shop.dto.tag.TagResponseDto;
 import shop.s5g.shop.entity.Tag;
@@ -17,7 +18,7 @@ import shop.s5g.shop.repository.tag.qdsl.impl.TagQuerydslRepositoryImpl;
 import java.util.List;
 
 @DataJpaTest
-@Import(QueryFactoryConfig.class)
+@Import(TestQueryFactoryConfig.class)
 public class TagRepositoryTest {
     @Autowired
     private TagRepository tagRepository;
