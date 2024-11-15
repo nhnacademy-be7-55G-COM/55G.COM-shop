@@ -28,7 +28,7 @@ import shop.s5g.shop.repository.delivery.DeliveryStatusRepository;
 import shop.s5g.shop.service.delivery.impl.DeliveryServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
-class DeliveryServiceTest {
+class DeliveryServiceImplTest {
     @Mock
     DeliveryRepository deliveryRepository;
     @Mock
