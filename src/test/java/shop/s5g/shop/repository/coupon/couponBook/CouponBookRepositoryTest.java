@@ -1,7 +1,6 @@
 package shop.s5g.shop.repository.coupon.couponBook;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -17,7 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
-import shop.s5g.shop.config.QueryFactoryConfig;
+import shop.s5g.shop.config.TestQueryFactoryConfig;
 import shop.s5g.shop.dto.coupon.book.CouponBookDetailsForBookDto;
 import shop.s5g.shop.dto.coupon.book.CouponBookRequestDto;
 import shop.s5g.shop.dto.coupon.book.CouponBookResponseDto;
@@ -37,7 +36,7 @@ import shop.s5g.shop.repository.publisher.PublisherRepository;
 
 @DataJpaTest
 @ActiveProfiles("local")
-@Import(QueryFactoryConfig.class)
+@Import(TestQueryFactoryConfig.class)
 class CouponBookRepositoryTest {
     @Autowired
     private CouponTemplateRepository couponTemplateRepository;

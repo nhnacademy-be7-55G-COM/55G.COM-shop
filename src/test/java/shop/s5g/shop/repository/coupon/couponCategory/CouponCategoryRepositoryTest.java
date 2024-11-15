@@ -19,7 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
-import shop.s5g.shop.config.QueryFactoryConfig;
+import shop.s5g.shop.config.TestQueryFactoryConfig;
 import shop.s5g.shop.dto.coupon.category.CouponCategoryDetailsForCategoryDto;
 import shop.s5g.shop.dto.coupon.category.CouponCategoryResponseDto;
 import shop.s5g.shop.entity.Category;
@@ -33,7 +33,7 @@ import shop.s5g.shop.repository.coupon.template.CouponTemplateRepository;
 
 @DataJpaTest
 @ActiveProfiles("local")
-@Import(QueryFactoryConfig.class)
+@Import(TestQueryFactoryConfig.class)
 class CouponCategoryRepositoryTest {
 
     @Autowired
