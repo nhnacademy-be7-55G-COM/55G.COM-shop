@@ -1,4 +1,4 @@
-package shop.S5G.shop.repository.coupon.couponBook;
+package shop.s5g.shop.repository.coupon.couponBook;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;

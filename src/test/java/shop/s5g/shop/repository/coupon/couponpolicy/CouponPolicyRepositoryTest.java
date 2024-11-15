@@ -1,4 +1,4 @@
-package shop.S5G.shop.repository.coupon.couponpolicy;
+package shop.s5g.shop.repository.coupon.couponpolicy;
 
 import java.math.BigDecimal;
 import org.junit.jupiter.api.Assertions;
