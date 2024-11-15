@@ -1,4 +1,4 @@
-package shop.s5g.shop.service.coupontemplate;
+package shop.s5g.shop.service.coupon.coupontemplate;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -81,11 +81,12 @@ class CouponTemplateServiceImplTest {
 
     @Test
     @DisplayName("쿠폰 템플릿 조회 - read")
-    void findCouponTemplate() {
+    void getCouponTemplate() {
         // Given
         Long couponTemplateId = 1L;
 
         CouponTemplateResponseDto couponTemplateResponseDto = new CouponTemplateResponseDto(
+            couponTemplateId,
             couponPolicy.getDiscountPrice(),
             couponPolicy.getCondition(),
             couponPolicy.getMaxPrice(),
@@ -105,7 +106,7 @@ class CouponTemplateServiceImplTest {
         when(couponTemplateRepository.findCouponTemplateById(couponTemplateId)).thenReturn(couponTemplateResponseDto);
 
         // When
-        CouponTemplateResponseDto templateDto = couponTemplateService.findCouponTemplate(couponTemplateId);
+        CouponTemplateResponseDto templateDto = couponTemplateService.getCouponTemplate(couponTemplateId);
 
         // Then
         assertThat(templateDto).isNotNull();

@@ -1,4 +1,4 @@
-### memberGrade 생성
+### admin 생성
 POST http://localhost:8100/api/shop/admin/register
 Content-Type: application/json
 Authorization: Bearer ANONYMOUS

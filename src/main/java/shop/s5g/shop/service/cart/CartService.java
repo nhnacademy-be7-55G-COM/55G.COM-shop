@@ -15,13 +15,16 @@ public interface CartService {
 
     void saveAll(List<Cart> mergedCart);
 
-    void saveMergedCartToRedis(String customerLoginId,List<CartBookInfoRequestDto> cartBookInfoList);
+    int saveMergedCartToRedis(String customerLoginId,List<CartBookInfoRequestDto> cartBookInfoList);
 
     void FromRedisToDb(String customerLoginId);
 
     List<CartBooksResponseDto> lookUpAllBooksWhenGuest(CartSessionStorageDto cartSessionStorageDto);
 
+    void removeAccount(String customerLoginId);
+
     // ----------- only Redis 관련 -----------
+    List<CartBookInfoRequestDto> getBooksWhenPurchase(String customerLoginId);
 
     void controlQuantity(Long bookId, int change, String customerLoginId);
 

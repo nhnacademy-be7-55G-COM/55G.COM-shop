@@ -1,5 +1,6 @@
 package shop.s5g.shop.repository.tag;
 
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -7,18 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
-import shop.s5g.shop.config.QueryFactoryConfig;
+import shop.s5g.shop.config.TestQueryFactoryConfig;
 import shop.s5g.shop.dto.tag.TagRequestDto;
 import shop.s5g.shop.dto.tag.TagResponseDto;
 import shop.s5g.shop.entity.Tag;
 import shop.s5g.shop.exception.tag.TagResourceNotFoundException;
 import shop.s5g.shop.repository.tag.qdsl.impl.TagQuerydslRepositoryImpl;
 
-import java.util.List;
-
 @DataJpaTest
-@Import(QueryFactoryConfig.class)
-public class TagRepositoryTest {
+@Import(TestQueryFactoryConfig.class)
+class TagRepositoryTest {
     @Autowired
     private TagRepository tagRepository;
 
@@ -47,8 +46,8 @@ public class TagRepositoryTest {
     void getTagTest() {
         Tag tag1 = new Tag("베스트셀러", true);
         Tag tag2 = new Tag("이달의 도서", true);
-        Tag save1 = tagRepository.save(tag1);
-        Tag save2 = tagRepository.save(tag2);
+        tagRepository.save(tag1);
+        tagRepository.save(tag2);
 
         List<TagResponseDto> allTag = tagQuerydslRepository.findAllTag();
         Assertions.assertEquals(2, allTag.size());

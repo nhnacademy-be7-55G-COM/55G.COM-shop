@@ -1,9 +1,13 @@
 package shop.s5g.shop.controller.book;
 
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import shop.s5g.shop.dto.PageResponseDto;
 import shop.s5g.shop.dto.category.CategoryRequestDto;
 import shop.s5g.shop.dto.category.CategoryResponseDto;
 import shop.s5g.shop.dto.category.CategoryUpdateRequestDto;
@@ -17,6 +21,7 @@ import java.util.List;
 @RequestMapping("/api/shop")
 public class CategoryController {
     private final CategoryServiceImpl categoryServiceImpl;
+
     public CategoryController(CategoryServiceImpl categoryServiceImpl) {
         this.categoryServiceImpl = categoryServiceImpl;
     }
@@ -33,16 +38,15 @@ public class CategoryController {
 
     //카테고리 목록 조회
     @GetMapping("/category")
-    public ResponseEntity<List<CategoryResponseDto>> getAllCategories() {
-        List<CategoryResponseDto> categoryResponseDto = categoryServiceImpl.allCategory();
-        return ResponseEntity.ok().body(categoryResponseDto);
+    public ResponseEntity<PageResponseDto<CategoryResponseDto>> getAllCategories(Pageable pageable) {
+        Page<CategoryResponseDto> categoryResponseDto = categoryServiceImpl.allCategory(pageable);
+        return ResponseEntity.ok().body(PageResponseDto.of(categoryResponseDto));
     }
 
     //자식 카테고리 조회
     @GetMapping("/category/childCategory/{categoryId}")
-    public ResponseEntity<List<CategoryResponseDto>> getChildCategories(@Valid @PathVariable("categoryId") Long categoryId) {
-        categoryServiceImpl.getChildCategory(categoryId);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<List<CategoryResponseDto>> getChildCategories(@Valid @PathVariable("categoryId") long categoryId) {
+        return ResponseEntity.ok().body(categoryServiceImpl.getChildCategory(categoryId));
     }
 
     //국내도서 하위 카테고리 조회
@@ -75,5 +79,17 @@ public class CategoryController {
         }
         categoryServiceImpl.deleteCategory(categoryId);
         return ResponseEntity.ok().body(new MessageDto("카테고리 삭제 성공"));
+    }
+
+    /**
+     * 카테고리 ID로 조회 - API
+     * @param categoryId
+     * @return ResponseEntity<CategoryResponseDto>
+     */
+    @GetMapping("/admin/coupons/category/{categoryId}")
+    public ResponseEntity<CategoryResponseDto> findCategoryById(@PathVariable("categoryId") Long categoryId) {
+        CategoryResponseDto category = categoryServiceImpl.getCategory(categoryId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(category);
     }
 }

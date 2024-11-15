@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.customer.CustomerRegistrationRequestDto;
 import shop.s5g.shop.dto.customer.CustomerResponseDto;
-import shop.s5g.shop.dto.customer.CustomerUpdateRequestDto;
+import shop.s5g.shop.dto.member.IdCheckResponseDto;
 import shop.s5g.shop.dto.member.LoginResponseDto;
 import shop.s5g.shop.dto.member.MemberDetailResponseDto;
 import shop.s5g.shop.dto.member.MemberRegistrationRequestDto;
@@ -23,6 +23,7 @@ import shop.s5g.shop.entity.member.MemberGrade;
 import shop.s5g.shop.entity.member.MemberStatus;
 import shop.s5g.shop.exception.member.MemberAlreadyExistsException;
 import shop.s5g.shop.exception.member.MemberNotFoundException;
+import shop.s5g.shop.exception.member.PasswordIncorrectException;
 import shop.s5g.shop.repository.member.MemberRepository;
 import shop.s5g.shop.service.member.CustomerService;
 import shop.s5g.shop.service.member.MemberGradeService;
@@ -89,12 +90,8 @@ public class MemberServiceImpl implements MemberService {
             .build();
 
         Member saved = memberRepository.save(member);
-        pointHistoryService.createPointHistory(saved.getId(), PointHistoryCreateRequestDto.REGISTER_POINT);
-    }
-
-    @Override
-    public void updateMember(CustomerUpdateRequestDto updateRequestDto) {
-
+        pointHistoryService.createPointHistory(saved.getId(),
+            PointHistoryCreateRequestDto.REGISTER_POINT);
     }
 
     @Override
@@ -130,8 +127,11 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void deleteById(Long memberId) {
-        //TODO 추후 진행 예정
-        throw new UnsupportedOperationException();
+        Member member = memberRepository.findById(memberId)
+            .orElseThrow(() -> new MemberNotFoundException("회원이 존재하지 않습니다."));
+        MemberStatus memberStatus = memberStatusService.getMemberStatusByTypeName(
+            MemberRepository.WITHDRAWAL_STATUS);
+        member.setStatus(memberStatus);
     }
 
     @Override
@@ -140,6 +140,23 @@ public class MemberServiceImpl implements MemberService {
             throw new MemberNotFoundException("회원이 존재하지 않습니다.");
         }
         memberRepository.updateLatestLoginAt(loginId, LocalDateTime.now());
+    }
+
+    @Override
+    public IdCheckResponseDto isExistsByLoginId(String loginId) {
+        return new IdCheckResponseDto(memberRepository.existsByLoginId(loginId));
+    }
+
+    @Override
+    public void changePassword(Long customerId, String oldPassword, String newPassword) {
+        Member member = memberRepository.findById(customerId)
+            .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
+
+        if (!passwordEncoder.matches(oldPassword, member.getPassword())) {
+            throw new PasswordIncorrectException("현재 비밀번호가 일치하지 않습니다.");
+        }
+
+        member.setPassword(passwordEncoder.encode(newPassword));
     }
 
 }

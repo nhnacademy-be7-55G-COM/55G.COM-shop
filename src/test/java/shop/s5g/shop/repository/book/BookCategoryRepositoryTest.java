@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import shop.s5g.shop.config.QueryFactoryConfig;
+import shop.s5g.shop.config.TestQueryFactoryConfig;
 import shop.s5g.shop.dto.book.category.BookCategoryResponseDto;
 import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.BookStatus;
@@ -17,28 +17,28 @@ import shop.s5g.shop.entity.Category;
 import shop.s5g.shop.entity.Publisher;
 import shop.s5g.shop.entity.bookCategory.BookCategory;
 import shop.s5g.shop.entity.bookCategory.BookCategoryId;
-import shop.s5g.shop.repository.bookCategory.BookCategoryRepository;
-import shop.s5g.shop.repository.bookStatus.BookStatusRepository;
+import shop.s5g.shop.repository.book.category.BookCategoryRepository;
+import shop.s5g.shop.repository.book.status.BookStatusRepository;
 import shop.s5g.shop.repository.category.CategoryRepository;
 import shop.s5g.shop.repository.publisher.PublisherRepository;
 
 @DataJpaTest
-@Import(QueryFactoryConfig.class)
+@Import(TestQueryFactoryConfig.class)
 class BookCategoryRepositoryTest {
 
     private final BookCategoryRepository bookCategoryRepository;
     private final CategoryRepository categoryRepository;
     private final BookRepository bookRepository;
-    @Autowired
-    private PublisherRepository publisherRepository;
-    @Autowired
-    private BookStatusRepository bookStatusRepository;
+    private final PublisherRepository publisherRepository;
+    private final BookStatusRepository bookStatusRepository;
 
     @Autowired
-    public BookCategoryRepositoryTest(BookCategoryRepository bookCategoryRepository, CategoryRepository categoryRepository, BookRepository bookRepository) {
+    public BookCategoryRepositoryTest(BookCategoryRepository bookCategoryRepository, CategoryRepository categoryRepository, BookRepository bookRepository,PublisherRepository publisherRepository,BookStatusRepository bookStatusRepository) {
         this.bookCategoryRepository = bookCategoryRepository;
         this.categoryRepository = categoryRepository;
         this.bookRepository = bookRepository;
+        this.publisherRepository=publisherRepository;
+        this.bookStatusRepository=bookStatusRepository;
     }
 
     /**

@@ -1,13 +1,22 @@
 package shop.s5g.shop.repository.book.qdsl.impl;
 
+import static shop.s5g.shop.entity.QAuthor.author;
+import static shop.s5g.shop.entity.QAuthorType.authorType;
+import static shop.s5g.shop.entity.QBook.book;
+import static shop.s5g.shop.entity.QBookAuthor.bookAuthor;
+import static shop.s5g.shop.entity.QBookImage.bookImage;
+import static shop.s5g.shop.entity.QBookStatus.bookStatus;
+import static shop.s5g.shop.entity.QCategory.category;
+import static shop.s5g.shop.entity.QPublisher.publisher;
+import static shop.s5g.shop.entity.bookCategory.QBookCategory.bookCategory;
+
 import com.querydsl.core.types.ConstantImpl;
-import com.querydsl.core.types.Expression;
-import com.querydsl.core.types.Path;
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -18,24 +27,13 @@ import shop.s5g.shop.dto.book.BookDetailResponseDto;
 import shop.s5g.shop.dto.book.BookPageableResponseDto;
 import shop.s5g.shop.dto.book.BookRequestDto;
 import shop.s5g.shop.dto.book.BookResponseDto;
-import shop.s5g.shop.dto.book.BookAuthorResponseDto;
+import shop.s5g.shop.dto.book.BookSimpleResponseDto;
+import shop.s5g.shop.dto.book.author.BookAuthorResponseDto;
 import shop.s5g.shop.dto.book.category.BookDetailCategoryResponseDto;
-import shop.s5g.shop.entity.*;
+import shop.s5g.shop.entity.Book;
+import shop.s5g.shop.entity.Category;
 import shop.s5g.shop.entity.bookCategory.BookCategory;
 import shop.s5g.shop.repository.book.qdsl.BookQuerydslRepository;
-
-import java.time.LocalDateTime;
-import java.util.List;
-
-import static shop.s5g.shop.entity.QAuthor.author;
-import static shop.s5g.shop.entity.QAuthorType.authorType;
-import static shop.s5g.shop.entity.QBook.book;
-import static shop.s5g.shop.entity.QBookAuthor.bookAuthor;
-import static shop.s5g.shop.entity.QBookStatus.bookStatus;
-import static shop.s5g.shop.entity.QCategory.category;
-import static shop.s5g.shop.entity.QPublisher.publisher;
-import static shop.s5g.shop.entity.bookCategory.QBookCategory.bookCategory;
-import static shop.s5g.shop.entity.QBookImage.bookImage;
 
 @Repository
 public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implements
@@ -126,7 +124,7 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
             case "title" -> query.orderBy(book.title.desc());
             case "price" -> query.orderBy(book.price.desc());
             case "publishedDate" -> query.orderBy(book.publishedDate.desc());
-            default -> throw new IllegalArgumentException("Unknown sort type: " + pageable.getSort());
+            default -> query.orderBy(book.title.asc());
         };
 
         List<BookPageableResponseDto> content = query.fetch();
@@ -138,6 +136,24 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
 
         long total = (totalCount != null) ? totalCount : 0L;
         return new PageImpl<>(content, pageable, total);
+    }
+
+    /**
+     * 특정 책의 상태 조회
+     * @param bookId
+     * @return String
+     */
+    @Override
+    public String findBookStatus(Long bookId) {
+
+        return jpaQueryFactory
+            .select(bookStatus.name)
+            .from(book)
+            .innerJoin(bookStatus)
+            .on(book.bookStatus.id.eq(bookStatus.id))
+            .where(book.bookId.eq(bookId))
+            .fetchOne();
+
     }
 
     // 도서 상세 BookResponseDto타입으로 리턴
@@ -199,5 +215,22 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
                 ConstantImpl.create(categoryList)
             ))
             .fetchOne();
+    }
+
+    @Override
+    public List<BookSimpleResponseDto> findSimpleBooksByIdList(List<Long> idList) {
+        return from(book)
+            .join(book.bookStatus, bookStatus)
+            .where(book.bookId.in(idList))
+            .select(Projections.constructor(BookSimpleResponseDto.class,
+                book.bookId,
+                book.title,
+                book.price,
+                book.discountRate,
+                book.stock,
+                book.isPacked,
+                bookStatus.name
+                )
+            ).fetch();
     }
 }

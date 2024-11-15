@@ -12,12 +12,13 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import shop.s5g.shop.config.QueryFactoryConfig;
+import shop.s5g.shop.config.TestQueryFactoryConfig;
 import shop.s5g.shop.dto.category.CategoryUpdateRequestDto;
 import shop.s5g.shop.entity.Category;
 import shop.s5g.shop.exception.category.CategoryResourceNotFoundException;
 
 @DataJpaTest
-@Import(QueryFactoryConfig.class)
+@Import(TestQueryFactoryConfig.class)
 class CategoryRepositoryTest {
 
     private final CategoryRepository categoryRepository;

@@ -28,6 +28,7 @@ import shop.s5g.shop.repository.cart.CartRedisRepository;
 import shop.s5g.shop.repository.cart.CartRepository;
 
 
+import shop.s5g.shop.repository.member.MemberRepository;
 import shop.s5g.shop.service.cart.CartService;
 import shop.s5g.shop.service.member.MemberService;
 
@@ -55,7 +56,7 @@ public class CartServiceImpl implements CartService {
     // 로그인 했을 때 세션스토리지와 db에 있는 걸 합쳐서 레디스에 옮김
     @Transactional
     @Override
-    public void saveMergedCartToRedis(String customerLoginId,List<CartBookInfoRequestDto> cartBookInfoListInSession) {
+    public int saveMergedCartToRedis(String customerLoginId,List<CartBookInfoRequestDto> cartBookInfoListInSession) {
 
         // 정상로그아웃을 했을 경우에는 해당회원의 레디스 loginFlag 를 삭제한다.
         // 근데 만약 loginFlag 가 존재한다면 비정상로그아웃으로 간주하고 db에 있는 걸 안 가져오고 레디스에 세션 스토리지 내용만 추가하는 방법 고려
@@ -78,6 +79,8 @@ public class CartServiceImpl implements CartService {
                 customerLoginId);
         });
 
+        return cartRedisRepository.getBooksInRedisCart(customerLoginId).size();
+
     }
 
     // 로그아웃할 때 레디스에 있는 걸 db 에 저장한다.
@@ -93,27 +96,18 @@ public class CartServiceImpl implements CartService {
 
         Member member = memberService.getMember(customerLoginId);
         Map<Long, Integer> booksInRedisCart = getBooksInRedisCart(customerLoginId);
-        List<Cart> booksInDbCart = getBooksInDbByCustomerId(customerLoginId);
+        List<Cart> booksInDbCart = new ArrayList<>();
 
 
         booksInRedisCart.forEach((bookId,quantity) ->{
-            booksInDbCart.stream().filter(cart ->
-                cart.getBook().getBookId().equals(bookId)
-            ).findFirst().ifPresentOrElse(
-                cart -> {
-                    cart.setQuantity(cart.getQuantity() + quantity);
-                },
-                () ->{
-                    bookRepository.findById(bookId).ifPresent(book -> {
-                        booksInDbCart.add(
-                            new Cart(new CartPk(member.getId(), bookId), book, member, quantity));
-                    });
 
-                }
-            );
-
+            bookRepository.findById(bookId).ifPresent(book -> {
+                booksInDbCart.add(
+                    new Cart(new CartPk(member.getId(), bookId), book, member, quantity));
+            });
         });
 
+        cartRepository.deleteAllByCartPk_CustomerId(member.getId());
         saveAll(booksInDbCart);
         deleteOldCart(customerLoginId);
         deleteLoginFlag(customerLoginId);
@@ -199,7 +193,7 @@ public class CartServiceImpl implements CartService {
 
 
         Map<Long, Integer> booksInSessionStorage = cartSessionStorageDto.cartBookInfoList().stream().collect(
-            Collectors.toMap(CartBookInfoRequestDto::bookId, CartBookInfoRequestDto::quantity));
+            Collectors.toMap(CartBookInfoRequestDto::bookId, CartBookInfoRequestDto::quantity,Integer::sum));
 
         if (booksInSessionStorage.isEmpty()) {
             List<CartBooksResponseDto> emptyList = new ArrayList<>();
@@ -225,7 +219,8 @@ public class CartServiceImpl implements CartService {
     public CartDetailInfoResponseDto getTotalPriceAndDeliverFee(
         List<CartBooksResponseDto> cartBooks) {
 
-        BigDecimal totalPrice = cartBooks.stream().map(CartBooksResponseDto::discountedPrice)
+        BigDecimal totalPrice = cartBooks.stream().map(cartBook -> cartBook.discountedPrice()
+                .multiply(BigDecimal.valueOf(cartBook.quantity())))
             .reduce(BigDecimal.ZERO, BigDecimal::add);
         int deliveryFee = 3000;
         int freeShippingThreshold = 30000;
@@ -274,7 +269,29 @@ public class CartServiceImpl implements CartService {
 
     }
 
+    @Transactional
+    public void removeAccount(String customerLoginId) {
 
+        deleteOldCart(customerLoginId);
+        cartRepository.deleteAllByCartPk_CustomerId(
+            memberService.getMember(customerLoginId).getId());
+        deleteLoginFlag(customerLoginId);
+
+    }
+
+    @Override
+    public List<CartBookInfoRequestDto> getBooksWhenPurchase(String customerLoginId) {
+
+        Map<Long, Integer> booksInRedisCart = getBooksInRedisCart(customerLoginId);
+
+        List<CartBookInfoRequestDto> books = new ArrayList<>();
+
+        booksInRedisCart.forEach((bookId,quantity) ->{
+            books.add(new CartBookInfoRequestDto(bookId, quantity));
+        });
+
+        return books;
+    }
 
 
 

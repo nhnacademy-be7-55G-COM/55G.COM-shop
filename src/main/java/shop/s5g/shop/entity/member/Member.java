@@ -31,6 +31,7 @@ public class Member {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_status_id")
+    @Setter
     private MemberStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -38,6 +39,7 @@ public class Member {
     private MemberGrade grade;
 
     private String loginId;
+    @Setter
     private String password;
     private String birth;
     private LocalDateTime createdAt;

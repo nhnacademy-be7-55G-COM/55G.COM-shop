@@ -1,14 +1,10 @@
 package shop.s5g.shop.dto.category;
 
-import jakarta.validation.constraints.NotNull;
-
 public record CategoryResponseDto(
-        @NotNull
-        Long categoryId,
-        Long parentCategoryId,
-        @NotNull
+
+        long categoryId,
+        long parentCategoryId,
         String categoryName,
-        @NotNull
         boolean active
 ) {
 }

@@ -1,0 +1,8 @@
+### keyword에 해당하는 book list 조회
+GET http://localhost:8100/api/shop/book/search
+Content-Type: application/json
+Authorization: Bearer ANONYMOUS
+
+{
+  "keyword": "정원"
+}
