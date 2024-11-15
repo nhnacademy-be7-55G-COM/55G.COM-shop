@@ -8,6 +8,7 @@ import shop.s5g.shop.dto.book.BookRequestDto;
 import shop.s5g.shop.dto.book.BookResponseDto;
 
 import java.util.List;
+import shop.s5g.shop.dto.book.BookSimpleResponseDto;
 
 public interface BookService {
     void createBook(BookRequestDto bookDto);
@@ -16,4 +17,6 @@ public interface BookService {
     void updateBooks(Long bookId, BookRequestDto bookDto);
     void deleteBooks(Long bookId);
     Page<BookPageableResponseDto> allBookPageable(Pageable pageable);
+
+    List<BookSimpleResponseDto> getSimpleBooks(List<Long> bookIdList);
 }
