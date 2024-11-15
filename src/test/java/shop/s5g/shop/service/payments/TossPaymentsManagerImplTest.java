@@ -66,7 +66,7 @@ class TossPaymentsManagerImplTest {
 
     @Test
     @Disabled
-    void confirmPaymentAdapterTest() {
+    void confirmPaymentAdapterTest() { // TODO: 테스트 보류
         when(orderDetail.getBook()).thenReturn(book);
         when(orderDetail.getQuantity()).thenReturn(5);
         when(orderDetail.getAccumulationPrice()).thenReturn(100);
