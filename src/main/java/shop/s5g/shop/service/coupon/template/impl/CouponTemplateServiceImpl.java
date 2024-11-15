@@ -124,7 +124,7 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
      * @return List<CouponTemplateResponseDto>
      */
     @Override
-    public List<CouponTemplateResponseDto> getCouponTemplates(Pageable pageable) {
+    public Page<CouponTemplateResponseDto> getCouponTemplates(Pageable pageable) {
         return couponTemplateRepository.findCouponTemplatesByPageable(pageable);
     }
 

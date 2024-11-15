@@ -115,10 +115,6 @@ public class CouponPolicyServiceImpl implements CouponPolicyService {
         Long maxPrice = couponPolicyRequestDto.maxPrice();
         Integer duration = couponPolicyRequestDto.duration();
 
-        if (discountPrice.scale() > 2) {
-            throw new IllegalArgumentException("소수점 이하 2자리까지만 가능합니다.");
-        }
-
         if (discountPrice.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("음수나 0이 될 수 없습니다.");
         }

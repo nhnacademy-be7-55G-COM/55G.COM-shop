@@ -102,11 +102,11 @@ public class CouponTemplateController {
      * @return List<CouponTemplateResponseDto>
      */
     @GetMapping("/templates")
-    public ResponseEntity<List<CouponTemplateResponseDto>> getCouponTemplates(Pageable pageable) {
-        List<CouponTemplateResponseDto> couponTemplateResponseDtoList = couponTemplateService.getCouponTemplates(pageable);
+    public ResponseEntity<PageResponseDto<CouponTemplateResponseDto>> getCouponTemplates(Pageable pageable) {
+        Page<CouponTemplateResponseDto> couponTemplateResponseDtoList = couponTemplateService.getCouponTemplates(pageable);
 
         return ResponseEntity.status(HttpStatus.OK)
-            .body(couponTemplateResponseDtoList);
+            .body(PageResponseDto.of(couponTemplateResponseDtoList));
     }
 
     /**

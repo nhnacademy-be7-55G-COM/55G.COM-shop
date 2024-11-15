@@ -12,8 +12,6 @@ public interface CouponService {
 
     CouponResponseDto getCoupon(Long couponId);
 
-    List<CouponResponseDto> getCoupons(Pageable pageable);
-
     void updateCoupon(Long couponId, LocalDateTime expiredAt);
 
     void deleteCoupon(Long couponId);

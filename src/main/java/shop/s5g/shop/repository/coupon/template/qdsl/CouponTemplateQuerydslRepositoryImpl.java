@@ -1,7 +1,5 @@
 package shop.s5g.shop.repository.coupon.template.qdsl;
 
-import static shop.s5g.shop.entity.coupon.QCouponTemplate.couponTemplate;
-
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
@@ -13,8 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateRequestDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateResponseDto;
-import shop.s5g.shop.entity.QBook;
-import shop.s5g.shop.entity.QCategory;
 import shop.s5g.shop.entity.coupon.CouponPolicy;
 import shop.s5g.shop.entity.coupon.CouponTemplate;
 import shop.s5g.shop.entity.coupon.QCoupon;
@@ -130,14 +126,12 @@ public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupp
     /**
      * 쿠폰 템플릿 찾기 쿼리 dsl
      * @param pageable
-     * @return List<CouponTemplateResponseDto>
+     * @return Page<CouponTemplateResponseDto>
      */
     @Override
-    public List<CouponTemplateResponseDto> findCouponTemplatesByPageable(Pageable pageable) {
+    public Page<CouponTemplateResponseDto> findCouponTemplatesByPageable(Pageable pageable) {
 
-        return from(couponTemplate)
-            .innerJoin(couponTemplate.couponPolicy, couponPolicy)
-            .where(couponTemplate.active.eq(ACTIVE))
+        List<CouponTemplateResponseDto> templateList = jpaQueryFactory
             .select(Projections.constructor(CouponTemplateResponseDto.class,
                 couponTemplate.couponTemplateId,
                 couponPolicy.discountPrice,
@@ -146,9 +140,22 @@ public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupp
                 couponPolicy.duration,
                 couponTemplate.couponName,
                 couponTemplate.couponDescription))
+            .from(couponTemplate)
+            .innerJoin(couponPolicy)
+            .on(couponTemplate.couponPolicy.couponPolicyId.eq(couponPolicy.couponPolicyId))
+            .where(couponTemplate.active.eq(ACTIVE))
             .limit(pageable.getPageSize())
             .offset(pageable.getOffset())
             .fetch();
+
+        Long totalCnt = jpaQueryFactory
+            .select(couponTemplate.count())
+            .from(couponTemplate)
+            .fetchOne();
+
+        long total = (Objects.isNull(totalCnt)) ? 0L : totalCnt;
+
+        return new PageImpl<>(templateList, pageable, total);
     }
 
     /**
