@@ -1,12 +1,9 @@
 package shop.s5g.shop.controller.book;
 
-import java.util.List;
-
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -17,20 +14,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import shop.s5g.shop.dto.PageResponseDto;
+import shop.s5g.shop.dto.book.BookDetailResponseDto;
 import shop.s5g.shop.dto.book.BookPageableResponseDto;
 import shop.s5g.shop.dto.book.BookRequestDto;
 import shop.s5g.shop.dto.book.BookResponseDto;
+import shop.s5g.shop.dto.book.BookSimpleResponseDto;
 import shop.s5g.shop.dto.tag.MessageDto;
 import shop.s5g.shop.exception.book.BookBadRequestException;
-import shop.s5g.shop.service.book.impl.BookServiceImpl;
-import shop.s5g.shop.dto.book.BookDetailResponseDto;
-import shop.s5g.shop.dto.book.BookRequestDto;
-import shop.s5g.shop.dto.book.BookResponseDto;
-import shop.s5g.shop.dto.tag.MessageDto;
-import shop.s5g.shop.exception.book.BookBadRequestException;
-//import shop.s5g.shop.service.BookServiceImpl;
 import shop.s5g.shop.service.book.BookService;
 
 @Slf4j
@@ -104,5 +97,11 @@ public class BookController {
         }
         bookService.deleteBooks(bookId);
         return ResponseEntity.ok().body(new MessageDto("도서 삭제 성공"));
+    }
+
+    @GetMapping("/books/query")
+    public ResponseEntity<List<BookSimpleResponseDto>> queryBooks(@RequestParam List<Long> books) {
+//        List<Long> bookIds = Arrays.stream(stringify.split(",")).map(Long::valueOf).toList();
+        return ResponseEntity.ok(bookService.getSimpleBooks(books));
     }
 }
