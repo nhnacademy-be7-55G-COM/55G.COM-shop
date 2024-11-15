@@ -11,6 +11,7 @@ import shop.s5g.shop.dto.payments.TossPaymentsConfirmRequestDto;
 import shop.s5g.shop.dto.payments.TossPaymentsDto;
 import shop.s5g.shop.entity.Payment;
 import shop.s5g.shop.entity.order.Order;
+import shop.s5g.shop.exception.ResourceNotFoundException;
 import shop.s5g.shop.repository.order.OrderRepository;
 import shop.s5g.shop.repository.payments.TossPaymentRepository;
 import shop.s5g.shop.service.payments.AbstractPaymentManager;
@@ -27,14 +28,10 @@ public class TossPaymentsManagerImpl extends AbstractPaymentManager {
         TossPaymentsConfirmRequestDto confirmDto = TossPaymentsConfirmRequestDto.of(request);
 
         ResponseEntity<TossPaymentsDto> response = adapter.confirm(confirmDto);
-        // 근데 어차피 feignClient 는 20x, 30x가 아니면 알아서 예외를 반환해버림..
-//        if (!response.getStatusCode().is2xxSuccessful()) {
-//            throw new RuntimeException();
-//        }
 
-        // TODO: 적절한 예외로 바꾸기!
+        // OrderDetail의 존재로 해당 order는 항상 존재할 것으로 인지됨...
         Order order = orderRepository.findById(orderDataId).orElseThrow(
-            () -> new RuntimeException()
+            () -> new ResourceNotFoundException("Order not found for given id: "+orderDataId)
         );
 //
         paymentRepository.save(new Payment(order, confirmDto.paymentKey(), "KRW", confirmDto.amount(), confirmDto.orderId()));
