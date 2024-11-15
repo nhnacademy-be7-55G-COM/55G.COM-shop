@@ -17,4 +17,5 @@ public interface BookQuerydslRepository {
     Page<BookPageableResponseDto> findAllBookPage(Pageable pageable);
 
     List<BookSimpleResponseDto> findSimpleBooksByIdList(List<Long> idList);
+    String findBookStatus(Long bookId);
 }

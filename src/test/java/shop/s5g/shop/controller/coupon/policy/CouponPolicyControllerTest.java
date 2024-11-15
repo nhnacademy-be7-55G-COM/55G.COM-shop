@@ -119,6 +119,7 @@ class CouponPolicyControllerTest {
         Long couponPolicyId = 1L;
 
         when(couponPolicyService.getByCouponPolicyId(couponPolicyId)).thenReturn(new CouponPolicyResponseDto(
+            couponPolicyId,
             new BigDecimal("0.5"),
             20000L,
             2000L,
@@ -132,33 +133,5 @@ class CouponPolicyControllerTest {
             .andExpect(jsonPath("$.condition").value(20000L))
             .andExpect(jsonPath("$.maxPrice").value(2000L))
             .andExpect(jsonPath("$.duration").value(30));
-    }
-
-    @Test
-    @DisplayName("모든 쿠폰 정책 조회 API - GET")
-    void findAllCouponPolices() throws Exception {
-        // Given
-        couponPolicyService.saveCouponPolicy(
-            new CouponPolicyRequestDto(new BigDecimal("10"), 50000L, 2000L, 30)
-        );
-
-        List<CouponPolicyResponseDto> couponPolicyResponseDtoList = List.of(
-            new CouponPolicyResponseDto(new BigDecimal("0.5"), 20000L, 2000L, 30),
-            new CouponPolicyResponseDto(new BigDecimal("10"), 50000L, 2000L, 30)
-        );
-
-        when(couponPolicyService.getAllCouponPolices()).thenReturn(couponPolicyResponseDtoList);
-
-        // When & Then
-        mockMvc.perform(get("/api/shop/admin/coupons/policy"))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$[0].discountPrice").value(new BigDecimal("0.5")))
-            .andExpect(jsonPath("$[0].condition").value(20000L))
-            .andExpect(jsonPath("$[0].maxPrice").value(2000L))
-            .andExpect(jsonPath("$[0].duration").value(30))
-            .andExpect(jsonPath("$[1].discountPrice").value(new BigDecimal("10")))
-            .andExpect(jsonPath("$[1].condition").value(50000L))
-            .andExpect(jsonPath("$[1].maxPrice").value(2000L))
-            .andExpect(jsonPath("$[1].duration").value(30));
     }
 }

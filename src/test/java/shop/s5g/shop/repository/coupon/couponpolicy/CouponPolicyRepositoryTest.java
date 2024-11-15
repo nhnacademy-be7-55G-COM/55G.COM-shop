@@ -1,4 +1,4 @@
-package shop.s5g.shop.repository.couponpolicy;
+package shop.s5g.shop.repository.coupon.couponpolicy;
 
 import java.math.BigDecimal;
 import org.junit.jupiter.api.Assertions;
@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
-import shop.s5g.shop.config.QueryFactoryConfig;
 import shop.s5g.shop.config.TestQueryFactoryConfig;
 import shop.s5g.shop.entity.coupon.CouponPolicy;
 import shop.s5g.shop.repository.coupon.policy.CouponPolicyRepository;

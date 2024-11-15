@@ -2,7 +2,9 @@ package shop.s5g.shop.service.coupon.template.impl;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Pattern;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,7 +53,7 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
      */
     @Override
     @Transactional(readOnly = true)
-    public CouponTemplateResponseDto findCouponTemplate(Long couponTemplateId) {
+    public CouponTemplateResponseDto getCouponTemplate(Long couponTemplateId) {
 
         if (Objects.isNull(couponTemplateId) || couponTemplateId <= 0) {
             throw new IllegalArgumentException();
@@ -122,7 +124,17 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
      * @return List<CouponTemplateResponseDto>
      */
     @Override
-    public List<CouponTemplateResponseDto> findCouponTemplates(Pageable pageable) {
+    public Page<CouponTemplateResponseDto> getCouponTemplates(Pageable pageable) {
         return couponTemplateRepository.findCouponTemplatesByPageable(pageable);
+    }
+
+    /**
+     * 사용되지않은 쿠폰 템플릿 조회 - Pageable
+     * @param pageable
+     * @return Page<CouponTemplateResponseDto>
+     */
+    @Override
+    public Page<CouponTemplateResponseDto> getCouponTemplatesUnused(Pageable pageable) {
+        return couponTemplateRepository.findUnusedCouponTemplates(pageable);
     }
 }
