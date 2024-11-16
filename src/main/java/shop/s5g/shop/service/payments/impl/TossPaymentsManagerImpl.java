@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import shop.s5g.shop.adapter.TossPaymentsAdapter;
 import shop.s5g.shop.dto.payments.TossPaymentsCancelRequestDto;
+import shop.s5g.shop.dto.payments.TossPaymentsCancelSimpleRequestDto;
 import shop.s5g.shop.dto.payments.TossPaymentsConfirmRequestDto;
 import shop.s5g.shop.dto.payments.TossPaymentsDto;
 import shop.s5g.shop.entity.Payment;
@@ -42,8 +43,18 @@ public class TossPaymentsManagerImpl extends AbstractPaymentManager {
     @Override
     protected Object cancelPaymentAdapter(String paymentKey, Map<String, Object> request) {
         ObjectMapper objectMapper = new ObjectMapper();
-        TossPaymentsCancelRequestDto cancelRequest = objectMapper.convertValue(request, TossPaymentsCancelRequestDto.class);
 
-        return adapter.cancel(paymentKey, cancelRequest).getBody();
+        // TODO: 이 if문에 대해 조금 더 생각을 해봐야함.
+        if (request.containsKey("refundReceiveAccount")) {
+            TossPaymentsCancelRequestDto cancelRequest = objectMapper.convertValue(request,
+                TossPaymentsCancelRequestDto.class);
+
+            return adapter.cancel(paymentKey, cancelRequest).getBody();
+        } else {    // 현재 여기만 사용중.
+            TossPaymentsCancelSimpleRequestDto cancelRequest = objectMapper.convertValue(request,
+                TossPaymentsCancelSimpleRequestDto.class);
+
+            return adapter.cancel(paymentKey, cancelRequest).getBody();
+        }
     }
 }

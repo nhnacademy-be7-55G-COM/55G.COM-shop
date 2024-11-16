@@ -13,7 +13,7 @@ public class AsyncConfig {
         executor.setMaxPoolSize(5);
         executor.setCorePoolSize(5);
         executor.setQueueCapacity(50);
-        executor.setThreadNamePrefix("RabbitExe-");
+        executor.setThreadNamePrefix("RabbitExec-");
         executor.initialize();
 
         return executor;

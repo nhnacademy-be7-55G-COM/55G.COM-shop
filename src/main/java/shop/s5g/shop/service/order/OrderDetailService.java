@@ -7,5 +7,5 @@ public interface OrderDetailService {
 
     List<OrderDetailWithBookResponseDto> getOrderDetailsWithBook(long orderId);
 
-    void cancelOrderDetail(long orderDetailId);
+//    void cancelOrderDetail(long orderDetailId);
 }

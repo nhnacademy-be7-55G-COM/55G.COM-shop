@@ -9,7 +9,7 @@ import shop.s5g.shop.dto.payments.TossPaymentsDto;
 import shop.s5g.shop.dto.tag.MessageDto;
 import shop.s5g.shop.service.payments.AbstractPaymentManager;
 
-@Slf4j
+@Slf4j(topic = "RABBITMQ_LISTENER")
 @Service
 public class TossPaymentsRequestListener {
     private final AbstractPaymentManager paymentManager;
