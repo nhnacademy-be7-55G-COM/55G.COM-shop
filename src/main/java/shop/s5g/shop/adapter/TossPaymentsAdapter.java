@@ -22,7 +22,11 @@ public interface TossPaymentsAdapter {
     @GetMapping("/orders/{orderId}")
     ResponseEntity<TossPaymentsDto> queryPayByOrderId(@PathVariable String orderId);
 
+//    @PostMapping("/{paymentKey}/cancel")
+//    ResponseEntity<TossPaymentsDto> cancel(@PathVariable String paymentKey, @RequestHeader("Idempotency-Key") String idempotencyKey, @RequestBody
+//        TossPaymentsCancelRequestDto cancelRequest);
+
     @PostMapping("/{paymentKey}/cancel")
     ResponseEntity<TossPaymentsDto> cancel(@PathVariable String paymentKey, @RequestBody
-        TossPaymentsCancelRequestDto cancelRequest);
+    TossPaymentsCancelRequestDto cancelRequest);
 }

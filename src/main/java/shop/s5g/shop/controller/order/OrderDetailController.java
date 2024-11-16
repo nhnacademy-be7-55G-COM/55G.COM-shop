@@ -2,8 +2,13 @@ package shop.s5g.shop.controller.order;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,12 +17,13 @@ import shop.s5g.shop.dto.order.OrderDetailInfoDto;
 import shop.s5g.shop.dto.order.OrderDetailWithBookResponseDto;
 import shop.s5g.shop.dto.refund.RefundHistoryResponseDto;
 import shop.s5g.shop.exception.BadRequestException;
+import shop.s5g.shop.security.ShopMemberDetail;
 import shop.s5g.shop.service.delivery.DeliveryService;
 import shop.s5g.shop.service.order.OrderDetailService;
 import shop.s5g.shop.service.order.RefundHistoryService;
 
 @RequiredArgsConstructor
-@RequestMapping("/api/shop/orders/{orderId}")
+@RequestMapping("/api/shop/orders")
 @RestController
 public class OrderDetailController {
     private final OrderDetailService orderDetailService;
@@ -25,7 +31,7 @@ public class OrderDetailController {
     private final RefundHistoryService refundHistoryService;
 
     // 하나의 주문에 대한 주문 상세, 환불내역, 배송지 모두 리턴하는 컨트롤러
-    @GetMapping
+    @GetMapping("/{orderId}")
     public Object getOrderDetailAll(@PathVariable long orderId, @RequestParam(required = false) String scope) {
         if (scope == null || scope.isEmpty()) {
             return orderDetailService.getOrderDetailsWithBook(orderId);
@@ -44,5 +50,16 @@ public class OrderDetailController {
             );
         }
         throw new BadRequestException("다음 인자는 잘못된 인자입니다: scope="+scope);
+    }
+
+    @DeleteMapping("/details/{detailId}")
+    public ResponseEntity<HttpStatus> cancelOrderDetail(
+        @AuthenticationPrincipal ShopMemberDetail memberDetail,
+        @PathVariable long detailId,
+        @RequestHeader String IdempotencyKey
+    ) {
+        // TODO: 주문을 취소하였으니 토스페이먼츠에 그만큼 취소 요청을 보내야함.
+//        orderDetailService.cancelOrderDetail(detailId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

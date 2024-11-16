@@ -27,7 +27,11 @@ redis:
   host: host
   port: 1
   password: password
-
+rabbit:
+  queue:
+    orders:
+      payment:
+        toss: 55g.orders.payment.queue
 management:
   endpoints:
     web:

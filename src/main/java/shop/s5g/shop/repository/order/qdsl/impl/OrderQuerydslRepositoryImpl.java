@@ -1,6 +1,7 @@
 package shop.s5g.shop.repository.order.qdsl.impl;
 
 import static shop.s5g.shop.entity.QBook.book;
+import static shop.s5g.shop.entity.member.QCustomer.customer;
 import static shop.s5g.shop.entity.order.QOrder.order;
 import static shop.s5g.shop.entity.order.QOrderDetail.orderDetail;
 
@@ -51,5 +52,13 @@ public class OrderQuerydslRepositoryImpl extends QuerydslRepositorySupport
                 order.id, order.orderedAt, order.netPrice, order.totalPrice,
                 orderDetail.book.title.min(), order.id.count(), orderDetail.quantity.sum())
             ).fetch();
+    }
+
+    @Override
+    public Order findOrderByIdFetch(long orderId) {
+        return from(order)
+            .join(order.customer, customer).fetchJoin()
+            .where(order.id.eq(orderId))
+            .fetchOne();
     }
 }
