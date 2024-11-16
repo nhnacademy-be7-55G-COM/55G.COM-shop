@@ -1,4 +1,4 @@
-package shop.s5g.shop.service.coponpolicy.impl;
+package shop.s5g.shop.service.coupon.coponpolicy.impl;
 
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;

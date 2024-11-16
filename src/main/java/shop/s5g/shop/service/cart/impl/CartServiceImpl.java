@@ -28,6 +28,7 @@ import shop.s5g.shop.repository.cart.CartRedisRepository;
 import shop.s5g.shop.repository.cart.CartRepository;
 
 
+import shop.s5g.shop.repository.member.MemberRepository;
 import shop.s5g.shop.service.cart.CartService;
 import shop.s5g.shop.service.member.MemberService;
 
@@ -268,7 +269,29 @@ public class CartServiceImpl implements CartService {
 
     }
 
+    @Transactional
+    public void removeAccount(String customerLoginId) {
 
+        deleteOldCart(customerLoginId);
+        cartRepository.deleteAllByCartPk_CustomerId(
+            memberService.getMember(customerLoginId).getId());
+        deleteLoginFlag(customerLoginId);
+
+    }
+
+    @Override
+    public List<CartBookInfoRequestDto> getBooksWhenPurchase(String customerLoginId) {
+
+        Map<Long, Integer> booksInRedisCart = getBooksInRedisCart(customerLoginId);
+
+        List<CartBookInfoRequestDto> books = new ArrayList<>();
+
+        booksInRedisCart.forEach((bookId,quantity) ->{
+            books.add(new CartBookInfoRequestDto(bookId, quantity));
+        });
+
+        return books;
+    }
 
 
 

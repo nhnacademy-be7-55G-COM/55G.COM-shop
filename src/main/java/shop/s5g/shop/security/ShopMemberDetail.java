@@ -11,9 +11,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Getter
 @AllArgsConstructor
 public class ShopMemberDetail implements UserDetails {
+
     private String loginId;
     private String role;
-    private long customerId;
+    private Long customerId;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

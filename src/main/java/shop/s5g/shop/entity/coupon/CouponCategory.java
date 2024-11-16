@@ -22,7 +22,6 @@ import shop.s5g.shop.entity.Category;
 public class CouponCategory {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long couponTemplateId;
 
     @MapsId

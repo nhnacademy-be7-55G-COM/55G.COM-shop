@@ -2,6 +2,7 @@ package shop.s5g.shop.repository.order.qdsl.impl;
 
 import static shop.s5g.shop.entity.QBook.book;
 import static shop.s5g.shop.entity.order.QOrderDetail.orderDetail;
+import static shop.s5g.shop.entity.order.QOrder.order;
 import static shop.s5g.shop.entity.order.QOrderDetailType.orderDetailType;
 import static shop.s5g.shop.entity.order.QWrappingPaper.wrappingPaper;
 
@@ -42,6 +43,7 @@ public class OrderDetailQuerydslRepositoryImpl extends QuerydslRepositorySupport
     public List<OrderDetail> fetchOrderDetailsByOrderId(long orderId) {
         return from(orderDetail)
             .join(orderDetail.book, book).fetchJoin()
+            .join(orderDetail.order, order).fetchJoin()
             .where(orderDetail.order.id.eq(orderId))
             .fetch();
     }

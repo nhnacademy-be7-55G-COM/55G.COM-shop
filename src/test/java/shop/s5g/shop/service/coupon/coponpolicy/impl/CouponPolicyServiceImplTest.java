@@ -1,4 +1,4 @@
-package shop.s5g.shop.service.coponpolicy.impl;
+package shop.s5g.shop.service.coupon.coponpolicy.impl;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -17,6 +17,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import shop.s5g.shop.dto.coupon.policy.CouponPolicyRequestDto;
 import shop.s5g.shop.dto.coupon.policy.CouponPolicyResponseDto;
@@ -123,23 +127,34 @@ class CouponPolicyServiceImplTest {
     }
 
     @Test
-    @DisplayName("모든 쿠폰 정책 조회 - 서비스")
-    void findCouponPolies() {
+    @DisplayName("쿠폰 정책 조회")
+    void getCouponPolicies() {
         // Given
-        List<CouponPolicy> testCouponPolicies = Arrays.asList(
-            new CouponPolicy(1L, new BigDecimal("0.1"), 50000L, 2000L, 30),
-            new CouponPolicy(2L, new BigDecimal("0.3"), 25000L, 2500L, 90)
+        Pageable pageable = PageRequest.of(0, 10);
+
+        List<CouponPolicyResponseDto> policies = Arrays.asList(
+            new CouponPolicyResponseDto(1L, new BigDecimal("0.5"), 25000L, 3000L, 15),
+            new CouponPolicyResponseDto(2L, new BigDecimal("5000"), 20000L, 2500L, 10)
         );
 
-        when(couponPolicyRepository.findAll()).thenReturn(testCouponPolicies);
+        Page<CouponPolicyResponseDto> pagedPolicies = new PageImpl<>(policies, pageable, policies.size());
+
+        when(couponPolicyRepository.findAllCouponPolicies(pageable)).thenReturn(pagedPolicies);
 
         // When
-        List<CouponPolicyResponseDto> couponPolicyList = couponPolicyService.getAllCouponPolices();
+        Page<CouponPolicyResponseDto> result = couponPolicyService.getAllCouponPolices(pageable);
 
         // Then
-        assertThat(couponPolicyList).isNotNull();
-        assertThat(couponPolicyList.size()).isEqualTo(testCouponPolicies.size());
+        assertThat(result).isNotNull();
+        assertThat(result.getTotalElements()).isEqualTo(2);
+        assertThat(result.getTotalPages()).isEqualTo(1);
+        assertThat(result.getContent().size()).isEqualTo(2);
 
-        verify(couponPolicyRepository, times(1)).findAll();
+        CouponPolicyResponseDto policy1 = result.getContent().get(0);
+        assertThat(policy1.discountPrice()).isEqualTo(new BigDecimal("0.5"));
+        assertThat(policy1.maxPrice()).isEqualTo(3000L);
+        assertThat(policy1.duration()).isEqualTo(15);
+
+        verify(couponPolicyRepository, times(1)).findAllCouponPolicies(pageable);
     }
 }
