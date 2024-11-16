@@ -1,6 +1,7 @@
 package shop.s5g.shop.service.book.impl;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,11 +9,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import shop.s5g.shop.dto.PageResponseDto;
 import shop.s5g.shop.dto.book.BookPageableResponseDto;
 import shop.s5g.shop.dto.book.BookDetailResponseDto;
 import shop.s5g.shop.dto.book.BookRequestDto;
 import shop.s5g.shop.dto.book.BookResponseDto;
+import shop.s5g.shop.dto.bookCategory.BookCategoryBookResponseDto;
 import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.BookStatus;
 import shop.s5g.shop.entity.Publisher;
@@ -20,6 +21,7 @@ import shop.s5g.shop.exception.book.BookResourceNotFoundException;
 import shop.s5g.shop.exception.bookstatus.BookStatusResourceNotFoundException;
 import shop.s5g.shop.exception.publisher.PublisherResourceNotFoundException;
 import shop.s5g.shop.repository.book.BookRepository;
+import shop.s5g.shop.repository.bookcategory.BookCategoryRepository;
 import shop.s5g.shop.repository.bookstatus.BookStatusRepository;
 import shop.s5g.shop.repository.publisher.PublisherRepository;
 import shop.s5g.shop.service.book.BookService;
@@ -31,12 +33,14 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final PublisherRepository publisherRepository;
     private final BookStatusRepository statusRepository;
+    private final BookCategoryRepository bookcategoryRepository;
 
     @Autowired
-    public BookServiceImpl(BookRepository bookRepository, PublisherRepository publisherRepository, BookStatusRepository statusRepository) {
+    public BookServiceImpl(BookRepository bookRepository, PublisherRepository publisherRepository, BookStatusRepository statusRepository, BookCategoryRepository bookcategoryRepository) {
         this.bookRepository = bookRepository;
         this.publisherRepository = publisherRepository;
         this.statusRepository = statusRepository;
+        this.bookcategoryRepository = bookcategoryRepository;
     }
 
     //도서 등록
@@ -96,5 +100,22 @@ public class BookServiceImpl implements BookService {
             throw new BookResourceNotFoundException("Book with id " + bookId + " not found");
         }
         bookRepository.deleteById(bookId);
+    }
+
+    //도서id 리스트로 도서 리스트 조회
+    @Override
+    public List<BookDetailResponseDto> getBookListByBookIdList(List<BookCategoryBookResponseDto> bookIdList) {
+        List<BookDetailResponseDto> bookList = new ArrayList<>();
+        for(int i=0 ; i<bookIdList.size(); i++) {
+//            BookDetailResponseDto bookDetail = bookRepository.getBookDetail(bookIdList.get(i).BookId());
+//            bookList.add(bookDetail);
+        }
+        return bookList;
+    }
+
+    //categoryId로 bookList조회
+    @Override
+    public List<BookPageableResponseDto> getBookList(Long categoryId) {
+        return bookcategoryRepository.getBookList(categoryId);
     }
 }

@@ -1,5 +1,6 @@
 package shop.s5g.shop.service.bookcategory;
 
+import shop.s5g.shop.dto.bookCategory.BookCategoryBookResponseDto;
 import shop.s5g.shop.dto.bookCategory.BookCategoryResponseDto;
 
 import java.util.List;
@@ -10,4 +11,8 @@ public interface BookCategoryService {
     List<BookCategoryResponseDto> getCategoryInBook(Long bookId);
 
     void deleteCategory(Long bookId, Long categoryId);
+
+    List<BookCategoryBookResponseDto> getBookByCategoryId(Long categoryId);
+
+    List<BookCategoryResponseDto> getAllBookCategory();
 }

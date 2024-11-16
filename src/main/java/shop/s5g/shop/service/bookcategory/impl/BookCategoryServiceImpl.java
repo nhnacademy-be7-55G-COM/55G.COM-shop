@@ -2,6 +2,7 @@ package shop.s5g.shop.service.bookcategory.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import shop.s5g.shop.dto.bookCategory.BookCategoryBookResponseDto;
 import shop.s5g.shop.dto.bookCategory.BookCategoryResponseDto;
 import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.bookCategory.BookCategory;
@@ -25,6 +26,7 @@ public class BookCategoryServiceImpl implements BookCategoryService {
     private final BookRepository bookRepository;
     private final CategoryRepository categoryRepository;
 
+
     //도서 내 카테고리 등록
     @Override
     public void addCategoryInBook(Long bookId, Long categoryId) {
@@ -44,6 +46,13 @@ public class BookCategoryServiceImpl implements BookCategoryService {
         bookCategoryRepository.save(bookCategory);
     }
 
+    //도서카테고리 전체 조회
+    @Override
+    public List<BookCategoryResponseDto> getAllBookCategory() {
+        List<BookCategory> bookCategories = bookCategoryRepository.findAll();
+        return bookCategoryRepository.findAllBookCategory();
+    }
+
     //도서 내 카테고리 조회
     @Override
     public List<BookCategoryResponseDto> getCategoryInBook(Long bookId) {
@@ -54,6 +63,16 @@ public class BookCategoryServiceImpl implements BookCategoryService {
 
         //bookId로 categoryId 리스트 찾기
         return bookCategoryRepository.findCategoryByBookId(bookId);
+    }
+
+    //카테고리 id로 도서 조회
+    @Override
+    public List<BookCategoryBookResponseDto> getBookByCategoryId(Long categoryId) {
+        if (categoryId < 1) {
+            throw new BookCategoryBadRequestException("categoryId는 1보다 커야 합니다.");
+        }
+        List<BookCategoryBookResponseDto> bookCategory = bookCategoryRepository.findBookByCategoryId(categoryId);
+        return bookCategory;
     }
 
     //도서 내 카테고리 삭제

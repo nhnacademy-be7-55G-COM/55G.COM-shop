@@ -10,10 +10,10 @@ import shop.s5g.shop.dto.category.CategoryUpdateRequestDto;
 import java.util.List;
 
 public interface CategoryService {
-    public void createCategory(CategoryRequestDto categorydto);
-    public Page<CategoryResponseDto> allCategory(Pageable pageable);
-    public void updateCategory(Long categoryId, CategoryUpdateRequestDto categoryDto);
-    public void deleteCategory(Long categoryId);
+    void createCategory(CategoryRequestDto categorydto);
+    Page<CategoryResponseDto> allCategory(Pageable pageable);
+    void updateCategory(Long categoryId, CategoryUpdateRequestDto categoryDto);
+    void deleteCategory(Long categoryId);
 
     List<CategoryResponseDto> getChildCategory(long categoryId);
 
