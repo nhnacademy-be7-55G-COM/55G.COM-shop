@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 import shop.s5g.shop.config.RedisConfig;
+import shop.s5g.shop.dto.cart.request.CartBookSelectRequestDto;
 
 @Repository
 @RequiredArgsConstructor
@@ -45,32 +46,45 @@ public class CartRedisRepository {
     public void deleteOldCart(String customerLoginId) {
         redisTemplate.delete(CART + customerLoginId);
     }
-
+    //TODO 수정필요
     public void putBookByMap(Map<Long,Integer> books,String customerLoginId) {
         redisTemplate.opsForHash().putAll(CART + customerLoginId, books);
 
     }
 
     public void putBook(Long bookId,Integer quantity,String customerLoginId) {
-        Integer newQuantity = Optional.ofNullable(
-                redisTemplate.opsForHash().get(CART + customerLoginId, bookId))
-            .map(currentQuantity -> (Integer) currentQuantity + quantity).orElse(quantity);
 
-        redisTemplate.opsForHash().put(CART + customerLoginId, bookId, newQuantity);
+        CartFieldValue quantityStatus = (CartFieldValue) redisTemplate.opsForHash()
+            .get(CART + customerLoginId, bookId);
+
+        if (Objects.isNull(quantityStatus)) {
+            redisTemplate.opsForHash()
+                .put(CART + customerLoginId, bookId, new CartFieldValue(quantity, true));
+
+        }else {
+            quantityStatus.setQuantity(quantityStatus.getQuantity() + quantity);
+
+            redisTemplate.opsForHash().put(CART + customerLoginId, bookId, quantityStatus);
+        }
+
+
     }
 
 
 
-    public void reduceBookQuantity(Long bookId, String customerLoginId) {
-        Integer existingQuantity = (Integer) redisTemplate.opsForHash().get(CART + customerLoginId, bookId);
 
-        if (Objects.nonNull(existingQuantity)){
-            if (existingQuantity <= 1) {
+    public void reduceBookQuantity(Long bookId, String customerLoginId) {
+        CartFieldValue bookQuantityStatus = (CartFieldValue) redisTemplate.opsForHash().get(CART + customerLoginId, bookId);
+
+        if (Objects.nonNull(bookQuantityStatus)){
+            if (bookQuantityStatus.getQuantity() <= 1) {
                 redisTemplate.opsForHash().delete(CART + customerLoginId, bookId);
                 return;
             }
 
-            redisTemplate.opsForHash().put(CART + customerLoginId, bookId, existingQuantity - 1);
+            bookQuantityStatus.setQuantity(bookQuantityStatus.getQuantity() - 1);
+            redisTemplate.opsForHash().put(CART + customerLoginId, bookId, bookQuantityStatus);
+
         }
 
     }
@@ -80,5 +94,15 @@ public class CartRedisRepository {
         redisTemplate.opsForHash().delete(CART + customerLoginId, bookId);
     }
 
+    public void changeBookStatus(String customerLoginId,
+        CartBookSelectRequestDto cartBookSelectRequestDto) {
 
+        Optional.ofNullable(redisTemplate.opsForHash().get(CART + customerLoginId, cartBookSelectRequestDto.bookId())).ifPresent(book ->{
+            CartFieldValue cartFieldValue = (CartFieldValue) book;
+            cartFieldValue.setStatus(cartBookSelectRequestDto.status());
+            redisTemplate.opsForHash()
+                .put(CART + customerLoginId, cartBookSelectRequestDto.bookId(), cartFieldValue);
+        });
+
+    }
 }

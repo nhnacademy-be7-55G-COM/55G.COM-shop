@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import shop.s5g.shop.config.RedisConfig;
 import shop.s5g.shop.dto.cart.request.CartBookInfoRequestDto;
+import shop.s5g.shop.dto.cart.request.CartBookSelectRequestDto;
 import shop.s5g.shop.dto.cart.request.CartControlQuantityRequestDto;
 import shop.s5g.shop.dto.cart.request.CartDeleteBookRequestDto;
 import shop.s5g.shop.dto.cart.request.CartLoginRequestDto;
@@ -190,6 +191,18 @@ public class CartController {
             customerLoginId);
 
         return ResponseEntity.status(HttpStatus.OK).body(booksWhenPurchase);
+    }
+
+    @PostMapping("/cart/changeBookStatus")
+    public ResponseEntity<Void> changeBookStatus(
+        @AuthenticationPrincipal ShopMemberDetail shopMemberDetail,
+        @RequestBody CartBookSelectRequestDto cartBookSelectRequestDto) {
+
+        String customerLoginId = shopMemberDetail.getLoginId();
+
+        cartService.changeBookStatus(customerLoginId, cartBookSelectRequestDto);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 }

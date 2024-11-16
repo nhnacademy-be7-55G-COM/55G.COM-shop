@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.config.RedisConfig;
 import shop.s5g.shop.dto.cart.request.CartBookInfoRequestDto;
+import shop.s5g.shop.dto.cart.request.CartBookSelectRequestDto;
 import shop.s5g.shop.dto.cart.request.CartSessionStorageDto;
 import shop.s5g.shop.dto.cart.response.CartBooksResponseDto;
 import shop.s5g.shop.dto.cart.response.CartDetailInfoResponseDto;
@@ -24,11 +25,11 @@ import shop.s5g.shop.exception.BadRequestException;
 import shop.s5g.shop.exception.ResourceNotFoundException;
 
 import shop.s5g.shop.repository.book.BookRepository;
+import shop.s5g.shop.repository.cart.CartFieldValue;
 import shop.s5g.shop.repository.cart.CartRedisRepository;
 import shop.s5g.shop.repository.cart.CartRepository;
 
 
-import shop.s5g.shop.repository.member.MemberRepository;
 import shop.s5g.shop.service.cart.CartService;
 import shop.s5g.shop.service.member.MemberService;
 
@@ -166,7 +167,9 @@ public class CartServiceImpl implements CartService {
             throw new BadRequestException("SessionId Is Not Valid");
         }
 
-        Map<Long, Integer> booksInRedisCart = getBooksInRedisCart(customerLoginId);
+        Map<Long, CartFieldValue> booksInRedisCart = getBooksInRedisCartWithStatus(
+            customerLoginId);
+
 
         if (booksInRedisCart.isEmpty()) {
             List<CartBooksResponseDto> emptyList = new ArrayList<>();
@@ -180,7 +183,8 @@ public class CartServiceImpl implements CartService {
             .map(book -> new CartBooksResponseDto(book.getBookId(), book.getPrice(),
                 BigDecimal.valueOf(book.getPrice())
                     .multiply(BigDecimal.valueOf(1).subtract(book.getDiscountRate())),
-                booksInRedisCart.get(book.getBookId()), book.getStock(), book.getTitle())
+                booksInRedisCart.get(book.getBookId()).getQuantity(), book.getStock(),
+                book.getTitle(), "image", booksInRedisCart.get(book.getBookId()).isStatus())
             ).toList();
 
         return cartBooks;
@@ -206,7 +210,8 @@ public class CartServiceImpl implements CartService {
             .map(book -> new CartBooksResponseDto(book.getBookId(), book.getPrice(),
                 BigDecimal.valueOf(book.getPrice())
                     .multiply(BigDecimal.valueOf(1).subtract(book.getDiscountRate())),
-                booksInSessionStorage.get(book.getBookId()), book.getStock(), book.getTitle())
+                booksInSessionStorage.get(book.getBookId()), book.getStock(), book.getTitle(),
+                "image", true)
             ).toList();
 
         return cartBooks;
@@ -254,9 +259,37 @@ public class CartServiceImpl implements CartService {
         Map<Object, Object> booksInRedisCart = cartRedisRepository.getBooksInRedisCart(customerLoginId);
 
         booksInRedisCart.entrySet()
-            .forEach(entry -> result.put((Long) entry.getKey(), (Integer) entry.getValue()));
+            .forEach(entry -> result.put((Long) entry.getKey(), ((CartFieldValue) entry.getValue()).getQuantity()));
 
         return result;
+
+    }
+
+    public Map<Long, CartFieldValue> getBooksInRedisCartWithStatus(String customerLoginId) {
+        Map<Object, Object> booksInRedisCart = cartRedisRepository.getBooksInRedisCart(
+            customerLoginId);
+
+        return booksInRedisCart.entrySet().stream().collect(Collectors.toMap(
+            entry -> (Long) entry.getKey(),
+            entry -> (CartFieldValue)  entry.getValue()
+        ));
+    }
+
+    @Override
+    public Map<Long, Integer> getBooksInRedisCartWithStatusTrue(String customerLoginId) {
+
+
+        Map<Object, Object> booksInRedisCart = cartRedisRepository.getBooksInRedisCart(customerLoginId);
+
+        return booksInRedisCart.entrySet().stream().filter(
+                entry -> entry.getValue() instanceof CartFieldValue
+                    && ((CartFieldValue) entry.getValue()).isStatus())
+            .collect(Collectors.toMap(
+                entry -> (Long) entry.getKey(),
+                entry -> ((CartFieldValue) entry.getValue()).getQuantity()
+            ));
+
+
 
     }
 
@@ -282,7 +315,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public List<CartBookInfoRequestDto> getBooksWhenPurchase(String customerLoginId) {
 
-        Map<Long, Integer> booksInRedisCart = getBooksInRedisCart(customerLoginId);
+        Map<Long, Integer> booksInRedisCart = getBooksInRedisCartWithStatusTrue(customerLoginId);
 
         List<CartBookInfoRequestDto> books = new ArrayList<>();
 
@@ -293,7 +326,12 @@ public class CartServiceImpl implements CartService {
         return books;
     }
 
+    @Override
+    public void changeBookStatus(String customerLoginId,
+        CartBookSelectRequestDto cartBookSelectRequestDto) {
 
+        cartRedisRepository.changeBookStatus(customerLoginId, cartBookSelectRequestDto);
 
+    }
 
 }

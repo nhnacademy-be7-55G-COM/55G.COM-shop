@@ -4,6 +4,7 @@ package shop.s5g.shop.service.cart;
 import java.util.List;
 import java.util.Map;
 import shop.s5g.shop.dto.cart.request.CartBookInfoRequestDto;
+import shop.s5g.shop.dto.cart.request.CartBookSelectRequestDto;
 import shop.s5g.shop.dto.cart.request.CartSessionStorageDto;
 import shop.s5g.shop.dto.cart.response.CartBooksResponseDto;
 import shop.s5g.shop.dto.cart.response.CartDetailInfoResponseDto;
@@ -25,6 +26,11 @@ public interface CartService {
 
     // ----------- only Redis 관련 -----------
     List<CartBookInfoRequestDto> getBooksWhenPurchase(String customerLoginId);
+
+    void changeBookStatus(String customerLoginId,
+        CartBookSelectRequestDto cartBookSelectRequestDto);
+
+    Map<Long, Integer> getBooksInRedisCartWithStatusTrue(String customerLoginId);
 
     void controlQuantity(Long bookId, int change, String customerLoginId);
 
