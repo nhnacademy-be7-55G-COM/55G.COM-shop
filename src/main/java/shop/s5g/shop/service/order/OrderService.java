@@ -4,8 +4,10 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
+import shop.s5g.shop.dto.order.OrderAdminTableView;
 import shop.s5g.shop.dto.order.OrderCreateRequestDto;
 import shop.s5g.shop.dto.order.OrderCreateResponseDto;
+import shop.s5g.shop.dto.order.OrderQueryFilterDto;
 import shop.s5g.shop.dto.order.OrderQueryRequestDto;
 import shop.s5g.shop.dto.order.OrderWithDetailResponseDto;
 import shop.s5g.shop.entity.order.Order;
@@ -23,4 +25,6 @@ public interface OrderService {
         long customerId, OrderQueryRequestDto queryRequest);
 
     void deactivateOrder(long orderId);
+
+    List<OrderAdminTableView> getOrderListAdmin(OrderQueryFilterDto filter);
 }

@@ -7,9 +7,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.delivery.DeliveryCreateRequestDto;
+import shop.s5g.shop.dto.order.OrderAdminTableView;
 import shop.s5g.shop.dto.order.OrderCreateRequestDto;
 import shop.s5g.shop.dto.order.OrderCreateResponseDto;
 import shop.s5g.shop.dto.order.OrderDetailCreateRequestDto;
+import shop.s5g.shop.dto.order.OrderQueryFilterDto;
 import shop.s5g.shop.dto.order.OrderQueryRequestDto;
 import shop.s5g.shop.dto.order.OrderWithDetailResponseDto;
 import shop.s5g.shop.entity.Book;
@@ -131,5 +133,11 @@ public class OrderServiceImpl implements OrderService {
     public void deactivateOrder(long orderId) {
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new ResourceNotFoundException("Given id is not available: "+orderId));
         order.setActive(false);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<OrderAdminTableView> getOrderListAdmin(OrderQueryFilterDto filter) {
+        return orderRepository.findOrdersUsingFilterForAdmin(filter);
     }
 }

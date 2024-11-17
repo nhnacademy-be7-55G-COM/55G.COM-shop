@@ -28,10 +28,12 @@ redis:
   port: 1
   password: password
 rabbit:
-  queue:
-    orders:
-      payment:
-        toss: 55g.orders.payment.queue
+  orders:
+    payment:
+      toss:
+        queue: 55g.orders.payment.queue
+        dlq: 55g.orders.payment.queue.dlq
+
 management:
   endpoints:
     web:

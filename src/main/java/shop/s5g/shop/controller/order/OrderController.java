@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import shop.s5g.shop.dto.order.OrderAdminTableView;
 import shop.s5g.shop.dto.order.OrderCreateRequestDto;
 import shop.s5g.shop.dto.order.OrderCreateResponseDto;
+import shop.s5g.shop.dto.order.OrderQueryFilterDto;
 import shop.s5g.shop.dto.order.OrderQueryRequestDto;
 import shop.s5g.shop.dto.order.OrderWithDetailResponseDto;
 import shop.s5g.shop.exception.BadRequestException;
@@ -65,5 +67,17 @@ public class OrderController {
     public ResponseEntity<HttpStatus> deleteOrder(@PathVariable long orderId) {
         orderService.deactivateOrder(orderId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/admin")
+    public List<OrderAdminTableView> fetchOrdersForAdmin(
+        @Valid OrderQueryFilterDto filter,
+        BindingResult errors
+    ) {
+        if (errors.hasErrors()) {
+            throw new BadRequestException("필터가 잘못되었습니다");
+        }
+        return orderService.getOrderListAdmin(filter);
     }
 }
