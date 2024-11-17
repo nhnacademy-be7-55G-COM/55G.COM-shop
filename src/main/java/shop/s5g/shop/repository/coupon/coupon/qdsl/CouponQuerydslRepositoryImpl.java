@@ -6,8 +6,6 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import java.time.LocalDateTime;
-import java.util.List;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import shop.s5g.shop.dto.coupon.coupon.CouponResponseDto;
 import shop.s5g.shop.entity.coupon.Coupon;
@@ -58,29 +56,6 @@ public class CouponQuerydslRepositoryImpl extends QuerydslRepositorySupport impl
             .from(qCoupon)
             .where(qCoupon.couponId.eq(couponId))
             .fetchOne();
-    }
-
-    /**
-     * 쿠폰 조회 - Pageable 쿼리dsl
-     * @param pageable
-     * @return List<CouponResponseDto>
-     */
-    @Override
-    public List<CouponResponseDto> findCoupons(Pageable pageable) {
-
-        QCoupon coupon = QCoupon.coupon;
-
-        return jpaQueryFactory
-            .select(Projections.constructor(CouponResponseDto.class,
-                coupon.couponTemplate,
-                coupon.couponCode,
-                coupon.createdAt,
-                coupon.expiredAt,
-                coupon.usedAt))
-            .from(coupon)
-            .offset(pageable.getOffset())
-            .limit(pageable.getPageSize())
-            .fetch();
     }
 
     /**

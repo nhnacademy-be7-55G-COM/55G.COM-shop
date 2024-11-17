@@ -14,7 +14,10 @@ import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.coupon.CouponBook;
 import shop.s5g.shop.entity.coupon.CouponTemplate;
 import shop.s5g.shop.exception.book.BookResourceNotFoundException;
+import shop.s5g.shop.exception.bookstatus.BookStatusBadRequestException;
+import shop.s5g.shop.exception.bookstatus.BookStatusResourceNotFoundException;
 import shop.s5g.shop.exception.coupon.CouponBookAlreadyExistsException;
+import shop.s5g.shop.exception.coupon.CouponBookNotFoundException;
 import shop.s5g.shop.exception.coupon.CouponTemplateNotFoundException;
 import shop.s5g.shop.repository.book.BookRepository;
 import shop.s5g.shop.repository.coupon.book.CouponBookRepository;
@@ -40,7 +43,9 @@ public class CouponBookServiceImpl implements CouponBookService {
         Book book = bookRepository.findById(couponBookRequestDto.bookId())
             .orElseThrow(() -> new BookResourceNotFoundException("해당 책을 찾을 수 없습니다."));
 
-        //TODO 도서 상태 로직 추가 예정
+        if (!bookRepository.findBookStatus(couponBookRequestDto.bookId()).equalsIgnoreCase("ONSALE")) {
+            throw new BookStatusResourceNotFoundException("해당 책은 판매중이 아닙니다.");
+        }
 
         CouponTemplate couponTemplate = couponTemplateRepository.findById(couponBookRequestDto.couponTemplateId())
             .orElseThrow(() -> new CouponTemplateNotFoundException("해당 쿠폰 템플릿을 찾을 수 없습니다."));
@@ -68,6 +73,14 @@ public class CouponBookServiceImpl implements CouponBookService {
      */
     @Override
     public CouponBookResponseDto getCouponBook(CouponBookRequestDto couponBookRequestDto) {
+
+        if (!couponBookRepository.existsByBookAndCouponTemplate(
+            couponBookRequestDto.bookId(),
+            couponBookRequestDto.couponTemplateId())
+        ) {
+            throw new CouponBookNotFoundException("해당 couponBook은 존재하지 않습니다.");
+        }
+
         return couponBookRepository.findCouponBook(couponBookRequestDto);
     }
 
