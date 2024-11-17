@@ -62,11 +62,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
 
             UserDetailResponseDto responseDto = responseEntity.getBody();
+            String role = responseDto.role();
+            ShopMemberDetail detail = null;
 
-            long customerId = memberService.getMember(responseDto.username()).getId();
-
-            ShopMemberDetail detail = new ShopMemberDetail(responseDto.username(),
-                responseDto.role(), customerId);
+            if (role.equals("ROLE_MEMBER")) {
+                long customerId = memberService.getMember(responseDto.username()).getId();
+                detail = new ShopMemberDetail(responseDto.username(),
+                    responseDto.role(), customerId);
+            } else if (role.equals("ROLE_ADMIN")) {
+                detail = new ShopMemberDetail(responseDto.username(), responseDto.role(), null);
+            }
 
             AbstractAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                 detail, null, Collections.singletonList(new SimpleGrantedAuthority(

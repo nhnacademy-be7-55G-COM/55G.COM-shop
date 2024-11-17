@@ -6,8 +6,6 @@ import shop.s5g.shop.dto.coupon.book.CouponBookDetailsForBookDto;
 import shop.s5g.shop.dto.coupon.book.CouponBookRequestDto;
 import shop.s5g.shop.dto.coupon.book.CouponBookResponseDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateResponseDto;
-import shop.s5g.shop.entity.Book;
-import shop.s5g.shop.entity.coupon.CouponTemplate;
 
 public interface CouponBookQuerydslRepository {
 

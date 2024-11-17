@@ -9,12 +9,13 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
-import shop.s5g.shop.config.QueryFactoryConfig;
+import shop.s5g.shop.config.TestQueryFactoryConfig;
 import shop.s5g.shop.dto.order.OrderDetailWithBookResponseDto;
+import shop.s5g.shop.entity.order.OrderDetail;
 
 @DataJpaTest
 @ActiveProfiles({"embed-db", "test"})
-@Import(QueryFactoryConfig.class)
+@Import(TestQueryFactoryConfig.class)
 class OrderDetailRepositoryTest {
     @Autowired
     OrderDetailRepository orderDetailRepository;
@@ -45,5 +46,23 @@ class OrderDetailRepositoryTest {
         assertThat(result.get(2))
             .hasFieldOrPropertyWithValue("bookTitle", "테스트 타이틀3")
             .hasFieldOrPropertyWithValue("quantity", 1);
+    }
+
+    @Test
+    @Sql("classpath:order-test.sql")
+    void fetchOrderDetailsByOrderIdTest() {
+        final long orderId = 1L;
+        List<OrderDetail> result = orderDetailRepository.fetchOrderDetailsByOrderId(orderId);
+
+        assertThat(result).hasSize(3);
+        assertThat(result.getFirst())
+            .hasFieldOrPropertyWithValue("quantity", 3);
+
+        // fetch join을 하는지 로그를 볼 것.
+        assertThat(result.getFirst().getBook())
+            .hasFieldOrPropertyWithValue("title", "테스트 타이틀1");
+        assertThat(result.getFirst().getOrder())
+            .hasFieldOrPropertyWithValue("id", orderId);
+
     }
 }

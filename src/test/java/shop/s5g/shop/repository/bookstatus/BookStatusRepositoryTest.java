@@ -1,20 +1,19 @@
 package shop.s5g.shop.repository.bookstatus;
 
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import shop.s5g.shop.config.QueryFactoryConfig;
+import shop.s5g.shop.config.TestQueryFactoryConfig;
 import shop.s5g.shop.dto.bookstatus.BookStatusResponseDto;
 import shop.s5g.shop.entity.BookStatus;
 
-import java.util.List;
-
 @DataJpaTest
-@Import(QueryFactoryConfig.class)
-public class BookStatusRepositoryTest {
+@Import(TestQueryFactoryConfig.class)
+class BookStatusRepositoryTest {
     @Autowired
     private BookStatusRepository bookStatusRepository;
 

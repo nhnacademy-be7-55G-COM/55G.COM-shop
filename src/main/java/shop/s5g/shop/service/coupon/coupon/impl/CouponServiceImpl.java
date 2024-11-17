@@ -81,16 +81,6 @@ public class CouponServiceImpl implements CouponService {
     }
 
     /**
-     * 쿠폰 조회 ( Pageable )
-     * @param pageable
-     * @return List<CouponResponseDto>
-     */
-    @Override
-    public List<CouponResponseDto> getCoupons(Pageable pageable) {
-        return couponRepository.findCoupons(pageable);
-    }
-
-    /**
      * 쿠폰 수정
      * @param couponId
      */

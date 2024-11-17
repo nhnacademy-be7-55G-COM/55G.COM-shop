@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import shop.s5g.shop.dto.PageResponseDto;
 import shop.s5g.shop.dto.coupon.book.CouponBookDetailsForBookDto;
 import shop.s5g.shop.dto.coupon.book.CouponBookRequestDto;
 import shop.s5g.shop.dto.coupon.book.CouponBookResponseDto;
@@ -54,10 +55,11 @@ public class CouponBookController {
      * @return Page<CouponBookResponseDto>
      */
     @GetMapping("/books")
-    public ResponseEntity<Page<CouponBookResponseDto>> findAllCouponBooks(Pageable pageable) {
+    public ResponseEntity<PageResponseDto<CouponBookResponseDto>> findAllCouponBooks(Pageable pageable) {
         Page<CouponBookResponseDto> couponBookList = couponBookService.getCouponBooks(pageable);
 
-        return ResponseEntity.status(HttpStatus.OK).body(couponBookList);
+        return ResponseEntity.status(HttpStatus.OK)
+            .body(PageResponseDto.of(couponBookList));
     }
 
     /**
@@ -67,12 +69,13 @@ public class CouponBookController {
      * @return Page<CouponTemplateResponseDto>
      */
     @GetMapping("/books/{bookId}")
-    public ResponseEntity<Page<CouponTemplateResponseDto>> getCouponBooksByBookId(@PathVariable("bookId") Long bookId,
+    public ResponseEntity<PageResponseDto<CouponTemplateResponseDto>> getCouponBooksByBookId(@PathVariable("bookId") Long bookId,
         Pageable pageable) {
 
         Page<CouponTemplateResponseDto> templateList = couponBookService.getCouponBooksByBookId(bookId, pageable);
 
-        return ResponseEntity.status(HttpStatus.OK).body(templateList);
+        return ResponseEntity.status(HttpStatus.OK)
+            .body(PageResponseDto.of(templateList));
     }
 
     /**
@@ -82,11 +85,12 @@ public class CouponBookController {
      * @return Page<CouponBookDetailsForBookDto>
      */
     @GetMapping("/books/template/{templateId}")
-    public ResponseEntity<Page<CouponBookDetailsForBookDto>> getCouponBooksByTemplateId(@PathVariable("templateId") Long templateId,
+    public ResponseEntity<PageResponseDto<CouponBookDetailsForBookDto>> getCouponBooksByTemplateId(@PathVariable("templateId") Long templateId,
         Pageable pageable) {
 
         Page<CouponBookDetailsForBookDto> bookList = couponBookService.getCouponBooksByTemplateId(templateId, pageable);
 
-        return ResponseEntity.status(HttpStatus.OK).body(bookList);
+        return ResponseEntity.status(HttpStatus.OK)
+            .body(PageResponseDto.of(bookList));
     }
 }

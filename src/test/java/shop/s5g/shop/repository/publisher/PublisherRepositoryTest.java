@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
-import shop.s5g.shop.config.QueryFactoryConfig;
+import shop.s5g.shop.config.TestQueryFactoryConfig;
 import shop.s5g.shop.dto.publisher.PublisherRequestDto;
 import shop.s5g.shop.dto.publisher.PublisherResponseDto;
 import shop.s5g.shop.entity.Publisher;
@@ -15,8 +15,8 @@ import shop.s5g.shop.exception.publisher.PublisherResourceNotFoundException;
 import shop.s5g.shop.repository.publisher.qdsl.impl.PublisherQuerydslRepositoryImpl;
 
 @DataJpaTest
-@Import(QueryFactoryConfig.class)
-public class PublisherRepositoryTest {
+@Import(TestQueryFactoryConfig.class)
+class PublisherRepositoryTest {
 
     @Autowired
     private PublisherRepository publisherRepository;

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import shop.s5g.shop.config.QueryFactoryConfig;
+import shop.s5g.shop.config.TestQueryFactoryConfig;
 import shop.s5g.shop.dto.bookCategory.BookCategoryResponseDto;
 import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.BookStatus;
@@ -23,7 +24,7 @@ import shop.s5g.shop.repository.category.CategoryRepository;
 import shop.s5g.shop.repository.publisher.PublisherRepository;
 
 @DataJpaTest
-@Import(QueryFactoryConfig.class)
+@Import(TestQueryFactoryConfig.class)
 class BookCategoryRepositoryTest {
 
     private final BookCategoryRepository bookCategoryRepository;

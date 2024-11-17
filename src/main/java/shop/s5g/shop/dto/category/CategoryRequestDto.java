@@ -4,10 +4,8 @@ import jakarta.validation.constraints.NotNull;
 
 public record CategoryRequestDto (
 
-    String parentCategoryName,
-    @NotNull
     String categoryName,
     @NotNull
-    boolean active
+    long parentCategoryId
 ){
 }
