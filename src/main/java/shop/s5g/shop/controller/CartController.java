@@ -46,6 +46,7 @@ public class CartController {
 
     private final CartService cartService;
 
+
     //담기
     @PostMapping("/cart")
     public ResponseEntity<MessageDto> putBook(
@@ -155,8 +156,9 @@ public class CartController {
         }
         String customerLoginId = shopMemberDetail.getLoginId();
 
-        int cartCount = cartService.saveMergedCartToRedis(customerLoginId,
-            cartLoginRequestDto.cartBookInfoList());
+        cartService.saveMergedCartToRedis(customerLoginId, cartLoginRequestDto.cartBookInfoList());
+
+        int cartCount = cartService.getCartCountInRedis(customerLoginId);
 
         return ResponseEntity.status(HttpStatus.OK).body(Map.of("cartCount", cartCount));
     }
@@ -187,6 +189,7 @@ public class CartController {
         @AuthenticationPrincipal ShopMemberDetail shopMemberDetail) {
 
         String customerLoginId = shopMemberDetail.getLoginId();
+
         List<CartBookInfoRequestDto> booksWhenPurchase = cartService.getBooksWhenPurchase(
             customerLoginId);
 
@@ -196,7 +199,12 @@ public class CartController {
     @PostMapping("/cart/changeBookStatus")
     public ResponseEntity<Void> changeBookStatus(
         @AuthenticationPrincipal ShopMemberDetail shopMemberDetail,
-        @RequestBody CartBookSelectRequestDto cartBookSelectRequestDto) {
+        @RequestBody CartBookSelectRequestDto cartBookSelectRequestDto,
+        BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            throw new BadRequestException("Failed When Check or UnCheck Book In Cart");
+        }
 
         String customerLoginId = shopMemberDetail.getLoginId();
 
@@ -204,5 +212,6 @@ public class CartController {
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
 
 }

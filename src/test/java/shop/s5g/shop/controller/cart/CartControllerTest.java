@@ -94,9 +94,9 @@ class CartControllerTest {
 
         //given
         CartBooksResponseDto cartBooksRes1 = new CartBooksResponseDto(1l, 100L,
-            BigDecimal.valueOf(90l), 3, 10, "title1");
+            BigDecimal.valueOf(90l), 3, 10, "title1", "image", true);
         CartBooksResponseDto cartBooksRes2 = new CartBooksResponseDto(2l, 200L,
-            BigDecimal.valueOf(180l), 3, 10, "title2");
+            BigDecimal.valueOf(180l), 3, 10, "title2", "image", true);
 
         List<CartBooksResponseDto> cartBook = new ArrayList<>();
         cartBook.add(cartBooksRes1);

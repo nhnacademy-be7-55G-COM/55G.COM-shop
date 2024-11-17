@@ -1,6 +1,7 @@
 package shop.s5g.shop.repository.cart;
 
 
+
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -46,8 +47,8 @@ public class CartRedisRepository {
     public void deleteOldCart(String customerLoginId) {
         redisTemplate.delete(CART + customerLoginId);
     }
-    //TODO 수정필요
-    public void putBookByMap(Map<Long,Integer> books,String customerLoginId) {
+
+    public void putBookByMap(Map<Long,CartFieldValue> books,String customerLoginId) {
         redisTemplate.opsForHash().putAll(CART + customerLoginId, books);
 
     }
@@ -105,4 +106,6 @@ public class CartRedisRepository {
         });
 
     }
+
+
 }

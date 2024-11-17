@@ -9,6 +9,7 @@ import shop.s5g.shop.dto.cart.request.CartSessionStorageDto;
 import shop.s5g.shop.dto.cart.response.CartBooksResponseDto;
 import shop.s5g.shop.dto.cart.response.CartDetailInfoResponseDto;
 import shop.s5g.shop.entity.cart.Cart;
+import shop.s5g.shop.repository.cart.CartFieldValue;
 
 public interface CartService {
 
@@ -16,7 +17,7 @@ public interface CartService {
 
     void saveAll(List<Cart> mergedCart);
 
-    int saveMergedCartToRedis(String customerLoginId,List<CartBookInfoRequestDto> cartBookInfoList);
+    void saveMergedCartToRedis(String customerLoginId,List<CartBookInfoRequestDto> cartBookInfoList);
 
     void FromRedisToDb(String customerLoginId);
 
@@ -25,6 +26,10 @@ public interface CartService {
     void removeAccount(String customerLoginId);
 
     // ----------- only Redis 관련 -----------
+    int getCartCountInRedis(String customerLoginId);
+
+    Map<Long, CartFieldValue> getBooksInRedisCartWithStatus(String customerLoginId);
+
     List<CartBookInfoRequestDto> getBooksWhenPurchase(String customerLoginId);
 
     void changeBookStatus(String customerLoginId,
