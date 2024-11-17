@@ -1,13 +1,12 @@
 package shop.s5g.shop.controller.book;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import shop.s5g.shop.dto.book.BookDocumentRequestDto;
+import shop.s5g.shop.dto.PageResponseDto;
 import shop.s5g.shop.dto.book.BookDocumentResponseDto;
 import shop.s5g.shop.service.book.BookDocumentService;
 
@@ -16,14 +15,16 @@ import shop.s5g.shop.service.book.BookDocumentService;
 @RequestMapping("/api/shop")
 public class BookDocumentController {
 
-    private final BookDocumentService bookSearchService;
+    private final BookDocumentService bookDocumentService;
 
     @GetMapping("/book/search")
-    public ResponseEntity<List<BookDocumentResponseDto>> searchByTitleOrDescription(
-        @RequestBody BookDocumentRequestDto bookSearchRequestDto
+    public PageResponseDto<BookDocumentResponseDto> searchByTitleOrDescription(
+        @RequestParam("keyword") String keyword,
+        Pageable pageable
     ) {
-        List<BookDocumentResponseDto> bookList = bookSearchService.searchByTitleOrDescription(
-            bookSearchRequestDto.keyword());
-        return ResponseEntity.ok().body(bookList);
+        if (keyword.isEmpty()) {
+            return bookDocumentService.findAllBooks(pageable);
+        }
+        return bookDocumentService.searchByTitleOrDescription(keyword, pageable);
     }
 }
