@@ -1,5 +1,6 @@
 package shop.s5g.shop.service.book.impl;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -56,7 +57,7 @@ public class BookServiceImpl implements BookService {
             bookDto.title(),
             bookDto.chapter(),
             bookDto.description(),
-            LocalDateTime.parse(bookDto.publishedDate()),
+            LocalDate.parse(bookDto.publishedDate()),
             bookDto.isbn(),
             bookDto.price(),
             bookDto.discountRate(),
@@ -107,7 +108,7 @@ public class BookServiceImpl implements BookService {
             bookDto.title(),
             bookDto.chapter(),
             bookDto.description(),
-            LocalDateTime.parse(bookDto.publishedDate()),
+            LocalDate.parse(bookDto.publishedDate()),
             bookDto.isbn(),
             bookDto.price(),
             bookDto.discountRate(),

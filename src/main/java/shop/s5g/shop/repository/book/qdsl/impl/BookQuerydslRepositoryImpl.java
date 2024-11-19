@@ -4,6 +4,8 @@ import com.querydsl.core.types.ConstantImpl;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,7 @@ import static shop.s5g.shop.entity.QBookStatus.bookStatus;
 import static shop.s5g.shop.entity.QCategory.category;
 import static shop.s5g.shop.entity.QPublisher.publisher;
 import static shop.s5g.shop.entity.book.category.QBookCategory.bookCategory;
+import static shop.s5g.shop.entity.QBookImage.bookImage;
 
 @Repository
 public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implements
@@ -56,7 +59,7 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
             .set(book.title, bookDto.title())
             .set(book.chapter, bookDto.chapter())
             .set(book.description, bookDto.description())
-            .set(book.publishedDate, LocalDateTime.parse(bookDto.publishedDate()))
+            .set(book.publishedDate, LocalDate.parse(bookDto.publishedDate()))
             .set(book.isbn, bookDto.isbn())
             .set(book.price, bookDto.price())
             .set(book.discountRate, bookDto.discountRate())
