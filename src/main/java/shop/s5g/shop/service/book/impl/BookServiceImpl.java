@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,20 +33,13 @@ import shop.s5g.shop.service.book.BookService;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final PublisherRepository publisherRepository;
     private final BookStatusRepository statusRepository;
     private final BookCategoryRepository bookcategoryRepository;
-
-    @Autowired
-    public BookServiceImpl(BookRepository bookRepository, PublisherRepository publisherRepository, BookStatusRepository statusRepository, BookCategoryRepository bookcategoryRepository) {
-        this.bookRepository = bookRepository;
-        this.publisherRepository = publisherRepository;
-        this.statusRepository = statusRepository;
-        this.bookcategoryRepository = bookcategoryRepository;
-    }
 
     //도서 등록
     public void createBook(BookRequestDto bookDto) {
