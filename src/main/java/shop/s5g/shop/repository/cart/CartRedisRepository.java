@@ -75,16 +75,16 @@ public class CartRedisRepository {
 
 
     public void reduceBookQuantity(Long bookId, String customerLoginId) {
-        CartFieldValue bookQuantityStatus = (CartFieldValue) redisTemplate.opsForHash().get(CART + customerLoginId, bookId);
+        CartFieldValue cartFieldValue = (CartFieldValue) redisTemplate.opsForHash().get(CART + customerLoginId, bookId);
 
-        if (Objects.nonNull(bookQuantityStatus)){
-            if (bookQuantityStatus.getQuantity() <= 1) {
+        if (Objects.nonNull(cartFieldValue)){
+            if (cartFieldValue.getQuantity() <= 1) {
                 redisTemplate.opsForHash().delete(CART + customerLoginId, bookId);
                 return;
             }
 
-            bookQuantityStatus.setQuantity(bookQuantityStatus.getQuantity() - 1);
-            redisTemplate.opsForHash().put(CART + customerLoginId, bookId, bookQuantityStatus);
+            cartFieldValue.setQuantity(cartFieldValue.getQuantity() - 1);
+            redisTemplate.opsForHash().put(CART + customerLoginId, bookId, cartFieldValue);
 
         }
 

@@ -56,6 +56,7 @@ public class CartServiceImpl implements CartService {
     }
 
     // 로그인 했을 때 세션스토리지와 db에 있는 걸 합쳐서 레디스에 옮김
+    //TODO readOnly 설정 고려할 것
     @Transactional
     @Override
     public void saveMergedCartToRedis(String customerLoginId,List<CartBookInfoRequestDto> cartBookInfoListInSession) {
@@ -184,7 +185,7 @@ public class CartServiceImpl implements CartService {
     public List<CartBooksResponseDto> lookUpAllBooks(String customerLoginId) {
 
         if (customerLoginId.isBlank()) {
-            throw new BadRequestException("SessionId Is Not Valid");
+            throw new BadRequestException("customerLoginId Is Not Valid");
         }
 
         Map<Long, CartFieldValue> booksInRedisCart = getBooksInRedisCartWithStatus(
@@ -322,7 +323,7 @@ public class CartServiceImpl implements CartService {
     public void removeAccount(String customerLoginId) {
 
         if (customerLoginId.isBlank()) {
-            throw new BadRequestException("SessionId Is Not Valid");
+            throw new BadRequestException("customerLoginId Is Not Valid");
         }
 
         deleteOldCart(customerLoginId);
@@ -337,7 +338,7 @@ public class CartServiceImpl implements CartService {
     public List<CartBookInfoRequestDto> getBooksWhenPurchase(String customerLoginId) {
 
         if (customerLoginId.isBlank()) {
-            throw new BadRequestException("SessionId Is Not Valid");
+            throw new BadRequestException("customerLoginId Is Not Valid");
         }
 
         Map<Long, Integer> booksInRedisCart = getBooksInRedisCartWithStatusTrue(customerLoginId);
@@ -353,11 +354,26 @@ public class CartServiceImpl implements CartService {
 
     @Transactional
     @Override
+    public void deleteBooksAfterPurchase(String customerLoginId){
+        if (customerLoginId.isBlank()) {
+            throw new BadRequestException("customerLoginId Is Not Valid");
+        }
+
+        Map<Long, Integer> purchasedBookList = getBooksInRedisCartWithStatusTrue(customerLoginId);
+
+        purchasedBookList.forEach((bookId,quantity) ->{
+            deleteBookFromCart(bookId, customerLoginId);
+        });
+
+    }
+
+    @Transactional
+    @Override
     public void changeBookStatus(String customerLoginId,
         CartBookSelectRequestDto cartBookSelectRequestDto) {
 
         if (customerLoginId.isBlank()) {
-            throw new BadRequestException("SessionId Is Not Valid");
+            throw new BadRequestException("customerLoginId Is Not Valid");
         }
 
         cartRedisRepository.changeBookStatus(customerLoginId, cartBookSelectRequestDto);
