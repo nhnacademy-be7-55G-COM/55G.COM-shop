@@ -3,6 +3,7 @@ package shop.s5g.shop.dto.book;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import shop.s5g.shop.dto.book.author.BookAuthorResponseDto;
 import shop.s5g.shop.dto.book.category.BookDetailCategoryResponseDto;
 
 public record BookDetailResponseDto(
