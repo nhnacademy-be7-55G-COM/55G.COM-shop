@@ -11,10 +11,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.GenericToStringSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.test.context.junit.jupiter.DisabledIf;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import shop.s5g.shop.repository.cart.CartFieldValue;
 import shop.s5g.shop.repository.cart.CartRedisRepository;
 
 @ExtendWith(SpringExtension.class)
@@ -46,6 +50,12 @@ class RedisRepositoryTest {
 
         redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(factory);
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        redisTemplate.setHashKeySerializer(new GenericToStringSerializer<>(Long.class));
+        redisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
+
+
         redisTemplate.afterPropertiesSet();
 
         cartRedisRepository = new CartRedisRepository(redisTemplate);
@@ -58,6 +68,9 @@ class RedisRepositoryTest {
             return null;
         });
     }
+
+
+
 
 
     @Test
@@ -97,7 +110,8 @@ class RedisRepositoryTest {
 
         String customerLoginId = "TestCustomerLoginId";
 
-        Map<Long, Integer> books = new HashMap<>(Map.of(1l, 1, 2l, 2));
+        Map<Long, CartFieldValue> books = new HashMap<>(
+            Map.of(1l, new CartFieldValue(1, true), 2l, new CartFieldValue(2, true)));
         cartRedisRepository.putBookByMap(books, customerLoginId);
 
         Assertions.assertThat(
@@ -126,7 +140,9 @@ class RedisRepositoryTest {
     void putBookByMapTest() {
         // given
         String customerLoginId = "TestCustomerLoginId";
-        Map<Long, Integer> books = new HashMap<>(Map.of(1l, 1, 2l, 2));
+        Map<Long, CartFieldValue> books = new HashMap<>(
+            Map.of(1l, new CartFieldValue(1, true), 2l, new CartFieldValue(2, true)));
+
 
         // when
         cartRedisRepository.putBookByMap(books, customerLoginId);
@@ -148,7 +164,7 @@ class RedisRepositoryTest {
 
         Assertions.assertThat(
                 redisTemplate.opsForHash().get(CartRedisRepository.CART + customerLoginId, bookId))
-            .isEqualTo(quantity);
+            .isEqualTo(new CartFieldValue(1, true));
     }
 
 
@@ -157,12 +173,14 @@ class RedisRepositoryTest {
     void reduceBookQuantityTest() {
         String customerLoginId = "TestCustomerLoginId";
 
-        Map<Long, Integer> books = new HashMap<>(Map.of(1l, 1, 2l, 2));
+        Map<Long, CartFieldValue> books = new HashMap<>(
+            Map.of(1l, new CartFieldValue(1, true), 2l, new CartFieldValue(2, true)));
         cartRedisRepository.putBookByMap(books, customerLoginId);
         Long bookId = 2l;
 
         cartRedisRepository.reduceBookQuantity(bookId, customerLoginId);
-        Map<Long, Integer> ReducedBooks = new HashMap<>(Map.of(1l, 1, 2l, 1));
+        Map<Long, CartFieldValue> ReducedBooks = new HashMap<>(
+            Map.of(1l, new CartFieldValue(1, true), 2l, new CartFieldValue(1, true)));
 
         Assertions.assertThat(
                 redisTemplate.opsForHash().entries(CartRedisRepository.CART + customerLoginId))
@@ -174,7 +192,8 @@ class RedisRepositoryTest {
     void reduceBookQuantityDeleteTest() {
         String customerLoginId = "TestCustomerLoginId";
 
-        Map<Long, Integer> books = new HashMap<>(Map.of(1l, 1, 2l, 2));
+        Map<Long, CartFieldValue> books = new HashMap<>(
+            Map.of(1l, new CartFieldValue(1, true), 2l, new CartFieldValue(2, true)));
         cartRedisRepository.putBookByMap(books, customerLoginId);
 
 
@@ -182,7 +201,8 @@ class RedisRepositoryTest {
         Integer quantity = 1;
         cartRedisRepository.reduceBookQuantity(bookId, customerLoginId);
 
-        Map<Long, Integer> ReducedBooks = new HashMap<>(Map.of(2l, 2));
+        Map<Long, CartFieldValue> ReducedBooks = new HashMap<>(Map.of(2l, new CartFieldValue(2, true)));
+
         Assertions.assertThat(
                 redisTemplate.opsForHash().entries(CartRedisRepository.CART + customerLoginId))
             .isEqualTo(ReducedBooks);
@@ -193,18 +213,22 @@ class RedisRepositoryTest {
     void deleteBookFromCartTest() {
         String customerLoginId = "TestCustomerLoginId";
 
-        Map<Long, Integer> books = new HashMap<>(Map.of(1l, 1, 2l, 2));
+        Map<Long, CartFieldValue> books = new HashMap<>(
+            Map.of(1l, new CartFieldValue(1, true), 2l, new CartFieldValue(2, true)));
         cartRedisRepository.putBookByMap(books, customerLoginId);
 
         Long bookId = 2l;
         cartRedisRepository.deleteBookFromCart(bookId, customerLoginId);
 
-        Map<Long, Object> deletedBooks = new HashMap<>(Map.of(1l, 1));
+        Map<Long, Object> deletedBooks = new HashMap<>(Map.of(1l, new CartFieldValue(1, true)));
         Assertions.assertThat(
                 redisTemplate.opsForHash().entries(CartRedisRepository.CART + customerLoginId))
             .isEqualTo(deletedBooks);
 
     }
+
+
+
 }
 
 

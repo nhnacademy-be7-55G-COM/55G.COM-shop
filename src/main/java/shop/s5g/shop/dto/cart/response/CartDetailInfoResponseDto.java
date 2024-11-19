@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public record CartDetailInfoResponseDto(
     BigDecimal totalPrice,
-    int deliveryFee,
-    int freeShippingThreshold
+    long deliveryFee,
+    long freeShippingThreshold
 ) {
 
 }
