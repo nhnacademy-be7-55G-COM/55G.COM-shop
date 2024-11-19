@@ -3,6 +3,7 @@ package shop.s5g.shop.repository.book;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Assertions;
@@ -23,7 +24,7 @@ import shop.s5g.shop.entity.BookImage;
 import shop.s5g.shop.entity.BookStatus;
 import shop.s5g.shop.entity.Publisher;
 import shop.s5g.shop.exception.book.BookResourceNotFoundException;
-import shop.s5g.shop.repository.bookstatus.BookStatusRepository;
+import shop.s5g.shop.repository.book.status.BookStatusRepository;
 import shop.s5g.shop.repository.publisher.PublisherRepository;
 
 @DataJpaTest
@@ -61,13 +62,14 @@ class BookRepositoryTest {
                 "아낌없이 주는 나무",
                 "전래동화",
                 "이 책은 전래동화 입니다.",
-                LocalDateTime.of(2000, 10, 10, 10, 50),
+                LocalDate.of(2000, 10, 10),
                 "978-3-15-148410-2",
                 15000L,
                 new BigDecimal("5.5"),
                 true,
                 200,
                 2000L,
+                LocalDateTime.of(2010, 5, 5, 15, 30),
                 LocalDateTime.of(2010, 5, 5, 15, 30)
         );
 
@@ -173,13 +175,14 @@ class BookRepositoryTest {
                 "총균쇠",
                 "다큐",
                 "이 책은 다큐 입니다.",
-                LocalDateTime.of(2000, 10, 10, 10, 50),
+                LocalDate.of(2000, 10, 10),
                 "978-3-15-15859-1",
                 20000L,
                 new BigDecimal("10.0"),
                 true,
                 200,
                 30000L,
+                LocalDateTime.of(2010, 5, 5, 15, 30),
                 LocalDateTime.of(2010, 5, 5, 15, 30)
         );
 
@@ -212,13 +215,14 @@ class BookRepositoryTest {
                 "총균쇠",
                 "다큐",
                 "이 책은 다큐 입니다.",
-                LocalDateTime.of(2000, 10, 10, 10, 50),
+                LocalDate.of(2000, 10, 10),
                 "978-3-15-15859-1",
                 20000L,
                 new BigDecimal("10.0"),
                 true,
                 200,
                 30000L,
+                LocalDateTime.of(2010, 5, 5, 15, 30),
                 LocalDateTime.of(2010, 5, 5, 15, 30)
         );
         BookRequestDto book2 = new BookRequestDto(
@@ -227,9 +231,8 @@ class BookRepositoryTest {
                 "코스모스",
                 "다큐",
                 "이 책은 다큐 입니다.",
-//                LocalDateTime.of(2000, 10, 10, 10, 50),
-                "2000-10-10T10:50:00",
-                "978-3-15-15859-1",
+                "2000-10-10",
+                "12341234",
                 20000L,
                 new BigDecimal("10.0"),
                 true,
@@ -262,13 +265,14 @@ class BookRepositoryTest {
                 "총균쇠",
                 "다큐",
                 "이 책은 다큐 입니다.",
-                LocalDateTime.of(2000, 10, 10, 10, 50),
+                LocalDate.of(2000, 10, 10),
                 "978-3-15-15859-1",
                 20000L,
                 new BigDecimal("10.0"),
                 true,
                 200,
                 30000L,
+                LocalDateTime.of(2010, 5, 5, 15, 30),
                 LocalDateTime.of(2010, 5, 5, 15, 30)
         );
         bookRepository.save(book);
