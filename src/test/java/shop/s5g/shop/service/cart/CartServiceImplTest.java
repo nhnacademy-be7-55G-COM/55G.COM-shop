@@ -36,6 +36,7 @@ import shop.s5g.shop.exception.BadRequestException;
 import shop.s5g.shop.exception.ResourceNotFoundException;
 
 import shop.s5g.shop.repository.book.BookRepository;
+import shop.s5g.shop.repository.cart.CartFieldValue;
 import shop.s5g.shop.repository.cart.CartRedisRepository;
 import shop.s5g.shop.repository.cart.CartRepository;
 import shop.s5g.shop.service.cart.impl.CartServiceImpl;
@@ -212,8 +213,8 @@ class CartServiceImplTest {
 
         booksInfoInRedisCart.add(book1);
         booksInfoInRedisCart.add(book2);
-        booksInRedisCart.put(book1.getBookId(), 1);
-        booksInRedisCart.put(book2.getBookId(), 1);
+        booksInRedisCart.put(book1.getBookId(), new CartFieldValue(1, true));
+        booksInRedisCart.put(book2.getBookId(), new CartFieldValue(1, true));
     }
     @Test
     void lookUpAllBooksTest() throws Exception{
@@ -269,13 +270,16 @@ class CartServiceImplTest {
     @Test
     void deleteBookFromCartTest() {
         //given
-        doNothing().when(cartRedisRepository).deleteBookFromCart(anyLong(), anyString());
+        String customerLoginId = "testCustomerLoginId";
+        long bookId = 1l;
+        doNothing().when(cartRedisRepository).deleteBookFromCart(bookId, customerLoginId);
+
         //when
-        assertThatCode(() -> cartServiceImpl.deleteBookFromCart(anyLong(),
-            anyString())).doesNotThrowAnyException();
+        assertThatCode(() -> cartServiceImpl.deleteBookFromCart(bookId,
+            customerLoginId)).doesNotThrowAnyException();
 
         //then
-        verify(cartRedisRepository).deleteBookFromCart(anyLong(), anyString());
+        verify(cartRedisRepository).deleteBookFromCart(bookId, customerLoginId);
 
     }
 

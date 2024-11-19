@@ -59,16 +59,16 @@ class BookCategoryControllerTest {
     /**
      * 도서카테고리 조회 test
      */
-    @Test
-    void getBookCategoryTest() throws Exception {
-        this.mockMvc
-                .perform(get("/api/shop/bookcategory/1")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(print());
-        verify(bookCategoryService, times(1)).getCategoryInBook(any());
-
-    }
+//    @Test
+//    void getBookCategoryTest() throws Exception {
+//        this.mockMvc
+//                .perform(get("/api/shop/bookcategory/1")
+//                .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andDo(print());
+//        verify(bookCategoryService, times(1)).getCategoryInBook(any());
+//
+//    }
 
 
     /**

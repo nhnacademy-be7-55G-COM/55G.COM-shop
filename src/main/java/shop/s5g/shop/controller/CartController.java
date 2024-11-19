@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import shop.s5g.shop.config.RedisConfig;
 import shop.s5g.shop.dto.cart.request.CartBookInfoRequestDto;
+import shop.s5g.shop.dto.cart.request.CartBookSelectRequestDto;
 import shop.s5g.shop.dto.cart.request.CartControlQuantityRequestDto;
 import shop.s5g.shop.dto.cart.request.CartDeleteBookRequestDto;
 import shop.s5g.shop.dto.cart.request.CartLoginRequestDto;
@@ -44,6 +45,7 @@ import shop.s5g.shop.service.cart.CartService;
 public class CartController {
 
     private final CartService cartService;
+
 
     //담기
     @PostMapping("/cart")
@@ -154,8 +156,9 @@ public class CartController {
         }
         String customerLoginId = shopMemberDetail.getLoginId();
 
-        int cartCount = cartService.saveMergedCartToRedis(customerLoginId,
-            cartLoginRequestDto.cartBookInfoList());
+        cartService.saveMergedCartToRedis(customerLoginId, cartLoginRequestDto.cartBookInfoList());
+
+        int cartCount = cartService.getCartCountInRedis(customerLoginId);
 
         return ResponseEntity.status(HttpStatus.OK).body(Map.of("cartCount", cartCount));
     }
@@ -186,10 +189,29 @@ public class CartController {
         @AuthenticationPrincipal ShopMemberDetail shopMemberDetail) {
 
         String customerLoginId = shopMemberDetail.getLoginId();
+
         List<CartBookInfoRequestDto> booksWhenPurchase = cartService.getBooksWhenPurchase(
             customerLoginId);
 
         return ResponseEntity.status(HttpStatus.OK).body(booksWhenPurchase);
     }
+
+    @PostMapping("/cart/changeBookStatus")
+    public ResponseEntity<Void> changeBookStatus(
+        @AuthenticationPrincipal ShopMemberDetail shopMemberDetail,
+        @RequestBody CartBookSelectRequestDto cartBookSelectRequestDto,
+        BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            throw new BadRequestException("Failed When Check or UnCheck Book In Cart");
+        }
+
+        String customerLoginId = shopMemberDetail.getLoginId();
+
+        cartService.changeBookStatus(customerLoginId, cartBookSelectRequestDto);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
 
 }

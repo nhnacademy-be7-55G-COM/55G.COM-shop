@@ -17,6 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import shop.s5g.shop.dto.PageResponseDto;
+import shop.s5g.shop.dto.book.*;
+import shop.s5g.shop.dto.book.category.BookCategoryBookResponseDto;
+import shop.s5g.shop.dto.book.category.BookCategoryResponseDto;
+import shop.s5g.shop.dto.tag.MessageDto;
+import shop.s5g.shop.exception.book.BookBadRequestException;
 import shop.s5g.shop.dto.book.BookDetailResponseDto;
 import shop.s5g.shop.dto.book.BookPageableResponseDto;
 import shop.s5g.shop.dto.book.BookRequestDto;
@@ -106,5 +111,25 @@ public class BookController {
     public ResponseEntity<List<BookSimpleResponseDto>> queryBooks(@RequestParam List<Long> books) {
 //        List<Long> bookIds = Arrays.stream(stringify.split(",")).map(Long::valueOf).toList();
         return ResponseEntity.ok(bookService.getSimpleBooks(books));
+    }
+
+//    //도서id 리스트로 도서 리스트 조회
+//    @GetMapping("/book/{bookIdList}")
+//    public ResponseEntity<List<BookDetailResponseDto>> getBookListByBookId(@PathVariable("bookIdList") List<BookCategoryBookResponseDto> bookIdList) {
+//        List<BookDetailResponseDto> bookListByBookIdList = bookService.getBookListByBookIdList(bookIdList);
+//        return ResponseEntity.ok().body(bookListByBookIdList);
+//    }
+
+    // bookId 리스트로 book 리스트 조회
+    @PostMapping("/book/bookList")
+    ResponseEntity<List<BookDetailResponseDto>> getBooks(@RequestBody List<BookCategoryBookResponseDto> bookList) {
+        List<BookDetailResponseDto> bookListByBookIdList = bookService.getBookListByBookIdList(bookList);
+        return ResponseEntity.ok().body(bookListByBookIdList);
+    }
+
+    //categoryId로 bookList조회
+    @GetMapping("/books/{categoryId}")
+    ResponseEntity<List<BookPageableResponseDto>> getBookByCategory(@PathVariable("categoryId") Long categoryId) {
+        return ResponseEntity.ok().body(bookService.getBookList(categoryId));
     }
 }

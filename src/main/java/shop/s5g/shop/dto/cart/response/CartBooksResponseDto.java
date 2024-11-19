@@ -8,6 +8,8 @@ public record CartBooksResponseDto(
     BigDecimal discountedPrice,
     Integer quantity,
     Integer stock,
-    String title
+    String title,
+    String image,
+    boolean status
 
 ) {}
