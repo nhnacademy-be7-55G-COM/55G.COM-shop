@@ -118,3 +118,8 @@ spring:
     elasticsearch:
       repositories:
         enabled: false
+
+management:
+  health:
+    elasticsearch:
+      enabled: false
