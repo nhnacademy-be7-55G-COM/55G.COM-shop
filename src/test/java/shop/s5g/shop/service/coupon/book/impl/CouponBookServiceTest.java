@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -96,13 +97,14 @@ class CouponBookServiceTest {
             "아낌없이 주는 나무",
             "전래동화",
             "이 책은 전래동화 입니다.",
-            LocalDateTime.of(2000, 10, 10, 10, 50),
+            LocalDate.of(2000, 10, 10),
             "978-3-15-148410-2",
             15000L,
             new BigDecimal("5.5"),
             true,
             200,
             2000L,
+            LocalDateTime.of(2010, 5, 5, 15, 30),
             LocalDateTime.of(2010, 5, 5, 15, 30)
         );
         bookRepository.save(book);
