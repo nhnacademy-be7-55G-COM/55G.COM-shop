@@ -12,7 +12,7 @@ import shop.s5g.shop.exception.category.CategoryResourceNotFoundException;
 import shop.s5g.shop.exception.bookcategory.BookCategoryBadRequestException;
 import shop.s5g.shop.repository.book.BookRepository;
 import shop.s5g.shop.repository.category.CategoryRepository;
-import shop.s5g.shop.repository.bookCategory.BookCategoryRepository;
+import shop.s5g.shop.repository.book.category.BookCategoryRepository;
 import shop.s5g.shop.service.book.category.BookCategoryService;
 
 import java.util.List;
