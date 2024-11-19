@@ -15,7 +15,7 @@ import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.QBook;
 import shop.s5g.shop.entity.QCategory;
 import shop.s5g.shop.entity.book.category.BookCategory;
-import shop.s5g.shop.entity.bookCategory.QBookCategory;
+import shop.s5g.shop.entity.book.category.QBookCategory;
 import shop.s5g.shop.repository.book.category.qdsl.BookCategoryQuerydslRepository;
 
 import java.util.List;
@@ -23,8 +23,8 @@ import java.util.List;
 import static shop.s5g.shop.entity.QBook.book;
 import static shop.s5g.shop.entity.QBookAuthor.bookAuthor;
 import static shop.s5g.shop.entity.QBookImage.bookImage;
-import static shop.s5g.shop.entity.bookCategory.QBookCategory.bookCategory;
-import static shop.s5g.shop.entity.bookCategory.QBookCategory.bookCategory;
+import static shop.s5g.shop.entity.book.category.QBookCategory.bookCategory;
+import static shop.s5g.shop.entity.book.category.QBookCategory.bookCategory;
 
 public class BookCategoryQuerydslRepositoryImpl extends QuerydslRepositorySupport implements BookCategoryQuerydslRepository {
 
@@ -101,7 +101,7 @@ public class BookCategoryQuerydslRepositoryImpl extends QuerydslRepositorySuppor
                         bookImage.imageName
                 ))
                 .from(book)
-                .innerJoin(bookCategory).on(book.bookId.eq(bookCategory.book.bookId))
+//                .innerJoin(bookCategory).on(book.bookId.eq(bookCategory.book.bookId))
                 .innerJoin(category).on(bookCategory.category.categoryId.eq(category.categoryId))
                 .leftJoin(bookImage).on(bookImage.book.bookId.eq(book.bookId)) // book과 bookImage 조인
                 .where(category.categoryId.in(
@@ -113,6 +113,4 @@ public class BookCategoryQuerydslRepositoryImpl extends QuerydslRepositorySuppor
                 ))
                 .fetch();
     }
-
-
 }

@@ -15,7 +15,7 @@ import shop.s5g.shop.dto.book.BookPageableResponseDto;
 import shop.s5g.shop.dto.book.BookRequestDto;
 import shop.s5g.shop.dto.book.BookResponseDto;
 import shop.s5g.shop.dto.book.BookSimpleResponseDto;
-import shop.s5g.shop.dto.bookCategory.BookCategoryBookResponseDto;
+import shop.s5g.shop.dto.book.category.BookCategoryBookResponseDto;
 import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.BookStatus;
 import shop.s5g.shop.entity.Publisher;

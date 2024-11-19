@@ -3,7 +3,7 @@ package shop.s5g.shop.service.book.category.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import shop.s5g.shop.dto.book.category.BookCategoryResponseDto;
-import shop.s5g.shop.dto.bookCategory.BookCategoryBookResponseDto;
+import shop.s5g.shop.dto.book.category.BookCategoryBookResponseDto;
 import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.book.category.BookCategory;
 import shop.s5g.shop.entity.book.category.BookCategoryId;
