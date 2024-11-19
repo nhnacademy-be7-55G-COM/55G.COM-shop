@@ -67,7 +67,7 @@ class BookControllerTest {
 
     @Test
     void addBook() throws Exception {
-        mockMvc.perform(post("/api/shop/books")
+        mockMvc.perform(post("/api/shop/book")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content))
                 .andExpect(status().isOk())

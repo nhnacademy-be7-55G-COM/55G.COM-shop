@@ -3,11 +3,9 @@ package shop.s5g.shop.dto.book;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-//import lombok.Builder;
-import shop.s5g.shop.dto.bookAuthor.BookAuthorResponseDto;
-import shop.s5g.shop.dto.bookCategory.BookDetailCategoryResponseDto;
+import shop.s5g.shop.dto.book.author.BookAuthorResponseDto;
+import shop.s5g.shop.dto.book.category.BookDetailCategoryResponseDto;
 
-//@Builder
 public record BookDetailResponseDto(
     long bookId,
     String publisherName,
@@ -23,6 +21,7 @@ public record BookDetailResponseDto(
     int stock,
     long views,
     LocalDateTime createdAt,
+    LocalDateTime updatedAt,
     List<BookAuthorResponseDto> authorList,
     List<BookDetailCategoryResponseDto> categoryList
 ) {

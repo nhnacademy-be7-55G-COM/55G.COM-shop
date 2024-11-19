@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import jakarta.persistence.EntityManager;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,7 +32,7 @@ import shop.s5g.shop.entity.coupon.CouponCategory;
 import shop.s5g.shop.entity.coupon.CouponPolicy;
 import shop.s5g.shop.entity.coupon.CouponTemplate;
 import shop.s5g.shop.repository.book.BookRepository;
-import shop.s5g.shop.repository.bookstatus.BookStatusRepository;
+import shop.s5g.shop.repository.book.status.BookStatusRepository;
 import shop.s5g.shop.repository.category.CategoryRepository;
 import shop.s5g.shop.repository.coupon.book.CouponBookRepository;
 import shop.s5g.shop.repository.coupon.category.CouponCategoryRepository;
@@ -250,13 +251,14 @@ class CouponTemplateRepositoryTest {
             "아낌없이 주는 나무",
             "전래동화",
             "이 책은 전래동화 입니다.",
-            LocalDateTime.of(2000, 10, 10, 10, 50),
+            LocalDate.of(2000, 10, 10),
             "978-3-15-148410-2",
             15000L,
             new BigDecimal("5.5"),
             true,
             200,
             2000L,
+            LocalDateTime.of(2010, 5, 5, 15, 30),
             LocalDateTime.of(2010, 5, 5, 15, 30)
         );
         bookRepository.save(book);
