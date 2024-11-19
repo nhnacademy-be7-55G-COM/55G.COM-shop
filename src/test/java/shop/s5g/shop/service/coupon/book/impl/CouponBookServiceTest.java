@@ -35,7 +35,7 @@ import shop.s5g.shop.entity.coupon.CouponBook;
 import shop.s5g.shop.entity.coupon.CouponPolicy;
 import shop.s5g.shop.entity.coupon.CouponTemplate;
 import shop.s5g.shop.repository.book.BookRepository;
-import shop.s5g.shop.repository.bookstatus.BookStatusRepository;
+import shop.s5g.shop.repository.book.status.BookStatusRepository;
 import shop.s5g.shop.repository.coupon.book.CouponBookRepository;
 import shop.s5g.shop.repository.coupon.policy.CouponPolicyRepository;
 import shop.s5g.shop.repository.coupon.template.CouponTemplateRepository;

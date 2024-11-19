@@ -2,14 +2,12 @@ package shop.s5g.shop.service.coupon.book.impl;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.lenient;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,12 +24,8 @@ import shop.s5g.shop.dto.coupon.book.CouponBookRequestDto;
 import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.BookStatus;
 import shop.s5g.shop.entity.Publisher;
-import shop.s5g.shop.entity.coupon.CouponPolicy;
-import shop.s5g.shop.entity.coupon.CouponTemplate;
 import shop.s5g.shop.exception.bookstatus.BookStatusResourceNotFoundException;
-import shop.s5g.shop.exception.coupon.CouponBookAlreadyExistsException;
 import shop.s5g.shop.exception.coupon.CouponBookNotFoundException;
-import shop.s5g.shop.exception.coupon.CouponTemplateNotFoundException;
 import shop.s5g.shop.repository.book.BookRepository;
 import shop.s5g.shop.repository.coupon.book.CouponBookRepository;
 import shop.s5g.shop.repository.coupon.template.CouponTemplateRepository;
@@ -74,8 +68,8 @@ class CouponBookServiceExceptionTest {
     void bookNotForSaleException() {
         // Given
         Book book = new Book(new Publisher(),
-            new BookStatus(), "테스트", "테스트 챕터", "설명", LocalDateTime.now(),
-            "1111", 3000L, new BigDecimal("0.5"), true, 10, 3000L, LocalDateTime.now());
+            new BookStatus(), "테스트", "테스트 챕터", "설명", LocalDate.of(2024,11,11),
+            "1111", 3000L, new BigDecimal("0.5"), true, 10, 3000L, LocalDateTime.now(), LocalDateTime.now());
 
         when(bookRepository.findById(anyLong())).thenReturn(Optional.of(book));
         when(bookRepository.findBookStatus(anyLong())).thenReturn("OFFSALE");
