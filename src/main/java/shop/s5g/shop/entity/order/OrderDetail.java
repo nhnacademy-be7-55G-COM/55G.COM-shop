@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import shop.s5g.shop.entity.Book;
 
 @Getter
@@ -41,6 +42,7 @@ public class OrderDetail {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_detail_type_id")
+    @Setter
     private OrderDetailType orderDetailType;
 
     private int quantity;

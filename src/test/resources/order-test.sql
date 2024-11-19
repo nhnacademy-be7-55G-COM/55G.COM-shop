@@ -52,3 +52,8 @@ VALUES
     (7, 1, 3, 1, 1, 3, 15000, 2000),
     (8, 2, 4, 1, 1, 5, 100000, 2000),
     (9, 1, 4, 1, 1, 3, 15000, 2000);
+
+insert into payment (payment_id, order_id, payment_key, currency, amount, payco_order_id)
+VALUES
+    (1, 1, '12312', 'KRW', 5000, '1231'),
+    (2, 2, '45754', 'KRW', 5000, '547647');

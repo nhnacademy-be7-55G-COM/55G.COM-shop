@@ -6,4 +6,6 @@ import shop.s5g.shop.dto.order.OrderDetailWithBookResponseDto;
 public interface OrderDetailService {
 
     List<OrderDetailWithBookResponseDto> getOrderDetailsWithBook(long orderId);
+
+//    void cancelOrderDetail(long orderDetailId);
 }

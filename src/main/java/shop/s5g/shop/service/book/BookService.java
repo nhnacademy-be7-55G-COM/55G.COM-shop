@@ -6,6 +6,7 @@ import shop.s5g.shop.dto.book.BookDetailResponseDto;
 import shop.s5g.shop.dto.book.BookPageableResponseDto;
 import shop.s5g.shop.dto.book.BookRequestDto;
 import shop.s5g.shop.dto.book.BookResponseDto;
+import shop.s5g.shop.dto.book.category.BookCategoryBookResponseDto;
 
 import java.util.List;
 import shop.s5g.shop.dto.book.BookSimpleResponseDto;
@@ -19,4 +20,8 @@ public interface BookService {
     Page<BookPageableResponseDto> allBookPageable(Pageable pageable);
 
     List<BookSimpleResponseDto> getSimpleBooks(List<Long> bookIdList);
+
+    List<BookDetailResponseDto> getBookListByBookIdList(List<BookCategoryBookResponseDto> bookIdList);
+
+    List<BookPageableResponseDto> getBookList(Long categoryId);
 }

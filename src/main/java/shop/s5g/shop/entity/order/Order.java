@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.BatchSize;
 import shop.s5g.shop.entity.delivery.Delivery;
 import shop.s5g.shop.entity.member.Customer;
 
@@ -42,6 +43,7 @@ public class Order {
     private Delivery delivery;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+    @BatchSize(size = 30)
     private List<OrderDetail> orderDetails;
 
     private LocalDateTime orderedAt;

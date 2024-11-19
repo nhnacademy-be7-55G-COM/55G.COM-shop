@@ -14,8 +14,11 @@ import java.util.List;
 
 @Service
 public class TagServiceImpl implements TagService {
-    @Autowired
-    private TagRepository tagRepository;
+    private final TagRepository tagRepository;
+
+    public TagServiceImpl(TagRepository tagRepository){
+        this.tagRepository=tagRepository;
+    }
 
     //태그 등록
     public void createtag(TagRequestDto tagDto) {
