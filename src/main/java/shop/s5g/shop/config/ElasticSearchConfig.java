@@ -9,8 +9,7 @@ import org.springframework.data.elasticsearch.client.elc.ElasticsearchConfigurat
 @Configuration
 @ConditionalOnProperty(
     name = "spring.data.elasticsearch.repositories.enabled",
-    havingValue = "true",
-    matchIfMissing = false
+    havingValue = "true"
 )
 public class ElasticSearchConfig extends ElasticsearchConfiguration {
 

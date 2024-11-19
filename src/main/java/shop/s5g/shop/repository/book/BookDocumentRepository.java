@@ -6,8 +6,7 @@ import shop.s5g.shop.entity.document.BookDocument;
 
 @ConditionalOnProperty(
     name = "spring.data.elasticsearch.repositories.enabled",
-    havingValue = "true",
-    matchIfMissing = false
+    havingValue = "true"
 )
 public interface BookDocumentRepository extends ElasticsearchRepository<BookDocument, Long> {
 

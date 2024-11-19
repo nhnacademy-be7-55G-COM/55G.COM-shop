@@ -16,8 +16,7 @@ import shop.s5g.shop.service.book.BookDocumentService;
 @RequestMapping("/api/shop")
 @ConditionalOnProperty(
     name = "spring.data.elasticsearch.repositories.enabled",
-    havingValue = "true",
-    matchIfMissing = false
+    havingValue = "true"
 )
 public class BookDocumentController {
 

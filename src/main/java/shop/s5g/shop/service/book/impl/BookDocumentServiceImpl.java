@@ -21,8 +21,7 @@ import shop.s5g.shop.service.book.BookDocumentService;
 @RequiredArgsConstructor
 @ConditionalOnProperty(
     name = "spring.data.elasticsearch.repositories.enabled",
-    havingValue = "true",
-    matchIfMissing = false
+    havingValue = "true"
 )
 public class BookDocumentServiceImpl implements BookDocumentService {
 
