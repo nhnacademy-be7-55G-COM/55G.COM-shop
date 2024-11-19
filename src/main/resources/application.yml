@@ -107,3 +107,14 @@ spring:
     url: jdbc:mysql://localhost:3306/55g
     username: root
     password:
+
+---
+spring:
+  config:
+    activate:
+      on-profile: disable-elasticsearch
+
+  data:
+    elasticsearch:
+      repositories:
+        enabled: false
