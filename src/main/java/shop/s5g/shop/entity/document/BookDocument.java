@@ -3,11 +3,14 @@ package shop.s5g.shop.entity.document;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import lombok.Getter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
+import shop.s5g.shop.config.ElasticSearchConfig;
 
 @Document(indexName = "55g-book")
 @Getter
+@ConditionalOnBean(ElasticSearchConfig.class)
 public class BookDocument {
 
     @Id
