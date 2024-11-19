@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.coupon.user.UserCouponRequestDto;
 import shop.s5g.shop.dto.customer.CustomerRegistrationRequestDto;
 import shop.s5g.shop.dto.customer.CustomerResponseDto;
-import shop.s5g.shop.dto.customer.CustomerUpdateRequestDto;
 import shop.s5g.shop.dto.member.IdCheckResponseDto;
 import shop.s5g.shop.dto.member.LoginResponseDto;
 import shop.s5g.shop.dto.member.MemberDetailResponseDto;
@@ -103,11 +102,6 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void updateMember(CustomerUpdateRequestDto updateRequestDto) {
-
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public MemberDetailResponseDto getMemberDto(String loginId) {
         if (!memberRepository.existsByLoginIdAndStatus_TypeName(loginId, "ACTIVE")) {
@@ -140,12 +134,10 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void deleteById(Long memberId) {
-        if (!memberRepository.existsById(memberId)) {
-            throw new MemberNotFoundException("회원이 존재하지 않습니다.");
-        }
+        Member member = memberRepository.findById(memberId)
+            .orElseThrow(() -> new MemberNotFoundException("회원이 존재하지 않습니다."));
         MemberStatus memberStatus = memberStatusService.getMemberStatusByTypeName(
             MemberRepository.WITHDRAWAL_STATUS);
-        Member member = memberRepository.findById(memberId).get();
         member.setStatus(memberStatus);
     }
 

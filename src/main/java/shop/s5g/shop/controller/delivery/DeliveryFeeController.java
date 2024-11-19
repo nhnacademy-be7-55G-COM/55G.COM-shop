@@ -24,9 +24,7 @@ import shop.s5g.shop.service.delivery.DeliveryFeeService;
 public class DeliveryFeeController {
     private final DeliveryFeeService deliveryFeeService;
 
-    // TODO: 나중에 ADMIN role로 바꿔야 함.
     @PutMapping
-//    @PreAuthorize("hasRole('ROLE_MEMBER')")
     public ResponseEntity<DeliveryFeeResponseDto> updateDeliveryFee(
         @RequestBody @Valid
         DeliveryFeeUpdateRequestDto updateRequest,
@@ -43,8 +41,6 @@ public class DeliveryFeeController {
         return ResponseEntity.ok(deliveryFeeService.getAllDeliveryFees());
     }
 
-    // TODO: 나중에 ADMIN role로 바꿔야 함.
-//    @PreAuthorize("hasRole('ROLE_MEMBER')")
     @PostMapping
     public ResponseEntity<DeliveryFeeResponseDto> createDeliveryFee(
         @RequestBody @Valid

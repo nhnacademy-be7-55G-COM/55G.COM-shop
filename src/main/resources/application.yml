@@ -23,10 +23,21 @@ spring:
     username: username
     password: password
 
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
+
 redis:
   host: host
   port: 1
   password: password
+rabbit:
+  orders:
+    payment:
+      toss:
+        queue: 55g.orders.payment.queue
+        dlq: 55g.orders.payment.queue.dlq
 
 management:
   endpoints:
@@ -107,3 +118,15 @@ spring:
     url: jdbc:mysql://localhost:3306/55g
     username: root
     password:
+
+---
+spring:
+  config:
+    activate:
+      on-profile: disable-redis
+
+  # elasticsearch가 레포지토리 기능을 비활성화
+  data:
+    elasticsearch:
+      repositories:
+        enabled: false

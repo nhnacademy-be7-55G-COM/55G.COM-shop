@@ -13,6 +13,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 import shop.s5g.shop.entity.order.Order;
 
@@ -37,6 +38,7 @@ public class Payment {
     @Length(max = 10)
     private String currency;
 
+    @Setter
     private long amount;
 
     // TODO: ??? 언제 컬럼 이름 바뀜?

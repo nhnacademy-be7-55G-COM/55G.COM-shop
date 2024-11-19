@@ -11,5 +11,5 @@ import shop.s5g.shop.repository.book.qdsl.BookQuerydslRepository;
 public interface BookRepository extends JpaRepository<Book, Long>, BookQuerydslRepository {
 
     boolean existsAllByBookIdIn(List<Long> bookId);
-    Page<BookPageableResponseDto> findAllBookPage(Pageable pageable);
+//    Page<BookPageableResponseDto> findAllBookPage(Pageable pageable);
 }

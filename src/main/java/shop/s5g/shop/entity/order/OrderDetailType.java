@@ -10,6 +10,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 @Getter
@@ -23,8 +24,14 @@ public class OrderDetailType {
     @Column(name = "order_detail_type_id")
     private long id;
 
-    // TODO: unique? enum?
     @Column(name = "type_name")
     @Length(max = 20)
     private String name;
+
+    @Getter
+    @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
+    public enum Type{
+        COMPLETE("주문 완료"), CONFIRM("주문 확정"), RETURN("반품"), CANCEL("주문 취소");
+        private final String korName;
+    }
 }
