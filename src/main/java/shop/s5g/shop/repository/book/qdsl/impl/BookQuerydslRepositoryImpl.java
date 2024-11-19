@@ -1,15 +1,5 @@
 package shop.s5g.shop.repository.book.qdsl.impl;
 
-import static shop.s5g.shop.entity.QAuthor.author;
-import static shop.s5g.shop.entity.QAuthorType.authorType;
-import static shop.s5g.shop.entity.QBook.book;
-import static shop.s5g.shop.entity.QBookAuthor.bookAuthor;
-import static shop.s5g.shop.entity.QBookImage.bookImage;
-import static shop.s5g.shop.entity.QBookStatus.bookStatus;
-import static shop.s5g.shop.entity.QCategory.category;
-import static shop.s5g.shop.entity.QPublisher.publisher;
-import static shop.s5g.shop.entity.bookCategory.QBookCategory.bookCategory;
-
 import com.querydsl.core.types.ConstantImpl;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -32,8 +22,17 @@ import shop.s5g.shop.dto.book.author.BookAuthorResponseDto;
 import shop.s5g.shop.dto.book.category.BookDetailCategoryResponseDto;
 import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.Category;
-import shop.s5g.shop.entity.bookCategory.BookCategory;
+import shop.s5g.shop.entity.book.category.BookCategory;
 import shop.s5g.shop.repository.book.qdsl.BookQuerydslRepository;
+
+import static shop.s5g.shop.entity.QAuthor.author;
+import static shop.s5g.shop.entity.QAuthorType.authorType;
+import static shop.s5g.shop.entity.QBook.book;
+import static shop.s5g.shop.entity.QBookAuthor.bookAuthor;
+import static shop.s5g.shop.entity.QBookStatus.bookStatus;
+import static shop.s5g.shop.entity.QCategory.category;
+import static shop.s5g.shop.entity.QPublisher.publisher;
+import static shop.s5g.shop.entity.book.category.QBookCategory.bookCategory;
 
 @Repository
 public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implements
