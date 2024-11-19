@@ -279,6 +279,19 @@ public class CartServiceImpl implements CartService {
 
     }
 
+    @Override
+    public List<CartBookInfoRequestDto> getBooksWhenPurchase(String customerLoginId) {
+
+        Map<Long, Integer> booksInRedisCart = getBooksInRedisCart(customerLoginId);
+
+        List<CartBookInfoRequestDto> books = new ArrayList<>();
+
+        booksInRedisCart.forEach((bookId,quantity) ->{
+            books.add(new CartBookInfoRequestDto(bookId, quantity));
+        });
+
+        return books;
+    }
 
 
 

@@ -57,10 +57,8 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public void update(AddressUpdateRequestDto address, Long addressId) {
-        if (!addressRepository.existsById(addressId)) {
-            throw new AddressNotFoundException("주소가 존재하지 않습니다.");
-        }
-        Address originAddress = addressRepository.findById(addressId).get();
+        Address originAddress = addressRepository.findById(addressId)
+            .orElseThrow(() -> new AddressNotFoundException("주소가 존재하지 않습니다."));
 
         if (address.isDefault()) {
             changeDefaultAddress(originAddress.getMember().getId());
@@ -74,10 +72,8 @@ public class AddressServiceImpl implements AddressService {
     @Override
     @Transactional(readOnly = true)
     public AddressResponseDto getAddress(Long addressId) {
-        if (!addressRepository.existsById(addressId)) {
-            throw new AddressNotFoundException("주소가 존재하지 않습니다.");
-        }
-        return AddressResponseDto.toDto(addressRepository.findById(addressId).get());
+        return AddressResponseDto.toDto(addressRepository.findById(addressId)
+            .orElseThrow(() -> new AddressNotFoundException("주소가 존재하지 않습니다.")));
     }
 
     @Override

@@ -1,23 +1,14 @@
 package shop.s5g.shop.dto.book;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
-import shop.s5g.shop.entity.BookStatus;
-import shop.s5g.shop.entity.Publisher;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public record BookRequestDto (
     @NotNull
-//    Publisher publisherId,
     Long publisherId,
     @NotNull
-//    BookStatus bookStatusId,
     Long bookStatusId,
     @NotNull
     String title,
@@ -38,5 +29,6 @@ public record BookRequestDto (
     Long views,
     @NotNull
     LocalDateTime createdAt
-){
+) {
+
 }

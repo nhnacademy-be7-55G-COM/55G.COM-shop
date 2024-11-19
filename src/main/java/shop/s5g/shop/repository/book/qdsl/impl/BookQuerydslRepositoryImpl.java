@@ -1,19 +1,11 @@
 package shop.s5g.shop.repository.book.qdsl.impl;
 
-import static shop.s5g.shop.entity.QAuthor.author;
-import static shop.s5g.shop.entity.QAuthorType.authorType;
-import static shop.s5g.shop.entity.QBook.book;
-import static shop.s5g.shop.entity.QBookAuthor.bookAuthor;
-import static shop.s5g.shop.entity.QBookImage.bookImage;
-import static shop.s5g.shop.entity.QBookStatus.bookStatus;
-import static shop.s5g.shop.entity.QCategory.category;
-import static shop.s5g.shop.entity.QPublisher.publisher;
-import static shop.s5g.shop.entity.bookCategory.QBookCategory.bookCategory;
-
 import com.querydsl.core.types.ConstantImpl;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +20,22 @@ import shop.s5g.shop.dto.book.BookPageableResponseDto;
 import shop.s5g.shop.dto.book.BookRequestDto;
 import shop.s5g.shop.dto.book.BookResponseDto;
 import shop.s5g.shop.dto.book.BookSimpleResponseDto;
-import shop.s5g.shop.dto.bookAuthor.BookAuthorResponseDto;
-import shop.s5g.shop.dto.bookCategory.BookDetailCategoryResponseDto;
+import shop.s5g.shop.dto.book.author.BookAuthorResponseDto;
+import shop.s5g.shop.dto.book.category.BookDetailCategoryResponseDto;
 import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.Category;
-import shop.s5g.shop.entity.bookCategory.BookCategory;
+import shop.s5g.shop.entity.book.category.BookCategory;
 import shop.s5g.shop.repository.book.qdsl.BookQuerydslRepository;
+
+import static shop.s5g.shop.entity.QAuthor.author;
+import static shop.s5g.shop.entity.QAuthorType.authorType;
+import static shop.s5g.shop.entity.QBook.book;
+import static shop.s5g.shop.entity.QBookAuthor.bookAuthor;
+import static shop.s5g.shop.entity.QBookStatus.bookStatus;
+import static shop.s5g.shop.entity.QCategory.category;
+import static shop.s5g.shop.entity.QPublisher.publisher;
+import static shop.s5g.shop.entity.book.category.QBookCategory.bookCategory;
+import static shop.s5g.shop.entity.QBookImage.bookImage;
 
 @Repository
 public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implements
@@ -57,7 +59,7 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
             .set(book.title, bookDto.title())
             .set(book.chapter, bookDto.chapter())
             .set(book.description, bookDto.description())
-            .set(book.publishedDate, LocalDateTime.parse(bookDto.publishedDate()))
+            .set(book.publishedDate, LocalDate.parse(bookDto.publishedDate()))
             .set(book.isbn, bookDto.isbn())
             .set(book.price, bookDto.price())
             .set(book.discountRate, bookDto.discountRate())
@@ -136,6 +138,24 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
 
         long total = (totalCount != null) ? totalCount : 0L;
         return new PageImpl<>(content, pageable, total);
+    }
+
+    /**
+     * 특정 책의 상태 조회
+     * @param bookId
+     * @return String
+     */
+    @Override
+    public String findBookStatus(Long bookId) {
+
+        return jpaQueryFactory
+            .select(bookStatus.name)
+            .from(book)
+            .innerJoin(bookStatus)
+            .on(book.bookStatus.id.eq(bookStatus.id))
+            .where(book.bookId.eq(bookId))
+            .fetchOne();
+
     }
 
     // 도서 상세 BookResponseDto타입으로 리턴

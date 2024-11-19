@@ -103,7 +103,7 @@ class CouponTemplateControllerTest {
         // Given
         Long couponTemplateId = 1L;
 
-        when(couponTemplateService.findCouponTemplate(couponTemplateId)).thenReturn(
+        when(couponTemplateService.getCouponTemplate(couponTemplateId)).thenReturn(
             new CouponTemplateResponseDto(
                 1L,
                 couponPolicy.getDiscountPrice(),

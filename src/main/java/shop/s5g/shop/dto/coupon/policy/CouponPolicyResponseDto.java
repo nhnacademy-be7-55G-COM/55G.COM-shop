@@ -10,6 +10,7 @@ import java.math.BigDecimal;
  * @param duration
  */
 public record CouponPolicyResponseDto (
+    Long couponPolicyId,
     BigDecimal discountPrice,
     Long condition,
     Long maxPrice,

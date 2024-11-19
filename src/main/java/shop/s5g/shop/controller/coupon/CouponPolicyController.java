@@ -3,6 +3,8 @@ package shop.s5g.shop.controller.coupon;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import shop.s5g.shop.dto.PageResponseDto;
 import shop.s5g.shop.dto.tag.MessageDto;
 import shop.s5g.shop.dto.coupon.policy.CouponPolicyRequestDto;
 import shop.s5g.shop.dto.coupon.policy.CouponPolicyResponseDto;
@@ -89,10 +92,10 @@ public class CouponPolicyController {
      * @return couponPolicyResponseDtoList
      */
     @GetMapping("/policy")
-    public ResponseEntity<List<CouponPolicyResponseDto>> findAllCouponPolicy() {
-        List<CouponPolicyResponseDto> couponPolicyResponseDtoList = couponPolicyService.getAllCouponPolices();
+    public ResponseEntity<PageResponseDto<CouponPolicyResponseDto>> findAllCouponPolicy(Pageable pageable) {
+        Page<CouponPolicyResponseDto> couponPolicyResponseDtoList = couponPolicyService.getAllCouponPolices(pageable);
 
-        return ResponseEntity.status(HttpStatus.OK).body(couponPolicyResponseDtoList);
+        return ResponseEntity.status(HttpStatus.OK).body(PageResponseDto.of(couponPolicyResponseDtoList));
     }
 
 }

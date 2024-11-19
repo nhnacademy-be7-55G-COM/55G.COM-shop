@@ -1,6 +1,7 @@
 package shop.s5g.shop.repository.book;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
@@ -9,17 +10,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import shop.s5g.shop.config.QueryFactoryConfig;
 import shop.s5g.shop.config.TestQueryFactoryConfig;
-import shop.s5g.shop.dto.bookCategory.BookCategoryResponseDto;
+import shop.s5g.shop.dto.book.category.BookCategoryResponseDto;
 import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.BookStatus;
 import shop.s5g.shop.entity.Category;
 import shop.s5g.shop.entity.Publisher;
-import shop.s5g.shop.entity.bookCategory.BookCategory;
-import shop.s5g.shop.entity.bookCategory.BookCategoryId;
-import shop.s5g.shop.repository.bookcategory.BookCategoryRepository;
-import shop.s5g.shop.repository.bookstatus.BookStatusRepository;
+import shop.s5g.shop.entity.book.category.BookCategory;
+import shop.s5g.shop.entity.book.category.BookCategoryId;
+import shop.s5g.shop.repository.book.category.BookCategoryRepository;
+import shop.s5g.shop.repository.book.status.BookStatusRepository;
 import shop.s5g.shop.repository.category.CategoryRepository;
 import shop.s5g.shop.repository.publisher.PublisherRepository;
 
@@ -30,16 +30,16 @@ class BookCategoryRepositoryTest {
     private final BookCategoryRepository bookCategoryRepository;
     private final CategoryRepository categoryRepository;
     private final BookRepository bookRepository;
-    @Autowired
-    private PublisherRepository publisherRepository;
-    @Autowired
-    private BookStatusRepository bookStatusRepository;
+    private final PublisherRepository publisherRepository;
+    private final BookStatusRepository bookStatusRepository;
 
     @Autowired
-    public BookCategoryRepositoryTest(BookCategoryRepository bookCategoryRepository, CategoryRepository categoryRepository, BookRepository bookRepository) {
+    public BookCategoryRepositoryTest(BookCategoryRepository bookCategoryRepository, CategoryRepository categoryRepository, BookRepository bookRepository,PublisherRepository publisherRepository,BookStatusRepository bookStatusRepository) {
         this.bookCategoryRepository = bookCategoryRepository;
         this.categoryRepository = categoryRepository;
         this.bookRepository = bookRepository;
+        this.publisherRepository=publisherRepository;
+        this.bookStatusRepository=bookStatusRepository;
     }
 
     /**
@@ -57,13 +57,14 @@ class BookCategoryRepositoryTest {
                 "아낌없이 주는 나무",
                 "전래동화",
                 "이 책은 전래동화 입니다.",
-                LocalDateTime.of(2000, 10, 10, 10, 50),
+                LocalDate.of(2000, 10, 10),
                 "978-3-15-148410-2",
                 15000L,
                 new BigDecimal("5.5"),
                 true,
                 200,
                 2000L,
+                LocalDateTime.of(2010, 5, 5, 15, 30),
                 LocalDateTime.of(2010, 5, 5, 15, 30)
         );
 
@@ -93,13 +94,14 @@ class BookCategoryRepositoryTest {
                 "아낌없이 주는 나무",
                 "전래동화",
                 "이 책은 전래동화 입니다.",
-                LocalDateTime.of(2000, 10, 10, 10, 50),
+                LocalDate.of(2000, 10, 10),
                 "978-3-15-148410-2",
                 15000L,
                 new BigDecimal("5.5"),
                 true,
                 200,
                 2000L,
+                LocalDateTime.of(2010, 5, 5, 15, 30),
                 LocalDateTime.of(2010, 5, 5, 15, 30)
         );
 
@@ -132,13 +134,14 @@ class BookCategoryRepositoryTest {
                 "아낌없이 주는 나무",
                 "전래동화",
                 "이 책은 전래동화 입니다.",
-                LocalDateTime.of(2000, 10, 10, 10, 50),
+                LocalDate.of(2000, 10, 10),
                 "978-3-15-148410-2",
                 15000L,
                 new BigDecimal("5.5"),
                 true,
                 200,
                 2000L,
+                LocalDateTime.of(2010, 5, 5, 15, 30),
                 LocalDateTime.of(2010, 5, 5, 15, 30)
         );
         Category category1 = new Category(null, "컴퓨터", true);

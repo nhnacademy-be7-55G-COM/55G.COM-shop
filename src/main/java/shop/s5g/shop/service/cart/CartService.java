@@ -24,6 +24,7 @@ public interface CartService {
     void removeAccount(String customerLoginId);
 
     // ----------- only Redis 관련 -----------
+    List<CartBookInfoRequestDto> getBooksWhenPurchase(String customerLoginId);
 
     void controlQuantity(Long bookId, int change, String customerLoginId);
 
