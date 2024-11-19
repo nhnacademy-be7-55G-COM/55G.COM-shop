@@ -1,7 +1,7 @@
 package shop.s5g.shop.controller.book;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Profile;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,9 +12,13 @@ import shop.s5g.shop.dto.book.BookDocumentResponseDto;
 import shop.s5g.shop.service.book.BookDocumentService;
 
 @RestController
-@Profile("!disable-elasticsearch")
 @RequiredArgsConstructor
 @RequestMapping("/api/shop")
+@ConditionalOnProperty(
+    name = "spring.data.elasticsearch.repositories.enabled",
+    havingValue = "true",
+    matchIfMissing = false
+)
 public class BookDocumentController {
 
     private final BookDocumentService bookDocumentService;

@@ -23,6 +23,11 @@ spring:
     username: username
     password: password
 
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
+
 redis:
   host: host
   port: 1
@@ -112,14 +117,10 @@ spring:
 spring:
   config:
     activate:
-      on-profile: disable-elasticsearch
+      on-profile: disable-redis
 
+  # elasticsearch가 레포지토리 기능을 비활성화
   data:
     elasticsearch:
       repositories:
         enabled: false
-
-management:
-  health:
-    elasticsearch:
-      enabled: false

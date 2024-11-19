@@ -2,7 +2,7 @@ package shop.s5g.shop.service.book.impl;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Profile;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -18,8 +18,12 @@ import shop.s5g.shop.repository.book.BookDocumentRepository;
 import shop.s5g.shop.service.book.BookDocumentService;
 
 @Service
-@Profile("!disable-elasticsearch")
 @RequiredArgsConstructor
+@ConditionalOnProperty(
+    name = "spring.data.elasticsearch.repositories.enabled",
+    havingValue = "true",
+    matchIfMissing = false
+)
 public class BookDocumentServiceImpl implements BookDocumentService {
 
     private final BookDocumentRepository bookDocumentRepository;
