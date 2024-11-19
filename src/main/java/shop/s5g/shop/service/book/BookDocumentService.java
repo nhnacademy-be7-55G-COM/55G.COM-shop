@@ -1,9 +1,13 @@
 package shop.s5g.shop.service.book;
 
-import java.util.List;
+import org.springframework.data.domain.Pageable;
+import shop.s5g.shop.dto.PageResponseDto;
 import shop.s5g.shop.dto.book.BookDocumentResponseDto;
 
 public interface BookDocumentService {
 
-    List<BookDocumentResponseDto> searchByTitleOrDescription(String keyword);
+    PageResponseDto<BookDocumentResponseDto> findAllBooks(Pageable pageable);
+
+    PageResponseDto<BookDocumentResponseDto> searchByTitleOrDescription(String keyword,
+        Pageable pageable);
 }
