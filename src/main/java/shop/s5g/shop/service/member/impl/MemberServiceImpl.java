@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import shop.s5g.shop.dto.coupon.user.UserCouponRequestDto;
 import shop.s5g.shop.dto.customer.CustomerRegistrationRequestDto;
 import shop.s5g.shop.dto.customer.CustomerResponseDto;
 import shop.s5g.shop.dto.customer.CustomerUpdateRequestDto;
@@ -26,6 +27,7 @@ import shop.s5g.shop.exception.member.MemberAlreadyExistsException;
 import shop.s5g.shop.exception.member.MemberNotFoundException;
 import shop.s5g.shop.exception.member.PasswordIncorrectException;
 import shop.s5g.shop.repository.member.MemberRepository;
+import shop.s5g.shop.service.coupon.user.UserCouponService;
 import shop.s5g.shop.service.member.CustomerService;
 import shop.s5g.shop.service.member.MemberGradeService;
 import shop.s5g.shop.service.member.MemberService;
@@ -43,6 +45,7 @@ public class MemberServiceImpl implements MemberService {
     private final MemberGradeService memberGradeService;
     private final CustomerService customerService;
     private final PointHistoryService pointHistoryService;
+    private final UserCouponService userCouponService;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -91,8 +94,13 @@ public class MemberServiceImpl implements MemberService {
             .build();
 
         Member saved = memberRepository.save(member);
+
         pointHistoryService.createPointHistory(saved.getId(),
             PointHistoryCreateRequestDto.REGISTER_POINT);
+
+        userCouponService.createWelcomeCoupon(new UserCouponRequestDto(saved.getId()));
+
+        if (member.getBirth())
     }
 
     @Override

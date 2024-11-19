@@ -1,4 +1,4 @@
-package shop.s5g.shop.service.coupon.coponpolicy.impl;
+package shop.s5g.shop.service.coupon.policy.impl;
 
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -15,9 +15,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ActiveProfiles;
 import shop.s5g.shop.dto.coupon.policy.CouponPolicyRequestDto;
+import shop.s5g.shop.exception.ErrorCode;
 import shop.s5g.shop.exception.coupon.CouponPolicyNotFoundException;
+import shop.s5g.shop.exception.coupon.CouponPolicyValidationException;
 import shop.s5g.shop.repository.coupon.policy.CouponPolicyRepository;
-import shop.s5g.shop.service.coupon.policy.impl.CouponPolicyServiceImpl;
 
 @ActiveProfiles("local")
 @ExtendWith(MockitoExtension.class)
@@ -101,5 +102,35 @@ class CouponPolicyServiceExceptionTest {
             .isInstanceOf(CouponPolicyNotFoundException.class)
             .hasMessageContaining(notFoundId + ", 아이디는 존재하지 않는 쿠폰 정책입니다");
 
+    }
+
+    @Test
+    @DisplayName("할인 금액이 0보다 작고 80%를 초과할 경우 예외 발생")
+    void validateDiscountExceeds80Percent() {
+        CouponPolicyRequestDto request = new CouponPolicyRequestDto(new BigDecimal("0.85"), 20000L, 15000L, 30);
+
+        assertThatThrownBy(() -> couponPolicyService.validateCouponPolicy(request))
+            .isInstanceOf(CouponPolicyValidationException.class)
+            .hasMessageContaining(ErrorCode.DISCOUNT_EXCEEDS_80_PERCENT.getMessage());
+    }
+
+    @Test
+    @DisplayName("할인 금액이 1,000원 미만이거나 조건 금액의 80% 초과할 경우 예외 발생")
+    void validateDiscountInvalidRange() {
+        CouponPolicyRequestDto request = new CouponPolicyRequestDto(new BigDecimal("17000"), 20000L, 5000L, 30);
+
+        assertThatThrownBy(() -> couponPolicyService.validateCouponPolicy(request))
+            .isInstanceOf(CouponPolicyValidationException.class)
+            .hasMessageContaining(ErrorCode.DISCOUNT_INVALID_RANGE.getMessage());
+    }
+
+    @Test
+    @DisplayName("최대 할인 금액이 조건 금액의 절반을 초과할 경우 예외 발생")
+    void validateMaxPriceExceedsLimit() {
+        CouponPolicyRequestDto request = new CouponPolicyRequestDto(new BigDecimal("0.8"), 20000L, 12001L, 30);
+
+        assertThatThrownBy(() -> couponPolicyService.validateCouponPolicy(request))
+            .isInstanceOf(CouponPolicyValidationException.class)
+            .hasMessageContaining(ErrorCode.MAX_PRICE_EXCEEDS_LIMIT.getMessage());
     }
 }

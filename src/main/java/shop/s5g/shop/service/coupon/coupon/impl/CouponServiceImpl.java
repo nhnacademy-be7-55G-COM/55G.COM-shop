@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.coupon.coupon.CouponRequestDto;
 import shop.s5g.shop.dto.coupon.coupon.CouponResponseDto;
 import shop.s5g.shop.entity.coupon.Coupon;
+import shop.s5g.shop.entity.coupon.Coupon.CouponType;
 import shop.s5g.shop.entity.coupon.CouponTemplate;
 import shop.s5g.shop.exception.coupon.CouponAlreadyDeletedException;
 import shop.s5g.shop.exception.coupon.CouponNotFoundException;
@@ -57,6 +58,52 @@ public class CouponServiceImpl implements CouponService {
         }
 
         couponRepository.saveAll(couponSet);
+    }
+
+    /**
+     * 웰컴 쿠폰 생성
+     * @return Coupon
+     */
+    @Override
+    public Coupon createWelcomeCoupon() {
+
+        CouponTemplate welcomeTemplate = couponTemplateRepository.findParticularCouponByName(
+            CouponType.WELCOME.name());
+
+        if (Objects.isNull(welcomeTemplate)) {
+            throw new CouponTemplateNotFoundException("해당 쿠폰 템플릿이 존재하지 않습니다.");
+        }
+
+        return couponRepository.save(
+            new Coupon(
+                welcomeTemplate,
+                createCouponNumber(),
+                LocalDateTime.now()
+            )
+        );
+    }
+
+    /**
+     * 생일 쿠폰 생성
+     * @return Coupon
+     */
+    @Override
+    public Coupon createBirthCoupon() {
+
+        CouponTemplate birthTemplate = couponTemplateRepository.findParticularCouponByName(
+            CouponType.BIRTH.name()
+        );
+
+        if (Objects.isNull(birthTemplate)) {
+            throw new CouponTemplateNotFoundException("해당 쿠폰 템플릿이 존재하지 않습니다.");
+        }
+        return couponRepository.save(
+            new Coupon(
+                birthTemplate,
+                createCouponNumber(),
+                LocalDateTime.now()
+            )
+        );
     }
 
     /**
