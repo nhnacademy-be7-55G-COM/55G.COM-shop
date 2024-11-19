@@ -1,13 +1,12 @@
 package shop.s5g.shop.service.coupon.coupon.impl;
 
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.RandomStringUtils;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.coupon.coupon.CouponRequestDto;
@@ -52,7 +51,7 @@ public class CouponServiceImpl implements CouponService {
                 new Coupon(
                     couponTemplate,
                     createCouponNumber(),
-                    couponRequestDto.expiredAt()
+                    LocalDateTime.now().plusDays(couponTemplate.getCouponPolicy().getDuration())
                 )
             );
         }
@@ -78,7 +77,7 @@ public class CouponServiceImpl implements CouponService {
             new Coupon(
                 welcomeTemplate,
                 createCouponNumber(),
-                LocalDateTime.now()
+                LocalDateTime.now().plusDays(30)
             )
         );
     }
@@ -97,11 +96,17 @@ public class CouponServiceImpl implements CouponService {
         if (Objects.isNull(birthTemplate)) {
             throw new CouponTemplateNotFoundException("해당 쿠폰 템플릿이 존재하지 않습니다.");
         }
+
+        // 쿠폰의 만료일을 해당 월의 마지막 일로 설정
+        LocalDateTime now = LocalDateTime.now();
+        YearMonth yearMonth = YearMonth.from(now);
+        LocalDateTime lastDayOfMonth = yearMonth.atEndOfMonth().atTime(23, 59, 59);
+
         return couponRepository.save(
             new Coupon(
                 birthTemplate,
                 createCouponNumber(),
-                LocalDateTime.now()
+                lastDayOfMonth
             )
         );
     }
