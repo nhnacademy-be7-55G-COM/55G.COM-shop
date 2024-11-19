@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import shop.s5g.shop.config.TestQueryFactoryConfig;
+import shop.s5g.shop.dto.order.OrderAdminTableView;
 import shop.s5g.shop.dto.order.OrderWithDetailResponseDto;
 
 @DataJpaTest
@@ -66,5 +68,18 @@ class OrderRepositoryTest {
         assertThat(result)
             .element(1)
             .hasFieldOrPropertyWithValue("totalQuantity", 3);
+    }
+
+    @Test
+    @Sql("classpath:order-test.sql")
+    @DisplayName("left join 테스트용")
+    void findOrdersByCustomerIdForAdminRightJoinTest() {
+        List<OrderAdminTableView> result = orderRepository.findOrdersByCustomerIdForAdmin(1L);
+
+        assertThat(result).hasSize(4)
+            .element(1)
+            .hasFieldOrPropertyWithValue("payAmount", null);
+
+        log.info("Result: {}", result);
     }
 }

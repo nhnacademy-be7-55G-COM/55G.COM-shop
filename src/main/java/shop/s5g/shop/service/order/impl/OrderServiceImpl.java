@@ -7,12 +7,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.delivery.DeliveryCreateRequestDto;
+import shop.s5g.shop.dto.order.OrderAdminTableView;
 import shop.s5g.shop.dto.order.OrderCreateRequestDto;
 import shop.s5g.shop.dto.order.OrderCreateResponseDto;
 import shop.s5g.shop.dto.order.OrderDetailCreateRequestDto;
+import shop.s5g.shop.dto.order.OrderQueryFilterDto;
 import shop.s5g.shop.dto.order.OrderQueryRequestDto;
 import shop.s5g.shop.dto.order.OrderWithDetailResponseDto;
 import shop.s5g.shop.entity.Book;
+import shop.s5g.shop.entity.delivery.DeliveryStatus.Type;
 import shop.s5g.shop.entity.member.Customer;
 import shop.s5g.shop.entity.delivery.Delivery;
 import shop.s5g.shop.entity.delivery.DeliveryFee;
@@ -51,8 +54,6 @@ public class OrderServiceImpl implements OrderService {
     private final OrderDetailTypeRepository orderDetailTypeRepository;
     private final DeliveryStatusRepository deliveryStatusRepository;
 
-    private static final String INITIAL_STATE = "PREPARING";
-
     @Override
     @Transactional(readOnly = true)
     public Page<Order> findAllByCustomerId(long customerId, Pageable pageable) {
@@ -74,9 +75,7 @@ public class OrderServiceImpl implements OrderService {
             () -> new EssentialDataNotFoundException("Cannot find delivery fee data")
         );
 
-        DeliveryStatus status = deliveryStatusRepository.findByName(INITIAL_STATE).orElseThrow(
-            () -> new EssentialDataNotFoundException("Delivery state is not exists for 'preparing' state")
-        );
+        DeliveryStatus status = deliveryStatusRepository.findStatusByName(Type.PREPARING.name());
 
         Delivery delivery = deliveryRepository.save(
             new Delivery(deliveryDto.address(), deliveryDto.receivedDate(), status, fee, deliveryDto.receiverName())
@@ -104,9 +103,7 @@ public class OrderServiceImpl implements OrderService {
             WrappingPaper wrappingPaper = detail.wrappingPaperId() == null ? null : wrappingPaperRepository.findById(detail.wrappingPaperId()).orElseThrow(
                 () -> new WrappingPaperDoesNotExistsException(detail.wrappingPaperId())
             );
-            OrderDetailType type = orderDetailTypeRepository.findByName("COMPLETE").orElseThrow(
-                () -> new EssentialDataNotFoundException("Order detail type error")
-            );
+            OrderDetailType type = orderDetailTypeRepository.findStatusByName(OrderDetailType.Type.COMPLETE);
 
             OrderDetail orderDetail = OrderDetail.builder()
                 .order(order)
@@ -136,5 +133,11 @@ public class OrderServiceImpl implements OrderService {
     public void deactivateOrder(long orderId) {
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new ResourceNotFoundException("Given id is not available: "+orderId));
         order.setActive(false);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<OrderAdminTableView> getOrderListAdmin(OrderQueryFilterDto filter) {
+        return orderRepository.findOrdersUsingFilterForAdmin(filter);
     }
 }

@@ -17,7 +17,7 @@ import shop.s5g.shop.service.order.OrderDetailService;
 import shop.s5g.shop.service.order.RefundHistoryService;
 
 @RequiredArgsConstructor
-@RequestMapping("/api/shop/orders/{orderId}")
+@RequestMapping("/api/shop/orders")
 @RestController
 public class OrderDetailController {
     private final OrderDetailService orderDetailService;
@@ -25,7 +25,7 @@ public class OrderDetailController {
     private final RefundHistoryService refundHistoryService;
 
     // 하나의 주문에 대한 주문 상세, 환불내역, 배송지 모두 리턴하는 컨트롤러
-    @GetMapping
+    @GetMapping("/{orderId}")
     public Object getOrderDetailAll(@PathVariable long orderId, @RequestParam(required = false) String scope) {
         if (scope == null || scope.isEmpty()) {
             return orderDetailService.getOrderDetailsWithBook(orderId);
@@ -45,4 +45,5 @@ public class OrderDetailController {
         }
         throw new BadRequestException("다음 인자는 잘못된 인자입니다: scope="+scope);
     }
+
 }
