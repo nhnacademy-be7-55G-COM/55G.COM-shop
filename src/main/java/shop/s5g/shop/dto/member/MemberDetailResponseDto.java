@@ -1,6 +1,8 @@
 package shop.s5g.shop.dto.member;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import shop.s5g.shop.dto.address.AddressResponseDto;
 import shop.s5g.shop.dto.memberGrade.MemberGradeResponseDto;
 import shop.s5g.shop.dto.memberStatus.MemberStatusResponseDto;
 
@@ -16,7 +18,8 @@ public record MemberDetailResponseDto(
     String phoneNumber,
     LocalDateTime createdAt,
     LocalDateTime latestLoginAt,
-    Long point
+    Long point,
+    List<AddressResponseDto> addresses
 ) {
 
 }
