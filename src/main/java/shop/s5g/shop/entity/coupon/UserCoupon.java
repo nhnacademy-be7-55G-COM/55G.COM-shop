@@ -25,12 +25,12 @@ public class UserCoupon {
     private UserCouponPk userCouponPk;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId(value = "customer_id")
+    @MapsId(value = "customerId")
     @JoinColumn(name = "customer_id")
     private Member member;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @MapsId(value = "coupon_id")
+    @MapsId(value = "couponId")
     @JoinColumn(name = "coupon_id")
     private Coupon coupon;
 
