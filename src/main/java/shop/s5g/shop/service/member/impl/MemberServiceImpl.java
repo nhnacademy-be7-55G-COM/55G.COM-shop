@@ -100,7 +100,6 @@ public class MemberServiceImpl implements MemberService {
 
         userCouponService.createWelcomeCoupon(new UserCouponRequestDto(saved.getId()));
 
-        if (member.getBirth())
     }
 
     @Override
