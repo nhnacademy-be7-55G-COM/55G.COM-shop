@@ -1,4 +1,4 @@
-package shop.s5g.shop.controller;
+package shop.s5g.shop.controller.cart;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;

@@ -35,7 +35,6 @@ import shop.s5g.shop.annotation.WithCustomMockUser;
 import shop.s5g.shop.config.RedisConfig;
 import shop.s5g.shop.config.SecurityConfig;
 import shop.s5g.shop.config.TestSecurityConfig;
-import shop.s5g.shop.controller.CartController;
 import shop.s5g.shop.dto.cart.request.CartBookInfoRequestDto;
 import shop.s5g.shop.dto.cart.request.CartBookSelectRequestDto;
 import shop.s5g.shop.dto.cart.request.CartControlQuantityRequestDto;

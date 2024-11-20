@@ -20,6 +20,7 @@ import shop.s5g.shop.dto.cart.response.CartDetailInfoResponseDto;
 import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.cart.Cart;
 import shop.s5g.shop.entity.cart.CartPk;
+import shop.s5g.shop.entity.delivery.DeliveryFee;
 import shop.s5g.shop.entity.member.Member;
 import shop.s5g.shop.exception.BadRequestException;
 import shop.s5g.shop.exception.ResourceNotFoundException;
@@ -56,7 +57,6 @@ public class CartServiceImpl implements CartService {
     }
 
     // 로그인 했을 때 세션스토리지와 db에 있는 걸 합쳐서 레디스에 옮김
-    //TODO readOnly 설정 고려할 것
     @Transactional
     @Override
     public void saveMergedCartToRedis(String customerLoginId,List<CartBookInfoRequestDto> cartBookInfoListInSession) {
@@ -247,11 +247,18 @@ public class CartServiceImpl implements CartService {
         BigDecimal totalPrice = cartBooks.stream().map(cartBook -> cartBook.discountedPrice()
                 .multiply(BigDecimal.valueOf(cartBook.quantity())))
             .reduce(BigDecimal.ZERO, BigDecimal::add);
+        List<DeliveryFee> deliveryInfo = deliveryFeeRepository.findInfoForPurchase();
 
-        long deliveryFee = 3000;
-        long freeShippingThreshold = 30000;
+        long deliveryFee = deliveryInfo.stream().filter(delivery -> delivery.getCondition() == 0)
+            .findFirst().map(DeliveryFee::getFee)
+            .orElseThrow(() -> new ResourceNotFoundException("배달비 확인 불가"));
+        long freeShippingThreshold = deliveryInfo.stream()
+            .filter(delivery -> delivery.getFee() == 0).findFirst().map(DeliveryFee::getCondition)
+            .orElseThrow(() -> new ResourceNotFoundException("배달비 확인 불가"));
+
         return new CartDetailInfoResponseDto(totalPrice, deliveryFee, freeShippingThreshold);
     }
+
 
 
 

@@ -3,6 +3,8 @@ package shop.s5g.shop.repository.delivery.qdsl.impl;
 
 import static shop.s5g.shop.entity.delivery.QDeliveryFee.deliveryFee;
 
+import com.querydsl.core.BooleanBuilder;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import shop.s5g.shop.dto.delivery.DeliveryFeeUpdateRequestDto;
@@ -31,4 +33,17 @@ public class DeliveryFeeQuerydslRepositoryImpl extends QuerydslRepositorySupport
                 .fetchOne()
         );
     }
+
+    @Override
+    public List<DeliveryFee> findInfoForPurchase() {
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+        booleanBuilder.or(deliveryFee.fee.eq(0l))
+            .or(deliveryFee.condition.eq(0l));
+
+        return from(deliveryFee)
+            .where(booleanBuilder)
+            .select(deliveryFee)
+            .fetch();
+    }
+
 }
