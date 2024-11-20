@@ -21,15 +21,10 @@ public record BookRequestDto(
     Long price,
     @NotNull
     BigDecimal discountRate,
-    @NotNull
     boolean isPacked,
     @NotNull
     int stock,
-    @NotNull
-    Long views,
-    String thumbnailPath,   // 도서 이미지가 저장된 URL의 경로
-    @NotNull
-    LocalDateTime createdAt
+    String thumbnailPath   // 도서 이미지가 저장된 URL의 경로
 ) {
 
 }
