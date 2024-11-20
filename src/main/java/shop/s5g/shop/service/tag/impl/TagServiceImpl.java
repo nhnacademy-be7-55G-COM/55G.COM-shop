@@ -23,11 +23,11 @@ public class TagServiceImpl implements TagService {
     //태그 등록
     public void createtag(TagRequestDto tagDto) {
 
-        if (tagRepository.existsByTagNameAndActive(tagDto.tagName(), tagDto.active())) {
+        if (tagRepository.existsByTagName(tagDto.tagName())) {
             throw new TagAlreadyExistsException(tagDto.tagName() + " 가 이미 존재합니다.");
         }
 
-        Tag tag = new Tag(tagDto.tagName(), tagDto.active());
+        Tag tag = new Tag(tagDto.tagName());
         tagRepository.save(tag);
     }
 

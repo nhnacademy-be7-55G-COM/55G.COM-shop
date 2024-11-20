@@ -53,7 +53,7 @@ class TagControllerTest {
     @Test
     @DisplayName("태그 등록 test")
     void testGetTags() throws Exception {
-        TagRequestDto tagRequestDto = new TagRequestDto("서울 출판사", true);
+        TagRequestDto tagRequestDto = new TagRequestDto("서울 출판사");
 
         this.mockMvc
                 .perform(post("/api/shop/tag")
@@ -70,7 +70,7 @@ class TagControllerTest {
      */
     @Test
     void testGetTagsError() throws Exception {
-        TagRequestDto tagRequestDto = new TagRequestDto("베스트셀러", true);
+        TagRequestDto tagRequestDto = new TagRequestDto("베스트셀러");
 
         this.mockMvc
                 .perform(post("/api/shop/tag")

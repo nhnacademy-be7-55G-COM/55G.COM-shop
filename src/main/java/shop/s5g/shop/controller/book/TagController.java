@@ -21,7 +21,7 @@ public class TagController {
     }
     //태그 등록
     @PostMapping("/tag")
-    public ResponseEntity<MessageDto> addBook(@Valid @RequestBody TagRequestDto tagDto, BindingResult bindingResult) {
+    public ResponseEntity<MessageDto> addTag(@Valid @RequestBody TagRequestDto tagDto, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
             throw new TagBadRequestException("잘못된 입력입니다.");
         }

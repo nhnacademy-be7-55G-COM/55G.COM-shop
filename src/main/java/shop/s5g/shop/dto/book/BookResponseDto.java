@@ -1,6 +1,7 @@
 package shop.s5g.shop.dto.book;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 //@Builder
@@ -17,7 +18,7 @@ public interface BookResponseDto {
 
     String getDescription();
 
-    LocalDateTime getPublishedDate();
+    LocalDate getPublishedDate();
 
     String getIsbn();
 

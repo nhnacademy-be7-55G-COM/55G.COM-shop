@@ -39,7 +39,6 @@ public class TagQuerydslRepositoryImpl extends QuerydslRepositorySupport impleme
     public void updateTag(Long tagId, TagRequestDto tagDto) {
         jpaQueryFactory.update(tag)
                 .set(tag.tagName, tagDto.tagName())
-                .set(tag.active, tagDto.active())
                 .where(tag.tagId.eq(tagId))
                 .execute();
     }
