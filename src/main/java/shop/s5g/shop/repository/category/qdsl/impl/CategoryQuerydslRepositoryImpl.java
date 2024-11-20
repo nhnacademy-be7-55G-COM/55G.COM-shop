@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
+import shop.s5g.shop.dto.category.CategoryDetailResponseDto;
 import shop.s5g.shop.dto.category.CategoryResponseDto;
 import shop.s5g.shop.dto.category.CategoryUpdateRequestDto;
 import shop.s5g.shop.entity.Category;
@@ -29,9 +30,8 @@ public class CategoryQuerydslRepositoryImpl extends QuerydslRepositorySupport im
     //카테고리 수정
     @Override
     public void updatesCategory(Long categoryId, CategoryUpdateRequestDto categoryDto) {
-        jpaQueryFactory .update(category)
+        update(category)
                 .set(category.categoryName, categoryDto.categoryName())
-                .set(category.active, categoryDto.active())
                 .where(category.categoryId.eq(categoryId))
                 .execute();//쿼리를 최종적으로 실행하여 변경 내용을 db에 반영
     }
@@ -98,5 +98,11 @@ public class CategoryQuerydslRepositoryImpl extends QuerydslRepositorySupport im
                 .set(category.active, false)
                 .where(category.categoryId.eq(categoryId))
                 .execute();
+    }
+
+    //카테고리 상세
+    @Override
+    public List<CategoryDetailResponseDto> getCategoryDetail(Long categoryId) {
+        return List.of();
     }
 }

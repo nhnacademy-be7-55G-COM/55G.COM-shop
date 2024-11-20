@@ -3,7 +3,6 @@ package shop.s5g.shop.controller.book;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -16,19 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import shop.s5g.shop.dto.PageResponseDto;
-import shop.s5g.shop.dto.book.*;
 import shop.s5g.shop.dto.book.category.BookCategoryBookResponseDto;
-import shop.s5g.shop.dto.book.category.BookCategoryResponseDto;
 import shop.s5g.shop.dto.tag.MessageDto;
 import shop.s5g.shop.exception.book.BookBadRequestException;
 import shop.s5g.shop.dto.book.BookDetailResponseDto;
-import shop.s5g.shop.dto.book.BookPageableResponseDto;
 import shop.s5g.shop.dto.book.BookRequestDto;
 import shop.s5g.shop.dto.book.BookResponseDto;
 import shop.s5g.shop.dto.book.BookSimpleResponseDto;
-import shop.s5g.shop.dto.tag.MessageDto;
-import shop.s5g.shop.exception.book.BookBadRequestException;
 import shop.s5g.shop.service.book.BookService;
 
 @Slf4j
@@ -63,12 +56,12 @@ public class BookController {
     }
 
     //도서 목록 조회 pageable
-    @GetMapping("/books/pageable")
-    public ResponseEntity<PageResponseDto<BookPageableResponseDto>> getAllBooksPageable(
-        Pageable pageable) {
-        log.trace("/books/pageable says: Pageable={}", pageable);
-        return ResponseEntity.ok().body(PageResponseDto.of(bookService.allBookPageable(pageable)));
-    }
+//    @GetMapping("/books/pageable")
+//    public ResponseEntity<PageResponseDto<BookPageableResponseDto>> getAllBooksPageable(
+//        Pageable pageable) {
+//        log.trace("/books/pageable says: Pageable={}", pageable);
+//        return ResponseEntity.ok().body(PageResponseDto.of(bookService.allBookPageable(pageable)));
+//    }
 
     //도서 상세 조회
     @GetMapping("/book/{bookId}")
@@ -128,8 +121,8 @@ public class BookController {
     }
 
     //categoryId로 bookList조회
-    @GetMapping("/books/{categoryId}")
-    ResponseEntity<List<BookPageableResponseDto>> getBookByCategory(@PathVariable("categoryId") Long categoryId) {
-        return ResponseEntity.ok().body(bookService.getBookList(categoryId));
-    }
+//    @GetMapping("/books/{categoryId}")
+//    ResponseEntity<List<BookPageableResponseDto>> getBookByCategory(@PathVariable("categoryId") Long categoryId) {
+//        return ResponseEntity.ok().body(bookService.getBookList(categoryId));
+//    }
 }

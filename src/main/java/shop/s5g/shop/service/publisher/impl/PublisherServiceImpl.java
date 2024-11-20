@@ -1,8 +1,11 @@
 package shop.s5g.shop.service.publisher.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import shop.s5g.shop.dto.PageResponseDto;
 import shop.s5g.shop.dto.publisher.PublisherRequestDto;
 import shop.s5g.shop.dto.publisher.PublisherResponseDto;
 import shop.s5g.shop.entity.Publisher;
@@ -46,16 +49,13 @@ public class PublisherServiceImpl implements PublisherService {
 
     //모든 출판사 조회
     @Override
-    @Transactional(readOnly = true)
-    public List<PublisherResponseDto> getAllPublisher() {
-        return publisherRepository.getAllPublisher();
+    public Page<PublisherResponseDto> getAllPublisher(Pageable pageable) {
+        return publisherRepository.getAllPublisher(pageable);
     }
 
     //출판사 수정
     @Override
     public void updatePublisher(Long publisherId, PublisherRequestDto publisherRequestDto) {
-//        Publisher publisher = publisherRepository.findById(publisherId).orElseThrow(() -> new PublisherResourceNotFoundException("해당 출판사는 없습니다."));
-//        publisher.setActive(true);
 
         if(!publisherRepository.existsById(publisherId)) {
             throw new PublisherResourceNotFoundException("수정할 출판사가 존재하지 않습니다.");

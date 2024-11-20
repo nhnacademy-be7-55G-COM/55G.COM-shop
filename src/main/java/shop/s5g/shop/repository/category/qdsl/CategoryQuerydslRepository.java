@@ -2,6 +2,7 @@ package shop.s5g.shop.repository.category.qdsl;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import shop.s5g.shop.dto.category.CategoryDetailResponseDto;
 import shop.s5g.shop.dto.category.CategoryResponseDto;
 import shop.s5g.shop.dto.category.CategoryUpdateRequestDto;
 
@@ -15,4 +16,6 @@ public interface CategoryQuerydslRepository {
     List<CategoryResponseDto> getChild_Category(long categoryId);
 
     List<CategoryResponseDto> getKoreaBook();
+
+    List<CategoryDetailResponseDto> getCategoryDetail(Long categoryId);
 }

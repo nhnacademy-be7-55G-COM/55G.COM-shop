@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import shop.s5g.shop.dto.book.category.BookCategoryBookResponseDto;
 import shop.s5g.shop.dto.book.category.BookCategoryResponseDto;
-import shop.s5g.shop.dto.book.category.BookCategoryResponseDto;
 import shop.s5g.shop.dto.tag.MessageDto;
 import shop.s5g.shop.service.book.category.BookCategoryService;
 

@@ -69,7 +69,7 @@ class CategoryRepositoryTest {
         Category saved1 = categoryRepository.save(category1);
         Category saved2 = categoryRepository.save(category2);
 
-        CategoryUpdateRequestDto category3 = new CategoryUpdateRequestDto("인문학", true);
+        CategoryUpdateRequestDto category3 = new CategoryUpdateRequestDto("인문학");
 
         //category2를 category3으로 수정
         categoryRepository.updatesCategory(saved2.getCategoryId(), category3);

@@ -1,10 +1,15 @@
 package shop.s5g.shop.controller.publisher;
 
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import shop.s5g.shop.dto.PageResponseDto;
 import shop.s5g.shop.dto.publisher.PublisherRequestDto;
 import shop.s5g.shop.dto.publisher.PublisherResponseDto;
 import shop.s5g.shop.dto.tag.MessageDto;
@@ -13,6 +18,7 @@ import shop.s5g.shop.service.publisher.PublisherService;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/shop")
 public class PublisherController {
@@ -46,8 +52,11 @@ public class PublisherController {
 
     //모든 출판사 조회
     @GetMapping("/publisher")
-    public ResponseEntity<List<PublisherResponseDto>> getAllPublisher() {
-        return ResponseEntity.ok().body(publisherService.getAllPublisher());
+    public ResponseEntity<PageResponseDto<PublisherResponseDto>> getAllPublisher(@PageableDefault Pageable pageable) {
+        log.debug("method start");
+        Page<PublisherResponseDto> publisherResponseDtos = publisherService.getAllPublisher(pageable);
+
+        return ResponseEntity.ok().body(PageResponseDto.of(publisherResponseDtos));
     }
 
     //출판사 수정
