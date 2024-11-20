@@ -39,8 +39,8 @@ class BookRepositoryTest {
 
     @Autowired
     public BookRepositoryTest(BookRepository bookRepository,
-                              PublisherRepository publisherRepository,
-                              BookStatusRepository bookStatusRepository) {
+        PublisherRepository publisherRepository,
+        BookStatusRepository bookStatusRepository) {
         this.bookRepository = bookRepository;
         this.publisherRepository = publisherRepository;
         this.bookStatusRepository = bookStatusRepository;
@@ -57,20 +57,20 @@ class BookRepositoryTest {
         BookStatus bookStatus = new BookStatus();
 
         Book book = new Book(
-                publisher,
-                bookStatus,
-                "아낌없이 주는 나무",
-                "전래동화",
-                "이 책은 전래동화 입니다.",
-                LocalDate.of(2000, 10, 10),
-                "978-3-15-148410-2",
-                15000L,
-                new BigDecimal("5.5"),
-                true,
-                200,
-                2000L,
-                LocalDateTime.of(2010, 5, 5, 15, 30),
-                LocalDateTime.of(2010, 5, 5, 15, 30)
+            publisher,
+            bookStatus,
+            "아낌없이 주는 나무",
+            "전래동화",
+            "이 책은 전래동화 입니다.",
+            LocalDate.of(2000, 10, 10),
+            "978-3-15-148410-2",
+            15000L,
+            new BigDecimal("5.5"),
+            true,
+            200,
+            2000L,
+            LocalDateTime.of(2010, 5, 5, 15, 30),
+            LocalDateTime.of(2010, 5, 5, 15, 30)
         );
 
         Book save = bookRepository.save(book);
@@ -210,36 +210,37 @@ class BookRepositoryTest {
         bookStatusRepository.save(bookStatus1);
         bookStatusRepository.save(bookStatus2);
         Book book1 = new Book(
-                publisher1,
-                bookStatus1,
-                "총균쇠",
-                "다큐",
-                "이 책은 다큐 입니다.",
-                LocalDate.of(2000, 10, 10),
-                "978-3-15-15859-1",
-                20000L,
-                new BigDecimal("10.0"),
-                true,
-                200,
-                30000L,
-                LocalDateTime.of(2010, 5, 5, 15, 30),
-                LocalDateTime.of(2010, 5, 5, 15, 30)
+            publisher1,
+            bookStatus1,
+            "총균쇠",
+            "다큐",
+            "이 책은 다큐 입니다.",
+            LocalDate.of(2000, 10, 10),
+            "978-3-15-15859-1",
+            20000L,
+            new BigDecimal("10.0"),
+            true,
+            200,
+            30000L,
+            LocalDateTime.of(2010, 5, 5, 15, 30),
+            LocalDateTime.of(2010, 5, 5, 15, 30)
         );
         BookRequestDto book2 = new BookRequestDto(
-                publisher2.getId(),
-                bookStatus2.getId(),
-                "코스모스",
-                "다큐",
-                "이 책은 다큐 입니다.",
-                "2000-10-10",
-                "12341234",
-                20000L,
-                new BigDecimal("10.0"),
-                true,
-                200,
-                30000L,
-                LocalDateTime.of(2010, 5, 5, 15, 30)
-        );
+            publisher2.getId(),
+            bookStatus2.getId(),
+            "코스모스",
+            "다큐",
+            "이 책은 다큐 입니다.",
+            "2000-10-10",
+            "12341234",
+            20000L,
+            new BigDecimal("10.0"),
+            true,
+            200,
+            30000L,
+            "asdf.png",
+            LocalDateTime.of(2010, 5, 5, 15, 30)
+            );
 
         Book save = bookRepository.save(book1);
         bookRepository.updateBook(save.getBookId(), book2);
@@ -248,7 +249,7 @@ class BookRepositoryTest {
         testEntityManager.clear();
 
         Book book = bookRepository.findById(save.getBookId())
-                .orElseThrow(() -> new BookResourceNotFoundException("해당 도서는 존재하지 않습니다."));
+            .orElseThrow(() -> new BookResourceNotFoundException("해당 도서는 존재하지 않습니다."));
         Assertions.assertEquals("코스모스", book.getTitle());
     }
 
@@ -260,20 +261,20 @@ class BookRepositoryTest {
         Publisher publisher = new Publisher();
         BookStatus bookStatus = new BookStatus();
         Book book = new Book(
-                publisher,
-                bookStatus,
-                "총균쇠",
-                "다큐",
-                "이 책은 다큐 입니다.",
-                LocalDate.of(2000, 10, 10),
-                "978-3-15-15859-1",
-                20000L,
-                new BigDecimal("10.0"),
-                true,
-                200,
-                30000L,
-                LocalDateTime.of(2010, 5, 5, 15, 30),
-                LocalDateTime.of(2010, 5, 5, 15, 30)
+            publisher,
+            bookStatus,
+            "총균쇠",
+            "다큐",
+            "이 책은 다큐 입니다.",
+            LocalDate.of(2000, 10, 10),
+            "978-3-15-15859-1",
+            20000L,
+            new BigDecimal("10.0"),
+            true,
+            200,
+            30000L,
+            LocalDateTime.of(2010, 5, 5, 15, 30),
+            LocalDateTime.of(2010, 5, 5, 15, 30)
         );
         bookRepository.save(book);
         bookRepository.delete(book);
