@@ -17,5 +17,4 @@ public interface CategoryQuerydslRepository {
 
     List<CategoryResponseDto> getKoreaBook();
 
-    List<CategoryDetailResponseDto> getCategoryDetail(Long categoryId);
 }

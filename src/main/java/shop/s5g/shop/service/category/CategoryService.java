@@ -22,5 +22,4 @@ public interface CategoryService {
 
     CategoryResponseDto getCategory(Long categoryId);
 
-    List<CategoryDetailResponseDto> getCategoryDetail(Long categoryId);
 }

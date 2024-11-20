@@ -100,9 +100,4 @@ public class CategoryQuerydslRepositoryImpl extends QuerydslRepositorySupport im
                 .execute();
     }
 
-    //카테고리 상세
-    @Override
-    public List<CategoryDetailResponseDto> getCategoryDetail(Long categoryId) {
-        return List.of();
-    }
 }

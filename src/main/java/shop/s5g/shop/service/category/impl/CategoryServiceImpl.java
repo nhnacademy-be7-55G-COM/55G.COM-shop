@@ -7,7 +7,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import shop.s5g.shop.dto.category.CategoryDetailResponseDto;
 import shop.s5g.shop.dto.category.CategoryRequestDto;
 import shop.s5g.shop.dto.category.CategoryResponseDto;
 import shop.s5g.shop.dto.category.CategoryUpdateRequestDto;
@@ -95,10 +94,4 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.inactiveCategory(categoryId);
     }
 
-    //카테고리 상세 조회
-    @Override
-    public List<CategoryDetailResponseDto> getCategoryDetail(Long categoryId) {
-        categoryRepository.getCategoryDetail(categoryId);
-        return List.of();
-    }
 }
