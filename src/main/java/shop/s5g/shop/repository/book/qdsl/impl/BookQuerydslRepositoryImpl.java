@@ -182,16 +182,31 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
             ))
             .fetchOne();
 
-        List<BookDetailCategoryResponseDto> categoryList=new ArrayList<>();
-        Stack<BookDetailCategoryResponseDto> categoryStack=new Stack<>();
-        Category subCategory=bookCategoryQuery.getCategory();
-        while(subCategory!=null){
+        List<BookDetailCategoryResponseDto> categoryList = new ArrayList<>();
+        Stack<BookDetailCategoryResponseDto> categoryStack = new Stack<>();
+        Category subCategory = bookCategoryQuery.getCategory();
+        while (subCategory != null) {
             categoryStack.push(new BookDetailCategoryResponseDto(subCategory.getCategoryId(),
                 subCategory.getCategoryName()));
-            subCategory=subCategory.getParentCategory();
+            subCategory = subCategory.getParentCategory();
         }
-        while(!categoryStack.isEmpty()){
+        while (!categoryStack.isEmpty()) {
             categoryList.add(categoryStack.pop());
+        }
+
+        BookImage queryBookImage = from(bookImage)
+            .join(bookImage.book, book)
+            .where(book.bookId.eq(bookId))
+            .select(Projections.constructor(BookImage.class,
+                bookImage.bookImageId,
+                book,
+                bookImage.imageName
+            ))
+            .fetchOne();
+
+        String imagePath = "no-image.png";
+        if (queryBookImage != null) {
+            imagePath = queryBookImage.getImageName();
         }
 
         return from(book)
@@ -213,6 +228,8 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
                 book.stock,
                 book.views,
                 book.createdAt,
+                book.updatedAt,
+                ConstantImpl.create(imagePath),
                 ConstantImpl.create(authorList),
                 ConstantImpl.create(categoryList)
             ))
