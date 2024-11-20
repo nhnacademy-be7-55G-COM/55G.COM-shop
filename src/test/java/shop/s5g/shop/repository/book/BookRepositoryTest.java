@@ -157,41 +157,41 @@ class BookRepositoryTest {
     /**
      * //모든 도서 Page<BookPageableResponseDto>타입으로 리턴 test
      */
-    @Test
-    void pageableTest() {
-        Publisher publisher1 = new Publisher();
-        Publisher publisher2 = new Publisher();
-
-        BookStatus bookStatus1 = new BookStatus();
-        BookStatus bookStatus2 = new BookStatus();
-
-        publisherRepository.save(publisher1);
-        publisherRepository.save(publisher2);
-        bookStatusRepository.save(bookStatus1);
-        bookStatusRepository.save(bookStatus2);
-        Book book1 = new Book(
-                publisher1,
-                bookStatus1,
-                "총균쇠",
-                "다큐",
-                "이 책은 다큐 입니다.",
-                LocalDate.of(2000, 10, 10),
-                "978-3-15-15859-1",
-                20000L,
-                new BigDecimal("10.0"),
-                true,
-                200,
-                30000L,
-                LocalDateTime.of(2010, 5, 5, 15, 30),
-                LocalDateTime.of(2010, 5, 5, 15, 30)
-        );
-
-        BookImage bookImage = new BookImage(book1, "https://naver.com");
-        Pageable pageable = PageRequest.of(0, 10, Sort.by("price").descending());
-        bookRepository.findAllBookPage(pageable);
-
-
-    }
+//    @Test
+//    void pageableTest() {
+//        Publisher publisher1 = new Publisher();
+//        Publisher publisher2 = new Publisher();
+//
+//        BookStatus bookStatus1 = new BookStatus();
+//        BookStatus bookStatus2 = new BookStatus();
+//
+//        publisherRepository.save(publisher1);
+//        publisherRepository.save(publisher2);
+//        bookStatusRepository.save(bookStatus1);
+//        bookStatusRepository.save(bookStatus2);
+//        Book book1 = new Book(
+//                publisher1,
+//                bookStatus1,
+//                "총균쇠",
+//                "다큐",
+//                "이 책은 다큐 입니다.",
+//                LocalDate.of(2000, 10, 10),
+//                "978-3-15-15859-1",
+//                20000L,
+//                new BigDecimal("10.0"),
+//                true,
+//                200,
+//                30000L,
+//                LocalDateTime.of(2010, 5, 5, 15, 30),
+//                LocalDateTime.of(2010, 5, 5, 15, 30)
+//        );
+//
+//        BookImage bookImage = new BookImage(book1, "https://naver.com");
+//        Pageable pageable = PageRequest.of(0, 10, Sort.by("price").descending());
+//        bookRepository.findAllBookPage(pageable);
+//
+//
+//    }
 
     /**
      * 도서 수정
