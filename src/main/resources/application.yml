@@ -100,12 +100,11 @@ spring:
         config:
           default:
             logger-level: full
-
-
-logging:
-  level:
-    shop.s5g: trace
-    root: info
+rabbit:
+  orders:
+    payment:
+      toss:
+        queue: 55g.dev.orders.payment.queue
 
 ---
 spring:

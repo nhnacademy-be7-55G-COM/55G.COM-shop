@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
@@ -27,6 +28,7 @@ import shop.s5g.shop.security.ShopMemberDetail;
 import shop.s5g.shop.service.member.MemberService;
 import shop.s5g.shop.util.JwtUtil;
 
+@Slf4j
 @RequiredArgsConstructor
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -37,6 +39,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
         FilterChain filterChain) throws ServletException, IOException {
+        log.trace("Request incoming... :{}", request.getServletPath());
         try {
             if (request.getHeader(HttpHeaders.AUTHORIZATION) == null) {
                 filterChain.doFilter(request, response);
