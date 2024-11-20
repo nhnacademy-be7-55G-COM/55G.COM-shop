@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.math.BigDecimal;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -156,5 +161,69 @@ class CouponTemplateControllerTest {
 
         mockMvc.perform(delete("/api/shop/admin/coupons/template/{couponTemplateId}", templateId))
             .andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    @DisplayName("모든 쿠폰 템플릿 조회 성공")
+    void getCouponTemplates() throws Exception {
+        // Given
+        Pageable pageable = PageRequest.of(0, 10);
+        CouponTemplateResponseDto couponTemplateResponseDto = new CouponTemplateResponseDto(
+            1L,
+            new BigDecimal("0.8"),
+            15000L,
+            5000L,
+            30,
+            "쿠폰",
+            "테스트 쿠폰입니다."
+        );
+        Page<CouponTemplateResponseDto> couponTemplatePage = new PageImpl<>(List.of(couponTemplateResponseDto), pageable, 1);
+
+        when(couponTemplateService.getCouponTemplates(pageable)).thenReturn(couponTemplatePage);
+
+        // When & Then
+        mockMvc.perform(get("/api/shop/admin/coupons/templates")
+                .param("page", "0")
+                .param("size", "10"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.content[0].couponTemplateId").value(1L))
+            .andExpect(jsonPath("$.content[0].couponName").value("쿠폰"))
+            .andExpect(jsonPath("$.content[0].couponDescription").value("테스트 쿠폰입니다."))
+            .andExpect(jsonPath("$.content[0].discountPrice").value(new BigDecimal("0.8")))
+            .andExpect(jsonPath("$.content[0].condition").value(15000L))
+            .andExpect(jsonPath("$.content[0].maxPrice").value(5000L))
+            .andExpect(jsonPath("$.content[0].duration").value(30));
+    }
+
+    @Test
+    @DisplayName("사용되지 않은 쿠폰 템플릿 조회 성공")
+    void getCouponTemplatesUnused() throws Exception {
+        // Given
+        Pageable pageable = PageRequest.of(0, 10);
+        CouponTemplateResponseDto couponTemplateResponseDto = new CouponTemplateResponseDto(
+            1L,
+            new BigDecimal("0.8"),
+            15000L,
+            5000L,
+            30,
+            "쿠폰",
+            "테스트 쿠폰입니다."
+        );
+        Page<CouponTemplateResponseDto> couponTemplatePage = new PageImpl<>(List.of(couponTemplateResponseDto), pageable, 1);
+
+        when(couponTemplateService.getCouponTemplatesUnused(pageable)).thenReturn(couponTemplatePage);
+
+        // When & Then
+        mockMvc.perform(get("/api/shop/admin/coupons/templates/unused")
+                .param("page", "0")
+                .param("size", "10"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.content[0].couponTemplateId").value(1L))
+            .andExpect(jsonPath("$.content[0].couponName").value("쿠폰"))
+            .andExpect(jsonPath("$.content[0].couponDescription").value("테스트 쿠폰입니다."))
+            .andExpect(jsonPath("$.content[0].discountPrice").value(new BigDecimal("0.8")))
+            .andExpect(jsonPath("$.content[0].condition").value(15000L))
+            .andExpect(jsonPath("$.content[0].maxPrice").value(5000L))
+            .andExpect(jsonPath("$.content[0].duration").value(30));
     }
 }
