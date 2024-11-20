@@ -21,6 +21,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -133,5 +137,32 @@ class CouponPolicyControllerTest {
             .andExpect(jsonPath("$.condition").value(20000L))
             .andExpect(jsonPath("$.maxPrice").value(2000L))
             .andExpect(jsonPath("$.duration").value(30));
+    }
+
+    @Test
+    @DisplayName("모든 쿠폰 정책 조회 성공")
+    void findAllCouponPolicy() throws Exception {
+        // Given
+        Pageable pageable = PageRequest.of(0, 10);
+        CouponPolicyResponseDto couponPolicyResponseDto = new CouponPolicyResponseDto(
+            1L,
+            new BigDecimal("0.5"),
+            20000L,
+            2000L,
+            30
+        );
+        Page<CouponPolicyResponseDto> couponPolicyPage = new PageImpl<>(List.of(couponPolicyResponseDto), pageable, 1);
+
+        when(couponPolicyService.getAllCouponPolices(pageable)).thenReturn(couponPolicyPage);
+
+        // When & Then
+        mockMvc.perform(get("/api/shop/admin/coupons/policy")
+                .param("page", "0")
+                .param("size", "10"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.content[0].discountPrice").value(new BigDecimal("0.5")))
+            .andExpect(jsonPath("$.content[0].condition").value(20000L))
+            .andExpect(jsonPath("$.content[0].maxPrice").value(2000L))
+            .andExpect(jsonPath("$.content[0].duration").value(30));
     }
 }

@@ -1,18 +1,18 @@
 package shop.s5g.shop.service.coupon.coupon.impl;
 
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.RandomStringUtils;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.coupon.coupon.CouponRequestDto;
 import shop.s5g.shop.dto.coupon.coupon.CouponResponseDto;
 import shop.s5g.shop.entity.coupon.Coupon;
+import shop.s5g.shop.entity.coupon.Coupon.CouponType;
 import shop.s5g.shop.entity.coupon.CouponTemplate;
 import shop.s5g.shop.exception.coupon.CouponAlreadyDeletedException;
 import shop.s5g.shop.exception.coupon.CouponNotFoundException;
@@ -51,12 +51,64 @@ public class CouponServiceImpl implements CouponService {
                 new Coupon(
                     couponTemplate,
                     createCouponNumber(),
-                    couponRequestDto.expiredAt()
+                    LocalDateTime.now().plusDays(couponTemplate.getCouponPolicy().getDuration())
                 )
             );
         }
 
         couponRepository.saveAll(couponSet);
+    }
+
+    /**
+     * 웰컴 쿠폰 생성
+     * @return Coupon
+     */
+    @Override
+    public Coupon createWelcomeCoupon() {
+
+        CouponTemplate welcomeTemplate = couponTemplateRepository.findParticularCouponByName(
+            CouponType.WELCOME.name());
+
+        if (Objects.isNull(welcomeTemplate)) {
+            throw new CouponTemplateNotFoundException("해당 쿠폰 템플릿이 존재하지 않습니다.");
+        }
+
+        return couponRepository.save(
+            new Coupon(
+                welcomeTemplate,
+                createCouponNumber(),
+                LocalDateTime.now().plusDays(30)
+            )
+        );
+    }
+
+    /**
+     * 생일 쿠폰 생성
+     * @return Coupon
+     */
+    @Override
+    public Coupon createBirthCoupon() {
+
+        CouponTemplate birthTemplate = couponTemplateRepository.findParticularCouponByName(
+            CouponType.BIRTH.name()
+        );
+
+        if (Objects.isNull(birthTemplate)) {
+            throw new CouponTemplateNotFoundException("해당 쿠폰 템플릿이 존재하지 않습니다.");
+        }
+
+        // 쿠폰의 만료일을 해당 월의 마지막 일로 설정
+        LocalDateTime now = LocalDateTime.now();
+        YearMonth yearMonth = YearMonth.from(now);
+        LocalDateTime lastDayOfMonth = yearMonth.atEndOfMonth().atTime(23, 59, 59);
+
+        return couponRepository.save(
+            new Coupon(
+                birthTemplate,
+                createCouponNumber(),
+                lastDayOfMonth
+            )
+        );
     }
 
     /**

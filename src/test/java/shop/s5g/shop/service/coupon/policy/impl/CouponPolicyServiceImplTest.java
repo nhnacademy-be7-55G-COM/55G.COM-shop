@@ -1,4 +1,4 @@
-package shop.s5g.shop.service.coupon.coponpolicy.impl;
+package shop.s5g.shop.service.coupon.policy.impl;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -26,7 +26,6 @@ import shop.s5g.shop.dto.coupon.policy.CouponPolicyRequestDto;
 import shop.s5g.shop.dto.coupon.policy.CouponPolicyResponseDto;
 import shop.s5g.shop.entity.coupon.CouponPolicy;
 import shop.s5g.shop.repository.coupon.policy.CouponPolicyRepository;
-import shop.s5g.shop.service.coupon.policy.impl.CouponPolicyServiceImpl;
 
 @ActiveProfiles("local")
 @ExtendWith(MockitoExtension.class)
