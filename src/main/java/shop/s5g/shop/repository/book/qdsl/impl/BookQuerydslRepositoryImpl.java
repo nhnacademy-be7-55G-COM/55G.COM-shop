@@ -7,6 +7,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -23,6 +24,7 @@ import shop.s5g.shop.dto.book.BookSimpleResponseDto;
 import shop.s5g.shop.dto.book.author.BookAuthorResponseDto;
 import shop.s5g.shop.dto.book.category.BookDetailCategoryResponseDto;
 import shop.s5g.shop.entity.Book;
+import shop.s5g.shop.entity.BookImage;
 import shop.s5g.shop.entity.Category;
 import shop.s5g.shop.entity.book.category.BookCategory;
 import shop.s5g.shop.repository.book.qdsl.BookQuerydslRepository;
