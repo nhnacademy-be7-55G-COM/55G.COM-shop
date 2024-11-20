@@ -26,4 +26,9 @@ public class BookDocument {
     private Long views;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
+    private String[] author_names;
+    private String[] category_names;
+    private String publisher_name;
+    private String[] tag_names;
+    private String[] image_paths;
 }
