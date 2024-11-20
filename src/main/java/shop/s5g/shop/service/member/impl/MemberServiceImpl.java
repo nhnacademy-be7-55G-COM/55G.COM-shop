@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import shop.s5g.shop.dto.address.AddressResponseDto;
 import shop.s5g.shop.dto.coupon.user.UserCouponRequestDto;
 import shop.s5g.shop.dto.customer.CustomerRegistrationRequestDto;
 import shop.s5g.shop.dto.customer.CustomerResponseDto;
@@ -26,6 +27,7 @@ import shop.s5g.shop.exception.member.MemberAlreadyExistsException;
 import shop.s5g.shop.exception.member.MemberNotFoundException;
 import shop.s5g.shop.exception.member.PasswordIncorrectException;
 import shop.s5g.shop.repository.member.MemberRepository;
+import shop.s5g.shop.service.member.AddressService;
 import shop.s5g.shop.service.coupon.user.UserCouponService;
 import shop.s5g.shop.service.member.CustomerService;
 import shop.s5g.shop.service.member.MemberGradeService;
@@ -46,6 +48,7 @@ public class MemberServiceImpl implements MemberService {
     private final PointHistoryService pointHistoryService;
     private final UserCouponService userCouponService;
     private final PasswordEncoder passwordEncoder;
+    private final AddressService addressService;
 
     @Override
     @Transactional(readOnly = true)
@@ -109,14 +112,18 @@ public class MemberServiceImpl implements MemberService {
         }
         Member member = memberRepository.findByLoginIdAndStatus_TypeName(loginId, "ACTIVE");
         CustomerResponseDto customer = customerService.getCustomer(member.getId());
+        List<AddressResponseDto> addresses = addressService.getAddresses(member.getId());
 
-        return new MemberDetailResponseDto(member.getId(),
+        return new MemberDetailResponseDto(
+            member.getId(),
             MemberStatusResponseDto.toDto(member.getStatus()),
             MemberGradeResponseDto.toDto(member.getGrade()),
             member.getLoginId(),
             member.getPassword(), member.getBirth(), customer.name(), customer.email(),
             customer.phoneNumber(), member.getCreatedAt(),
-            member.getLatestLoginAt(), member.getPoint());
+            member.getLatestLoginAt(), member.getPoint(),
+            addresses
+        );
     }
 
     @Override
