@@ -8,6 +8,6 @@ public interface BookDocumentService {
 
     PageResponseDto<BookDocumentResponseDto> findAllBooks(Pageable pageable);
 
-    PageResponseDto<BookDocumentResponseDto> searchByTitleOrDescription(String keyword,
+    PageResponseDto<BookDocumentResponseDto> searchByKeyword(String keyword,
         Pageable pageable);
 }

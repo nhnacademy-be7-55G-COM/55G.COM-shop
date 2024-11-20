@@ -23,13 +23,13 @@ public class BookDocumentController {
     private final BookDocumentService bookDocumentService;
 
     @GetMapping("/book/search")
-    public PageResponseDto<BookDocumentResponseDto> searchByTitleOrDescription(
+    public PageResponseDto<BookDocumentResponseDto> searchByKeyword(
         @RequestParam("keyword") String keyword,
         Pageable pageable
     ) {
         if (keyword.isEmpty()) {
             return bookDocumentService.findAllBooks(pageable);
         }
-        return bookDocumentService.searchByTitleOrDescription(keyword, pageable);
+        return bookDocumentService.searchByKeyword(keyword, pageable);
     }
 }
