@@ -1,6 +1,7 @@
 package shop.s5g.shop.dto.book;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import shop.s5g.shop.dto.book.author.BookAuthorResponseDto;
@@ -13,7 +14,7 @@ public record BookDetailResponseDto(
     String title,
     String chapter,
     String description,
-    LocalDateTime publishedDate,
+    LocalDate publishedDate,
     String isbn,
     long price,
     BigDecimal discountRate,
@@ -22,6 +23,7 @@ public record BookDetailResponseDto(
     long views,
     LocalDateTime createdAt,
     LocalDateTime updatedAt,
+    String imagePath,
     List<BookAuthorResponseDto> authorList,
     List<BookDetailCategoryResponseDto> categoryList
 ) {

@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public record BookRequestDto (
+public record BookRequestDto(
     @NotNull
     Long publisherId,
     @NotNull
@@ -27,6 +27,7 @@ public record BookRequestDto (
     int stock,
     @NotNull
     Long views,
+    String thumbnailPath,   // 도서 이미지가 저장된 URL의 경로
     @NotNull
     LocalDateTime createdAt
 ) {

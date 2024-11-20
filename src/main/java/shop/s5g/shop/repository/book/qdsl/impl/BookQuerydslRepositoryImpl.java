@@ -7,6 +7,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -23,6 +24,7 @@ import shop.s5g.shop.dto.book.BookSimpleResponseDto;
 import shop.s5g.shop.dto.book.author.BookAuthorResponseDto;
 import shop.s5g.shop.dto.book.category.BookDetailCategoryResponseDto;
 import shop.s5g.shop.entity.Book;
+import shop.s5g.shop.entity.BookImage;
 import shop.s5g.shop.entity.Category;
 import shop.s5g.shop.entity.book.category.BookCategory;
 import shop.s5g.shop.repository.book.qdsl.BookQuerydslRepository;
@@ -182,16 +184,31 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
             ))
             .fetchOne();
 
-        List<BookDetailCategoryResponseDto> categoryList=new ArrayList<>();
-        Stack<BookDetailCategoryResponseDto> categoryStack=new Stack<>();
-        Category subCategory=bookCategoryQuery.getCategory();
-        while(subCategory!=null){
+        List<BookDetailCategoryResponseDto> categoryList = new ArrayList<>();
+        Stack<BookDetailCategoryResponseDto> categoryStack = new Stack<>();
+        Category subCategory = bookCategoryQuery.getCategory();
+        while (subCategory != null) {
             categoryStack.push(new BookDetailCategoryResponseDto(subCategory.getCategoryId(),
                 subCategory.getCategoryName()));
-            subCategory=subCategory.getParentCategory();
+            subCategory = subCategory.getParentCategory();
         }
-        while(!categoryStack.isEmpty()){
+        while (!categoryStack.isEmpty()) {
             categoryList.add(categoryStack.pop());
+        }
+
+        BookImage queryBookImage = from(bookImage)
+            .join(bookImage.book, book)
+            .where(book.bookId.eq(bookId))
+            .select(Projections.constructor(BookImage.class,
+                bookImage.bookImageId,
+                book,
+                bookImage.imageName
+            ))
+            .fetchOne();
+
+        String imagePath = "no-image.png";
+        if (queryBookImage != null) {
+            imagePath = queryBookImage.getImageName();
         }
 
         return from(book)
@@ -213,6 +230,8 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
                 book.stock,
                 book.views,
                 book.createdAt,
+                book.updatedAt,
+                ConstantImpl.create(imagePath),
                 ConstantImpl.create(authorList),
                 ConstantImpl.create(categoryList)
             ))
