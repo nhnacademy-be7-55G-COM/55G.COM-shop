@@ -113,13 +113,12 @@ public class CouponPolicyServiceImpl implements CouponPolicyService {
      * request 데이터 유효성 검사
      * @param couponPolicyRequestDto
      */
-    private void validateCouponPolicy(CouponPolicyRequestDto couponPolicyRequestDto) {
+    public void validateCouponPolicy(CouponPolicyRequestDto couponPolicyRequestDto) {
 
         BigDecimal discountPrice = couponPolicyRequestDto.discountPrice();
         Long condition = couponPolicyRequestDto.condition();
         Long maxPrice = couponPolicyRequestDto.maxPrice();
 
-        //TODO (young) : 에러 처리 수정 예정
         if (discountPrice.compareTo(BigDecimal.ONE) < 0) {
             if (discountPrice.compareTo(new BigDecimal("0.8")) > 0) {
                 throw new CouponPolicyValidationException(ErrorCode.DISCOUNT_EXCEEDS_80_PERCENT);

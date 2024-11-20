@@ -25,7 +25,7 @@ public class CouponCategory {
     private Long couponTemplateId;
 
     @MapsId
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "coupon_template_id")
     private CouponTemplate couponTemplate;
 

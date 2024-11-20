@@ -19,7 +19,6 @@ import shop.s5g.shop.repository.coupon.template.CouponTemplateRepository;
 import shop.s5g.shop.service.coupon.template.CouponTemplateService;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class CouponTemplateServiceImpl implements CouponTemplateService {
 
@@ -32,6 +31,7 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
      * @param couponTemplateRequestDto
      */
     @Override
+    @Transactional
     public void createCouponTemplate(CouponTemplateRequestDto couponTemplateRequestDto) {
 
         CouponPolicy couponPolicy = couponPolicyRepository.findById(couponTemplateRequestDto.couponPolicyId())
@@ -76,6 +76,7 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
      * @param couponTemplateRequestDto
      */
     @Override
+    @Transactional
     public void updateCouponTemplate(Long couponTemplateId, CouponTemplateRequestDto couponTemplateRequestDto) {
 
         if (Objects.isNull(couponTemplateId) || couponTemplateId <= 0) {
@@ -101,6 +102,7 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
      * @param couponTemplateId
      */
     @Override
+    @Transactional
     public void deleteCouponTemplate(Long couponTemplateId) {
 
         if (Objects.isNull(couponTemplateId) || couponTemplateId <= 0) {
@@ -124,6 +126,7 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
      * @return List<CouponTemplateResponseDto>
      */
     @Override
+    @Transactional(readOnly = true)
     public Page<CouponTemplateResponseDto> getCouponTemplates(Pageable pageable) {
         return couponTemplateRepository.findCouponTemplatesByPageable(pageable);
     }
@@ -134,6 +137,7 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
      * @return Page<CouponTemplateResponseDto>
      */
     @Override
+    @Transactional(readOnly = true)
     public Page<CouponTemplateResponseDto> getCouponTemplatesUnused(Pageable pageable) {
         return couponTemplateRepository.findUnusedCouponTemplates(pageable);
     }

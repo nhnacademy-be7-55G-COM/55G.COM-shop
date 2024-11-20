@@ -1,6 +1,7 @@
 package shop.s5g.shop.repository.coupon.template.qdsl;
 
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import java.util.List;
@@ -195,5 +196,21 @@ public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupp
         long total = (Objects.isNull(totalCnt)) ? 0L : totalCnt;
 
         return new PageImpl<>(templateList, pageable, total);
+    }
+
+    /**
+     * 특정 쿠폰이 존재하다면 return
+     * @param keyword
+     * @return CouponTemplate
+     */
+    @Override
+    public CouponTemplate findParticularCouponByName(String keyword) {
+
+        return jpaQueryFactory
+            .select(couponTemplate)
+            .from(coupon)
+            .innerJoin(coupon.couponTemplate, couponTemplate)
+            .where(Expressions.stringTemplate("locate({0}, {1})", keyword, couponTemplate.couponName).gt("0"))
+            .fetchFirst();
     }
 }

@@ -1,4 +1,4 @@
-package shop.s5g.shop.service.coupon.coupontemplate;
+package shop.s5g.shop.service.coupon.template;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -7,6 +7,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,6 +16,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateRequestDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateResponseDto;
@@ -162,5 +167,81 @@ class CouponTemplateServiceImplTest {
         verify(couponTemplateRepository, times(1)).deleteCouponTemplate(templateId);
         verify(couponTemplateRepository, times(1)).existsById(templateId);
         verify(couponTemplateRepository, times(1)).checkActiveCouponTemplate(templateId);
+    }
+
+    @Test
+    @DisplayName("쿠폰 템플릿 조회 - Pageable")
+    void getCouponTemplates() {
+        // Given
+        couponTemplateRepository.save(couponTemplate);
+
+        Pageable pageable = PageRequest.of(0, 10);
+
+        List<CouponTemplateResponseDto> couponTemplateResponseDto = List.of(
+            new CouponTemplateResponseDto(
+                1L,
+                new BigDecimal("0.1"),
+                20000L,
+                50000L,
+                30,
+                "생일 쿠폰",
+                "이 쿠폰은 생일자를 위한 쿠폰입니다.")
+        );
+
+        Page<CouponTemplateResponseDto> pageDto = new PageImpl<>(couponTemplateResponseDto, pageable, couponTemplateResponseDto.size());
+
+        when(couponTemplateRepository.findCouponTemplatesByPageable(pageable)).thenReturn(pageDto);
+
+        // When
+        Page<CouponTemplateResponseDto> result = couponTemplateService.getCouponTemplates(pageable);
+
+        // Then
+        assertThat(result).isNotNull();
+        assertThat(result.getTotalElements()).isEqualTo(1);
+        assertThat(result.getTotalPages()).isEqualTo(1);
+        assertThat(result.getContent()).isEqualTo(couponTemplateResponseDto);
+
+        CouponTemplateResponseDto templateDto = result.getContent().get(0);
+        assertThat(templateDto).isNotNull();
+        assertThat(templateDto.maxPrice()).isEqualTo(50000L);
+        assertThat(templateDto.couponName()).isEqualTo("생일 쿠폰");
+    }
+
+    @Test
+    @DisplayName("사용되지 않은 쿠폰 템플릿 조회")
+    void findUnusedCouponTemplates() {
+        // Given
+        Pageable pageable = PageRequest.of(0, 10);
+
+        List<CouponTemplateResponseDto> couponTemplateResponseDto = List.of(
+            new CouponTemplateResponseDto(
+                1L,
+                new BigDecimal("0.1"),
+                20000L,
+                50000L,
+                30,
+                "생일 쿠폰",
+                "이 쿠폰은 생일자를 위한 쿠폰입니다.")
+        );
+
+        Page<CouponTemplateResponseDto> pageDto = new PageImpl<>(couponTemplateResponseDto, pageable, couponTemplateResponseDto.size());
+
+        when(couponTemplateRepository.findUnusedCouponTemplates(any(Pageable.class)))
+            .thenReturn(pageDto);
+
+        // When
+        Page<CouponTemplateResponseDto> result = couponTemplateService.getCouponTemplatesUnused(pageable);
+
+        // Then
+        assertThat(result).isNotNull();
+        assertThat(result.getTotalElements()).isEqualTo(1);
+        assertThat(result.getTotalPages()).isEqualTo(1);
+        assertThat(result.getContent()).isEqualTo(couponTemplateResponseDto);
+
+        CouponTemplateResponseDto templateDto = result.getContent().get(0);
+        assertThat(templateDto).isNotNull();
+        assertThat(templateDto.maxPrice()).isEqualTo(50000L);
+        assertThat(templateDto.couponName()).isEqualTo("생일 쿠폰");
+        assertThat(templateDto.couponDescription()).isEqualTo("이 쿠폰은 생일자를 위한 쿠폰입니다.");
     }
 }
