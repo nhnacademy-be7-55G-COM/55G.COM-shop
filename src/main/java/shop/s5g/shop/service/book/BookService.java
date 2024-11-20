@@ -17,11 +17,11 @@ public interface BookService {
     BookDetailResponseDto getBookById(Long bookId);
     void updateBooks(Long bookId, BookRequestDto bookDto);
     void deleteBooks(Long bookId);
-    Page<BookPageableResponseDto> allBookPageable(Pageable pageable);
+//    Page<BookPageableResponseDto> allBookPageable(Pageable pageable);
 
     List<BookSimpleResponseDto> getSimpleBooks(List<Long> bookIdList);
 
     List<BookDetailResponseDto> getBookListByBookIdList(List<BookCategoryBookResponseDto> bookIdList);
 
-    List<BookPageableResponseDto> getBookList(Long categoryId);
+//    List<BookPageableResponseDto> getBookList(Long categoryId);
 }

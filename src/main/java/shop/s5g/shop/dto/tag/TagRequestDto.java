@@ -7,8 +7,6 @@ public record TagRequestDto (
 //    private Long publisherId;
     @Size(min = 1, max = 50)
     @NotNull
-    String tagName,
-    @NotNull
-    boolean active
+    String tagName
 ){
 }

@@ -60,7 +60,7 @@ class TagRepositoryTest {
     @DisplayName("테그 수정 test")
     void updateTagTest() {
         Tag oldTag = new Tag("5월 베스트셀러", true);
-        TagRequestDto newTag = new TagRequestDto("6월 베스트셀러", true);
+        TagRequestDto newTag = new TagRequestDto("6월 베스트셀러");
 
         //oldTag 저장
         Tag save = tagRepository.save(oldTag);

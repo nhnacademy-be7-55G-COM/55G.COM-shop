@@ -30,9 +30,9 @@ class TagServiceTest {
     @Test
     void addTag() {
         //given
-        TagRequestDto tagRequestDto = new TagRequestDto("베스트셀러", true);
+        TagRequestDto tagRequestDto = new TagRequestDto("베스트셀러");
         //tagName이 베스트셀러인 tag가 이미 존재한다고 가정하면
-        when(tagRepository.existsByTagNameAndActive("베스트셀러", true)).thenReturn(true);
+        when(tagRepository.existsByTagName("베스트셀러")).thenReturn(true);
 
         //when
         assertThatThrownBy(()-> tagServiceImpl.createtag(tagRequestDto)).isInstanceOf(TagAlreadyExistsException.class);

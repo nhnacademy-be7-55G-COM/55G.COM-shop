@@ -15,5 +15,5 @@ public interface BookCategoryQuerydslRepository {
 
     List<BookCategoryResponseDto> findAllBookCategory();
 
-    List<BookPageableResponseDto> getBookList(Long categoryId);
+//    List<BookPageableResponseDto> getBookList(Long categoryId);
 }

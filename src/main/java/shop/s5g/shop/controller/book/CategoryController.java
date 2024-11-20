@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import shop.s5g.shop.dto.PageResponseDto;
+import shop.s5g.shop.dto.category.CategoryDetailResponseDto;
 import shop.s5g.shop.dto.category.CategoryRequestDto;
 import shop.s5g.shop.dto.category.CategoryResponseDto;
 import shop.s5g.shop.dto.category.CategoryUpdateRequestDto;
@@ -92,4 +93,7 @@ public class CategoryController {
 
         return ResponseEntity.status(HttpStatus.OK).body(category);
     }
+
+    //카테고리 수정
+
 }

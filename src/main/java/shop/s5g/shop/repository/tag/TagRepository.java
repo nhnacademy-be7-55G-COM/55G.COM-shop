@@ -5,5 +5,5 @@ import shop.s5g.shop.entity.Tag;
 import shop.s5g.shop.repository.tag.qdsl.TagQuerydslRepository;
 
 public interface TagRepository extends JpaRepository<Tag, Long>, TagQuerydslRepository {
-    boolean existsByTagNameAndActive(String name, boolean active);
+    boolean existsByTagName(String name);
 }

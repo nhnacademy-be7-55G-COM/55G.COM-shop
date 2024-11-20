@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.book.BookPageableResponseDto;
 import shop.s5g.shop.dto.book.BookDetailResponseDto;
-import shop.s5g.shop.dto.book.BookPageableResponseDto;
 import shop.s5g.shop.dto.book.BookRequestDto;
 import shop.s5g.shop.dto.book.BookResponseDto;
 import shop.s5g.shop.dto.book.BookSimpleResponseDto;
@@ -74,10 +73,10 @@ public class BookServiceImpl implements BookService {
     }
 
     //도서 전체 조회 페이징
-    @Override
-    public Page<BookPageableResponseDto> allBookPageable(Pageable pageable) {
-        return bookRepository.findAllBookPage(pageable);
-    }
+//    @Override
+//    public Page<BookPageableResponseDto> allBookPageable(Pageable pageable) {
+//        return bookRepository.findAllBookPage(pageable);
+//    }
 
     //도서 상세 조회
     public BookDetailResponseDto getBookById(Long bookId) {
@@ -121,8 +120,8 @@ public class BookServiceImpl implements BookService {
     }
 
     //categoryId로 bookList조회
-    @Override
-    public List<BookPageableResponseDto> getBookList(Long categoryId) {
-        return bookcategoryRepository.getBookList(categoryId);
-    }
+//    @Override
+//    public List<BookPageableResponseDto> getBookList(Long categoryId) {
+//        return bookcategoryRepository.getBookList(categoryId);
+//    }
 }

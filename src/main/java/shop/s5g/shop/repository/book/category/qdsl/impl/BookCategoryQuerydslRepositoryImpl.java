@@ -80,37 +80,37 @@ public class BookCategoryQuerydslRepositoryImpl extends QuerydslRepositorySuppor
     }
 
     //categoryId로 bookList 조회
-    @Override
-    public List<BookPageableResponseDto> getBookList(Long categoryId) {
-        return jpaQueryFactory
-                .select(Projections.constructor(BookPageableResponseDto.class,
-                        book.bookId,
-                        book.publisher.id,
-                        book.bookStatus.id,
-                        book.title,
-                        book.chapter,
-                        book.description,
-                        book.publishedDate,
-                        book.isbn,
-                        book.price,
-                        book.discountRate,
-                        book.isPacked,
-                        book.stock,
-                        book.views,
-                        book.createdAt,
-                        bookImage.imageName
-                ))
-                .from(book)
+//    @Override
+//    public List<BookPageableResponseDto> getBookList(Long categoryId) {
+//        return jpaQueryFactory
+//                .select(Projections.constructor(BookPageableResponseDto.class,
+//                        book.bookId,
+//                        book.publisher.id,
+//                        book.bookStatus.id,
+//                        book.title,
+//                        book.chapter,
+//                        book.description,
+//                        book.publishedDate,
+//                        book.isbn,
+//                        book.price,
+//                        book.discountRate,
+//                        book.isPacked,
+//                        book.stock,
+//                        book.views,
+//                        book.createdAt,
+//                        bookImage.imageName
+//                ))
+//                .from(book)
 //                .innerJoin(bookCategory).on(book.bookId.eq(bookCategory.book.bookId))
-                .innerJoin(category).on(bookCategory.category.categoryId.eq(category.categoryId))
-                .leftJoin(bookImage).on(bookImage.book.bookId.eq(book.bookId)) // book과 bookImage 조인
-                .where(category.categoryId.in(
-                        JPAExpressions
-                                .select(subCategory.categoryId) // 서브쿼리: 하위 카테고리 ID 조회
-                                .from(category)
-                                .innerJoin(subCategory).on(category.categoryId.eq(subCategory.parentCategory.categoryId))
-                                .where(category.categoryId.eq(categoryId)) // 입력받은 categoryId
-                ))
-                .fetch();
-    }
+//                .innerJoin(category).on(bookCategory.category.categoryId.eq(category.categoryId))
+//                .leftJoin(bookImage).on(bookImage.book.bookId.eq(book.bookId)) // book과 bookImage 조인
+//                .where(category.categoryId.in(
+//                        JPAExpressions
+//                                .select(subCategory.categoryId) // 서브쿼리: 하위 카테고리 ID 조회
+//                                .from(category)
+//                                .innerJoin(subCategory).on(category.categoryId.eq(subCategory.parentCategory.categoryId))
+//                                .where(category.categoryId.eq(categoryId)) // 입력받은 categoryId
+//                ))
+//                .fetch();
+//    }
 }

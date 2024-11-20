@@ -1,4 +1,4 @@
-package shop.s5g.shop.service.coupon.coupontemplate;
+package shop.s5g.shop.service.coupon.template;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.Mockito.times;

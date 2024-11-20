@@ -5,10 +5,16 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 import shop.s5g.shop.dto.coupon.coupon.CouponRequestDto;
 import shop.s5g.shop.dto.coupon.coupon.CouponResponseDto;
+import shop.s5g.shop.entity.coupon.Coupon;
 
 public interface CouponService {
 
+    // 쿠폰 생성
     void createCoupon(Integer couponCnt, CouponRequestDto couponRequestDto);
+
+    Coupon createWelcomeCoupon();
+
+    Coupon createBirthCoupon();
 
     CouponResponseDto getCoupon(Long couponId);
 
