@@ -32,4 +32,16 @@ public class BookDocumentController {
         }
         return bookDocumentService.searchByKeyword(keyword, pageable);
     }
+
+    @GetMapping("/book/list/category")
+    public PageResponseDto<BookDocumentResponseDto> searchByCategoryAndKeyword(
+        @RequestParam("name") String categoryName,
+        @RequestParam("keyword") String keyword,
+        Pageable pageable
+    ) {
+        if (keyword.isEmpty()) {
+            return bookDocumentService.findAllBooksByCategory(categoryName, pageable);
+        }
+        return bookDocumentService.searchByCategoryAndKeyword(categoryName, keyword, pageable);
+    }
 }
