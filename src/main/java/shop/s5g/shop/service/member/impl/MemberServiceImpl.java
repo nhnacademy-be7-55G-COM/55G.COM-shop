@@ -8,12 +8,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.address.AddressResponseDto;
-import shop.s5g.shop.dto.coupon.user.UserCouponRequestDto;
 import shop.s5g.shop.dto.customer.CustomerRegistrationRequestDto;
 import shop.s5g.shop.dto.customer.CustomerResponseDto;
 import shop.s5g.shop.dto.member.IdCheckResponseDto;
 import shop.s5g.shop.dto.member.LoginResponseDto;
 import shop.s5g.shop.dto.member.MemberDetailResponseDto;
+import shop.s5g.shop.dto.member.MemberLoginIdResponseDto;
 import shop.s5g.shop.dto.member.MemberRegistrationRequestDto;
 import shop.s5g.shop.dto.member.MemberResponseDto;
 import shop.s5g.shop.dto.memberGrade.MemberGradeResponseDto;
@@ -26,9 +26,11 @@ import shop.s5g.shop.entity.member.MemberStatus;
 import shop.s5g.shop.exception.member.MemberAlreadyExistsException;
 import shop.s5g.shop.exception.member.MemberNotFoundException;
 import shop.s5g.shop.exception.member.PasswordIncorrectException;
+import shop.s5g.shop.exception.payco.AlreadyLinkAccountException;
+import shop.s5g.shop.exception.payco.PaycoNotLinkedException;
 import shop.s5g.shop.repository.member.MemberRepository;
-import shop.s5g.shop.service.member.AddressService;
 import shop.s5g.shop.service.coupon.user.UserCouponService;
+import shop.s5g.shop.service.member.AddressService;
 import shop.s5g.shop.service.member.CustomerService;
 import shop.s5g.shop.service.member.MemberGradeService;
 import shop.s5g.shop.service.member.MemberService;
@@ -54,7 +56,7 @@ public class MemberServiceImpl implements MemberService {
     @Transactional(readOnly = true)
     public Member getMember(String loginId) {
         if (!memberRepository.existsByLoginIdAndStatus_TypeName(loginId, "ACTIVE")) {
-            throw new MemberNotFoundException("회원이 존재하지 않습니다");
+            throw new MemberNotFoundException();
         }
 
         return memberRepository.findByLoginIdAndStatus_TypeName(loginId, "ACTIVE");
@@ -64,7 +66,7 @@ public class MemberServiceImpl implements MemberService {
     @Transactional(readOnly = true)
     public LoginResponseDto getLoginDto(String loginId) {
         if (!memberRepository.existsByLoginIdAndStatus_TypeName(loginId, "ACTIVE")) {
-            throw new MemberNotFoundException("회원이 존재하지 않습니다");
+            throw new MemberNotFoundException();
         }
         Member member = memberRepository.findByLoginIdAndStatus_TypeName(loginId, "ACTIVE");
 
@@ -108,7 +110,7 @@ public class MemberServiceImpl implements MemberService {
     @Transactional(readOnly = true)
     public MemberDetailResponseDto getMemberDto(String loginId) {
         if (!memberRepository.existsByLoginIdAndStatus_TypeName(loginId, "ACTIVE")) {
-            throw new MemberNotFoundException("회원이 존재하지 않습니다");
+            throw new MemberNotFoundException();
         }
         Member member = memberRepository.findByLoginIdAndStatus_TypeName(loginId, "ACTIVE");
         CustomerResponseDto customer = customerService.getCustomer(member.getId());
@@ -142,7 +144,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void deleteById(Long memberId) {
         Member member = memberRepository.findById(memberId)
-            .orElseThrow(() -> new MemberNotFoundException("회원이 존재하지 않습니다."));
+            .orElseThrow(MemberNotFoundException::new);
         MemberStatus memberStatus = memberStatusService.getMemberStatusByTypeName(
             MemberRepository.WITHDRAWAL_STATUS);
         member.setStatus(memberStatus);
@@ -151,7 +153,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void updateLatestLoginAt(String loginId) {
         if (!memberRepository.existsByLoginIdAndStatus_TypeName(loginId, "ACTIVE")) {
-            throw new MemberNotFoundException("회원이 존재하지 않습니다.");
+            throw new MemberNotFoundException();
         }
         memberRepository.updateLatestLoginAt(loginId, LocalDateTime.now());
     }
@@ -162,15 +164,33 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public MemberLoginIdResponseDto getMemberLoginIdDtoByPaycoId(String paycoId) {
+        Member member = memberRepository.findByPaycoIdNo(paycoId)
+            .orElseThrow(() -> new PaycoNotLinkedException("account not linked"));
+        return new MemberLoginIdResponseDto(member.getLoginId());
+    }
+
+    @Override
     public void changePassword(Long customerId, String oldPassword, String newPassword) {
         Member member = memberRepository.findById(customerId)
-            .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
+            .orElseThrow(MemberNotFoundException::new);
 
         if (!passwordEncoder.matches(oldPassword, member.getPassword())) {
             throw new PasswordIncorrectException("현재 비밀번호가 일치하지 않습니다.");
         }
 
         member.setPassword(passwordEncoder.encode(newPassword));
+    }
+
+    @Override
+    public void linkAccountByPaycoId(Long customerId, String paycoId) {
+        Member member = memberRepository.findById(customerId)
+            .orElseThrow(MemberNotFoundException::new);
+
+        if (member.getPaycoIdNo() != null) {
+            throw new AlreadyLinkAccountException("already linked account");
+        }
+        member.setPaycoIdNo(paycoId);
     }
 
 }
