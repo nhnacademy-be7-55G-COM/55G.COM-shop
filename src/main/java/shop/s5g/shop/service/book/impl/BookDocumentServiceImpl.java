@@ -1,6 +1,5 @@
 package shop.s5g.shop.service.book.impl;
 
-import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch._types.query_dsl.TermQuery;
@@ -34,7 +33,6 @@ public class BookDocumentServiceImpl implements BookDocumentService {
 
     private final BookDocumentRepository bookDocumentRepository;
     private final ElasticsearchOperations elasticsearchOperations;
-    private final ElasticsearchClient elasticsearchClient;
 
     public PageResponseDto<BookDocumentResponseDto> findAllBooks(Pageable pageable) {
         Page<BookDocument> bookDocumentPage = bookDocumentRepository.findAll(pageable);
