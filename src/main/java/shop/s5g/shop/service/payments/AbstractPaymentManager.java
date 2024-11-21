@@ -2,6 +2,7 @@ package shop.s5g.shop.service.payments;
 
 import java.util.List;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.point.PointHistoryCreateRequestDto;
@@ -12,6 +13,7 @@ import shop.s5g.shop.entity.order.Order;
 import shop.s5g.shop.entity.order.OrderDetail;
 import shop.s5g.shop.entity.order.OrderDetailType;
 import shop.s5g.shop.entity.order.OrderDetailType.Type;
+import shop.s5g.shop.entity.point.PointSource.Name;
 import shop.s5g.shop.exception.BadRequestException;
 import shop.s5g.shop.exception.order.OrderDetailsNotExistException;
 import shop.s5g.shop.exception.order.OrderDoesNotProceedException;
@@ -22,6 +24,7 @@ import shop.s5g.shop.repository.payments.TossPaymentRepository;
 import shop.s5g.shop.service.delivery.DeliveryService;
 import shop.s5g.shop.service.point.PointHistoryService;
 
+@Slf4j
 public abstract class AbstractPaymentManager {
     private PointHistoryService pointHistoryService;
     private OrderRepository orderRepository;
@@ -33,8 +36,8 @@ public abstract class AbstractPaymentManager {
     // TODO: 비회원 전용 메소드도 필요함.
     @Transactional
     public <T> T confirmPayment(
-        long memberId,
         long orderDataId,
+        long usedPoint,
         Map<String, Object> request,
         Class<T> responseType
     ) {
@@ -58,10 +61,17 @@ public abstract class AbstractPaymentManager {
         }
 
         Customer customer = order.getCustomer();
-
-        pointHistoryService.createPointHistory(
-            customer.getCustomerId(), new PointHistoryCreateRequestDto("구매", accPrice)
-        );
+        // 회원 only
+        if (customer.getMember() != null) {
+            if (usedPoint > 0) {    // 포인트를 사용해 구매함
+                pointHistoryService.createPointHistory(customer.getCustomerId(), new PointHistoryCreateRequestDto(
+                    Name.PURCHASE.getDataName(), -usedPoint));
+            } else {
+                pointHistoryService.createPointHistory(
+                    customer.getCustomerId(), new PointHistoryCreateRequestDto(Name.PURCHASE.getDataName(), accPrice)
+                );
+            }
+        }
         T object = responseType.cast(confirmPaymentAdapter(orderDataId, request));
 
         return object;

@@ -28,48 +28,6 @@ public class PaymentsController {
         this.paymentManager = paymentManager;
     }
 
-    /*
-     * {
-     *   orderDataId: 1234,
-     *   order: {
-     *     ...
-     *   },
-     *   payment: {
-     *     ...
-     *   }
-     * }
-     */
-    @Deprecated
-    @PostMapping("/confirm")
-    public MessageDto confirmPayment(
-        @AuthenticationPrincipal ShopMemberDetail memberDetail,
-        @RequestBody Map<String, Object> body
-    ) {
-        log.trace("Payment confirm request received: [customerId={}, loginId={}]", memberDetail.getCustomerId(), memberDetail.getLoginId());
-
-//        log.trace("Payment confirm request for Order: {}", orderRelationId);
-        long orderDataId = ((Number) body.get("orderDataId")).longValue();
-        Map<String, Object> paymentInfo = extractPaymentInfo(body);
-
-        paymentManager.confirmPayment(
-            memberDetail.getCustomerId(),
-            orderDataId,
-            paymentInfo,
-            TossPaymentsDto.class
-        );
-        // Not implemented yet.
-        return new MessageDto("confirmed");
-    }
-
-    private OrderCreateRequestDto extractOrderRequest(Map<String, Object> body) {
-        return objectMapper.convertValue(body.get("order"), OrderCreateRequestDto.class);
-    }
-
-    @SuppressWarnings("unchecked")
-    private Map<String, Object> extractPaymentInfo(Map<String, Object> body) {
-        return (Map<String, Object>) body.get("payment");
-    }
-
     /**
      * {
      *     "detailId": number,
