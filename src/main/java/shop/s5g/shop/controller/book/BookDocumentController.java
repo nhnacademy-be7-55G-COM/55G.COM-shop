@@ -22,7 +22,7 @@ public class BookDocumentController {
 
     private final BookDocumentService bookDocumentService;
 
-    @GetMapping("/book/search")
+    @GetMapping("/book/list")
     public PageResponseDto<BookDocumentResponseDto> searchByKeyword(
         @RequestParam("keyword") String keyword,
         Pageable pageable
