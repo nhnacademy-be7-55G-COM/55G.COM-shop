@@ -111,6 +111,7 @@ class CouponTemplateRepositoryTest {
         saveCouponTemplate.setCouponDescription("이번 달 생일자들을 위한 생일 쿠폰입니다.");
 
         CouponTemplateUpdateRequestDto couponTemplateRequestDto = new CouponTemplateUpdateRequestDto(
+            1L,
             saveCouponTemplate.getCouponName(),
             saveCouponTemplate.getCouponDescription()
         );

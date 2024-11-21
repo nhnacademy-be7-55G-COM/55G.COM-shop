@@ -134,7 +134,7 @@ class CouponTemplateControllerTest {
         // Given
         Long templateId = 1L;
 
-        String updateTemplate = "{\"couponPolicyId\":1,"
+        String updateTemplate = "{\"couponTemplateId\":1,"
             + "\"couponName\": \"생일 쿠폰\","
             + "\"couponDescription\": \"이 쿠폰은 생일자들을 위한 쿠폰입니다.\"}";
 
@@ -145,7 +145,7 @@ class CouponTemplateControllerTest {
         );
 
         // When
-        mockMvc.perform(patch("/api/shop/admin/coupons/template/{couponTemplateId}", templateId)
+        mockMvc.perform(post("/api/shop/admin/coupons/template/{couponTemplateId}", templateId)
             .contentType(MediaType.APPLICATION_JSON)
             .content(updateTemplate))
             .andExpect(status().isOk());

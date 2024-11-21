@@ -139,7 +139,6 @@ class CouponTemplateServiceImplTest {
         when(couponTemplateRepository.existsById(couponTemplateId)).thenReturn(true);
         when(couponTemplateRepository.checkActiveCouponTemplate(couponTemplateId)).thenReturn(true);
 
-        when(couponPolicyRepository.findById(couponPolicy.getCouponPolicyId())).thenReturn(Optional.of(couponPolicy));
 
         // When
         couponTemplateService.updateCouponTemplate(couponTemplateId, couponTemplateRequestDto);
@@ -148,8 +147,6 @@ class CouponTemplateServiceImplTest {
         verify(couponTemplateRepository, times(1)).updateCouponTemplate(couponTemplateId, couponTemplateRequestDto);
         verify(couponTemplateRepository, times(1)).existsById(couponTemplateId);
         verify(couponTemplateRepository, times(1)).checkActiveCouponTemplate(couponTemplateId);
-
-        verify(couponPolicyRepository, times(1)).findById(couponPolicy.getCouponPolicyId());
     }
 
     @Test

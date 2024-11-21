@@ -177,33 +177,6 @@ class CouponTemplateServiceExceptionTest {
     }
 
     @Test
-    @DisplayName("쿠폰 템플릿 수정 - 존재하지 않는 쿠폰 정책으로 CouponPolicyNotFoundException 발생")
-    void updateCouponTemplateThrowsCouponPolicyNotFoundException() {
-        // Given
-        Long couponTemplateId = 1L;
-        Long couponPolicyId = 999L;
-        CouponTemplateUpdateRequestDto couponTemplateRequestDto = new CouponTemplateUpdateRequestDto(
-            couponTemplateId,
-            "Coupon Name",
-            "Coupon Description"
-        );
-
-        when(couponTemplateRepository.existsById(couponTemplateId)).thenReturn(true);
-        when(couponTemplateRepository.checkActiveCouponTemplate(couponTemplateId)).thenReturn(true);
-        when(couponPolicyRepository.findById(couponPolicyId)).thenReturn(Optional.empty());
-
-        // When & Then
-        assertThatThrownBy(() -> couponTemplateService.updateCouponTemplate(couponTemplateId, couponTemplateRequestDto))
-            .isInstanceOf(CouponPolicyNotFoundException.class)
-            .hasMessage("선택하신 쿠폰 정책이 존재하지 않습니다.");
-
-        // Then
-        verify(couponTemplateRepository, times(1)).existsById(couponTemplateId);
-        verify(couponTemplateRepository, times(1)).checkActiveCouponTemplate(couponTemplateId);
-        verify(couponPolicyRepository, times(1)).findById(couponPolicyId);
-    }
-
-    @Test
     @DisplayName("쿠폰 템플릿 삭제 - 잘못된 ID로 IllegalArgumentException 발생")
     void deleteCouponTemplateThrowsIllegalArgumentException() {
         // Given

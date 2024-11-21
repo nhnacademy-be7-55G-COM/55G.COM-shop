@@ -85,7 +85,7 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
     /**
      * 쿠폰 템플릿 수정
      * @param couponTemplateId
-     * @param couponTemplateRequestDto
+     * @param couponTemplateUpdateRequestDto
      */
     @Override
     @Transactional

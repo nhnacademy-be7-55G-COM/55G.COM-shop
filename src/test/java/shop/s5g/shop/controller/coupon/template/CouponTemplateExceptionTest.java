@@ -59,12 +59,12 @@ public class CouponTemplateExceptionTest {
     @DisplayName("쿠폰 템플릿 수정 API 에러 테스트")
     void updateCouponTemplateThrowsBadRequestException() throws Exception {
         // Given
-        String updateTemplate = "{\"couponPolicyId\":1,"
+        String updateTemplate = "{\"couponTemplateId\":1,"
             + "\"couponName\": null,"
             + "\"couponDescription\": \"이 쿠폰은 생일자들을 위한 쿠폰입니다.\"}";
 
         // When
-        mockMvc.perform(patch("/api/shop/admin/coupons/template/1")
+        mockMvc.perform(post("/api/shop/admin/coupons/template/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(updateTemplate))
             .andExpect(status().isBadRequest());
