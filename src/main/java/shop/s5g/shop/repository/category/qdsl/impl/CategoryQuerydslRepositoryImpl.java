@@ -10,12 +10,14 @@ import org.springframework.stereotype.Repository;
 import shop.s5g.shop.dto.category.CategoryDetailResponseDto;
 import shop.s5g.shop.dto.category.CategoryResponseDto;
 import shop.s5g.shop.dto.category.CategoryUpdateRequestDto;
+import shop.s5g.shop.dto.publisher.PublisherResponseDto;
 import shop.s5g.shop.entity.Category;
 import shop.s5g.shop.repository.category.qdsl.CategoryQuerydslRepository;
 
 import java.util.List;
 
 import static shop.s5g.shop.entity.QCategory.category;
+import static shop.s5g.shop.entity.QPublisher.publisher;
 
 @Repository
 public class CategoryQuerydslRepositoryImpl extends QuerydslRepositorySupport implements CategoryQuerydslRepository {
@@ -79,16 +81,30 @@ public class CategoryQuerydslRepositoryImpl extends QuerydslRepositorySupport im
 
     //국내도서 하위 카테고리 조회
     @Override
-    public List<CategoryResponseDto> getKoreaBook() {
-        return jpaQueryFactory
-                .from(category)
+    public Page<CategoryResponseDto> getKoreaBook(Pageable pageable) {
+        List<CategoryResponseDto> categories = jpaQueryFactory
                 .select(Projections.constructor(CategoryResponseDto.class,
                         category.categoryId,
                         category.parentCategory.categoryId,
                         category.categoryName,
-                        category.active))
+                        category.active
+                ))
+                .from(category)
                 .where(category.parentCategory.isNull())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
+
+        // 총 개수 쿼리
+        Long total = jpaQueryFactory
+                .select(category.count())
+                .from(category)
+                .where(category.parentCategory.isNull())
+                .fetchOne();
+        total = total != null ? total : 0L; // Null 안전 처리
+
+        // Page 객체 반환
+        return new PageImpl<>(categories, pageable, total);
     }
 
     //카테고리 비활성화

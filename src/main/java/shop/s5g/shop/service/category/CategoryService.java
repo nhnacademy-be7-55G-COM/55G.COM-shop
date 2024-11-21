@@ -18,7 +18,7 @@ public interface CategoryService {
 
     List<CategoryResponseDto> getChildCategory(long categoryId);
 
-    List<CategoryResponseDto> getKoreaBooks();
+    Page<CategoryResponseDto> getKoreaBooks(Pageable pageable);
 
     CategoryResponseDto getCategory(Long categoryId);
 

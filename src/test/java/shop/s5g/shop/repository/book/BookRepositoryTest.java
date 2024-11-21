@@ -16,7 +16,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import shop.s5g.shop.config.QueryFactoryConfig;
 import shop.s5g.shop.config.TestQueryFactoryConfig;
 import shop.s5g.shop.dto.book.BookRequestDto;
 import shop.s5g.shop.entity.Book;
@@ -237,9 +236,7 @@ class BookRepositoryTest {
             new BigDecimal("10.0"),
             true,
             200,
-            30000L,
-            "asdf.png",
-            LocalDateTime.of(2010, 5, 5, 15, 30)
+            "asdf.png"
             );
 
         Book save = bookRepository.save(book1);
