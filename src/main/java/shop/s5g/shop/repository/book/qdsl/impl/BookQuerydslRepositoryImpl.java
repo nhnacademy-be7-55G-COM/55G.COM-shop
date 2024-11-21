@@ -38,6 +38,7 @@ import static shop.s5g.shop.entity.QCategory.category;
 import static shop.s5g.shop.entity.QPublisher.publisher;
 import static shop.s5g.shop.entity.book.category.QBookCategory.bookCategory;
 import static shop.s5g.shop.entity.QBookImage.bookImage;
+import static shop.s5g.shop.entity.coupon.QCouponBook.couponBook;
 
 @Repository
 public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implements
@@ -61,7 +62,8 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
             .set(book.title, bookDto.title())
             .set(book.chapter, bookDto.chapter())
             .set(book.description, bookDto.description())
-            .set(book.publishedDate, LocalDate.parse(bookDto.publishedDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+            .set(book.publishedDate,
+                LocalDate.parse(bookDto.publishedDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")))
             .set(book.isbn, bookDto.isbn())
             .set(book.price, bookDto.price())
             .set(book.discountRate, bookDto.discountRate())
@@ -209,6 +211,15 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
             imagePath = queryBookImage.getImageName();
         }
 
+        Long countCoupons = from(couponBook)
+            .join(couponBook.book, book)
+            .where(book.bookId.eq(bookId))
+            .select(couponBook.count())
+            .fetchOne();
+        if (countCoupons == null) {
+            countCoupons = 0L;
+        }
+
         return from(book)
             .join(book.publisher, publisher)
             .join(book.bookStatus, bookStatus)
@@ -231,7 +242,8 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
                 book.updatedAt,
                 ConstantImpl.create(imagePath),
                 ConstantImpl.create(authorList),
-                ConstantImpl.create(categoryList)
+                ConstantImpl.create(categoryList),
+                ConstantImpl.create(countCoupons)
             ))
             .fetchOne();
     }
@@ -242,13 +254,13 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
             .join(book.bookStatus, bookStatus)
             .where(book.bookId.in(idList))
             .select(Projections.constructor(BookSimpleResponseDto.class,
-                book.bookId,
-                book.title,
-                book.price,
-                book.discountRate,
-                book.stock,
-                book.isPacked,
-                bookStatus.name
+                    book.bookId,
+                    book.title,
+                    book.price,
+                    book.discountRate,
+                    book.stock,
+                    book.isPacked,
+                    bookStatus.name
                 )
             ).fetch();
     }

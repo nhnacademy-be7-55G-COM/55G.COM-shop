@@ -25,7 +25,8 @@ public record BookDetailResponseDto(
     LocalDateTime updatedAt,
     String imagePath,
     List<BookAuthorResponseDto> authorList,
-    List<BookDetailCategoryResponseDto> categoryList
+    List<BookDetailCategoryResponseDto> categoryList,
+    long countCoupons
 ) {
 
 }
