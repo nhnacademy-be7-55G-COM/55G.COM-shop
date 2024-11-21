@@ -34,6 +34,7 @@ import shop.s5g.shop.config.TestSecurityConfig;
 import shop.s5g.shop.controller.coupon.CouponTemplateController;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateRequestDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateResponseDto;
+import shop.s5g.shop.dto.coupon.template.CouponTemplateUpdateRequestDto;
 import shop.s5g.shop.entity.coupon.CouponPolicy;
 import shop.s5g.shop.filter.JwtAuthenticationFilter;
 import shop.s5g.shop.service.coupon.template.impl.CouponTemplateServiceImpl;
@@ -137,7 +138,7 @@ class CouponTemplateControllerTest {
             + "\"couponName\": \"생일 쿠폰\","
             + "\"couponDescription\": \"이 쿠폰은 생일자들을 위한 쿠폰입니다.\"}";
 
-        CouponTemplateRequestDto couponTemplateRequestDto = new CouponTemplateRequestDto(
+        CouponTemplateUpdateRequestDto couponTemplateRequestDto = new CouponTemplateUpdateRequestDto(
             1L,
             "생일 쿠폰",
             "이 쿠폰은 생일자들을 위한 쿠폰입니다."

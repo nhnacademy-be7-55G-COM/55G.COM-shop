@@ -1,18 +1,20 @@
 package shop.s5g.shop.service.coupon.template.impl;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.regex.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import shop.s5g.shop.dto.coupon.template.CouponCategoryAndBookResponseDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateRequestDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateResponseDto;
+import shop.s5g.shop.dto.coupon.template.CouponTemplateUpdateRequestDto;
 import shop.s5g.shop.entity.coupon.CouponPolicy;
 import shop.s5g.shop.entity.coupon.CouponTemplate;
+import shop.s5g.shop.entity.coupon.CouponTemplate.CouponTemplateType;
 import shop.s5g.shop.exception.coupon.CouponPolicyNotFoundException;
+import shop.s5g.shop.exception.coupon.CouponTemplateAlreadyExistsException;
 import shop.s5g.shop.exception.coupon.CouponTemplateNotFoundException;
 import shop.s5g.shop.repository.coupon.policy.CouponPolicyRepository;
 import shop.s5g.shop.repository.coupon.template.CouponTemplateRepository;
@@ -33,6 +35,16 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
     @Override
     @Transactional
     public void createCouponTemplate(CouponTemplateRequestDto couponTemplateRequestDto) {
+
+        if (couponTemplateRequestDto.couponName().contains(CouponTemplateType.WELCOME.getTypeName())
+        || couponTemplateRequestDto.couponName().contains(CouponTemplateType.BIRTH.getTypeName())) {
+            String couponType = couponTemplateRequestDto.couponName().split(" ")[0];
+
+            if (couponTemplateRepository.existsCouponTemplateName(couponType)) {
+                throw new CouponTemplateAlreadyExistsException("해당 쿠폰 템플릿은 이미 존재합니다.");
+            }
+
+        }
 
         CouponPolicy couponPolicy = couponPolicyRepository.findById(couponTemplateRequestDto.couponPolicyId())
             .orElseThrow(() -> new CouponPolicyNotFoundException("선택하신 쿠폰 정책이 존재하지 않습니다."));
@@ -77,7 +89,7 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
      */
     @Override
     @Transactional
-    public void updateCouponTemplate(Long couponTemplateId, CouponTemplateRequestDto couponTemplateRequestDto) {
+    public void updateCouponTemplate(Long couponTemplateId, CouponTemplateUpdateRequestDto couponTemplateUpdateRequestDto) {
 
         if (Objects.isNull(couponTemplateId) || couponTemplateId <= 0) {
             throw new IllegalArgumentException();
@@ -91,10 +103,7 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
             throw new CouponTemplateNotFoundException("삭제된 쿠폰 템플릿입니다.");
         }
 
-        CouponPolicy couponPolicy = couponPolicyRepository.findById(couponTemplateRequestDto.couponPolicyId())
-                .orElseThrow(() -> new CouponPolicyNotFoundException("선택하신 쿠폰 정책이 존재하지 않습니다."));
-
-        couponTemplateRepository.updateCouponTemplate(couponTemplateId, couponPolicy ,couponTemplateRequestDto);
+        couponTemplateRepository.updateCouponTemplate(couponTemplateId, couponTemplateUpdateRequestDto);
     }
 
     /**

@@ -237,17 +237,17 @@ class CouponBookServiceTest {
         // given
         Long validTemplateId = 1L;
         Pageable pageable = PageRequest.of(0, 10);
-        CouponBookDetailsForBookDto detailsDto = new CouponBookDetailsForBookDto("베스트셀러 책 제목");
+        CouponBookDetailsForBookDto detailsDto = new CouponBookDetailsForBookDto(1L, "베스트셀러 책 제목");
         List<CouponBookDetailsForBookDto> detailsList = Collections.singletonList(detailsDto);
         Page<CouponBookDetailsForBookDto> detailsPage = new PageImpl<>(detailsList, pageable, detailsList.size());
 
-        given(couponBookRepository.findCouponBooksByCouponTemplateId(validTemplateId, pageable)).willReturn(detailsPage);
+        given(couponBookRepository.findCouponBooksInfo(pageable)).willReturn(detailsPage);
 
         // when
-        Page<CouponBookDetailsForBookDto> result = couponBookService.getCouponBooksByTemplateId(validTemplateId, pageable);
+        Page<CouponBookDetailsForBookDto> result = couponBookService.getCouponBooksByTemplateId(pageable);
 
         // then
         assertThat(result).isNotNull();
-        verify(couponBookRepository).findCouponBooksByCouponTemplateId(validTemplateId, pageable);
+        verify(couponBookRepository).findCouponBooksInfo(pageable);
     }
 }

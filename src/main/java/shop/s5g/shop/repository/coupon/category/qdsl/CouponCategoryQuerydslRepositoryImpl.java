@@ -90,16 +90,15 @@ public class CouponCategoryQuerydslRepositoryImpl extends QuerydslRepositorySupp
 
     /**
      * 쿠폰 적용이 된 모든 카테고리 조회 - Pageable
-     * @param couponTemplateId
      * @param pageable
      * @return Page<CouponCategoryDetailsForCategoryDto>
      */
     @Override
-    public Page<CouponCategoryDetailsForCategoryDto> findCategoryByCouponTemplateId(
-        Long couponTemplateId, Pageable pageable) {
+    public Page<CouponCategoryDetailsForCategoryDto> findCategoryInfoByCouponTemplate(Pageable pageable) {
 
         List<CouponCategoryDetailsForCategoryDto> categoryNames = jpaQueryFactory
             .select(Projections.constructor(CouponCategoryDetailsForCategoryDto.class,
+                category.categoryId,
                 category.categoryName))
             .from(couponCategory)
             .innerJoin(category)
@@ -120,4 +119,5 @@ public class CouponCategoryQuerydslRepositoryImpl extends QuerydslRepositorySupp
 
         return new PageImpl<>(categoryNames, pageable, total);
     }
+
 }

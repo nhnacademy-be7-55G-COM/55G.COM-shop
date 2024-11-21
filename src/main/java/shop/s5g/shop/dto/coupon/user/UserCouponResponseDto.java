@@ -1,12 +1,9 @@
-package shop.s5g.shop.dto.coupon.coupon;
+package shop.s5g.shop.dto.coupon.user;
 
 import java.time.LocalDateTime;
 
-public record CouponResponseDto(
-
+public record UserCouponResponseDto(
     Long couponId,
-
-    Long couponTemplateId,
 
     String couponCode,
 
@@ -14,8 +11,9 @@ public record CouponResponseDto(
 
     LocalDateTime expiredAt,
 
-    LocalDateTime usedAt
+    String couponName,
 
+    String couponDescription
 ) {
 
 }

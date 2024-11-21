@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ActiveProfiles;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateRequestDto;
+import shop.s5g.shop.dto.coupon.template.CouponTemplateUpdateRequestDto;
 import shop.s5g.shop.exception.coupon.CouponPolicyNotFoundException;
 import shop.s5g.shop.exception.coupon.CouponTemplateNotFoundException;
 import shop.s5g.shop.repository.coupon.policy.CouponPolicyRepository;
@@ -115,7 +116,7 @@ class CouponTemplateServiceExceptionTest {
 
         Long invalidId = -1L;
 
-        CouponTemplateRequestDto couponTemplateRequestDto = new CouponTemplateRequestDto(
+        CouponTemplateUpdateRequestDto couponTemplateRequestDto = new CouponTemplateUpdateRequestDto(
             1L,
             "Error Coupon",
             "이 쿠폰은 에러 쿠폰입니다."
@@ -134,7 +135,7 @@ class CouponTemplateServiceExceptionTest {
     void updateCouponTemplateThrowsCouponTemplateNotFoundException() {
         // Given
         Long notFoundId = 999L;
-        CouponTemplateRequestDto couponTemplateRequestDto = new CouponTemplateRequestDto(
+        CouponTemplateUpdateRequestDto couponTemplateRequestDto = new CouponTemplateUpdateRequestDto(
             1L,
             "Error Coupon",
             "이 쿠폰은 에러 쿠폰입니다."
@@ -156,7 +157,7 @@ class CouponTemplateServiceExceptionTest {
     void updateCouponTemplateThrowsDeletedCouponTemplateException() {
         // Given
         Long deletedId = 1L;
-        CouponTemplateRequestDto couponTemplateRequestDto = new CouponTemplateRequestDto(
+        CouponTemplateUpdateRequestDto couponTemplateRequestDto = new CouponTemplateUpdateRequestDto(
             1L,
             "Error Coupon",
             "이 쿠폰은 에러 쿠폰입니다."
@@ -181,8 +182,8 @@ class CouponTemplateServiceExceptionTest {
         // Given
         Long couponTemplateId = 1L;
         Long couponPolicyId = 999L;
-        CouponTemplateRequestDto couponTemplateRequestDto = new CouponTemplateRequestDto(
-            couponPolicyId,
+        CouponTemplateUpdateRequestDto couponTemplateRequestDto = new CouponTemplateUpdateRequestDto(
+            couponTemplateId,
             "Coupon Name",
             "Coupon Description"
         );

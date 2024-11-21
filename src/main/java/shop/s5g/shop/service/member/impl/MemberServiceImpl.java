@@ -102,7 +102,7 @@ public class MemberServiceImpl implements MemberService {
         pointHistoryService.createPointHistory(saved.getId(),
             PointHistoryCreateRequestDto.REGISTER_POINT);
 
-//        userCouponService.createWelcomeCoupon(new UserCouponRequestDto(saved.getId()));
+        userCouponService.createWelcomeCoupon(new UserCouponRequestDto(saved.getId()));
 
     }
 

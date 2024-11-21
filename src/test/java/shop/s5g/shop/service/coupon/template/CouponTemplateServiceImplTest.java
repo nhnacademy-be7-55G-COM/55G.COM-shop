@@ -23,6 +23,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateRequestDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateResponseDto;
+import shop.s5g.shop.dto.coupon.template.CouponTemplateUpdateRequestDto;
 import shop.s5g.shop.entity.coupon.CouponPolicy;
 import shop.s5g.shop.entity.coupon.CouponTemplate;
 import shop.s5g.shop.repository.coupon.policy.CouponPolicyRepository;
@@ -129,8 +130,8 @@ class CouponTemplateServiceImplTest {
         // Given
         Long couponTemplateId = 1L;
 
-        CouponTemplateRequestDto couponTemplateRequestDto = new CouponTemplateRequestDto(
-            couponPolicy.getCouponPolicyId(),
+        CouponTemplateUpdateRequestDto couponTemplateRequestDto = new CouponTemplateUpdateRequestDto(
+            couponTemplate.getCouponTemplateId(),
             couponTemplate.getCouponName(),
             couponTemplate.getCouponDescription()
         );
@@ -144,7 +145,7 @@ class CouponTemplateServiceImplTest {
         couponTemplateService.updateCouponTemplate(couponTemplateId, couponTemplateRequestDto);
 
         // Then
-        verify(couponTemplateRepository, times(1)).updateCouponTemplate(couponTemplateId, couponPolicy, couponTemplateRequestDto);
+        verify(couponTemplateRepository, times(1)).updateCouponTemplate(couponTemplateId, couponTemplateRequestDto);
         verify(couponTemplateRepository, times(1)).existsById(couponTemplateId);
         verify(couponTemplateRepository, times(1)).checkActiveCouponTemplate(couponTemplateId);
 

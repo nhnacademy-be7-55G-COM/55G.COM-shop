@@ -130,21 +130,21 @@ class CouponCategoryServiceTest {
 
     @Test
     @DisplayName("특정 쿠폰 템플릿 ID에 대한 카테고리 조회")
-    void getCategoriesByCouponTemplateIdTest() {
+    void getCategoriesByCouponTemplateTest() {
         // Given
         Long couponTemplateId = 1L;
         Pageable pageable = PageRequest.of(0, 10);
-        CouponCategoryDetailsForCategoryDto categoryDto = new CouponCategoryDetailsForCategoryDto("카테고리1");
+        CouponCategoryDetailsForCategoryDto categoryDto = new CouponCategoryDetailsForCategoryDto(1L, "카테고리1");
         List<CouponCategoryDetailsForCategoryDto> categoryNames = Arrays.asList(categoryDto);
 
-        when(couponCategoryRepository.findCategoryByCouponTemplateId(couponTemplateId, pageable))
+        when(couponCategoryRepository.findCategoryInfoByCouponTemplate(pageable))
             .thenReturn(new PageImpl<>(categoryNames, pageable, categoryNames.size()));
 
         // When
-        Page<CouponCategoryDetailsForCategoryDto> result = couponCategoryService.getCategoriesByCouponTemplateId(couponTemplateId, pageable);
+        Page<CouponCategoryDetailsForCategoryDto> result = couponCategoryService.getCategoriesByCouponTemplate(pageable);
 
         // Then
         assertNotNull(result);
-        verify(couponCategoryRepository, times(1)).findCategoryByCouponTemplateId(couponTemplateId, pageable);
+        verify(couponCategoryRepository, times(1)).findCategoryInfoByCouponTemplate(pageable);
     }
 }
