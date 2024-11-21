@@ -13,8 +13,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.config.RedisConfig;
 import shop.s5g.shop.dto.cart.request.CartBookInfoRequestDto;
+import shop.s5g.shop.dto.cart.request.CartBookInfoWithStatusRequestDto;
 import shop.s5g.shop.dto.cart.request.CartBookSelectRequestDto;
+import shop.s5g.shop.dto.cart.request.CartLocalStorageWithStatusRequestDto;
 import shop.s5g.shop.dto.cart.request.CartSessionStorageDto;
+import shop.s5g.shop.dto.cart.response.CartBooksInfoInCartResponseDto;
 import shop.s5g.shop.dto.cart.response.CartBooksResponseDto;
 import shop.s5g.shop.dto.cart.response.CartDetailInfoResponseDto;
 import shop.s5g.shop.entity.Book;
@@ -197,15 +200,15 @@ public class CartServiceImpl implements CartService {
             return emptyList;
         }
 
-        List<Book> booksInfoInRedisCart = bookRepository.findAllById(
-            booksInRedisCart.keySet().stream().toList());
+        List<CartBooksInfoInCartResponseDto> booksInfoInRedisCart = bookRepository.findAllBooksInfoInCart(
+            booksInRedisCart.keySet());
 
         List<CartBooksResponseDto> cartBooks = booksInfoInRedisCart.stream()
-            .map(book -> new CartBooksResponseDto(book.getBookId(), book.getPrice(),
-                BigDecimal.valueOf(book.getPrice())
-                    .multiply(BigDecimal.valueOf(1).subtract(book.getDiscountRate())),
-                booksInRedisCart.get(book.getBookId()).getQuantity(), book.getStock(),
-                book.getTitle(), "image", booksInRedisCart.get(book.getBookId()).isStatus())
+            .map(book -> new CartBooksResponseDto(book.bookId(), book.price(),
+                BigDecimal.valueOf(book.price())
+                    .multiply(BigDecimal.valueOf(1).subtract(book.discountRate())),
+                booksInRedisCart.get(book.bookId()).getQuantity(), book.stock(),
+                book.title(), book.imageName(), booksInRedisCart.get(book.bookId()).isStatus())
             ).toList();
 
         return cartBooks;
@@ -214,25 +217,28 @@ public class CartServiceImpl implements CartService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<CartBooksResponseDto> lookUpAllBooksWhenGuest(CartSessionStorageDto cartSessionStorageDto) {
+    public List<CartBooksResponseDto> lookUpAllBooksWhenGuest(
+        CartLocalStorageWithStatusRequestDto cartLocalStorageDto) {
 
+        Map<Long, CartFieldValue> booksInLocalStorage = cartLocalStorageDto.cartBookInfoList()
+            .stream().collect(
+                Collectors.toMap(CartBookInfoWithStatusRequestDto::bookId,
+                    (dto) -> new CartFieldValue(dto.quantity(), dto.status())));
 
-        Map<Long, Integer> booksInSessionStorage = cartSessionStorageDto.cartBookInfoList().stream().collect(
-            Collectors.toMap(CartBookInfoRequestDto::bookId, CartBookInfoRequestDto::quantity,Integer::sum));
-
-        if (booksInSessionStorage.isEmpty()) {
+        if (booksInLocalStorage.isEmpty()) {
             List<CartBooksResponseDto> emptyList = new ArrayList<>();
             return emptyList;
         }
 
-        List<Book> booksInfo = bookRepository.findAllById(booksInSessionStorage.keySet());
+        List<CartBooksInfoInCartResponseDto> booksInfo = bookRepository.findAllBooksInfoInCart(
+            booksInLocalStorage.keySet());
 
         List<CartBooksResponseDto> cartBooks = booksInfo.stream()
-            .map(book -> new CartBooksResponseDto(book.getBookId(), book.getPrice(),
-                BigDecimal.valueOf(book.getPrice())
-                    .multiply(BigDecimal.valueOf(1).subtract(book.getDiscountRate())),
-                booksInSessionStorage.get(book.getBookId()), book.getStock(), book.getTitle(),
-                "image", true)
+            .map(book -> new CartBooksResponseDto(book.bookId(), book.price(),
+                BigDecimal.valueOf(book.price())
+                    .multiply(BigDecimal.valueOf(1).subtract(book.discountRate())),
+                booksInLocalStorage.get(book.bookId()).getQuantity(), book.stock(), book.title(),
+                book.imageName(), booksInLocalStorage.get(book.bookId()).isStatus())
             ).toList();
 
         return cartBooks;

@@ -28,6 +28,7 @@ import shop.s5g.shop.dto.cart.request.CartBookInfoRequestDto;
 import shop.s5g.shop.dto.cart.request.CartBookSelectRequestDto;
 import shop.s5g.shop.dto.cart.request.CartControlQuantityRequestDto;
 import shop.s5g.shop.dto.cart.request.CartDeleteBookRequestDto;
+import shop.s5g.shop.dto.cart.request.CartLocalStorageWithStatusRequestDto;
 import shop.s5g.shop.dto.cart.request.CartLoginRequestDto;
 import shop.s5g.shop.dto.cart.request.CartPutRequestDto;
 import shop.s5g.shop.dto.cart.request.CartSessionStorageDto;
@@ -93,12 +94,12 @@ public class CartController {
         String decodedCart = new String(decoded, StandardCharsets.UTF_8);
 
         ObjectMapper objectMapper = new ObjectMapper();
-        CartSessionStorageDto cartSessionStorageDto = objectMapper.readValue(decodedCart,
-            new TypeReference<CartSessionStorageDto>() {
+        CartLocalStorageWithStatusRequestDto cartLocalStorageDto = objectMapper.readValue(decodedCart,
+            new TypeReference<CartLocalStorageWithStatusRequestDto>() {
             });
 
         List<CartBooksResponseDto> cartBooks = cartService.lookUpAllBooksWhenGuest(
-            cartSessionStorageDto);
+            cartLocalStorageDto);
 
         CartDetailInfoResponseDto cartTotalPriceAndDeliverFee = cartService.getTotalPriceAndDeliverFee(
             cartBooks);

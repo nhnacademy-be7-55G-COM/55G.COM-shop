@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.Stack;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -23,6 +25,7 @@ import shop.s5g.shop.dto.book.BookResponseDto;
 import shop.s5g.shop.dto.book.BookSimpleResponseDto;
 import shop.s5g.shop.dto.book.author.BookAuthorResponseDto;
 import shop.s5g.shop.dto.book.category.BookDetailCategoryResponseDto;
+import shop.s5g.shop.dto.cart.response.CartBooksInfoInCartResponseDto;
 import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.BookImage;
 import shop.s5g.shop.entity.Category;
@@ -251,6 +254,25 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
                 book.stock,
                 book.isPacked,
                 bookStatus.name
+                )
+            ).fetch();
+    }
+    @Override
+    public List<CartBooksInfoInCartResponseDto> findAllBooksInfoInCart(Set<Long> bookIdSet){
+        if (Objects.isNull(bookIdSet) || bookIdSet.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        return from(bookImage)
+            .rightJoin(bookImage.book,book)
+            .where(book.bookId.in(bookIdSet))
+            .select(Projections.constructor(CartBooksInfoInCartResponseDto.class,
+                book.bookId,
+                book.price,
+                book.discountRate,
+                book.stock,
+                book.title,
+                bookImage.imageName
                 )
             ).fetch();
     }
