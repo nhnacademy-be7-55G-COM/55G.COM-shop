@@ -1,8 +1,10 @@
 package shop.s5g.shop.controller.book;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -14,18 +16,18 @@ import shop.s5g.shop.dto.category.CategoryResponseDto;
 import shop.s5g.shop.dto.category.CategoryUpdateRequestDto;
 import shop.s5g.shop.dto.tag.MessageDto;
 import shop.s5g.shop.exception.category.CategoryBadRequestException;
+import shop.s5g.shop.service.category.CategoryService;
 import shop.s5g.shop.service.category.impl.CategoryServiceImpl;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/shop")
+@RequiredArgsConstructor
 public class CategoryController {
-    private final CategoryServiceImpl categoryServiceImpl;
 
-    public CategoryController(CategoryServiceImpl categoryServiceImpl) {
-        this.categoryServiceImpl = categoryServiceImpl;
-    }
+    private final CategoryService categoryService;
+
 
     //카테고리 등록
     @PostMapping("/category")
@@ -33,27 +35,27 @@ public class CategoryController {
         if(bindingResult.hasErrors()) {
             throw new CategoryBadRequestException("잘못된 입력입니다.");
         }
-        categoryServiceImpl.createCategory(categoryDto);
+        categoryService.createCategory(categoryDto);
         return ResponseEntity.ok().body(new MessageDto("카테고리 등록 성공"));
     }
 
     //카테고리 목록 조회
     @GetMapping("/category")
     public ResponseEntity<PageResponseDto<CategoryResponseDto>> getAllCategories(Pageable pageable) {
-        Page<CategoryResponseDto> categoryResponseDto = categoryServiceImpl.allCategory(pageable);
+        Page<CategoryResponseDto> categoryResponseDto = categoryService.allCategory(pageable);
         return ResponseEntity.ok().body(PageResponseDto.of(categoryResponseDto));
     }
 
     //자식 카테고리 조회
     @GetMapping("/category/childCategory/{categoryId}")
     public ResponseEntity<List<CategoryResponseDto>> getChildCategories(@Valid @PathVariable("categoryId") long categoryId) {
-        return ResponseEntity.ok().body(categoryServiceImpl.getChildCategory(categoryId));
+        return ResponseEntity.ok().body(categoryService.getChildCategory(categoryId));
     }
 
     //국내도서 하위 카테고리 조회
     @GetMapping("/category/korea")
-    public ResponseEntity<List<CategoryResponseDto>> getKoreaCategories() {
-        return ResponseEntity.ok().body(categoryServiceImpl.getKoreaBooks());
+    public ResponseEntity<PageResponseDto<CategoryResponseDto>> getKoreaCategories(@PageableDefault Pageable pageable) {
+        return ResponseEntity.ok().body(PageResponseDto.of(categoryService.getKoreaBooks(pageable)));
     }
 
     //카테고리 수정
@@ -66,7 +68,7 @@ public class CategoryController {
             throw new CategoryBadRequestException("카테고리 Id는 1보다 커야 합니다.");
         }
 
-        categoryServiceImpl.updateCategory(categoryId, categoryDto);
+        categoryService.updateCategory(categoryId, categoryDto);
         return ResponseEntity.ok().body(new MessageDto("카테고리 수정 성공"));
     }
 
@@ -78,7 +80,7 @@ public class CategoryController {
         if (categoryId < 1) {
             throw new CategoryBadRequestException("카테고리 Id는 1보다 커야 합니다.");
         }
-        categoryServiceImpl.deleteCategory(categoryId);
+        categoryService.deleteCategory(categoryId);
         return ResponseEntity.ok().body(new MessageDto("카테고리 삭제 성공"));
     }
 
@@ -89,7 +91,7 @@ public class CategoryController {
      */
     @GetMapping("/admin/coupons/category/{categoryId}")
     public ResponseEntity<CategoryResponseDto> findCategoryById(@PathVariable("categoryId") Long categoryId) {
-        CategoryResponseDto category = categoryServiceImpl.getCategory(categoryId);
+        CategoryResponseDto category = categoryService.getCategory(categoryId);
 
         return ResponseEntity.status(HttpStatus.OK).body(category);
     }
