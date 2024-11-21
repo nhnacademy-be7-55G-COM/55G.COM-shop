@@ -21,5 +21,7 @@ public interface MemberRepository extends JpaRepository<Member, Long>, MemberQue
 
     boolean existsByLoginId(String loginId);
 
+    boolean existsByPaycoIdNo(String paycoIdNo);
+
     Optional<Member> findByIdAndStatus_TypeName(long memberId, String typeName);
 }

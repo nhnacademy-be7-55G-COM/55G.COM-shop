@@ -3,16 +3,11 @@ package shop.s5g.shop.dto.tag;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public class TagResponseDto {
-    @Size(min = 1, max = 50)
+public record TagResponseDto (
     @NotNull
-    private String tagName;
-    private boolean active;
-
-    public TagResponseDto() {
-    }
-    public TagResponseDto(String tagName, boolean active) {
-        this.tagName = tagName;
-        this.active = active;
-    }
+    Long tagId,
+    @NotNull
+    String tagName,
+    boolean active
+) {
 }

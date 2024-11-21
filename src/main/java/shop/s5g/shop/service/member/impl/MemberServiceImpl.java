@@ -184,6 +184,10 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void linkAccountByPaycoId(Long customerId, String paycoId) {
+        if (memberRepository.existsByPaycoIdNo(paycoId)) {
+            throw new AlreadyLinkAccountException("already linked account");
+        }
+
         Member member = memberRepository.findById(customerId)
             .orElseThrow(MemberNotFoundException::new);
 

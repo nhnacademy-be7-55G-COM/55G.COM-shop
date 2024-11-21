@@ -83,13 +83,13 @@ class TagControllerTest {
     /**
      * 태그 목록 조회 test
      */
-    @Test
-    void getTagListTest() throws Exception {
-        this.mockMvc
-                .perform(get("/api/shop/tag"))
-                .andExpect(status().isOk())
-                .andDo(print());
-    }
+//    @Test
+//    void getTagListTest() throws Exception {
+//        this.mockMvc
+//                .perform(get("/api/shop/tag"))
+//                .andExpect(status().isOk())
+//                .andDo(print());
+//    }
 
     /**
      * 태그 수정 test

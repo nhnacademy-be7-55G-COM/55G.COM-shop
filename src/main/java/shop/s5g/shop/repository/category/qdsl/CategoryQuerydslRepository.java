@@ -15,6 +15,6 @@ public interface CategoryQuerydslRepository {
 
     List<CategoryResponseDto> getChild_Category(long categoryId);
 
-    List<CategoryResponseDto> getKoreaBook();
+    Page<CategoryResponseDto> getKoreaBook(Pageable pageable);
 
 }
