@@ -43,7 +43,7 @@ public interface CartService {
 
     void controlQuantity(Long bookId, int change, String customerLoginId);
 
-    void putBook(Long bookId, Integer quantity, String customerLoginId);
+    int putBook(Long bookId, Integer quantity, String customerLoginId);
 
     void reduceBookQuantity(Long bookId, String customerLoginId);
 

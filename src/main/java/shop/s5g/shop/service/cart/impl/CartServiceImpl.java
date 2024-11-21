@@ -16,11 +16,9 @@ import shop.s5g.shop.dto.cart.request.CartBookInfoRequestDto;
 import shop.s5g.shop.dto.cart.request.CartBookInfoWithStatusRequestDto;
 import shop.s5g.shop.dto.cart.request.CartBookSelectRequestDto;
 import shop.s5g.shop.dto.cart.request.CartLocalStorageWithStatusRequestDto;
-import shop.s5g.shop.dto.cart.request.CartSessionStorageDto;
 import shop.s5g.shop.dto.cart.response.CartBooksInfoInCartResponseDto;
 import shop.s5g.shop.dto.cart.response.CartBooksResponseDto;
 import shop.s5g.shop.dto.cart.response.CartDetailInfoResponseDto;
-import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.cart.Cart;
 import shop.s5g.shop.entity.cart.CartPk;
 import shop.s5g.shop.entity.delivery.DeliveryFee;
@@ -150,14 +148,14 @@ public class CartServiceImpl implements CartService {
 
     @Transactional
     @Override
-    public void putBook(Long bookId, Integer quantity, String customerLoginId) {
+    public int putBook(Long bookId, Integer quantity, String customerLoginId) {
 
         if (customerLoginId.isBlank()) {
             throw new BadRequestException("CustomerLoginId Is Not Valid");
         }
 
         if (bookRepository.findById(bookId).isPresent()) {
-            cartRedisRepository.putBook(bookId, quantity, customerLoginId);
+            return cartRedisRepository.putBook(bookId, quantity, customerLoginId);
         }else {
             throw new ResourceNotFoundException("해당 도서를 담는데 실패했습니다.");
         }
