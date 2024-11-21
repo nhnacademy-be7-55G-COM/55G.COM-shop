@@ -28,6 +28,8 @@ public interface CartService {
     // ----------- only Redis 관련 -----------
     int getCartCountInRedis(String customerLoginId);
 
+    void deleteBooksAfterPurchase(String customerLoginId);
+
     Map<Long, CartFieldValue> getBooksInRedisCartWithStatus(String customerLoginId);
 
     List<CartBookInfoRequestDto> getBooksWhenPurchase(String customerLoginId);

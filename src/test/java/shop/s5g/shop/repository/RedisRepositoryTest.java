@@ -18,6 +18,7 @@ import org.springframework.test.context.junit.jupiter.DisabledIf;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import shop.s5g.shop.dto.cart.request.CartBookSelectRequestDto;
 import shop.s5g.shop.repository.cart.CartFieldValue;
 import shop.s5g.shop.repository.cart.CartRedisRepository;
 
@@ -224,6 +225,23 @@ class RedisRepositoryTest {
         Assertions.assertThat(
                 redisTemplate.opsForHash().entries(CartRedisRepository.CART + customerLoginId))
             .isEqualTo(deletedBooks);
+
+    }
+
+    @Test
+    void changeBookStatusTest() {
+        //given
+        String customerLoginId = "TestCustomerLoginId";
+        CartBookSelectRequestDto cartBookSelectRequestDto = new CartBookSelectRequestDto(1l, false);
+        cartRedisRepository.putBook(1l, 1, customerLoginId);
+
+        //when
+        cartRedisRepository.changeBookStatus(customerLoginId, cartBookSelectRequestDto);
+
+        //then
+        CartFieldValue cartFieldValue = (CartFieldValue) redisTemplate.opsForHash()
+            .get(CartRedisRepository.CART + customerLoginId, 1l);
+        Assertions.assertThat(cartFieldValue.isStatus()).isFalse();
 
     }
 

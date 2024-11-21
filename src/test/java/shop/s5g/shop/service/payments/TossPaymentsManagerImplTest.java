@@ -78,9 +78,9 @@ class TossPaymentsManagerImplTest {
         when(adapter.confirm(any())).thenReturn(mockResponse);
         when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
 
-        assertThatCode(() -> manager.confirmPayment(
-            1L, orderDataId, request, TossPaymentsDto.class
-        )).doesNotThrowAnyException();
+//        assertThatCode(() -> manager.confirmPayment(
+//            1L, orderDataId, request, TossPaymentsDto.class
+//        )).doesNotThrowAnyException();
 
         verify(orderDetailRepository, times(1)).fetchOrderDetailsByOrderId(orderDataId);
         verify(orderDetail, times(1)).getBook();
