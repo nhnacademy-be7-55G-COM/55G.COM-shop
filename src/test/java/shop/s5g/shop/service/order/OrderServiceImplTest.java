@@ -129,7 +129,7 @@ class OrderServiceImplTest {
     );
 
     OrderCreateRequestDto request = new OrderCreateRequestDto(
-        deliveryReq, List.of(detail), 0L, 0L
+        deliveryReq, List.of(detail), 0L, 0L, 0L
     );
 
     @Test

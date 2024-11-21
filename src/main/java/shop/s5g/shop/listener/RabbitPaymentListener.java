@@ -32,9 +32,10 @@ public class RabbitPaymentListener {
     )
     public MessageDto paymentListener(Map<String, Object> body){
         long orderDataId = ((Number) body.get("orderDataId")).longValue();
+        long usedPoint = ((Number)body.get("usedPoint")).longValue();
         log.debug("Rabbit payment request just received for orderId={}", orderDataId);
         Map<String, Object> paymentInfo = extractPaymentInfo(body);
-        paymentManager.confirmPayment(0L, orderDataId, paymentInfo, TossPaymentsDto.class);
+        paymentManager.confirmPayment(orderDataId, usedPoint, paymentInfo, TossPaymentsDto.class);
 
         return new MessageDto("confirmed");
     }

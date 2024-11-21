@@ -39,12 +39,19 @@ public class BookDocumentServiceImpl implements BookDocumentService {
             bookDocumentPage.getSize(), bookDocumentPage.getTotalElements());
     }
 
-    public PageResponseDto<BookDocumentResponseDto> searchByTitleOrDescription(String keyword,
+    public PageResponseDto<BookDocumentResponseDto> searchByKeyword(String keyword,
         Pageable pageable) {
-        Criteria criteria = new Criteria("title").matches(keyword)
-            .or(new Criteria("description").matches(keyword));
 
-        CriteriaQuery query = new CriteriaQuery(criteria);
+        Criteria titleCriteria = new Criteria("title").matches(keyword).boost(60.f);
+        Criteria descriptionCriteria = new Criteria("description").matches(keyword).boost(30.f);
+        Criteria tagCriteria = new Criteria("tag_names.keyword").is(keyword).boost(50.f);
+        Criteria authorCriteria = new Criteria("author_names").matches(keyword).boost(50.f);
+        Criteria publisherCriteria = new Criteria("publisher_name").matches(keyword).boost(20.f);
+
+        Criteria combinedCriteria = titleCriteria.or(descriptionCriteria).or(tagCriteria)
+            .or(authorCriteria).or(publisherCriteria);
+
+        CriteriaQuery query = new CriteriaQuery(combinedCriteria);
         query.setPageable(pageable);
 
         SearchHits<BookDocument> searchHits = elasticsearchOperations.search(query,
