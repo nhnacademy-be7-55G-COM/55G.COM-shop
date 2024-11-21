@@ -32,7 +32,17 @@ redis:
   host: host
   port: 1
   password: password
+
 rabbit:
+  retry-count: 5
+  exchange:
+    orders: 55g.orders.exchange
+
+  route:
+    orders:
+      payment:
+        toss: 55g.orders.payment.toss
+
   orders:
     payment:
       toss:
@@ -85,6 +95,17 @@ spring:
 spring:
   config:
     activate:
+      on-profile: local
+
+rabbit:
+  orders:
+    payment:
+      toss:
+        queue: 55g.dev.orders.payment.queue
+---
+spring:
+  config:
+    activate:
       on-profile: test
   jpa:
     properties:
@@ -100,11 +121,12 @@ spring:
         config:
           default:
             logger-level: full
+
 rabbit:
   orders:
     payment:
       toss:
-        queue: 55g.dev.orders.payment.queue
+        queue: 55g.dev.f3fort.orders.payment.queue
 
 ---
 spring:
