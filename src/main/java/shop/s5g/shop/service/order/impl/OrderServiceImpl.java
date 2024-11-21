@@ -90,12 +90,14 @@ public class OrderServiceImpl implements OrderService {
             new Order(customer, delivery, requestDto.netPrice(), requestDto.totalPrice())
         );
 
+        OrderDetailType.Type type = requestDto.usePoint() == 0 ? OrderDetailType.Type.COMPLETE : OrderDetailType.Type.CONFIRM;
+
         // orderDetail 생성
-        linkOrderDetails(order, requestDto.cartList());
+        linkOrderDetails(order, requestDto.cartList(), type);
         return OrderCreateResponseDto.of(order);
     }
 
-    private void linkOrderDetails(Order order, List<OrderDetailCreateRequestDto> details) {
+    private void linkOrderDetails(Order order, List<OrderDetailCreateRequestDto> details, OrderDetailType.Type type) {
         for (OrderDetailCreateRequestDto detail: details) {
             Book book = bookRepository.findById(detail.bookId()).orElseThrow(
                 () -> new BookResourceNotFoundException("Book not found: "+detail.bookId())
@@ -103,13 +105,13 @@ public class OrderServiceImpl implements OrderService {
             WrappingPaper wrappingPaper = detail.wrappingPaperId() == null ? null : wrappingPaperRepository.findById(detail.wrappingPaperId()).orElseThrow(
                 () -> new WrappingPaperDoesNotExistsException(detail.wrappingPaperId())
             );
-            OrderDetailType type = orderDetailTypeRepository.findStatusByName(OrderDetailType.Type.COMPLETE);
+            OrderDetailType typeEntity = orderDetailTypeRepository.findStatusByName(type);
 
             OrderDetail orderDetail = OrderDetail.builder()
                 .order(order)
                 .book(book)
                 .wrappingPaper(wrappingPaper)
-                .orderDetailType(type)
+                .orderDetailType(typeEntity)
                 .quantity(detail.quantity())
                 .totalPrice(detail.totalPrice())
                 .accumulationPrice(detail.accumulationPrice())

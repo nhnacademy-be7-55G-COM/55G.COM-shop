@@ -15,5 +15,6 @@ public record OrderCreateRequestDto(
     @Min(0)
     long netPrice,
     @Min(0)
-    long totalPrice
+    long totalPrice,
+    long usePoint
 ) {}

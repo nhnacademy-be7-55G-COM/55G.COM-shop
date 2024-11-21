@@ -2,9 +2,11 @@ package shop.s5g.shop.listener;
 
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import shop.s5g.shop.dto.order.OrderRabbitResponseDto;
 import shop.s5g.shop.dto.payments.TossPaymentsDto;
 import shop.s5g.shop.dto.tag.MessageDto;
 import shop.s5g.shop.service.order.OrderService;
@@ -30,13 +32,22 @@ public class RabbitPaymentListener {
         concurrency = "1",
         executor = "rabbitExecutor", messageConverter = "jacksonMessageConverter"
     )
-    public MessageDto paymentListener(Map<String, Object> body){
+    public OrderRabbitResponseDto paymentListener(Map<String, Object> body){
         long orderDataId = ((Number) body.get("orderDataId")).longValue();
+        long usedPoint = ((Number)body.get("usedPoint")).longValue();
         log.debug("Rabbit payment request just received for orderId={}", orderDataId);
         Map<String, Object> paymentInfo = extractPaymentInfo(body);
-        paymentManager.confirmPayment(0L, orderDataId, paymentInfo, TossPaymentsDto.class);
+        try {
+            paymentManager.confirmPayment(orderDataId, usedPoint, paymentInfo,
+                TossPaymentsDto.class);
+        } catch (RuntimeException e) {
+            String rootMessage = ExceptionUtils.getRootCauseMessage(e);
+            log.info("결제 과정 중 오류 발생: {}", rootMessage);
+            orderService.deactivateOrder(orderDataId);
+            return new OrderRabbitResponseDto(false, rootMessage);
+        }
 
-        return new MessageDto("confirmed");
+        return new OrderRabbitResponseDto(true, "confirmed");
     }
 
     @RabbitListener(
