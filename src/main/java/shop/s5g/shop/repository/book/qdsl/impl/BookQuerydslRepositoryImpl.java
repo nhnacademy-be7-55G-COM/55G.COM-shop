@@ -61,14 +61,12 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
             .set(book.title, bookDto.title())
             .set(book.chapter, bookDto.chapter())
             .set(book.description, bookDto.description())
-            .set(book.publishedDate, LocalDate.parse(bookDto.publishedDate()))
+            .set(book.publishedDate, LocalDate.parse(bookDto.publishedDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")))
             .set(book.isbn, bookDto.isbn())
             .set(book.price, bookDto.price())
             .set(book.discountRate, bookDto.discountRate())
             .set(book.isPacked, bookDto.isPacked())
             .set(book.stock, bookDto.stock())
-            .set(book.views, bookDto.views())
-            .set(book.createdAt, bookDto.createdAt())
             .where(book.bookId.eq(bookId))
             .execute();
     }

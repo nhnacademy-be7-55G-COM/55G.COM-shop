@@ -18,6 +18,7 @@ import shop.s5g.shop.dto.book.BookResponseDto;
 import shop.s5g.shop.dto.book.BookSimpleResponseDto;
 import shop.s5g.shop.dto.book.category.BookCategoryBookResponseDto;
 import shop.s5g.shop.entity.Book;
+import shop.s5g.shop.entity.BookImage;
 import shop.s5g.shop.entity.BookStatus;
 import shop.s5g.shop.entity.Publisher;
 import shop.s5g.shop.exception.book.BookResourceNotFoundException;
@@ -26,6 +27,7 @@ import shop.s5g.shop.exception.publisher.PublisherResourceNotFoundException;
 import shop.s5g.shop.repository.book.BookRepository;
 import shop.s5g.shop.repository.book.category.BookCategoryRepository;
 import shop.s5g.shop.repository.book.status.BookStatusRepository;
+import shop.s5g.shop.repository.book.image.BookImageRepository;
 import shop.s5g.shop.repository.book.status.BookStatusRepository;
 import shop.s5g.shop.repository.publisher.PublisherRepository;
 import shop.s5g.shop.service.book.BookService;
@@ -39,6 +41,7 @@ public class BookServiceImpl implements BookService {
     private final PublisherRepository publisherRepository;
     private final BookStatusRepository statusRepository;
     private final BookCategoryRepository bookcategoryRepository;
+    private final BookImageRepository bookImageRepository;
 
     //도서 등록
     public void createBook(BookRequestDto bookDto) {
@@ -60,11 +63,16 @@ public class BookServiceImpl implements BookService {
             bookDto.discountRate(),
             bookDto.isPacked(),
             bookDto.stock(),
-            bookDto.views(),
+            0L,
             LocalDateTime.now(),
             LocalDateTime.now()
         );
         book = bookRepository.save(book);
+
+        if(bookDto.thumbnailPath()!=null) {
+            BookImage bookImage = bookImageRepository.save(
+                new BookImage(book, bookDto.thumbnailPath()));
+        }
     }
 
     //모든 도서 리스트 조회

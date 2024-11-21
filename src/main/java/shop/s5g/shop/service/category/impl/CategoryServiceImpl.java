@@ -49,8 +49,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     //국내도서 하위 카테고리
     @Override
-    public List<CategoryResponseDto> getKoreaBooks() {
-        return categoryRepository.getKoreaBook();
+    public Page<CategoryResponseDto> getKoreaBooks(Pageable pageable) {
+        return categoryRepository.getKoreaBook(pageable);
     }
 
     // 아이디로 조회
