@@ -1,4 +1,4 @@
-package shop.s5g.shop.controller;
+package shop.s5g.shop.controller.cart;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -196,10 +196,21 @@ public class CartController {
         return ResponseEntity.status(HttpStatus.OK).body(booksWhenPurchase);
     }
 
+    @PostMapping("/cart/removePurchasedBooks")
+    public ResponseEntity<Void> removePurchasedBooks(
+        @AuthenticationPrincipal ShopMemberDetail shopMemberDetail) {
+
+        String customerLoginId = shopMemberDetail.getLoginId();
+
+        cartService.deleteBooksAfterPurchase(customerLoginId);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
     @PostMapping("/cart/changeBookStatus")
     public ResponseEntity<Void> changeBookStatus(
         @AuthenticationPrincipal ShopMemberDetail shopMemberDetail,
-        @RequestBody CartBookSelectRequestDto cartBookSelectRequestDto,
+        @RequestBody @Validated CartBookSelectRequestDto cartBookSelectRequestDto,
         BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {

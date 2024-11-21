@@ -20,6 +20,7 @@ import shop.s5g.shop.dto.cart.response.CartDetailInfoResponseDto;
 import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.cart.Cart;
 import shop.s5g.shop.entity.cart.CartPk;
+import shop.s5g.shop.entity.delivery.DeliveryFee;
 import shop.s5g.shop.entity.member.Member;
 import shop.s5g.shop.exception.BadRequestException;
 import shop.s5g.shop.exception.ResourceNotFoundException;
@@ -184,7 +185,7 @@ public class CartServiceImpl implements CartService {
     public List<CartBooksResponseDto> lookUpAllBooks(String customerLoginId) {
 
         if (customerLoginId.isBlank()) {
-            throw new BadRequestException("SessionId Is Not Valid");
+            throw new BadRequestException("customerLoginId Is Not Valid");
         }
 
         Map<Long, CartFieldValue> booksInRedisCart = getBooksInRedisCartWithStatus(
@@ -246,11 +247,18 @@ public class CartServiceImpl implements CartService {
         BigDecimal totalPrice = cartBooks.stream().map(cartBook -> cartBook.discountedPrice()
                 .multiply(BigDecimal.valueOf(cartBook.quantity())))
             .reduce(BigDecimal.ZERO, BigDecimal::add);
+        List<DeliveryFee> deliveryInfo = deliveryFeeRepository.findInfoForPurchase();
 
-        long deliveryFee = 3000;
-        long freeShippingThreshold = 30000;
+        long deliveryFee = deliveryInfo.stream().filter(delivery -> delivery.getCondition() == 0)
+            .findFirst().map(DeliveryFee::getFee)
+            .orElseThrow(() -> new ResourceNotFoundException("배달비 확인 불가"));
+        long freeShippingThreshold = deliveryInfo.stream()
+            .filter(delivery -> delivery.getFee() == 0).findFirst().map(DeliveryFee::getCondition)
+            .orElseThrow(() -> new ResourceNotFoundException("배달비 확인 불가"));
+
         return new CartDetailInfoResponseDto(totalPrice, deliveryFee, freeShippingThreshold);
     }
+
 
 
 
@@ -322,7 +330,7 @@ public class CartServiceImpl implements CartService {
     public void removeAccount(String customerLoginId) {
 
         if (customerLoginId.isBlank()) {
-            throw new BadRequestException("SessionId Is Not Valid");
+            throw new BadRequestException("customerLoginId Is Not Valid");
         }
 
         deleteOldCart(customerLoginId);
@@ -337,7 +345,7 @@ public class CartServiceImpl implements CartService {
     public List<CartBookInfoRequestDto> getBooksWhenPurchase(String customerLoginId) {
 
         if (customerLoginId.isBlank()) {
-            throw new BadRequestException("SessionId Is Not Valid");
+            throw new BadRequestException("customerLoginId Is Not Valid");
         }
 
         Map<Long, Integer> booksInRedisCart = getBooksInRedisCartWithStatusTrue(customerLoginId);
@@ -353,11 +361,26 @@ public class CartServiceImpl implements CartService {
 
     @Transactional
     @Override
+    public void deleteBooksAfterPurchase(String customerLoginId){
+        if (customerLoginId.isBlank()) {
+            throw new BadRequestException("customerLoginId Is Not Valid");
+        }
+
+        Map<Long, Integer> purchasedBookList = getBooksInRedisCartWithStatusTrue(customerLoginId);
+
+        purchasedBookList.forEach((bookId,quantity) ->{
+            deleteBookFromCart(bookId, customerLoginId);
+        });
+
+    }
+
+    @Transactional
+    @Override
     public void changeBookStatus(String customerLoginId,
         CartBookSelectRequestDto cartBookSelectRequestDto) {
 
         if (customerLoginId.isBlank()) {
-            throw new BadRequestException("SessionId Is Not Valid");
+            throw new BadRequestException("customerLoginId Is Not Valid");
         }
 
         cartRedisRepository.changeBookStatus(customerLoginId, cartBookSelectRequestDto);
