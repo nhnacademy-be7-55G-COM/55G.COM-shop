@@ -32,7 +32,17 @@ redis:
   host: host
   port: 1
   password: password
+
 rabbit:
+  retry-count: 5
+  exchange:
+    orders: 55g.orders.exchange
+
+  route:
+    orders:
+      payment:
+        toss: 55g.orders.payment.toss
+
   orders:
     payment:
       toss:
