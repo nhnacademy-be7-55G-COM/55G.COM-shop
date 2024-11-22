@@ -1,5 +1,6 @@
 package shop.s5g.shop.repository.coupon.category.qdsl;
 
+import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import shop.s5g.shop.dto.coupon.category.CouponCategoryDetailsForCategoryDto;
@@ -14,5 +15,5 @@ public interface CouponCategoryQuerydslRepository {
 
     // read
     Page<CouponCategoryResponseDto> findAllCouponCategories(Pageable pageable);
-    Page<CouponCategoryDetailsForCategoryDto> findCategoryByCouponTemplateId(Long couponTemplateId, Pageable pageable);
+    Page<CouponCategoryDetailsForCategoryDto> findCategoryInfoByCouponTemplate(Pageable pageable);
 }

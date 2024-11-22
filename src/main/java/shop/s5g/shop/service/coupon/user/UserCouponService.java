@@ -6,5 +6,5 @@ public interface UserCouponService {
 
     void createWelcomeCoupon(UserCouponRequestDto userCouponRequestDto);
 
-    void createBirthCoupon(UserCouponRequestDto userCouponRequestDto);
+    void createCategoryCoupon(Long memberId, String categoryName);
 }

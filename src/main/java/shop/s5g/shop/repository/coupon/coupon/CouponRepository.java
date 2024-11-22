@@ -6,5 +6,5 @@ import shop.s5g.shop.repository.coupon.coupon.qdsl.CouponQuerydslRepository;
 
 public interface CouponRepository extends JpaRepository<Coupon, Long>, CouponQuerydslRepository {
 
-
+    boolean existsCouponByCouponCode(String couponCode);
 }

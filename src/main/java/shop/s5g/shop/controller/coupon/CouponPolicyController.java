@@ -60,7 +60,7 @@ public class CouponPolicyController {
      * @param couponPolicyId
      * @return MessageDto
      */
-    @PatchMapping("/policy/{couponPolicyId}")
+    @PostMapping("/policy/{couponPolicyId}")
     public ResponseEntity<MessageDto> updateCouponPolicy(
         @Valid @RequestBody CouponPolicyRequestDto couponPolicyRequestDto,
         BindingResult bindingResult,

@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateRequestDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateResponseDto;
+import shop.s5g.shop.dto.coupon.template.CouponTemplateUpdateRequestDto;
 import shop.s5g.shop.entity.coupon.CouponPolicy;
 import shop.s5g.shop.entity.coupon.CouponTemplate;
 import shop.s5g.shop.entity.coupon.QCoupon;
@@ -65,15 +66,13 @@ public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupp
     /**
      * 쿠폰 템플릿 업데이트 쿼리 dsl
      * @param couponTemplateId
-     * @param couponPolicy
-     * @param couponTemplateRequestDto
+     * @param couponTemplateUpdateRequestDto
      */
     @Override
-    public void updateCouponTemplate(Long couponTemplateId, CouponPolicy couponPolicy, CouponTemplateRequestDto couponTemplateRequestDto) {
+    public void updateCouponTemplate(Long couponTemplateId, CouponTemplateUpdateRequestDto couponTemplateUpdateRequestDto) {
         update(couponTemplate)
-            .set(couponTemplate.couponPolicy, couponPolicy)
-            .set(couponTemplate.couponName, couponTemplateRequestDto.couponName())
-            .set(couponTemplate.couponDescription, couponTemplateRequestDto.couponDescription())
+            .set(couponTemplate.couponName, couponTemplateUpdateRequestDto.couponName())
+            .set(couponTemplate.couponDescription, couponTemplateUpdateRequestDto.couponDescription())
             .set(couponTemplate.active, ACTIVE)
             .where(couponTemplate.couponTemplateId.eq(couponTemplateId))
             .execute();
@@ -92,6 +91,21 @@ public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupp
             .from(couponTemplate)
             .where(couponTemplate.couponTemplateId.eq(couponTemplateId))
             .fetchOne());
+    }
+
+    /**
+     * 해당 이름의 쿠폰 템플릿의 이름이 있는지 체크
+     * @param type
+     * @return boolean
+     */
+    @Override
+    public boolean existsCouponTemplateName(String type) {
+
+        return Boolean.TRUE.equals(jpaQueryFactory
+            .selectOne()
+            .from(couponTemplate)
+            .where(couponTemplate.couponName.startsWith(type))
+            .fetchFirst() != null);
     }
 
     /**
@@ -207,10 +221,24 @@ public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupp
     public CouponTemplate findParticularCouponByName(String keyword) {
 
         return jpaQueryFactory
-            .select(couponTemplate)
-            .from(coupon)
-            .innerJoin(coupon.couponTemplate, couponTemplate)
+            .selectFrom(couponTemplate)
             .where(Expressions.stringTemplate("locate({0}, {1})", keyword, couponTemplate.couponName).gt("0"))
+            .fetchOne();
+    }
+
+    /**
+     * 쿠폰 템플릿에 사용된 정책 찾기
+     * @param couponTemplateId
+     * @return CouponPolicy
+     */
+    @Override
+    public Integer findCouponPolicyDurationByCouponTemplateId(Long couponTemplateId) {
+        return jpaQueryFactory
+            .select(couponPolicy.duration)
+            .from(couponTemplate)
+            .where(couponTemplate.couponTemplateId.eq(couponTemplateId))
+            .innerJoin(couponPolicy)
+            .on(couponTemplate.couponPolicy.couponPolicyId.eq(couponPolicy.couponPolicyId))
             .fetchFirst();
     }
 }

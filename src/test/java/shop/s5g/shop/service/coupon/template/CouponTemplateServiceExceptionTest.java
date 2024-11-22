@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ActiveProfiles;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateRequestDto;
+import shop.s5g.shop.dto.coupon.template.CouponTemplateUpdateRequestDto;
 import shop.s5g.shop.exception.coupon.CouponPolicyNotFoundException;
 import shop.s5g.shop.exception.coupon.CouponTemplateNotFoundException;
 import shop.s5g.shop.repository.coupon.policy.CouponPolicyRepository;
@@ -115,7 +116,7 @@ class CouponTemplateServiceExceptionTest {
 
         Long invalidId = -1L;
 
-        CouponTemplateRequestDto couponTemplateRequestDto = new CouponTemplateRequestDto(
+        CouponTemplateUpdateRequestDto couponTemplateRequestDto = new CouponTemplateUpdateRequestDto(
             1L,
             "Error Coupon",
             "이 쿠폰은 에러 쿠폰입니다."
@@ -134,7 +135,7 @@ class CouponTemplateServiceExceptionTest {
     void updateCouponTemplateThrowsCouponTemplateNotFoundException() {
         // Given
         Long notFoundId = 999L;
-        CouponTemplateRequestDto couponTemplateRequestDto = new CouponTemplateRequestDto(
+        CouponTemplateUpdateRequestDto couponTemplateRequestDto = new CouponTemplateUpdateRequestDto(
             1L,
             "Error Coupon",
             "이 쿠폰은 에러 쿠폰입니다."
@@ -156,7 +157,7 @@ class CouponTemplateServiceExceptionTest {
     void updateCouponTemplateThrowsDeletedCouponTemplateException() {
         // Given
         Long deletedId = 1L;
-        CouponTemplateRequestDto couponTemplateRequestDto = new CouponTemplateRequestDto(
+        CouponTemplateUpdateRequestDto couponTemplateRequestDto = new CouponTemplateUpdateRequestDto(
             1L,
             "Error Coupon",
             "이 쿠폰은 에러 쿠폰입니다."
@@ -173,33 +174,6 @@ class CouponTemplateServiceExceptionTest {
         // Then
         verify(couponTemplateRepository, times(1)).existsById(deletedId);
         verify(couponTemplateRepository, times(1)).checkActiveCouponTemplate(deletedId);
-    }
-
-    @Test
-    @DisplayName("쿠폰 템플릿 수정 - 존재하지 않는 쿠폰 정책으로 CouponPolicyNotFoundException 발생")
-    void updateCouponTemplateThrowsCouponPolicyNotFoundException() {
-        // Given
-        Long couponTemplateId = 1L;
-        Long couponPolicyId = 999L;
-        CouponTemplateRequestDto couponTemplateRequestDto = new CouponTemplateRequestDto(
-            couponPolicyId,
-            "Coupon Name",
-            "Coupon Description"
-        );
-
-        when(couponTemplateRepository.existsById(couponTemplateId)).thenReturn(true);
-        when(couponTemplateRepository.checkActiveCouponTemplate(couponTemplateId)).thenReturn(true);
-        when(couponPolicyRepository.findById(couponPolicyId)).thenReturn(Optional.empty());
-
-        // When & Then
-        assertThatThrownBy(() -> couponTemplateService.updateCouponTemplate(couponTemplateId, couponTemplateRequestDto))
-            .isInstanceOf(CouponPolicyNotFoundException.class)
-            .hasMessage("선택하신 쿠폰 정책이 존재하지 않습니다.");
-
-        // Then
-        verify(couponTemplateRepository, times(1)).existsById(couponTemplateId);
-        verify(couponTemplateRepository, times(1)).checkActiveCouponTemplate(couponTemplateId);
-        verify(couponPolicyRepository, times(1)).findById(couponPolicyId);
     }
 
     @Test

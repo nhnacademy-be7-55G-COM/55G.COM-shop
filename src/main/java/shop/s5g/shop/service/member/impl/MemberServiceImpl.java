@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.address.AddressResponseDto;
+import shop.s5g.shop.dto.coupon.user.UserCouponRequestDto;
 import shop.s5g.shop.dto.customer.CustomerRegistrationRequestDto;
 import shop.s5g.shop.dto.customer.CustomerResponseDto;
 import shop.s5g.shop.dto.member.IdCheckResponseDto;
@@ -102,7 +103,7 @@ public class MemberServiceImpl implements MemberService {
         pointHistoryService.createPointHistory(saved.getId(),
             PointHistoryCreateRequestDto.REGISTER_POINT);
 
-//        userCouponService.createWelcomeCoupon(new UserCouponRequestDto(saved.getId()));
+        userCouponService.createWelcomeCoupon(new UserCouponRequestDto(saved.getId()));
 
     }
 

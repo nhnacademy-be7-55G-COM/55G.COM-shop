@@ -37,5 +37,6 @@ public class UserCoupon {
     public UserCoupon(Member member, Coupon coupon) {
         this.member = member;
         this.coupon = coupon;
+        this.userCouponPk = new UserCouponPk(member.getId(), coupon.getCouponId());
     }
 }

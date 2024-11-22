@@ -55,11 +55,4 @@ public class Coupon {
         this.active = true;
     }
 
-    public enum CouponType {
-        WELCOME("Welcome"), BIRTH("Birth"), BOOK("도서"), CATEGORY("카테고리");
-
-        private final String dataName;
-
-        CouponType(String name) { this.dataName = name; }
-    }
 }

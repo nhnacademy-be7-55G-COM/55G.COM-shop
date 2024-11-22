@@ -159,16 +159,15 @@ public class CouponBookQuerydslRepositoryImpl extends QuerydslRepositorySupport 
 
     /**
      * 특정 쿠폰 템플릿이 적용된 책 리스트 조회
-     * @param couponTemplateId
      * @param pageable
      * @return Page<CouponBookDetailsForBookDto>
      */
     @Override
-    public Page<CouponBookDetailsForBookDto> findCouponBooksByCouponTemplateId(Long couponTemplateId,
-        Pageable pageable) {
+    public Page<CouponBookDetailsForBookDto> findCouponBooksInfo(Pageable pageable) {
 
         List<CouponBookDetailsForBookDto> detailsForBookList = jpaQueryFactory
             .select(Projections.constructor(CouponBookDetailsForBookDto.class,
+                book.bookId,
                 book.title))
             .from(couponBook)
             .innerJoin(book)
