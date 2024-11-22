@@ -7,7 +7,7 @@ import shop.s5g.shop.dto.author.AllAuthorResponseDto;
 import shop.s5g.shop.dto.author.AuthorRequestDto;
 
 public interface AuthorService {
-    void createAuthor(@Valid AuthorRequestDto authorRequestDto);
+    void createAuthor(AuthorRequestDto authorRequestDto);
 
     Page<AllAuthorResponseDto> allAuthor(Pageable pageable);
 }
