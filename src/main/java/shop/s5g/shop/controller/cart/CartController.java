@@ -28,9 +28,9 @@ import shop.s5g.shop.dto.cart.request.CartBookInfoRequestDto;
 import shop.s5g.shop.dto.cart.request.CartBookSelectRequestDto;
 import shop.s5g.shop.dto.cart.request.CartControlQuantityRequestDto;
 import shop.s5g.shop.dto.cart.request.CartDeleteBookRequestDto;
+import shop.s5g.shop.dto.cart.request.CartLocalStorageWithStatusRequestDto;
 import shop.s5g.shop.dto.cart.request.CartLoginRequestDto;
 import shop.s5g.shop.dto.cart.request.CartPutRequestDto;
-import shop.s5g.shop.dto.cart.request.CartSessionStorageDto;
 import shop.s5g.shop.dto.cart.response.CartBooksResponseDto;
 import shop.s5g.shop.dto.cart.response.CartDetailInfoResponseDto;
 import shop.s5g.shop.dto.tag.MessageDto;
@@ -49,7 +49,7 @@ public class CartController {
 
     //담기
     @PostMapping("/cart")
-    public ResponseEntity<MessageDto> putBook(
+    public ResponseEntity<Map<String,Integer>> putBook(
         @RequestBody @Validated CartPutRequestDto cartPutRequestDto,
         BindingResult bindingResult, @AuthenticationPrincipal ShopMemberDetail shopMemberDetail) {
 
@@ -59,10 +59,11 @@ public class CartController {
 
         String customerLoginId = shopMemberDetail.getLoginId();
 
-        cartService.putBook(cartPutRequestDto.bookId(), cartPutRequestDto.quantity(),
+        int cartCountChange = cartService.putBook(cartPutRequestDto.bookId(), cartPutRequestDto.quantity(),
             customerLoginId);
-
-        return ResponseEntity.status(HttpStatus.OK).body(new MessageDto("장바구니에 물품이 담겼습니다."));
+        Map<String, Integer> response = new HashMap<>();
+        response.put("cartCountChange", cartCountChange);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     // 조회 (회원 장바구니상세페이지 접근)
@@ -93,12 +94,12 @@ public class CartController {
         String decodedCart = new String(decoded, StandardCharsets.UTF_8);
 
         ObjectMapper objectMapper = new ObjectMapper();
-        CartSessionStorageDto cartSessionStorageDto = objectMapper.readValue(decodedCart,
-            new TypeReference<CartSessionStorageDto>() {
+        CartLocalStorageWithStatusRequestDto cartLocalStorageDto = objectMapper.readValue(decodedCart,
+            new TypeReference<CartLocalStorageWithStatusRequestDto>() {
             });
 
         List<CartBooksResponseDto> cartBooks = cartService.lookUpAllBooksWhenGuest(
-            cartSessionStorageDto);
+            cartLocalStorageDto);
 
         CartDetailInfoResponseDto cartTotalPriceAndDeliverFee = cartService.getTotalPriceAndDeliverFee(
             cartBooks);
