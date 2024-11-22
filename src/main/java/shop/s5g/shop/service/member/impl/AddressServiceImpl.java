@@ -42,7 +42,7 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public void delete(Long addressId) {
         if (!addressRepository.existsById(addressId)) {
-            throw new AddressNotFoundException("주소가 존재하지 않습니다.");
+            throw new AddressNotFoundException();
         }
         addressRepository.deleteById(addressId);
     }
@@ -58,7 +58,7 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public void update(AddressUpdateRequestDto address, Long addressId) {
         Address originAddress = addressRepository.findById(addressId)
-            .orElseThrow(() -> new AddressNotFoundException("주소가 존재하지 않습니다."));
+            .orElseThrow(AddressNotFoundException::new);
 
         if (address.isDefault()) {
             changeDefaultAddress(originAddress.getMember().getId());
@@ -73,7 +73,7 @@ public class AddressServiceImpl implements AddressService {
     @Transactional(readOnly = true)
     public AddressResponseDto getAddress(Long addressId) {
         return AddressResponseDto.toDto(addressRepository.findById(addressId)
-            .orElseThrow(() -> new AddressNotFoundException("주소가 존재하지 않습니다.")));
+            .orElseThrow(AddressNotFoundException::new));
     }
 
     @Override

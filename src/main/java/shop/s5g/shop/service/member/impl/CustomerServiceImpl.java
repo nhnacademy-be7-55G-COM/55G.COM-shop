@@ -54,4 +54,9 @@ public class CustomerServiceImpl implements CustomerService {
         }
         customerRepository.inactiveCustomer(customerId);
     }
+
+    @Override
+    public Customer addCustomerByMember(Customer customer) {
+        return customerRepository.save(customer);
+    }
 }
