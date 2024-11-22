@@ -23,6 +23,7 @@ import shop.s5g.shop.dto.book.BookResponseDto;
 import shop.s5g.shop.dto.book.BookSimpleResponseDto;
 import shop.s5g.shop.dto.book.author.BookAuthorResponseDto;
 import shop.s5g.shop.dto.book.category.BookDetailCategoryResponseDto;
+import shop.s5g.shop.dto.tag.TagResponseDto;
 import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.BookImage;
 import shop.s5g.shop.entity.Category;
@@ -38,6 +39,8 @@ import static shop.s5g.shop.entity.QCategory.category;
 import static shop.s5g.shop.entity.QPublisher.publisher;
 import static shop.s5g.shop.entity.book.category.QBookCategory.bookCategory;
 import static shop.s5g.shop.entity.QBookImage.bookImage;
+import static shop.s5g.shop.entity.QTag.tag;
+import static shop.s5g.shop.entity.booktag.QBookTag.bookTag;
 import static shop.s5g.shop.entity.coupon.QCouponBook.couponBook;
 
 @Repository
@@ -211,6 +214,17 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
             imagePath = queryBookImage.getImageName();
         }
 
+        List<TagResponseDto> tagList=from(bookTag)
+            .join(bookTag.book,book)
+            .join(bookTag.tag,tag)
+            .where(book.bookId.eq(bookId))
+            .select(Projections.constructor(TagResponseDto.class,
+                tag.tagId,
+                tag.tagName,
+                tag.active
+            ))
+            .fetch();
+
         Long countCoupons = from(couponBook)
             .join(couponBook.book, book)
             .where(book.bookId.eq(bookId))
@@ -243,6 +257,7 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
                 ConstantImpl.create(imagePath),
                 ConstantImpl.create(authorList),
                 ConstantImpl.create(categoryList),
+                ConstantImpl.create(tagList),
                 ConstantImpl.create(countCoupons)
             ))
             .fetchOne();

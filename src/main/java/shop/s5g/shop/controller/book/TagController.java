@@ -60,4 +60,10 @@ public class TagController {
         tagService.deleteTags(tagId);
         return ResponseEntity.ok().body(new MessageDto("테그 삭제 성공"));
     }
+
+    // 태그 검색
+    @GetMapping("/tags")
+    public ResponseEntity<List<TagResponseDto>> searchTags(String keyword){
+        return tagService.searchTags(keyword);
+    }
 }

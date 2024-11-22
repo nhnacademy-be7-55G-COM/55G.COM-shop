@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,16 +21,25 @@ import shop.s5g.shop.dto.book.category.BookCategoryBookResponseDto;
 import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.BookImage;
 import shop.s5g.shop.entity.BookStatus;
+import shop.s5g.shop.entity.Category;
 import shop.s5g.shop.entity.Publisher;
+import shop.s5g.shop.entity.Tag;
+import shop.s5g.shop.entity.book.category.BookCategory;
+import shop.s5g.shop.entity.booktag.BookTag;
 import shop.s5g.shop.exception.book.BookResourceNotFoundException;
 import shop.s5g.shop.exception.bookstatus.BookStatusResourceNotFoundException;
+import shop.s5g.shop.exception.category.CategoryResourceNotFoundException;
 import shop.s5g.shop.exception.publisher.PublisherResourceNotFoundException;
+import shop.s5g.shop.exception.tag.TagResourceNotFoundException;
 import shop.s5g.shop.repository.book.BookRepository;
 import shop.s5g.shop.repository.book.category.BookCategoryRepository;
 import shop.s5g.shop.repository.book.status.BookStatusRepository;
 import shop.s5g.shop.repository.book.image.BookImageRepository;
 import shop.s5g.shop.repository.book.status.BookStatusRepository;
+import shop.s5g.shop.repository.booktag.BookTagRepository;
+import shop.s5g.shop.repository.category.CategoryRepository;
 import shop.s5g.shop.repository.publisher.PublisherRepository;
+import shop.s5g.shop.repository.tag.TagRepository;
 import shop.s5g.shop.service.book.BookService;
 
 @Service
@@ -38,10 +48,13 @@ import shop.s5g.shop.service.book.BookService;
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
+    private final CategoryRepository categoryRepository;
     private final PublisherRepository publisherRepository;
     private final BookStatusRepository statusRepository;
     private final BookCategoryRepository bookcategoryRepository;
     private final BookImageRepository bookImageRepository;
+    private final TagRepository tagRepository;
+    private final BookTagRepository bookTagRepository;
 
     //도서 등록
     public void createBook(BookRequestDto bookDto) {
@@ -69,9 +82,25 @@ public class BookServiceImpl implements BookService {
         );
         book = bookRepository.save(book);
 
-        if(bookDto.thumbnailPath()!=null) {
+        Optional<Category> optionalCategory = categoryRepository.findById(bookDto.categoryId());
+        if (optionalCategory.isEmpty()) {
+            throw new CategoryResourceNotFoundException("존재하지 않는 카테고리");
+        }
+
+        Category category = optionalCategory.get();
+        bookcategoryRepository.save(new BookCategory(category, book));
+
+        if (bookDto.thumbnailPath() != null) {
             BookImage bookImage = bookImageRepository.save(
                 new BookImage(book, bookDto.thumbnailPath()));
+        }
+
+        for (long tagId : bookDto.tagIdList()) {
+            Optional<Tag> optionalTag = tagRepository.findById(tagId);
+            if (optionalTag.isEmpty()) {
+                throw new TagResourceNotFoundException("태그가 존재하지 않습니다.");
+            }
+            bookTagRepository.save(new BookTag(book, optionalTag.get()));
         }
     }
 
