@@ -27,7 +27,7 @@ public class RabbitEventCouponListener {
 
     @RabbitListener(
         queues = "${rabbit.coupon.event.create.dlq}",
-        concurrency = "2",
+        concurrency = "1",
         executor = "rabbitExecutor", messageConverter = "jacksonMessageConverter"
     )
     public MessageDto deadEventCoupon(Long customerId) {
@@ -52,7 +52,7 @@ public class RabbitEventCouponListener {
 
     @RabbitListener(
         queues = "${rabbit.category.event.coupon.create.dlq}",
-        concurrency = "2",
+        concurrency = "1",
         executor = "rabbitExecutor", messageConverter = "jacksonMessageConverter"
     )
     public MessageDto deadReceiveCategoryCoupon(Long customerId) {

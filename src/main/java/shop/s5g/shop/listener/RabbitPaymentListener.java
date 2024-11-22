@@ -74,7 +74,7 @@ public class RabbitPaymentListener {
 
     @RabbitListener(
         queues = "${rabbit.orders.payment.toss.dlq}",
-        concurrency = "2",
+        concurrency = "1",
         executor = "rabbitExecutor"
     )
     public void paymentDeadMessageListener(Message failedMessage) {
