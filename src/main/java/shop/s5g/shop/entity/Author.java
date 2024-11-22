@@ -7,12 +7,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Author {
 
     @Id
@@ -25,4 +27,9 @@ public class Author {
 
     private String name;
     private boolean active;
+
+    public Author(String name, boolean active) {
+        this.name = name;
+        this.active = active;
+    }
 }

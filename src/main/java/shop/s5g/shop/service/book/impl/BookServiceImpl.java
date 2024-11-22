@@ -6,12 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import shop.s5g.shop.dto.book.BookPageableResponseDto;
 import shop.s5g.shop.dto.book.BookDetailResponseDto;
 import shop.s5g.shop.dto.book.BookRequestDto;
 import shop.s5g.shop.dto.book.BookResponseDto;
@@ -28,7 +24,6 @@ import shop.s5g.shop.repository.book.BookRepository;
 import shop.s5g.shop.repository.book.category.BookCategoryRepository;
 import shop.s5g.shop.repository.book.status.BookStatusRepository;
 import shop.s5g.shop.repository.book.image.BookImageRepository;
-import shop.s5g.shop.repository.book.status.BookStatusRepository;
 import shop.s5g.shop.repository.publisher.PublisherRepository;
 import shop.s5g.shop.service.book.BookService;
 
@@ -40,7 +35,6 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final PublisherRepository publisherRepository;
     private final BookStatusRepository statusRepository;
-    private final BookCategoryRepository bookcategoryRepository;
     private final BookImageRepository bookImageRepository;
 
     //도서 등록
