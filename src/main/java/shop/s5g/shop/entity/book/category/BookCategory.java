@@ -16,18 +16,19 @@ public class BookCategory {
     private BookCategoryId id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", insertable = false, updatable = false)
     @MapsId("categoryId")
     private Category category;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_id")
+    @JoinColumn(name = "book_id", insertable = false, updatable = false)
     @MapsId("bookId")
     private Book book;
 
-    public BookCategory(Category category,Book book){
-        this.category=category;
-        this.book=book;
+    public BookCategory(Category category, Book book) {
+        this.category = category;
+        this.book = book;
+        this.id = new BookCategoryId(book.getBookId(), category.getCategoryId());
     }
 
 }

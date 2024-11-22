@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -227,6 +228,7 @@ class BookRepositoryTest {
         BookRequestDto book2 = new BookRequestDto(
             publisher2.getId(),
             bookStatus2.getId(),
+            203L,
             "코스모스",
             "다큐",
             "이 책은 다큐 입니다.",
@@ -236,7 +238,8 @@ class BookRepositoryTest {
             new BigDecimal("10.0"),
             true,
             200,
-            "asdf.png"
+            "asdf.png",
+            List.of(1L,3L,4L)
             );
 
         Book save = bookRepository.save(book1);
