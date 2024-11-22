@@ -129,7 +129,62 @@ public class BookServiceImpl implements BookService {
         if (!bookRepository.existsById(bookId)) {
             throw new BookResourceNotFoundException("책이 존재하지 않습니다.");
         }
-        bookRepository.updateBook(bookId, bookDto);
+
+        Publisher publisher = publisherRepository.findById(bookDto.publisherId())
+            .orElseThrow(() -> new PublisherResourceNotFoundException("해당 출판사를 찾을 수 없습니다."));
+
+        BookStatus bookStatus = statusRepository.findById(bookDto.bookStatusId())
+            .orElseThrow(() -> new BookStatusResourceNotFoundException("해당 도서 상태를 찾을 수 없습니다."));
+
+        Book oldBook = bookRepository.findById(bookId)
+            .orElseThrow(() -> new BookResourceNotFoundException("해당 도서가 존재하지 않습니다."));
+
+        Book book = new Book(
+            bookId,
+            publisher,
+            bookStatus,
+            bookDto.title(),
+            bookDto.chapter(),
+            bookDto.description(),
+            LocalDate.parse(bookDto.publishedDate()),
+            bookDto.isbn(),
+            bookDto.price(),
+            bookDto.discountRate(),
+            bookDto.isPacked(),
+            bookDto.stock(),
+            oldBook.getViews(),
+            oldBook.getCreatedAt(),
+            LocalDateTime.now()
+        );
+        bookRepository.save(book);
+
+        // 기존 카테고리 제거
+        bookcategoryRepository.deleteByBookBookId(bookId);
+
+        Optional<Category> optionalCategory = categoryRepository.findById(bookDto.categoryId());
+        if (optionalCategory.isEmpty()) {
+            throw new CategoryResourceNotFoundException("존재하지 않는 카테고리");
+        }
+
+        Category category = optionalCategory.get();
+        bookcategoryRepository.save(new BookCategory(category, book));
+
+//        bookImageRepository.save(new BookImage(book, bookDto.thumbnailPath()));
+
+        if (bookDto.thumbnailPath() != null) {
+            BookImage bookImage = bookImageRepository.save(
+                new BookImage(book, bookDto.thumbnailPath()));
+        }
+
+        bookTagRepository.deleteByBookBookId(bookId);
+
+        for (long tagId : bookDto.tagIdList()) {
+            Optional<Tag> optionalTag = tagRepository.findById(tagId);
+            if (optionalTag.isEmpty()) {
+                throw new TagResourceNotFoundException("태그가 존재하지 않습니다.");
+            }
+            bookTagRepository.save(new BookTag(book, optionalTag.get()));
+        }
     }
 
     //도서 삭제
