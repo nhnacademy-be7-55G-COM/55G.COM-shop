@@ -10,9 +10,9 @@ public class AsyncConfig {
     @Bean("rabbitExecutor")
     public Executor rabbitExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setMaxPoolSize(5);
-        executor.setCorePoolSize(5);
-        executor.setQueueCapacity(50);
+        executor.setMaxPoolSize(10);
+        executor.setCorePoolSize(10);
+        executor.setQueueCapacity(200);
         executor.setThreadNamePrefix("RabbitExec-");
         executor.initialize();
 

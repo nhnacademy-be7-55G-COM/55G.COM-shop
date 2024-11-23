@@ -16,5 +16,5 @@ public interface CouponBookQuerydslRepository {
     CouponBookResponseDto findCouponBook(CouponBookRequestDto couponBookRequestDto);
     Page<CouponBookResponseDto> findCouponBooks(Pageable pageable);
     Page<CouponTemplateResponseDto> findCouponBooksByBookId(Long bookId, Pageable pageable);
-    Page<CouponBookDetailsForBookDto> findCouponBooksByCouponTemplateId(Long couponTemplateId, Pageable pageable);
+    Page<CouponBookDetailsForBookDto> findCouponBooksInfo(Pageable pageable);
 }

@@ -3,8 +3,10 @@ package shop.s5g.shop.service.coupon.template;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import shop.s5g.shop.dto.coupon.template.CouponCategoryAndBookResponseDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateRequestDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateResponseDto;
+import shop.s5g.shop.dto.coupon.template.CouponTemplateUpdateRequestDto;
 
 public interface CouponTemplateService {
 
@@ -15,7 +17,7 @@ public interface CouponTemplateService {
     CouponTemplateResponseDto getCouponTemplate(Long couponTemplateId);
 
     // Update
-    void updateCouponTemplate(Long couponTemplateId, CouponTemplateRequestDto couponTemplateRequestDto);
+    void updateCouponTemplate(Long couponTemplateId, CouponTemplateUpdateRequestDto couponTemplateUpdateRequestDto);
 
     // Delete
     void deleteCouponTemplate(Long couponTemplateId);

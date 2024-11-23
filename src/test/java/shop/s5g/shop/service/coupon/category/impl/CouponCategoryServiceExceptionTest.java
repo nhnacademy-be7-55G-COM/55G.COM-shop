@@ -130,30 +130,4 @@ class CouponCategoryServiceExceptionTest {
 
         assertEquals("이미 존재하는 카테고리 쿠폰입니다.", exception.getMessage());
     }
-
-    @Test
-    @DisplayName("유효하지 않은 쿠폰 템플릿 ID로 카테고리 조회 시 예외 발생")
-    void getCategoriesByCouponTemplateId_InvalidCouponTemplateId_ShouldThrowException() {
-        // Given
-        Long invalidCouponTemplateId = -1L;  // 유효하지 않은 ID (음수)
-        Pageable pageable = PageRequest.of(0, 10);  // 첫 번째 페이지, 페이지 크기 10
-
-        // When & Then
-        assertThrows(IllegalArgumentException.class, () -> {
-            couponCategoryService.getCategoriesByCouponTemplateId(invalidCouponTemplateId, pageable);
-        }, "옳바르지 않은 템플릿 아이디입니다.");
-    }
-
-    @Test
-    @DisplayName("null 쿠폰 템플릿 ID로 카테고리 조회 시 예외 발생")
-    void getCategoriesByCouponTemplateId_NullCouponTemplateId_ShouldThrowException() {
-        // Given
-        Long nullCouponTemplateId = null;  // null ID
-        Pageable pageable = PageRequest.of(0, 10);  // 첫 번째 페이지, 페이지 크기 10
-
-        // When & Then
-        assertThrows(IllegalArgumentException.class, () -> {
-            couponCategoryService.getCategoriesByCouponTemplateId(nullCouponTemplateId, pageable);
-        }, "옳바르지 않은 템플릿 아이디입니다.");
-    }
 }

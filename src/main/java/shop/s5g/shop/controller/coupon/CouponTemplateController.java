@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import shop.s5g.shop.dto.PageResponseDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateRequestDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateResponseDto;
+import shop.s5g.shop.dto.coupon.template.CouponTemplateUpdateRequestDto;
 import shop.s5g.shop.dto.tag.MessageDto;
 import shop.s5g.shop.exception.coupon.CouponTemplateBadRequestException;
 import shop.s5g.shop.service.coupon.template.CouponTemplateService;
@@ -56,16 +57,16 @@ public class CouponTemplateController {
     }
 
     /**
-     * 쿠폰 템플릿 수정 - PATCH
+     * 쿠폰 템플릿 수정 - Post
      * @param couponTemplateId
      * @param couponTemplateRequestDto
      * @param bindingResult
      * @return messageDto
      */
-    @PatchMapping("/template/{couponTemplateId}")
+    @PostMapping("/template/{couponTemplateId}")
     public ResponseEntity<MessageDto> updateCouponTemplate(
         @PathVariable("couponTemplateId") Long couponTemplateId,
-        @Valid @RequestBody CouponTemplateRequestDto couponTemplateRequestDto,
+        @Valid @RequestBody CouponTemplateUpdateRequestDto couponTemplateRequestDto,
         BindingResult bindingResult
     ) {
 

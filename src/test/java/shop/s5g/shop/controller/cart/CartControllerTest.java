@@ -70,7 +70,7 @@ class CartControllerTest {
                 "quantity": 3
             }
             """;
-        doNothing().when(cartService).putBook(anyLong(), anyInt(), anyString());
+        when(cartService.putBook(1l, 3, "123")).thenReturn(1);
 
         //when
         mockMvc.perform(post("/api/shop/cart")
@@ -150,7 +150,8 @@ class CartControllerTest {
                     "cartBookInfoList" : [
                     {
                         "bookId" : 1,
-                        "quantity" : 1
+                        "quantity" : 1,
+                        "status":true
                     }
         
                     ]
