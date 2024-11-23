@@ -35,16 +35,6 @@ public class PublisherQuerydslRepositoryImpl extends QuerydslRepositorySupport i
     //출판사 조회
     @Override
     public PublisherResponseDto getPublisher(Long id) {
-
-//        QPublisher publisher1 = QPublisher.publisher;
-//        return new JPAQuery<>(em)
-//                .select(Projections.constructor(PublisherResponseDto.class,
-//                        publisher1.id,
-//                        publisher1.name,
-//                        publisher1.active))
-//                .from(publisher1)
-//                .where(publisher1.id.eq(publisherId))
-//                .fetchFirst();
         return jpaQueryFactory.select(Projections.constructor(PublisherResponseDto.class,
                         publisher.id,
                         publisher.name,

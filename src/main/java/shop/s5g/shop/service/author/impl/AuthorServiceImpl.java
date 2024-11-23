@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.author.AllAuthorResponseDto;
 import shop.s5g.shop.dto.author.AuthorRequestDto;
+import shop.s5g.shop.dto.author.AuthorResponseDto;
 import shop.s5g.shop.entity.Author;
 import shop.s5g.shop.repository.author.AuthorRepository;
 import shop.s5g.shop.service.author.AuthorService;
@@ -26,9 +27,26 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     //작가 전체 조회
-
     @Override
     public Page<AllAuthorResponseDto> allAuthor(Pageable pageable) {
         return authorRepository.findAllAuthor(pageable);
+    }
+
+    //작가 id로 작가 조회
+    @Override
+    public AuthorResponseDto getAuthor(long authorId) {
+        return authorRepository.getAuthor(authorId);
+    }
+
+    //작가 수정
+    @Override
+    public void updateAuthor(long authorId, AuthorRequestDto authorRequestDto) {
+        authorRepository.updateAuthor(authorId, authorRequestDto);
+    }
+
+    //작가 삭제(비활성화)
+    @Override
+    public void deleteAuthor(long authorId) {
+        authorRepository.inactiveAuthor(authorId);
     }
 }

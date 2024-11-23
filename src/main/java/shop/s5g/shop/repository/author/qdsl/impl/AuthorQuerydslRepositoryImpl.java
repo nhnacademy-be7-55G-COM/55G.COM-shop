@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 import shop.s5g.shop.dto.author.AllAuthorResponseDto;
+import shop.s5g.shop.dto.author.AuthorRequestDto;
+import shop.s5g.shop.dto.author.AuthorResponseDto;
 import shop.s5g.shop.entity.Author;
 import shop.s5g.shop.repository.author.qdsl.AuthorQuerydslRepository;
 
@@ -50,5 +52,36 @@ public class AuthorQuerydslRepositoryImpl extends QuerydslRepositorySupport impl
 
         // Page 객체 반환
         return new PageImpl<>(authors, pageable, total);
+    }
+
+    //작가id로 작가 조회
+    @Override
+    public AuthorResponseDto getAuthor(long authorId) {
+        return jpaQueryFactory.select(Projections.constructor(AuthorResponseDto.class,
+                author.authorId,
+                author.name,
+                author.active
+                ))
+                .from(author)
+                .where(author.authorId.eq(authorId))
+                .fetchOne();
+    }
+
+    //작가 수정
+    @Override
+    public void updateAuthor(long authorId, AuthorRequestDto authorRequestDto) {
+        update(author)
+                .set(author.name, authorRequestDto.name())
+                .where(author.authorId.eq(authorId))
+                .execute();
+    }
+
+    //작가 삭제(비활성화)
+    @Override
+    public void inactiveAuthor(long authorId) {
+        jpaQueryFactory.update(author)
+                .set(author.active, false)
+                .where(author.authorId.eq(authorId))
+                .execute();
     }
 }

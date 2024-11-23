@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import shop.s5g.shop.dto.PageResponseDto;
 import shop.s5g.shop.dto.author.AllAuthorResponseDto;
 import shop.s5g.shop.dto.author.AuthorRequestDto;
+import shop.s5g.shop.dto.author.AuthorResponseDto;
 import shop.s5g.shop.dto.tag.MessageDto;
 import shop.s5g.shop.exception.author.AuthorBadRequestException;
 import shop.s5g.shop.service.author.AuthorService;
@@ -36,6 +37,27 @@ public class AuthorController {
     ResponseEntity<PageResponseDto<AllAuthorResponseDto>> getAllAuthors(Pageable pageable){
         Page<AllAuthorResponseDto> authors = authorService.allAuthor(pageable);
         return ResponseEntity.ok().body(PageResponseDto.of(authors));
+    }
+
+    //작가 id로 작가 조회
+    @GetMapping("/author/{authorId}")
+    ResponseEntity<AuthorResponseDto> findAuthor(@Valid @PathVariable("authorId") long authorId) {
+        AuthorResponseDto authorResponseDto = authorService.getAuthor(authorId);
+        return ResponseEntity.ok().body(authorResponseDto);
+    }
+
+    //작가 수정
+    @PutMapping("/author/{authorId}")
+    ResponseEntity<MessageDto> updateAuthor(@Valid @PathVariable("authorId") long authorId, @Valid @RequestBody AuthorRequestDto authorRequestDto, BindingResult bindingResult) {
+        authorService.updateAuthor(authorId, authorRequestDto);
+        return ResponseEntity.ok().body(new MessageDto("작가 수정 성공"));
+    }
+
+    //작가 삭제(비활성화)
+    @DeleteMapping("/author/{authorId}")
+    ResponseEntity<MessageDto> deleteAuthor(@Valid @PathVariable("authorId") long authorId) {
+        authorService.deleteAuthor(authorId);
+        return ResponseEntity.ok().body(new MessageDto("작가 삭제 성공"));
     }
 
 }
