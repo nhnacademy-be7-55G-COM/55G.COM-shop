@@ -56,6 +56,10 @@ public class RefundHistoryServiceImpl implements RefundHistoryService {
         OrderDetail detail = pair.orderDetail();
         Delivery delivery = pair.delivery();
 
+        if (detail.getOrderDetailType().getName().equals(Type.CONFIRM.name())) {
+            throw new RefundConditionNotFulfilledException("이미 확정된 주문입니다.");
+        }
+
         // 반품 조건 체크 겸 포인트 적립.
         if (refundType.getId() == RefundType.Type.DAMAGED.getTypeId()) {
             damagedRefundPoint(memberId, detail, delivery);
