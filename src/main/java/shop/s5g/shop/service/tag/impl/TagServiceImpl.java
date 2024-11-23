@@ -50,9 +50,9 @@ public class TagServiceImpl implements TagService {
         if(!tagRepository.existsById(tagId)) {
             throw new TagResourceNotFoundException(tagId+"태그는 존재하지 않습니다.");
         }
-//        if(!bookTagRepository.BookTagCount(tagId).isEmpty()) {
-//            throw new BookTagAlreadyExistsException("이 태그는 도서에 적용되어 있습니다.");
-//        }
+        if(!bookTagRepository.BookTagCount(tagId).isEmpty()) {
+            throw new BookTagAlreadyExistsException("이 태그는 도서에 적용되어 있습니다.");
+        }
         tagRepository.inactiveTag(tagId);
     }
 }
