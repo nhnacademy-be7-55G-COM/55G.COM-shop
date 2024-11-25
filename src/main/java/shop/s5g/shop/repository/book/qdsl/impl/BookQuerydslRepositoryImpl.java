@@ -186,7 +186,9 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
             .where(bookCategory.book.bookId.eq(bookId))
             .select(Projections.constructor(BookCategory.class,
                 category,
-                book
+                book,
+                bookCategory.createdAt,
+                bookCategory.updatedAt
             ))
             .fetchOne();
 

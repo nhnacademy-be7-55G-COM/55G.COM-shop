@@ -174,6 +174,8 @@ public class BookServiceImpl implements BookService {
 //        bookImageRepository.save(new BookImage(book, bookDto.thumbnailPath()));
 
         if (bookDto.thumbnailPath() != null) {
+            bookImageRepository.deleteByBook(book);
+            
             BookImage bookImage = bookImageRepository.save(
                 new BookImage(book, bookDto.thumbnailPath()));
         }
