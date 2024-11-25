@@ -1,6 +1,7 @@
 package shop.s5g.shop.entity.booktag;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 import lombok.*;
 import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.Tag;
@@ -26,9 +27,14 @@ public class BookTag {
     @JoinColumn(name = "tag_id")
     private Tag tag;
 
-    public BookTag(Book book,Tag tag){
-        this.book=book;
-        this.tag=tag;
-        this.id=new BookTagId(book.getBookId(),tag.getTagId());
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    public BookTag(Book book, Tag tag, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.book = book;
+        this.tag = tag;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.id = new BookTagId(book.getBookId(), tag.getTagId());
     }
 }

@@ -1,5 +1,6 @@
 package shop.s5g.shop.service.book.category.impl;
 
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import shop.s5g.shop.dto.book.category.BookCategoryResponseDto;
@@ -22,8 +23,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookCategoryServiceImpl implements BookCategoryService {
 
-    private final String MSG_BAD_BOOK_ID="bookId는 1보다 커야 합니다.";
-    private final String MSG_BAD_CATEGORY_ID="categoryId는 1보다 커야 합니다";
+    private final String MSG_BAD_BOOK_ID = "bookId는 1보다 커야 합니다.";
+    private final String MSG_BAD_CATEGORY_ID = "categoryId는 1보다 커야 합니다";
 
     private final BookCategoryRepository bookCategoryRepository;
     private final BookRepository bookRepository;
@@ -40,10 +41,14 @@ public class BookCategoryServiceImpl implements BookCategoryService {
             throw new BookCategoryBadRequestException(MSG_BAD_CATEGORY_ID);
         }
 
-        Book book = bookRepository.findById(bookId).orElseThrow(() -> new BookResourceNotFoundException("없는 도서 입니다."));
-        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new CategoryResourceNotFoundException("없는 카테고리 입니다."));
+        Book book = bookRepository.findById(bookId)
+            .orElseThrow(() -> new BookResourceNotFoundException("없는 도서 입니다."));
+        Category category = categoryRepository.findById(categoryId)
+            .orElseThrow(() -> new CategoryResourceNotFoundException("없는 카테고리 입니다."));
 
-        BookCategory bookCategory = new BookCategory(new BookCategoryId(bookId, categoryId), category, book);
+        BookCategory bookCategory = new BookCategory(new BookCategoryId(bookId, categoryId),
+            category, book,
+            LocalDateTime.now(), LocalDateTime.now());
 
         bookCategoryRepository.save(bookCategory);
     }
@@ -73,7 +78,8 @@ public class BookCategoryServiceImpl implements BookCategoryService {
         if (categoryId < 1) {
             throw new BookCategoryBadRequestException("categoryId는 1보다 커야 합니다.");
         }
-        List<BookCategoryBookResponseDto> bookCategory = bookCategoryRepository.findBookByCategoryId(categoryId);
+        List<BookCategoryBookResponseDto> bookCategory = bookCategoryRepository.findBookByCategoryId(
+            categoryId);
         return bookCategory;
     }
 
@@ -87,12 +93,15 @@ public class BookCategoryServiceImpl implements BookCategoryService {
         if (categoryId < 1) {
             throw new BookCategoryBadRequestException(MSG_BAD_CATEGORY_ID);
         }
-         //bookId에 해당하는 book이 없을 때
-        Book book = bookRepository.findById(bookId).orElseThrow(() -> new BookResourceNotFoundException("Book not found"));
+        //bookId에 해당하는 book이 없을 때
+        Book book = bookRepository.findById(bookId)
+            .orElseThrow(() -> new BookResourceNotFoundException("Book not found"));
         //categoryId에 해당하는 category가 없을 때
-        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new CategoryResourceNotFoundException("Category not found"));
+        Category category = categoryRepository.findById(categoryId)
+            .orElseThrow(() -> new CategoryResourceNotFoundException("Category not found"));
 
-        BookCategory bookCategory = new BookCategory(new BookCategoryId(bookId, categoryId), category, book);
+        BookCategory bookCategory = new BookCategory(new BookCategoryId(bookId, categoryId),
+            category, book, LocalDateTime.now(), LocalDateTime.now());
 
         bookCategoryRepository.delete(bookCategory);
     }

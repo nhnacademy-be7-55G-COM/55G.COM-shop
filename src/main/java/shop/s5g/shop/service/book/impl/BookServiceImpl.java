@@ -48,6 +48,7 @@ public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final CategoryRepository categoryRepository;
+    private final BookCategoryRepository bookCategoryRepository;
     private final PublisherRepository publisherRepository;
     private final BookStatusRepository statusRepository;
     private final BookImageRepository bookImageRepository;
@@ -86,7 +87,8 @@ public class BookServiceImpl implements BookService {
         }
 
         Category category = optionalCategory.get();
-        bookcategoryRepository.save(new BookCategory(category, book));
+        bookCategoryRepository.save(
+            new BookCategory(category, book, LocalDateTime.now(), LocalDateTime.now()));
 
         if (bookDto.thumbnailPath() != null) {
             BookImage bookImage = bookImageRepository.save(
@@ -98,7 +100,8 @@ public class BookServiceImpl implements BookService {
             if (optionalTag.isEmpty()) {
                 throw new TagResourceNotFoundException("태그가 존재하지 않습니다.");
             }
-            bookTagRepository.save(new BookTag(book, optionalTag.get()));
+            bookTagRepository.save(
+                new BookTag(book, optionalTag.get(), LocalDateTime.now(), LocalDateTime.now()));
         }
     }
 
@@ -157,7 +160,7 @@ public class BookServiceImpl implements BookService {
         bookRepository.save(book);
 
         // 기존 카테고리 제거
-        bookcategoryRepository.deleteByBookBookId(bookId);
+        bookCategoryRepository.deleteByBookBookId(bookId);
 
         Optional<Category> optionalCategory = categoryRepository.findById(bookDto.categoryId());
         if (optionalCategory.isEmpty()) {
@@ -165,7 +168,8 @@ public class BookServiceImpl implements BookService {
         }
 
         Category category = optionalCategory.get();
-        bookcategoryRepository.save(new BookCategory(category, book));
+        bookCategoryRepository.save(
+            new BookCategory(category, book, LocalDateTime.now(), LocalDateTime.now()));
 
 //        bookImageRepository.save(new BookImage(book, bookDto.thumbnailPath()));
 
@@ -181,7 +185,8 @@ public class BookServiceImpl implements BookService {
             if (optionalTag.isEmpty()) {
                 throw new TagResourceNotFoundException("태그가 존재하지 않습니다.");
             }
-            bookTagRepository.save(new BookTag(book, optionalTag.get()));
+            bookTagRepository.save(
+                new BookTag(book, optionalTag.get(), LocalDateTime.now(), LocalDateTime.now()));
         }
     }
 
