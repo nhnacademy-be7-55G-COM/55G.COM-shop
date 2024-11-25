@@ -8,19 +8,24 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.Map;
-
 import org.springframework.http.HttpHeaders;
 import shop.s5g.shop.exception.AuthenticationException;
 
 public class JwtUtil {
+
+    private JwtUtil() {
+
+    }
+
     public static String decodeJwtLoginId(HttpServletRequest request) {
         return getClaimsFromRequest(request).get("loginId").toString();
     }
 
     public static Claims getClaimsFromRequest(HttpServletRequest request) {
         String token = checkAuthHeader(request);
-        if (token == null)
+        if (token == null) {
             throw new AuthenticationException();
+        }
         return Jwts.parser().build().parseSignedClaims(token).getPayload();
     }
 

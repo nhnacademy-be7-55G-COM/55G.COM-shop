@@ -10,6 +10,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 @Getter
@@ -28,4 +29,18 @@ public class RefundType {
     private String name;
 
     private boolean active;
+
+    @Getter
+    @RequiredArgsConstructor
+    public enum Type {
+        SIMPLE(1, "단순 변심"),
+        WRONG_DESTINATION(2, "오배송"),
+        DELIVERY_DELAYED(3, "배송 지연"),
+        DAMAGED(4, "파손/파본"),
+        WRONG_PURCHASE(5, "다른 상품을 잘못 주문함"),
+        OTHERS(6, "기타");
+
+        private final long typeId;
+        private final String typeName;
+    }
 }

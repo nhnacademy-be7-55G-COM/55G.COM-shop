@@ -3,7 +3,7 @@ package shop.s5g.shop.repository.member.qdsl.impl;
 import static shop.s5g.shop.entity.member.QMemberGrade.memberGrade;
 
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
-import shop.s5g.shop.dto.memberGrade.MemberGradeRequestDto;
+import shop.s5g.shop.dto.member_grade.MemberGradeRequestDto;
 import shop.s5g.shop.entity.member.MemberGrade;
 import shop.s5g.shop.repository.member.qdsl.MemberGradeQuerydslRepository;
 
@@ -13,7 +13,6 @@ public class MemberGradeQuerydslRepositoryImpl extends QuerydslRepositorySupport
     public MemberGradeQuerydslRepositoryImpl() {
         super(MemberGrade.class);
     }
-
 
 
     @Override

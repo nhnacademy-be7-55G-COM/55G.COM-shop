@@ -13,6 +13,4 @@ public interface PublisherQuerydslRepository {
     Page<PublisherResponseDto> getAllPublisher(Pageable pageable);
     void updatePublisher(Long publisherId, PublisherRequestDto publisherRequestDto);
     void deletePublisher(Long publisherId);
-
-
 }

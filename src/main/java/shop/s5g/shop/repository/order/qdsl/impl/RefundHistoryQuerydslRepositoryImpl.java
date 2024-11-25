@@ -22,6 +22,7 @@ public class RefundHistoryQuerydslRepositoryImpl extends QuerydslRepositorySuppo
             .innerJoin(refundHistory.orderDetail, orderDetail)
             .innerJoin(refundHistory.refundType, refundType)
             .innerJoin(orderDetail.book, book)
+            .where(orderDetail.id.eq(orderDetailId))
             .select(Projections.constructor(RefundHistoryResponseDto.class,
                 orderDetail.id,
                 book.title,
