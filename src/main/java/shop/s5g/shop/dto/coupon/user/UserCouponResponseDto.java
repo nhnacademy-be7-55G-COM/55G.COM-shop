@@ -3,6 +3,7 @@ package shop.s5g.shop.dto.coupon.user;
 import java.time.LocalDateTime;
 
 public record UserCouponResponseDto(
+
     Long couponId,
 
     String couponCode,
@@ -14,6 +15,7 @@ public record UserCouponResponseDto(
     String couponName,
 
     String couponDescription
+
 ) {
 
 }

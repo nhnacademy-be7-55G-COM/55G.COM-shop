@@ -42,4 +42,12 @@ public class RefundHistory {
 
     private LocalDateTime refundedAt;
     private boolean active;
+
+    public RefundHistory(OrderDetail detail, RefundType type, String reason) {
+        orderDetail = detail;
+        refundType = type;
+        this.reason = reason;
+        refundedAt = LocalDateTime.now();
+        active = true;
+    }
 }

@@ -1,8 +1,8 @@
 package shop.s5g.shop.service.member;
 
 import java.util.List;
-import shop.s5g.shop.dto.memberGrade.MemberGradeRequestDto;
-import shop.s5g.shop.dto.memberGrade.MemberGradeResponseDto;
+import shop.s5g.shop.dto.member_grade.MemberGradeRequestDto;
+import shop.s5g.shop.dto.member_grade.MemberGradeResponseDto;
 import shop.s5g.shop.entity.member.MemberGrade;
 
 public interface MemberGradeService {

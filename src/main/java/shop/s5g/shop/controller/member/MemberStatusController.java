@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import shop.s5g.shop.dto.memberStatus.MemberStatusRequestDto;
-import shop.s5g.shop.dto.memberStatus.MemberStatusResponseDto;
+import shop.s5g.shop.dto.member_status.MemberStatusRequestDto;
+import shop.s5g.shop.dto.member_status.MemberStatusResponseDto;
 import shop.s5g.shop.dto.tag.MessageDto;
 import shop.s5g.shop.exception.BadRequestException;
 import shop.s5g.shop.service.member.MemberStatusService;
@@ -44,7 +44,7 @@ public class MemberStatusController {
     public ResponseEntity<MessageDto> createMemberStatus(
         @Valid @RequestBody MemberStatusRequestDto requestDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            throw new BadRequestException("잘못된 요청입니다");
+            throw new BadRequestException();
         }
         memberStatusService.saveMemberStatus(requestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(new MessageDto("생성 성공"));
@@ -56,7 +56,7 @@ public class MemberStatusController {
         @Valid @RequestBody MemberStatusRequestDto memberStatusRequestDto,
         BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            throw new BadRequestException("잘못된 요청입니다");
+            throw new BadRequestException();
         }
         memberStatusService.updateMemberStatus(memberStatusId, memberStatusRequestDto);
         return ResponseEntity.ok().body(new MessageDto("변경 성공"));
