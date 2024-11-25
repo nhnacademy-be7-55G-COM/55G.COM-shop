@@ -214,7 +214,7 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
             ))
             .fetchOne();
 
-        String imagePath = "no-image.png";
+        String imagePath = "";
         if (queryBookImage != null) {
             imagePath = queryBookImage.getImageName();
         }
