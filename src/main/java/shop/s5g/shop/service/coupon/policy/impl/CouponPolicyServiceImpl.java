@@ -80,7 +80,6 @@ public class CouponPolicyServiceImpl implements CouponPolicyService {
     @Transactional(readOnly = true)
     public CouponPolicyResponseDto getByCouponPolicyId(Long couponPolicyId) {
 
-        //TODO (young) : 에러 처리 수정 예정
         if (Objects.isNull(couponPolicyId) || couponPolicyId <= 0) {
             throw new IllegalArgumentException();
         }
