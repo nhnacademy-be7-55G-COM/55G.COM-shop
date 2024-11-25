@@ -63,6 +63,19 @@ public class OrderController {
         );
     }
 
+    @PostMapping("/guests/{customerId}")
+    public ResponseEntity<OrderCreateResponseDto> createNewGuestOrder(
+        @PathVariable long customerId,
+        @Valid @RequestBody OrderCreateRequestDto requestDto,
+        BindingResult result
+    ) {
+        if (result.hasErrors()) {
+            throw new BadRequestException("Order creation failed: bad request");
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+            orderService.createOrder(customerId, requestDto)
+        );
+    }
     @DeleteMapping("/{orderId}")
     public ResponseEntity<HttpStatus> deleteOrder(@PathVariable long orderId) {
         orderService.deactivateOrder(orderId);
