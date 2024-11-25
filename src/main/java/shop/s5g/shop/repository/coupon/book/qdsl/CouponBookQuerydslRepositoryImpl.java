@@ -69,6 +69,8 @@ public class CouponBookQuerydslRepositoryImpl extends QuerydslRepositorySupport 
             .where(book.bookId.eq(couponBookRequestDto.bookId()))
             .where(couponTemplate.couponTemplateId.eq(couponBookRequestDto.couponTemplateId()))
             .select(Projections.constructor(CouponBookResponseDto.class,
+                couponTemplate.couponTemplateId,
+                book.bookId,
                 book.title,
                 couponPolicy.discountPrice,
                 couponPolicy.condition,
@@ -90,6 +92,8 @@ public class CouponBookQuerydslRepositoryImpl extends QuerydslRepositorySupport 
 
         List<CouponBookResponseDto> bookList = jpaQueryFactory
             .select(Projections.constructor(CouponBookResponseDto.class,
+                couponTemplate.couponTemplateId,
+                book.bookId,
                 book.title,
                 couponPolicy.discountPrice,
                 couponPolicy.condition,

@@ -22,7 +22,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import shop.s5g.shop.config.SecurityConfig;
 import shop.s5g.shop.config.TestSecurityConfig;
 import shop.s5g.shop.controller.coupon.CouponBookController;
-import shop.s5g.shop.controller.coupon.CouponTemplateController;
 import shop.s5g.shop.dto.coupon.book.CouponBookRequestDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateRequestDto;
 import shop.s5g.shop.entity.coupon.CouponPolicy;

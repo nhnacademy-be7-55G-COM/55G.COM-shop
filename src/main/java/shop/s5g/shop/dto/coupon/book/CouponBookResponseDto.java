@@ -4,6 +4,10 @@ import java.math.BigDecimal;
 
 public record CouponBookResponseDto(
 
+    Long couponTemplateId,
+
+    Long bookId,
+
     String title,
 
     BigDecimal discountPrice,

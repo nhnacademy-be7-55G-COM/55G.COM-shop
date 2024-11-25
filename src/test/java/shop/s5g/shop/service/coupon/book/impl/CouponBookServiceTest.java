@@ -146,6 +146,8 @@ class CouponBookServiceTest {
         );
 
         CouponBookResponseDto expectedResponse = new CouponBookResponseDto(
+            couponTemplate.getCouponTemplateId(),
+            book.getBookId(),
             book.getTitle(),
             couponPolicy.getDiscountPrice(),
             couponPolicy.getCondition(),
@@ -179,6 +181,8 @@ class CouponBookServiceTest {
 
         List<CouponBookResponseDto> couponBookList = List.of(
             new CouponBookResponseDto(
+                1L,
+                1L,
                 "아낌없이 주는 나무",
                 new BigDecimal("0.5"),
                 20000L,
