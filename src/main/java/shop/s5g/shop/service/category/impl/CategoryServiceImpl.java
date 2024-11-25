@@ -23,16 +23,20 @@ import java.util.List;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
-    
+
     //카테고리 등록
     @Override
     public void createCategory(CategoryRequestDto categoryDto) {
+        if (categoryDto.parentCategoryId() == null) {
+            Category category = new Category(null, categoryDto.categoryName(), true);
+            categoryRepository.save(category);
+        } else {
+            Category category1 = categoryRepository.findById(categoryDto.parentCategoryId())
+                    .orElseThrow(() -> new CategoryResourceNotFoundException("카테고리가 존재하지 않습니다."));
 
-        Category category1 = categoryRepository.findById(categoryDto.parentCategoryId())
-                .orElseThrow(() -> new CategoryResourceNotFoundException("카테고리가 존재하지 않습니다."));
-
-        Category category = new Category(category1, categoryDto.categoryName(), true);
-        categoryRepository.save(category);
+            Category category = new Category(category1, categoryDto.categoryName(), true);
+            categoryRepository.save(category);
+        }
     }
 
     //모든 카테고리 조회
@@ -62,22 +66,22 @@ public class CategoryServiceImpl implements CategoryService {
         }
 
         Category category = categoryRepository.findById(categoryId)
-            .orElseThrow(() -> new CategoryResourceNotFoundException("해당 카테고리는 존재하지 않습니다."));
+                .orElseThrow(() -> new CategoryResourceNotFoundException("해당 카테고리는 존재하지 않습니다."));
 
         Long parentCategoryId = (category.getParentCategory() != null) ? category.getParentCategory().getCategoryId() : null;
 
         return new CategoryResponseDto(
-            category.getCategoryId(),
-            parentCategoryId,
-            category.getCategoryName(),
-            category.isActive()
+                category.getCategoryId(),
+                parentCategoryId,
+                category.getCategoryName(),
+                category.isActive()
         );
     }
 
     //카테고리 수정
     @Override
     public void updateCategory(Long categoryId, CategoryUpdateRequestDto categoryDto) {
-        if(!categoryRepository.findById(categoryId).isPresent()) {
+        if (!categoryRepository.findById(categoryId).isPresent()) {
             throw new CategoryResourceNotFoundException(categoryId + " 는 존재하지 않습니다.");
         }
 
