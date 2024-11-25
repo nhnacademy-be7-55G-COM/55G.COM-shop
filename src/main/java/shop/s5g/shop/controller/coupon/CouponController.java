@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import shop.s5g.shop.dto.PageResponseDto;
+import shop.s5g.shop.dto.coupon.coupon.AvailableCouponResponseDto;
 import shop.s5g.shop.dto.coupon.coupon.CouponRequestDto;
 import shop.s5g.shop.dto.coupon.coupon.CouponResponseDto;
 import shop.s5g.shop.dto.tag.MessageDto;
@@ -55,6 +56,7 @@ public class CouponController {
      * @param bindingResult
      * @return ResponseEntity<MessageDto>
      */
+    //TODO 쿠폰 업데이트 수정 예정
     @PatchMapping("/coupons/{couponId}")
     public ResponseEntity<MessageDto> updateCoupon(
         @PathVariable("couponId") Long couponId,
@@ -68,6 +70,20 @@ public class CouponController {
 //        couponService.updateCoupon(couponId);
 
         return ResponseEntity.status(HttpStatus.OK).body(new MessageDto("쿠폰 업데이트 성공"));
+    }
+
+    /**
+     * 발급 가능한 쿠폰 목록 가져오기
+     * @param pageable
+     * @return ResponseEntity<PageResponseDto<AvailableCouponResponseDto>>
+     */
+    @GetMapping("/coupons/available")
+    public ResponseEntity<PageResponseDto<AvailableCouponResponseDto>> getAvailableCoupons(Pageable pageable) {
+
+        Page<AvailableCouponResponseDto> coupons = couponService.getAvailableCoupons(pageable);
+
+        return ResponseEntity.status(HttpStatus.OK)
+            .body(PageResponseDto.of(coupons));
     }
 
     /**

@@ -16,7 +16,7 @@ public interface BookQuerydslRepository {
     void updateBook(long bookId, BookRequestDto bookDto);
     List<BookResponseDto> findAllBookList();
     BookDetailResponseDto getBookDetail(long bookId);
-//    Page<BookPageableResponseDto> findAllBookPage(Pageable pageable);
+    Page<BookPageableResponseDto> findAllBookPage(Pageable pageable);
 
     List<BookSimpleResponseDto> findSimpleBooksByIdList(List<Long> idList);
     String findBookStatus(Long bookId);

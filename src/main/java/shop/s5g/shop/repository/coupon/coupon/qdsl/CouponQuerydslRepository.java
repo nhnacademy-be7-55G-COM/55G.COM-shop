@@ -3,6 +3,7 @@ package shop.s5g.shop.repository.coupon.coupon.qdsl;
 import java.time.LocalDateTime;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import shop.s5g.shop.dto.coupon.coupon.AvailableCouponResponseDto;
 import shop.s5g.shop.dto.coupon.coupon.CouponResponseDto;
 
 public interface CouponQuerydslRepository {
@@ -26,4 +27,7 @@ public interface CouponQuerydslRepository {
 
     // 해당 쿠폰이 만료일이 지났는 지 확인하기
     boolean checkIfCouponExpired(Long couponId);
+
+    // 발급 가능한 쿠폰리스트 가져오기
+    Page<AvailableCouponResponseDto> getAllAvailableCoupons(Pageable pageable);
 }

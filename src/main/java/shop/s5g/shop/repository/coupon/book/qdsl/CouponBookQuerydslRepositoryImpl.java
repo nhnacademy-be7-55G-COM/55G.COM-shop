@@ -90,6 +90,8 @@ public class CouponBookQuerydslRepositoryImpl extends QuerydslRepositorySupport 
 
         List<CouponBookResponseDto> bookList = jpaQueryFactory
             .select(Projections.constructor(CouponBookResponseDto.class,
+                couponTemplate.couponTemplateId,
+                book.bookId,
                 book.title,
                 couponPolicy.discountPrice,
                 couponPolicy.condition,
