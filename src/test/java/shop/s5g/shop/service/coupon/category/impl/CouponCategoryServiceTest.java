@@ -113,7 +113,7 @@ class CouponCategoryServiceTest {
         // Given
         Pageable pageable = PageRequest.of(0, 10);
         CouponCategoryResponseDto couponCategoryResponseDto = new CouponCategoryResponseDto(
-            1L, "카테고리1", new BigDecimal("0.5"), 2000L, 5000L, 30, "쿠폰1", "설명1");
+            1L, 1L,"카테고리1", new BigDecimal("0.5"), 2000L, 5000L, 30, "쿠폰1", "설명1");
 
         List<CouponCategoryResponseDto> couponCategoryList = Arrays.asList(couponCategoryResponseDto);
 

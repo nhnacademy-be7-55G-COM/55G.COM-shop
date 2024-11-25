@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import shop.s5g.shop.dto.coupon.coupon.AvailableCouponResponseDto;
 import shop.s5g.shop.dto.coupon.coupon.CouponRequestDto;
 import shop.s5g.shop.dto.coupon.coupon.CouponResponseDto;
 import shop.s5g.shop.entity.coupon.Coupon;
@@ -233,9 +234,21 @@ public class CouponServiceImpl implements CouponService {
     }
 
     /**
+     * 발급 가능한 쿠폰 조회
+     * @param pageable
+     * @return Page<AvailableCouponResponseDto>
+     */
+    @Override
+    public Page<AvailableCouponResponseDto> getAvailableCoupons(Pageable pageable) {
+
+        return couponRepository.getAllAvailableCoupons(pageable);
+    }
+
+    /**
      * 쿠폰 번호 랜덤 생성
      * @return String
      */
+    //TODO UUID 와 같이 여기서 고유성을 체크해줘야함
     private String createCouponNumber() {
 
         final String ALPHANUMERIC = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
