@@ -35,5 +35,4 @@ public class Category {
         this.categoryName = categoryName;
         this.active = active;
     }
-
 }

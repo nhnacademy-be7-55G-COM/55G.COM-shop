@@ -1,4 +1,4 @@
-package shop.s5g.shop.dto.memberStatus;
+package shop.s5g.shop.dto.member_status;
 
 import shop.s5g.shop.entity.member.MemberStatus;
 

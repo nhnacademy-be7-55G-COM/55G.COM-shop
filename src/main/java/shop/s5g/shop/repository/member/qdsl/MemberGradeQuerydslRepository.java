@@ -1,6 +1,6 @@
 package shop.s5g.shop.repository.member.qdsl;
 
-import shop.s5g.shop.dto.memberGrade.MemberGradeRequestDto;
+import shop.s5g.shop.dto.member_grade.MemberGradeRequestDto;
 
 public interface MemberGradeQuerydslRepository {
 

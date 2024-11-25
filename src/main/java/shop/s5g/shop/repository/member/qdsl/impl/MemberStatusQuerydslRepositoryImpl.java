@@ -3,7 +3,7 @@ package shop.s5g.shop.repository.member.qdsl.impl;
 import static shop.s5g.shop.entity.member.QMemberStatus.memberStatus;
 
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
-import shop.s5g.shop.dto.memberStatus.MemberStatusRequestDto;
+import shop.s5g.shop.dto.member_status.MemberStatusRequestDto;
 import shop.s5g.shop.entity.member.MemberStatus;
 import shop.s5g.shop.repository.member.qdsl.MemberStatusQuerydslRepository;
 

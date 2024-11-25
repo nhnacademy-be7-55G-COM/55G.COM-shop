@@ -10,12 +10,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
-import shop.s5g.shop.dto.coupon.user.UserCouponResponseDto;
+import shop.s5g.shop.dto.coupon.user.InValidUsedCouponResponseDto;
+import shop.s5g.shop.dto.coupon.user.ValidUserCouponResponseDto;
 import shop.s5g.shop.entity.coupon.QCoupon;
+import shop.s5g.shop.entity.coupon.QCouponPolicy;
 import shop.s5g.shop.entity.coupon.QCouponTemplate;
 import shop.s5g.shop.entity.coupon.QUserCoupon;
 import shop.s5g.shop.entity.coupon.UserCoupon;
-import shop.s5g.shop.entity.member.QCustomer;
 
 public class UserCouponQuerydslRepositoryImpl extends QuerydslRepositorySupport implements
     UserCouponQuerydslRepository {
@@ -30,7 +31,7 @@ public class UserCouponQuerydslRepositoryImpl extends QuerydslRepositorySupport 
     QUserCoupon userCoupon = QUserCoupon.userCoupon;
     QCoupon coupon = QCoupon.coupon;
     QCouponTemplate couponTemplate = QCouponTemplate.couponTemplate;
-    QCustomer customer = QCustomer.customer;
+    QCouponPolicy couponPolicy = QCouponPolicy.couponPolicy;
 
     /**
      * 해당 유저가 쿠폰 템플릿을 가지고 있는 지 체크하기
@@ -57,28 +58,37 @@ public class UserCouponQuerydslRepositoryImpl extends QuerydslRepositorySupport 
      * 사용하지 않은 coupon 리스트 가져오기
      * @param customerId
      * @param pageable
-     * @return Page<UserCouponResponseDto>
+     * @return Page<ValidUserCouponResponseDto>
      */
     @Override
-    public Page<UserCouponResponseDto> findUnusedCouponList(Long customerId, Pageable pageable) {
+    public Page<ValidUserCouponResponseDto> findUnusedCouponList(Long customerId, Pageable pageable) {
 
-        List<UserCouponResponseDto> userCouponList = queryFactory
-            .select(Projections.constructor(UserCouponResponseDto.class,
+        LocalDateTime now = LocalDateTime.now();
+
+        List<ValidUserCouponResponseDto> userCouponList = queryFactory
+            .select(Projections.constructor(ValidUserCouponResponseDto.class,
                 coupon.couponId,
                 coupon.couponCode,
+                couponTemplate.couponName,
                 coupon.createdAt,
                 coupon.expiredAt,
-                couponTemplate.couponName,
-                couponTemplate.couponDescription))
+                couponTemplate.couponDescription,
+                couponPolicy.condition,
+                couponPolicy.discountPrice,
+                couponPolicy.maxPrice
+            ))
             .from(userCoupon)
-            .where(userCoupon.userCouponPk.customerId.eq(customerId))
-            .innerJoin(coupon)
-            .on(userCoupon.userCouponPk.couponId.eq(coupon.couponId))
-            .where(coupon.active.eq(true)
-                .and(coupon.expiredAt.after(LocalDateTime.now()))
-                .and(coupon.usedAt.isNull()))
-            .innerJoin(couponTemplate)
-            .on(coupon.couponTemplate.couponTemplateId.eq(couponTemplate.couponTemplateId))
+            .innerJoin(coupon).on(userCoupon.userCouponPk.couponId.eq(coupon.couponId))
+            .innerJoin(couponTemplate).on(coupon.couponTemplate.couponTemplateId.eq(couponTemplate.couponTemplateId))
+            .innerJoin(couponPolicy).on(couponTemplate.couponPolicy.couponPolicyId.eq(couponPolicy.couponPolicyId))
+            .where(
+                userCoupon.userCouponPk.customerId.eq(customerId)
+                    .and(coupon.active.isTrue())
+                    .and(coupon.expiredAt.after(now))
+                    .and(coupon.usedAt.isNull())
+            )
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
             .fetch();
 
         Long totalCnt = queryFactory
@@ -95,26 +105,35 @@ public class UserCouponQuerydslRepositoryImpl extends QuerydslRepositorySupport 
      * 사용한 쿠폰 리스트 가져오기
      * @param customerId
      * @param pageable
-     * @return
+     * @return Page<InValidUsedCouponResponseDto>
      */
     @Override
-    public Page<UserCouponResponseDto> findUsedCouponList(Long customerId, Pageable pageable) {
-        List<UserCouponResponseDto> userCouponList = queryFactory
-            .select(Projections.constructor(UserCouponResponseDto.class,
+    public Page<InValidUsedCouponResponseDto> findUsedCouponList(Long customerId,
+        Pageable pageable) {
+
+        List<InValidUsedCouponResponseDto> usedCouponList = queryFactory
+            .select(Projections.constructor(InValidUsedCouponResponseDto.class,
                 coupon.couponId,
                 coupon.couponCode,
+                couponTemplate.couponName,
                 coupon.createdAt,
                 coupon.expiredAt,
-                couponTemplate.couponName,
-                couponTemplate.couponDescription))
+                coupon.usedAt,
+                couponTemplate.couponDescription,
+                couponPolicy.condition,
+                couponPolicy.discountPrice,
+                couponPolicy.maxPrice))
             .from(userCoupon)
-            .where(userCoupon.userCouponPk.customerId.eq(customerId))
-            .innerJoin(coupon)
-            .on(userCoupon.userCouponPk.couponId.eq(coupon.couponId))
-            .where(coupon.expiredAt.before(LocalDateTime.now())
-                .and(coupon.usedAt.isNull()))
-            .innerJoin(couponTemplate)
-            .on(coupon.couponTemplate.couponTemplateId.eq(couponTemplate.couponTemplateId))
+            .innerJoin(coupon).on(userCoupon.userCouponPk.couponId.eq(coupon.couponId))
+            .innerJoin(couponTemplate).on(coupon.couponTemplate.couponTemplateId.eq(couponTemplate.couponTemplateId))
+            .innerJoin(couponPolicy).on(couponTemplate.couponPolicy.couponPolicyId.eq(couponPolicy.couponPolicyId))
+            .where(
+                userCoupon.userCouponPk.customerId.eq(customerId)
+                    .and(coupon.active.isFalse())
+                    .and(coupon.usedAt.isNotNull())
+            )
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
             .fetch();
 
         Long totalCnt = queryFactory
@@ -124,6 +143,103 @@ public class UserCouponQuerydslRepositoryImpl extends QuerydslRepositorySupport 
 
         long total = (Objects.isNull(totalCnt)) ? 0L : totalCnt;
 
-        return new PageImpl<>(userCouponList, pageable, total);
+        return new PageImpl<>(usedCouponList, pageable, total);
+    }
+
+    /**
+     * 사용하지는 않았으나 기간이 만료된 쿠폰 리스트 가져오기
+     * @param customerId
+     * @param pageable
+     * @return Page<InValidUsedCouponResponseDto>
+     */
+    @Override
+    public Page<InValidUsedCouponResponseDto> findAfterExpiredUserCouponList(Long customerId,
+        Pageable pageable) {
+
+        LocalDateTime now = LocalDateTime.now();
+
+        List<InValidUsedCouponResponseDto> expiredCouponList = queryFactory
+            .select(Projections.constructor(InValidUsedCouponResponseDto.class,
+                coupon.couponId,
+                coupon.couponCode,
+                couponTemplate.couponName,
+                coupon.createdAt,
+                coupon.expiredAt,
+                coupon.usedAt,
+                couponTemplate.couponDescription,
+                couponPolicy.condition,
+                couponPolicy.discountPrice,
+                couponPolicy.maxPrice))
+            .from(userCoupon)
+            .innerJoin(coupon).on(userCoupon.userCouponPk.couponId.eq(coupon.couponId))
+            .innerJoin(couponTemplate).on(coupon.couponTemplate.couponTemplateId.eq(couponTemplate.couponTemplateId))
+            .innerJoin(couponPolicy).on(couponTemplate.couponPolicy.couponPolicyId.eq(couponPolicy.couponPolicyId))
+            .where(
+                userCoupon.userCouponPk.customerId.eq(customerId)
+                    .and(coupon.active.isFalse())
+                    .and(coupon.usedAt.isNull())
+                    .and(coupon.expiredAt.before(now))
+            )
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetch();
+
+        Long totalCnt = queryFactory
+            .select(userCoupon.count())
+            .from(userCoupon)
+            .fetchOne();
+
+        long total = (Objects.isNull(totalCnt)) ? 0L : totalCnt;
+
+        return new PageImpl<>(expiredCouponList, pageable, total);
+    }
+
+    /**
+     * 사용하지 않아서 기간이 만료되었거나, 사용한 쿠폰 리스트 가져오기
+     * @param customerId
+     * @param pageable
+     * @return Page<InValidUsedCouponResponseDto>
+     */
+    @Override
+    public Page<InValidUsedCouponResponseDto> findInvalidUserCouponList(Long customerId,
+        Pageable pageable) {
+
+        LocalDateTime now = LocalDateTime.now();
+
+        List<InValidUsedCouponResponseDto> invalidCouponList = queryFactory
+            .select(Projections.constructor(InValidUsedCouponResponseDto.class,
+                coupon.couponId,
+                coupon.couponCode,
+                couponTemplate.couponName,
+                coupon.createdAt,
+                coupon.expiredAt,
+                coupon.usedAt,
+                couponTemplate.couponDescription,
+                couponPolicy.condition,
+                couponPolicy.discountPrice,
+                couponPolicy.maxPrice))
+            .from(userCoupon)
+            .innerJoin(coupon).on(userCoupon.userCouponPk.couponId.eq(coupon.couponId))
+            .innerJoin(couponTemplate).on(coupon.couponTemplate.couponTemplateId.eq(couponTemplate.couponTemplateId))
+            .innerJoin(couponPolicy).on(couponTemplate.couponPolicy.couponPolicyId.eq(couponPolicy.couponPolicyId))
+            .where(
+                userCoupon.userCouponPk.customerId.eq(customerId)
+                    .and(
+                        coupon.usedAt.isNull().and(coupon.expiredAt.before(now))
+                            .or(coupon.usedAt.isNotNull())
+                    )
+            )
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetch();
+
+        Long totalCnt = queryFactory
+            .select(userCoupon.count())
+            .from(userCoupon)
+            .fetchOne();
+
+        long total = (Objects.isNull(totalCnt)) ? 0L : totalCnt;
+
+        return new PageImpl<>(invalidCouponList, pageable, total);
     }
 }

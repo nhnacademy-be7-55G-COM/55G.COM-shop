@@ -58,6 +58,7 @@ public class CouponCategoryQuerydslRepositoryImpl extends QuerydslRepositorySupp
 
         List<CouponCategoryResponseDto> couponCategoryList = jpaQueryFactory
             .select(Projections.constructor(CouponCategoryResponseDto.class,
+                couponTemplate.couponTemplateId,
                 category.categoryId,
                 category.categoryName,
                 couponPolicy.discountPrice,

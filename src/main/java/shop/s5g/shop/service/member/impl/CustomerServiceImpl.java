@@ -89,4 +89,9 @@ public class CustomerServiceImpl implements CustomerService {
     private String customerPasswordHash(String password, String name) {
         return DigestUtils.sha256Hex(name + password + name);
     }
+
+    @Override
+    public Customer addCustomerByMember(Customer customer) {
+        return customerRepository.save(customer);
+    }
 }

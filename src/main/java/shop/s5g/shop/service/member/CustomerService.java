@@ -18,4 +18,6 @@ public interface CustomerService {
     CustomerResponseDto queryCustomer(String phoneNumber, String name, String password);
 
     CustomerResponseDto getOrRegisterCustomerPhoneNumber(String phoneNumber, String name, String password);
+
+    Customer addCustomerByMember(Customer customer);
 }
