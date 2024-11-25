@@ -1,5 +1,6 @@
 package shop.s5g.shop.controller.book;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,13 +13,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/shop")
+@RequiredArgsConstructor
 public class BookCategoryController {
 
     private final BookCategoryService bookCategoryService;
-    @Autowired
-    public BookCategoryController(BookCategoryService bookCategoryService) {
-        this.bookCategoryService = bookCategoryService;
-    }
 
     //도서 내 카테고리 등록
     @PostMapping("/bookcategory/{bookId}/{categoryId}")

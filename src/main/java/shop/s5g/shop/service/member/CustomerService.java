@@ -14,4 +14,10 @@ public interface CustomerService {
     CustomerResponseDto getCustomer(long customerId);
 
     void deleteCustomer(long customerId);
+
+    CustomerResponseDto queryCustomer(String phoneNumber, String name, String password);
+
+    CustomerResponseDto getOrRegisterCustomerPhoneNumber(String phoneNumber, String name, String password);
+
+    Customer addCustomerByMember(Customer customer);
 }

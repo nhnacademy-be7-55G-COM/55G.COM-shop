@@ -31,8 +31,8 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import shop.s5g.shop.config.SecurityConfig;
 import shop.s5g.shop.config.TestSecurityConfig;
-import shop.s5g.shop.dto.memberGrade.MemberGradeRequestDto;
-import shop.s5g.shop.dto.memberGrade.MemberGradeResponseDto;
+import shop.s5g.shop.dto.member_grade.MemberGradeRequestDto;
+import shop.s5g.shop.dto.member_grade.MemberGradeResponseDto;
 import shop.s5g.shop.filter.JwtAuthenticationFilter;
 import shop.s5g.shop.service.member.MemberGradeService;
 
@@ -40,7 +40,7 @@ import shop.s5g.shop.service.member.MemberGradeService;
 @WebMvcTest(
     value = MemberGradeController.class,
     excludeFilters = @ComponentScan.Filter(
-        type= FilterType.ASSIGNABLE_TYPE,
+        type = FilterType.ASSIGNABLE_TYPE,
         classes = {SecurityConfig.class, JwtAuthenticationFilter.class}
     )
 )

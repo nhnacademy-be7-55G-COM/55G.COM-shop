@@ -1,4 +1,4 @@
-package shop.s5g.shop.dto.memberGrade;
+package shop.s5g.shop.dto.member_grade;
 
 
 import jakarta.validation.constraints.NotNull;

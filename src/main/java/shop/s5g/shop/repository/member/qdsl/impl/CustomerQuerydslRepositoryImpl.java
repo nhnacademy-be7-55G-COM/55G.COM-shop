@@ -3,6 +3,8 @@ package shop.s5g.shop.repository.member.qdsl.impl;
 
 import static shop.s5g.shop.entity.member.QCustomer.customer;
 
+import com.querydsl.core.BooleanBuilder;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import shop.s5g.shop.dto.customer.CustomerUpdateRequestDto;
 import shop.s5g.shop.entity.member.Customer;
@@ -31,5 +33,22 @@ public class CustomerQuerydslRepositoryImpl extends QuerydslRepositorySupport im
             .set(customer.active, false)
             .where(customer.customerId.eq(customerId))
             .execute();
+    }
+
+    @Override
+    public Optional<Customer> getCustomerByPhoneNumber(
+        String phoneNumber, String name, String password
+    ) {
+        BooleanBuilder builder = new BooleanBuilder();
+        builder
+            .and(customer.phoneNumber.eq(phoneNumber))
+            .and(customer.name.eq(name))
+            .and(customer.password.eq(password));
+
+        return Optional.ofNullable(
+            from(customer)
+                .where(builder)
+                .fetchOne()
+        );
     }
 }
