@@ -14,4 +14,6 @@ public interface AuthorQuerydslRepository {
     void updateAuthor(long authorId, AuthorRequestDto authorRequestDto);
 
     void inactiveAuthor(long authorId);
+
+    boolean existsByName(String name);
 }

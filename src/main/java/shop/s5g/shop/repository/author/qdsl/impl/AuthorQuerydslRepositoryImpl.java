@@ -84,4 +84,16 @@ public class AuthorQuerydslRepositoryImpl extends QuerydslRepositorySupport impl
                 .where(author.authorId.eq(authorId))
                 .execute();
     }
+
+    //이름으로 작가가 존재하는지 확인
+    @Override
+    public boolean existsByName(String name) {
+        Integer result = jpaQueryFactory
+                .selectOne()
+                .from(author)
+                .where(author.name.eq(name))
+                .fetchFirst();
+
+        return result != null;
+    }
 }

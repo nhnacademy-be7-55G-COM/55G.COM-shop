@@ -1,6 +1,7 @@
 package shop.s5g.shop.controller.author;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,7 +42,7 @@ public class AuthorController {
 
     //작가 id로 작가 조회
     @GetMapping("/author/{authorId}")
-    ResponseEntity<AuthorResponseDto> findAuthor(@Valid @PathVariable("authorId") long authorId) {
+    ResponseEntity<AuthorResponseDto> findAuthor(@PathVariable("authorId") long authorId) {
         AuthorResponseDto authorResponseDto = authorService.getAuthor(authorId);
         return ResponseEntity.ok().body(authorResponseDto);
     }
@@ -49,13 +50,22 @@ public class AuthorController {
     //작가 수정
     @PutMapping("/author/{authorId}")
     ResponseEntity<MessageDto> updateAuthor(@Valid @PathVariable("authorId") long authorId, @Valid @RequestBody AuthorRequestDto authorRequestDto, BindingResult bindingResult) {
+        if (authorId < 1) {
+            throw new AuthorBadRequestException("작가id는 1보다 커야 합니다.");
+        }
+        if(bindingResult.hasErrors()) {
+            throw new AuthorBadRequestException("잘못된 입력입니다.");
+        }
         authorService.updateAuthor(authorId, authorRequestDto);
         return ResponseEntity.ok().body(new MessageDto("작가 수정 성공"));
     }
 
     //작가 삭제(비활성화)
     @DeleteMapping("/author/{authorId}")
-    ResponseEntity<MessageDto> deleteAuthor(@Valid @PathVariable("authorId") long authorId) {
+    ResponseEntity<MessageDto> deleteAuthor(@PathVariable("authorId") long authorId) {
+        if (authorId < 1) {
+            throw new AuthorBadRequestException("작가 id는 1보다 커야 합니다.");
+        }
         authorService.deleteAuthor(authorId);
         return ResponseEntity.ok().body(new MessageDto("작가 삭제 성공"));
     }
