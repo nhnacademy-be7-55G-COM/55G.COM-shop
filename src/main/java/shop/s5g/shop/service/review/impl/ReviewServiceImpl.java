@@ -15,6 +15,7 @@ import shop.s5g.shop.entity.review.Review;
 import shop.s5g.shop.exception.book.BookResourceNotFoundException;
 import shop.s5g.shop.exception.member.MemberNotFoundException;
 import shop.s5g.shop.exception.order.OrderDetailsNotExistException;
+import shop.s5g.shop.exception.review.ReviewAlreadyExistsException;
 import shop.s5g.shop.repository.book.BookRepository;
 import shop.s5g.shop.repository.member.MemberRepository;
 import shop.s5g.shop.repository.order.OrderDetailRepository;
@@ -41,6 +42,10 @@ public class ReviewServiceImpl implements ReviewService {
         OrderDetail orderDetail = orderDetailRepository.findById(
                 createReviewRequestDto.orderDetailId())
             .orElseThrow(() -> new OrderDetailsNotExistException("존재하지 않는 주문 상세입니다."));
+
+        if (reviewRepository.existsByOrderDetail_id(orderDetail.getId())) {
+            throw new ReviewAlreadyExistsException("등록된 리뷰가 존재합니다.");
+        }
 
         Review review = new Review(book, member, orderDetail, createReviewRequestDto.score(),
             createReviewRequestDto.content());

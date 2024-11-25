@@ -8,4 +8,6 @@ import shop.s5g.shop.entity.review.Review;
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     Page<Review> findByMemberIdAndActiveTrue(Long memberId, Pageable pageable);
+
+    boolean existsByOrderDetail_id(Long orderDetailId);
 }
