@@ -1,8 +1,13 @@
 package shop.s5g.shop.service.review.impl;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import shop.s5g.shop.dto.PageResponseDto;
 import shop.s5g.shop.dto.review.CreateReviewRequestDto;
+import shop.s5g.shop.dto.review.ReviewResponseDto;
 import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.member.Member;
 import shop.s5g.shop.entity.order.OrderDetail;
@@ -39,7 +44,19 @@ public class ReviewServiceImpl implements ReviewService {
 
         Review review = new Review(book, member, orderDetail, createReviewRequestDto.score(),
             createReviewRequestDto.content());
-        
+
         reviewRepository.save(review);
+    }
+
+    @Override
+    public PageResponseDto<ReviewResponseDto> getReviewList(Long memberId, Pageable pageable) {
+        Page<Review> reviewPage = reviewRepository.findByMemberIdAndActiveTrue(memberId, pageable);
+
+        List<ReviewResponseDto> reviewList = reviewPage.getContent().stream()
+            .map(ReviewResponseDto::toDto)
+            .toList();
+
+        return new PageResponseDto<>(reviewList, reviewPage.getTotalPages(), reviewPage.getSize(),
+            reviewPage.getTotalElements());
     }
 }
