@@ -60,8 +60,8 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     @Transactional(readOnly = true)
     public CustomerResponseDto queryCustomer(String phoneNumber, String name, String password) {
-        return customerRepository.findByPhoneNumberAndPasswordAndActiveTrue(
-            phoneNumber, customerPasswordHash(password, name)
+        return customerRepository.findByPhoneNumberAndNameAndPassword(
+            phoneNumber, name, customerPasswordHash(password, name)
         ).map(CustomerResponseDto::of).orElseThrow(
             () -> new CustomerNotFoundException("휴대폰 번호와 비밀번호가 맞는 고객이 존재하지 않습니다.")
         );

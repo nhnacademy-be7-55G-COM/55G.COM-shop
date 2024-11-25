@@ -26,6 +26,7 @@ import shop.s5g.shop.dto.order.OrderQueryRequestDto;
 import shop.s5g.shop.dto.order.OrderWithDetailResponseDto;
 import shop.s5g.shop.exception.BadRequestException;
 import shop.s5g.shop.security.ShopMemberDetail;
+import shop.s5g.shop.service.member.CustomerService;
 import shop.s5g.shop.service.order.OrderService;
 
 @RequiredArgsConstructor
@@ -34,6 +35,7 @@ import shop.s5g.shop.service.order.OrderService;
 @Slf4j
 public class OrderController {
     private final OrderService orderService;
+    private final CustomerService customerService;
 
     @GetMapping
     public List<OrderWithDetailResponseDto> queryAllOrders(
@@ -92,5 +94,15 @@ public class OrderController {
             throw new BadRequestException("필터가 잘못되었습니다");
         }
         return orderService.getOrderListAdmin(filter);
+    }
+
+    @GetMapping("/guests")
+    public List<OrderWithDetailResponseDto> queryAllGuestOrders(
+        @RequestParam String phoneNumber,
+        @RequestParam String name,
+        @RequestParam String password
+    ) {
+         long customerId = customerService.queryCustomer(phoneNumber, name, password).customerId();
+         return orderService.getAllOrdersWithDetail(customerId);
     }
 }
