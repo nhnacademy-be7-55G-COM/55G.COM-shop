@@ -103,50 +103,50 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
     }
 
     //모든 도서 Page<BookPageableResponseDto>타입으로 리턴
-//    @Override
-//    public Page<BookPageableResponseDto> findAllBookPage(Pageable pageable) {
-//        JPAQuery<BookPageableResponseDto> query = jpaQueryFactory
-//                .select(Projections.constructor(BookPageableResponseDto.class,
-//                        book.bookId,
-//                        book.publisher.id,
-//                        book.bookStatus.id,
-//                        book.title,
-//                        book.chapter,
-//                        book.description,
-//                        book.publishedDate,
-//                        book.isbn,
-//                        book.price,
-//                        book.discountRate,
-//                        book.isPacked,
-//                        book.stock,
-//                        book.views,
-//                        book.createdAt,
-//                        bookImage.imageName
-//                        ))
-//                .from(book)
-//                .leftJoin(bookImage)
-//                .on(bookImage.book.bookId.eq(book.bookId))
-//                .offset(pageable.getOffset())
-//                .limit(pageable.getPageSize())
-//                ;
-//
-//        query = switch(pageable.getSort().toString().split(":")[0]) {
-//            case "title" -> query.orderBy(book.title.desc());
-//            case "price" -> query.orderBy(book.price.desc());
-//            case "publishedDate" -> query.orderBy(book.publishedDate.desc());
-//            default -> query.orderBy(book.title.asc());
-//        };
-//
-//        List<BookPageableResponseDto> content = query.fetch();
-//
-//        Long totalCount = jpaQueryFactory
-//                .select(book.count())
-//                .from(book)
-//                .fetchOne();
-//
-//        long total = (totalCount != null) ? totalCount : 0L;
-//        return new PageImpl<>(content, pageable, total);
-//    }
+    @Override
+    public Page<BookPageableResponseDto> findAllBookPage(Pageable pageable) {
+        JPAQuery<BookPageableResponseDto> query = jpaQueryFactory
+                .select(Projections.constructor(BookPageableResponseDto.class,
+                        book.bookId,
+                        book.publisher.id,
+                        book.bookStatus.id,
+                        book.title,
+                        book.chapter,
+                        book.description,
+                        book.publishedDate,
+                        book.isbn,
+                        book.price,
+                        book.discountRate,
+                        book.isPacked,
+                        book.stock,
+                        book.views,
+                        book.createdAt,
+                        bookImage.imageName
+                        ))
+                .from(book)
+                .leftJoin(bookImage)
+                .on(bookImage.book.bookId.eq(book.bookId))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                ;
+
+        query = switch(pageable.getSort().toString().split(":")[0]) {
+            case "title" -> query.orderBy(book.title.desc());
+            case "price" -> query.orderBy(book.price.desc());
+            case "publishedDate" -> query.orderBy(book.publishedDate.desc());
+            default -> query.orderBy(book.title.asc());
+        };
+
+        List<BookPageableResponseDto> content = query.fetch();
+
+        Long totalCount = jpaQueryFactory
+                .select(book.count())
+                .from(book)
+                .fetchOne();
+
+        long total = (totalCount != null) ? totalCount : 0L;
+        return new PageImpl<>(content, pageable, total);
+    }
 
     /**
      * 특정 책의 상태 조회
