@@ -70,7 +70,7 @@ class BookCategoryRepositoryTest {
 
         Category category1 = new Category( null, "컴퓨터", true);
 
-        BookCategory bookCategory = new BookCategory(new BookCategoryId(book1.getBookId(), category1.getCategoryId()), category1, book1);
+        BookCategory bookCategory = new BookCategory(new BookCategoryId(book1.getBookId(), category1.getCategoryId()), category1, book1,LocalDateTime.of(2010, 5, 5, 15, 30),LocalDateTime.of(2010, 5, 5, 15, 30));
 
         bookCategoryRepository.save(bookCategory);
         Assertions.assertEquals(1, bookCategoryRepository.count());
@@ -110,7 +110,7 @@ class BookCategoryRepositoryTest {
         Book saveBook = bookRepository.save(book1);
         Category saveCategory = categoryRepository.save(category1);
 
-        BookCategory bookCategory = new BookCategory(new BookCategoryId(saveBook.getBookId(), saveCategory.getCategoryId()), saveCategory, saveBook);
+        BookCategory bookCategory = new BookCategory(new BookCategoryId(saveBook.getBookId(), saveCategory.getCategoryId()), saveCategory, saveBook,LocalDateTime.of(2010, 5, 5, 15, 30),LocalDateTime.of(2010, 5, 5, 15, 30));
         BookCategory save = bookCategoryRepository.save(bookCategory);
 
         List<BookCategoryResponseDto> categoryByBookId = bookCategoryRepository.findCategoryByBookId(saveBook.getBookId());
@@ -149,7 +149,7 @@ class BookCategoryRepositoryTest {
         Book saveBook = bookRepository.save(book1);
         Category saveCategory = categoryRepository.save(category1);
 
-        BookCategory bookCategory = new BookCategory(new BookCategoryId(saveBook.getBookId(), saveCategory.getCategoryId()), saveCategory, saveBook);
+        BookCategory bookCategory = new BookCategory(new BookCategoryId(saveBook.getBookId(), saveCategory.getCategoryId()), saveCategory, saveBook,LocalDateTime.of(2010, 5, 5, 15, 30),LocalDateTime.of(2010, 5, 5, 15, 30));
         BookCategory save = bookCategoryRepository.save(bookCategory);
 
         bookCategoryRepository.delete(bookCategory);
