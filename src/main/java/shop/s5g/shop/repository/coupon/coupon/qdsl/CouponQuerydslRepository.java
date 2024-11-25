@@ -1,6 +1,8 @@
 package shop.s5g.shop.repository.coupon.coupon.qdsl;
 
 import java.time.LocalDateTime;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import shop.s5g.shop.dto.coupon.coupon.CouponResponseDto;
 
 public interface CouponQuerydslRepository {
@@ -16,8 +18,12 @@ public interface CouponQuerydslRepository {
     // 활성화된 쿠폰인지 체크
     boolean checkActiveCoupon(Long couponId);
 
+    // 발급된 쿠폰 리스트 가져오기
+    Page<CouponResponseDto> getAllIssuedCoupons(Pageable pageable);
 
-    // 쿠폰 조회 ( 기간으로 조회 )
+    // 만료일 지난 쿠폰 비활성화 해주기
+    void deactivateExpiredCoupons();
 
-    // 사용한 쿠폰 조회 ( 기간으로 조회 )
+    // 해당 쿠폰이 만료일이 지났는 지 확인하기
+    boolean checkIfCouponExpired(Long couponId);
 }

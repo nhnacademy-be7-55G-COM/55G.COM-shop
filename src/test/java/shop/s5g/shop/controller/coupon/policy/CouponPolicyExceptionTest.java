@@ -79,7 +79,7 @@ class CouponPolicyExceptionTest {
             + "\"duration\":30}";
 
         // When
-        mockMvc.perform(patch("/api/shop/admin/coupons/policy/1")
+        mockMvc.perform(post("/api/shop/admin/coupons/policy/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(updateCouponPolicy))
             .andExpect(status().isBadRequest());

@@ -32,4 +32,9 @@ public class RefundImage {
 
     @Length(max = 50)
     private String imageName;
+
+    public RefundImage(RefundHistory history, String imageName) {
+        refundHistory =history;
+        this.imageName =imageName;
+    }
 }

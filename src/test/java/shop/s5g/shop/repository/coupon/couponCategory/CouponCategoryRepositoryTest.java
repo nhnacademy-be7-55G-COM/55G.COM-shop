@@ -111,7 +111,7 @@ class CouponCategoryRepositoryTest {
     void findAllCouponCategoryByCouponTemplate() {
 
         Pageable pageable = PageRequest.of(0, 10);
-        Page<CouponCategoryDetailsForCategoryDto> categoryList = couponCategoryRepository.findCategoryByCouponTemplateId(couponTemplate.getCouponTemplateId(), pageable);
+        Page<CouponCategoryDetailsForCategoryDto> categoryList = couponCategoryRepository.findCategoryInfoByCouponTemplate(pageable);
 
         assertNotNull(categoryList);
         assertEquals(1, categoryList.getTotalElements());

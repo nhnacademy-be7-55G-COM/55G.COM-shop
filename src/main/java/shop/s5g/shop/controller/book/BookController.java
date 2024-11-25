@@ -2,6 +2,8 @@ package shop.s5g.shop.controller.book;
 
 import jakarta.validation.Valid;
 import java.util.List;
+
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -26,16 +28,13 @@ import shop.s5g.shop.service.book.BookService;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/shop")
 public class BookController {
 
     private final String MSG_BAD_BOOK_ID = "도서 ID는 1보다 커야 합니다.";
 
     private final BookService bookService;
-
-    public BookController(BookService bookService) {
-        this.bookService = bookService;
-    }
 
     //도서 등록
     @PostMapping("/book")

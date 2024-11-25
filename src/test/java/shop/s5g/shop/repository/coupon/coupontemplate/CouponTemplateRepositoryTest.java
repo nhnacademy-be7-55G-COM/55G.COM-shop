@@ -23,6 +23,7 @@ import shop.s5g.shop.config.QueryFactoryConfig;
 import shop.s5g.shop.config.TestQueryFactoryConfig;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateRequestDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateResponseDto;
+import shop.s5g.shop.dto.coupon.template.CouponTemplateUpdateRequestDto;
 import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.BookStatus;
 import shop.s5g.shop.entity.Category;
@@ -109,15 +110,14 @@ class CouponTemplateRepositoryTest {
         CouponTemplate saveCouponTemplate = couponTemplateRepository.save(couponTemplate);
         saveCouponTemplate.setCouponDescription("이번 달 생일자들을 위한 생일 쿠폰입니다.");
 
-        CouponTemplateRequestDto couponTemplateRequestDto = new CouponTemplateRequestDto(
-            saveCouponTemplate.getCouponPolicy().getCouponPolicyId(),
+        CouponTemplateUpdateRequestDto couponTemplateRequestDto = new CouponTemplateUpdateRequestDto(
+            1L,
             saveCouponTemplate.getCouponName(),
             saveCouponTemplate.getCouponDescription()
         );
 
         couponTemplateRepository.updateCouponTemplate(
             saveCouponTemplate.getCouponTemplateId(),
-            saveCouponTemplate.getCouponPolicy(),
             couponTemplateRequestDto);
 
         CouponTemplateResponseDto couponTemplateResponseDto = couponTemplateRepository.findCouponTemplateById(couponTemplate.getCouponTemplateId());

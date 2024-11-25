@@ -82,30 +82,4 @@ class CouponBookServiceExceptionTest {
 
         assertEquals("해당 책은 판매중이 아닙니다.", exception.getMessage());
     }
-
-    @Test
-    @DisplayName("유효하지 않은 templateId가 전달될 때 IllegalArgumentException 발생")
-    void givenInvalidTemplateId_whenGetCouponBooksByTemplateId_thenThrowsIllegalArgumentException() {
-        // given
-        Long invalidTemplateId = -1L;
-        Pageable pageable = PageRequest.of(0, 10);
-
-        // when & then
-        assertThatThrownBy(() -> couponBookService.getCouponBooksByTemplateId(invalidTemplateId, pageable))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("잘못된 템플릿 아이디 값 요청입니다.");
-    }
-
-    @Test
-    @DisplayName("유효하지 않은 bookId가 전달될 때 IllegalArgumentException 발생")
-    void givenInvalidBookId_whenGetCouponBooksByBookId_thenThrowsIllegalArgumentException() {
-        // given
-        Long invalidBookId = -1L;
-        Pageable pageable = PageRequest.of(0, 10);
-
-        // when & then
-        assertThatThrownBy(() -> couponBookService.getCouponBooksByBookId(invalidBookId, pageable))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("잘못된 책 아이디 값 요청입니다.");
-    }
 }

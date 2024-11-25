@@ -80,15 +80,13 @@ public class CouponBookController {
 
     /**
      * 특정 템플릿이 적용된 책 조회 - API
-     * @param templateId
      * @param pageable
      * @return Page<CouponBookDetailsForBookDto>
      */
-    @GetMapping("/books/template/{templateId}")
-    public ResponseEntity<PageResponseDto<CouponBookDetailsForBookDto>> getCouponBooksByTemplateId(@PathVariable("templateId") Long templateId,
-        Pageable pageable) {
+    @GetMapping("/books/templates")
+    public ResponseEntity<PageResponseDto<CouponBookDetailsForBookDto>> getCouponBooksByTemplateId(Pageable pageable) {
 
-        Page<CouponBookDetailsForBookDto> bookList = couponBookService.getCouponBooksByTemplateId(templateId, pageable);
+        Page<CouponBookDetailsForBookDto> bookList = couponBookService.getCouponBooksByTemplateId(pageable);
 
         return ResponseEntity.status(HttpStatus.OK)
             .body(PageResponseDto.of(bookList));

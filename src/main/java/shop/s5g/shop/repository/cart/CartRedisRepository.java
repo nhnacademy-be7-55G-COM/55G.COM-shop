@@ -53,7 +53,7 @@ public class CartRedisRepository {
 
     }
 
-    public void putBook(Long bookId,Integer quantity,String customerLoginId) {
+    public int putBook(Long bookId,Integer quantity,String customerLoginId) {
 
         CartFieldValue quantityStatus = (CartFieldValue) redisTemplate.opsForHash()
             .get(CART + customerLoginId, bookId);
@@ -61,11 +61,13 @@ public class CartRedisRepository {
         if (Objects.isNull(quantityStatus)) {
             redisTemplate.opsForHash()
                 .put(CART + customerLoginId, bookId, new CartFieldValue(quantity, true));
-
+            return 1;
         }else {
             quantityStatus.setQuantity(quantityStatus.getQuantity() + quantity);
 
             redisTemplate.opsForHash().put(CART + customerLoginId, bookId, quantityStatus);
+
+            return 0;
         }
 
 

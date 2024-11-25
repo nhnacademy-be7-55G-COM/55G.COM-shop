@@ -56,4 +56,18 @@ public class CouponTemplate {
         this.active = true;
     }
 
+    @Getter
+    public enum CouponTemplateType {
+        WELCOME("Welcome"),
+        BIRTH("Birth"),
+        BOOK("Book"),
+        CATEGORY("Category"),
+        FREE("Free");
+
+        private final String typeName;
+
+        private CouponTemplateType(String typeName) {
+            this.typeName = typeName;
+        }
+    }
 }

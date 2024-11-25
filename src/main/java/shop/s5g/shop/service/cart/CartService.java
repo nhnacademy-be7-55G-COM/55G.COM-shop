@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import shop.s5g.shop.dto.cart.request.CartBookInfoRequestDto;
 import shop.s5g.shop.dto.cart.request.CartBookSelectRequestDto;
+import shop.s5g.shop.dto.cart.request.CartLocalStorageWithStatusRequestDto;
 import shop.s5g.shop.dto.cart.request.CartSessionStorageDto;
 import shop.s5g.shop.dto.cart.response.CartBooksResponseDto;
 import shop.s5g.shop.dto.cart.response.CartDetailInfoResponseDto;
@@ -21,7 +22,8 @@ public interface CartService {
 
     void FromRedisToDb(String customerLoginId);
 
-    List<CartBooksResponseDto> lookUpAllBooksWhenGuest(CartSessionStorageDto cartSessionStorageDto);
+    List<CartBooksResponseDto> lookUpAllBooksWhenGuest(
+        CartLocalStorageWithStatusRequestDto cartLocalStorageDto);
 
     void removeAccount(String customerLoginId);
 
@@ -41,7 +43,7 @@ public interface CartService {
 
     void controlQuantity(Long bookId, int change, String customerLoginId);
 
-    void putBook(Long bookId, Integer quantity, String customerLoginId);
+    int putBook(Long bookId, Integer quantity, String customerLoginId);
 
     void reduceBookQuantity(Long bookId, String customerLoginId);
 

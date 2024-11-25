@@ -6,8 +6,6 @@ import org.springframework.http.ResponseEntity;
 import shop.s5g.shop.dto.tag.TagRequestDto;
 import shop.s5g.shop.dto.tag.TagResponseDto;
 
-import java.util.List;
-
 public interface TagService {
     void createtag(TagRequestDto tagDto);
     Page<TagResponseDto> allTag(Pageable pageable);

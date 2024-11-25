@@ -1,23 +1,27 @@
 package shop.s5g.shop.service.coupon.coupon.impl;
 
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang.RandomStringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.coupon.coupon.CouponRequestDto;
 import shop.s5g.shop.dto.coupon.coupon.CouponResponseDto;
 import shop.s5g.shop.entity.coupon.Coupon;
-import shop.s5g.shop.entity.coupon.Coupon.CouponType;
 import shop.s5g.shop.entity.coupon.CouponTemplate;
+import shop.s5g.shop.entity.coupon.CouponTemplate.CouponTemplateType;
 import shop.s5g.shop.exception.coupon.CouponAlreadyDeletedException;
 import shop.s5g.shop.exception.coupon.CouponNotFoundException;
+import shop.s5g.shop.exception.coupon.CouponPolicyNotFoundException;
 import shop.s5g.shop.exception.coupon.CouponTemplateNotFoundException;
 import shop.s5g.shop.repository.coupon.coupon.CouponRepository;
+import shop.s5g.shop.repository.coupon.policy.CouponPolicyRepository;
 import shop.s5g.shop.repository.coupon.template.CouponTemplateRepository;
 import shop.s5g.shop.service.coupon.coupon.CouponService;
 
@@ -28,6 +32,7 @@ public class CouponServiceImpl implements CouponService {
 
     private final CouponRepository couponRepository;
     private final CouponTemplateRepository couponTemplateRepository;
+    private final CouponPolicyRepository couponPolicyRepository;
 
     /**
      * 쿠폰 생성 ( 1 ~ n개 생성 가능 )
@@ -44,16 +49,34 @@ public class CouponServiceImpl implements CouponService {
         CouponTemplate couponTemplate = couponTemplateRepository.findById(couponRequestDto.couponTemplateId())
             .orElseThrow(() -> new CouponTemplateNotFoundException("쿠폰 템플릿을 찾을 수 없습니다."));
 
+        Integer duration = couponTemplateRepository.findCouponPolicyDurationByCouponTemplateId(couponRequestDto.couponTemplateId());
+
+        if (Objects.isNull(duration)) {
+            throw new CouponPolicyNotFoundException("해당 쿠폰 정책이 존재하지 않습니다.");
+        }
+
+        Set<String> uniqueCode = new HashSet<>();
         Set<Coupon> couponSet = new HashSet<>();
 
-        while (couponSet.size() < couponCnt) {
-            couponSet.add(
-                new Coupon(
-                    couponTemplate,
-                    createCouponNumber(),
-                    LocalDateTime.now().plusDays(couponTemplate.getCouponPolicy().getDuration())
-                )
-            );
+        // 필요한 수량만큼 쿠폰 코드 생성
+        while (uniqueCode.size() < couponCnt) {
+            String couponCode = createCouponNumber();
+
+            if (couponRepository.existsCouponByCouponCode(couponCode)) {
+                continue;
+            }
+
+            uniqueCode.add(couponCode);
+        }
+
+        // 고유한 코드로 쿠폰 생성
+        for (String code : uniqueCode) {
+
+            couponSet.add(new Coupon(
+                couponTemplate,
+                code,
+                LocalDateTime.now().plusDays(duration)
+            ));
         }
 
         couponRepository.saveAll(couponSet);
@@ -67,10 +90,10 @@ public class CouponServiceImpl implements CouponService {
     public Coupon createWelcomeCoupon() {
 
         CouponTemplate welcomeTemplate = couponTemplateRepository.findParticularCouponByName(
-            CouponType.WELCOME.name());
+            CouponTemplateType.WELCOME.getTypeName());
 
         if (Objects.isNull(welcomeTemplate)) {
-            throw new CouponTemplateNotFoundException("해당 쿠폰 템플릿이 존재하지 않습니다.");
+            return null;
         }
 
         return couponRepository.save(
@@ -90,7 +113,7 @@ public class CouponServiceImpl implements CouponService {
     public Coupon createBirthCoupon() {
 
         CouponTemplate birthTemplate = couponTemplateRepository.findParticularCouponByName(
-            CouponType.BIRTH.name()
+            CouponTemplateType.BIRTH.getTypeName()
         );
 
         if (Objects.isNull(birthTemplate)) {
@@ -107,6 +130,30 @@ public class CouponServiceImpl implements CouponService {
                 birthTemplate,
                 createCouponNumber(),
                 lastDayOfMonth
+            )
+        );
+    }
+
+    /**
+     * 카테고리와 북 쿠폰 생성
+     * @return Coupon - 생성된 쿠폰
+     */
+    @Override
+    public Coupon createCategoryCoupon() {
+
+        CouponTemplate categoryTemplate = couponTemplateRepository.findParticularCouponByName(
+            CouponTemplateType.CATEGORY.getTypeName()
+        );
+
+        if (Objects.isNull(categoryTemplate)) {
+            throw new CouponTemplateNotFoundException("해당 쿠폰 템플릿이 존재하지 않습니다.");
+        }
+
+        return couponRepository.save(
+            new Coupon(
+                categoryTemplate,
+                createCouponNumber(),
+                null
             )
         );
     }
@@ -130,6 +177,16 @@ public class CouponServiceImpl implements CouponService {
         }
 
         return couponResponseDto;
+    }
+
+    /**
+     * 발급한 모든 쿠폰 조회
+     * @param pageable
+     * @return Page<CouponResponseDto> - paging 처리
+     */
+    @Override
+    public Page<CouponResponseDto> getAllCouponList(Pageable pageable) {
+        return couponRepository.getAllIssuedCoupons(pageable);
     }
 
     /**
@@ -180,6 +237,17 @@ public class CouponServiceImpl implements CouponService {
      * @return String
      */
     private String createCouponNumber() {
-        return RandomStringUtils.randomAlphanumeric(15);
+
+        final String ALPHANUMERIC = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        final SecureRandom random = new SecureRandom();
+
+        StringBuilder couponNumber = new StringBuilder(15);
+        for (int i = 0; i < 15; i++) {
+            int number = random.nextInt(ALPHANUMERIC.length());
+            couponNumber.append(ALPHANUMERIC.charAt(number));
+        }
+
+        return couponNumber.toString();
+
     }
 }

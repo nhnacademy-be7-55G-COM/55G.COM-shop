@@ -176,7 +176,7 @@ class CouponBookRepositoryTest {
     void findBooksByCouponBook() {
 
         Pageable pageable = PageRequest.of(0, 10);
-        Page<CouponBookDetailsForBookDto> bookList = couponBookRepository.findCouponBooksByCouponTemplateId(bookCouponTemplate.getCouponTemplateId(), pageable);
+        Page<CouponBookDetailsForBookDto> bookList = couponBookRepository.findCouponBooksInfo(pageable);
 
         assertNotNull(bookList);
         assertEquals(1, bookList.getContent().size());

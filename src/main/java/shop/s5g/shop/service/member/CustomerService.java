@@ -14,4 +14,6 @@ public interface CustomerService {
     CustomerResponseDto getCustomer(long customerId);
 
     void deleteCustomer(long customerId);
+
+    Customer addCustomerByMember(Customer customer);
 }
