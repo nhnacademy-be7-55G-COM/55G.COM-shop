@@ -68,6 +68,7 @@ public class UserCouponQuerydslRepositoryImpl extends QuerydslRepositorySupport 
         List<ValidUserCouponResponseDto> userCouponList = queryFactory
             .select(Projections.constructor(ValidUserCouponResponseDto.class,
                 coupon.couponId,
+                couponTemplate.couponTemplateId,
                 coupon.couponCode,
                 couponTemplate.couponName,
                 coupon.createdAt,

@@ -130,6 +130,19 @@ public class UserCouponServiceImpl implements UserCouponService {
     }
 
     /**
+     * 유저에게 쿠폰 넣어주기
+     * @param customerId
+     * @param couponTemplateId
+     */
+    @Override
+    public void addUserCoupon(Long customerId, Long couponTemplateId) {
+        // TODO 1. - redis : 쿠폰 갯수가 있는 지 체크 ( front 단에서도 더블 체크를 할 예정임 )
+        // TODO 2. - redis : 사용자가 이미 쿠폰이 있는 지 체크
+        // TODO 3. - redis : 사용자가 쿠폰이 없다면 userCoupon 안에 넣어주기
+        // TODO 4. - redis : 쿠폰을 넣어줬다면 redis 발급받은 유저 목록에 넣어주기
+    }
+
+    /**
      * 멤버 조회
      * @param memberId
      * @return Member

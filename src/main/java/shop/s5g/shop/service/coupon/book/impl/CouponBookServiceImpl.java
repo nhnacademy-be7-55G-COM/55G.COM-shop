@@ -49,12 +49,10 @@ public class CouponBookServiceImpl implements CouponBookService {
         CouponTemplate couponTemplate = couponTemplateRepository.findById(couponBookRequestDto.couponTemplateId())
             .orElseThrow(() -> new CouponTemplateNotFoundException("해당 쿠폰 템플릿을 찾을 수 없습니다."));
 
-        //TODO 테스트 코드 작성 예정
         if (!couponTemplateRepository.checkActiveCouponTemplate(couponTemplate.getCouponTemplateId())) {
             throw new CouponTemplateNotFoundException("해당 쿠폰 템플릿은 삭제된 템플릿입니다.");
         }
 
-        //TODO 테스트 코드 작성 예정
         if (couponBookRepository.existsByBookAndCouponTemplate(book.getBookId(), couponTemplate.getCouponTemplateId())) {
             throw new CouponBookAlreadyExistsException("해당 책에 대한 쿠폰이 이미 존재합니다.");
         }

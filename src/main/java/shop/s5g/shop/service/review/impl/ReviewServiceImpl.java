@@ -6,11 +6,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import shop.s5g.shop.dto.PageResponseDto;
+import shop.s5g.shop.dto.point.PointHistoryCreateRequestDto;
+import shop.s5g.shop.dto.point.PointPolicyView;
 import shop.s5g.shop.dto.review.ReviewRequestDto;
 import shop.s5g.shop.dto.review.ReviewResponseDto;
 import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.member.Member;
 import shop.s5g.shop.entity.order.OrderDetail;
+import shop.s5g.shop.entity.point.PointSource.Name;
 import shop.s5g.shop.entity.review.Review;
 import shop.s5g.shop.entity.review.ReviewImage;
 import shop.s5g.shop.exception.book.BookResourceNotFoundException;
@@ -22,6 +25,8 @@ import shop.s5g.shop.repository.member.MemberRepository;
 import shop.s5g.shop.repository.order.OrderDetailRepository;
 import shop.s5g.shop.repository.review.ReviewImageRepository;
 import shop.s5g.shop.repository.review.ReviewRepository;
+import shop.s5g.shop.service.point.PointHistoryService;
+import shop.s5g.shop.service.point.PointPolicyService;
 import shop.s5g.shop.service.review.ReviewService;
 
 @Service
@@ -33,6 +38,8 @@ public class ReviewServiceImpl implements ReviewService {
     private final BookRepository bookRepository;
     private final MemberRepository memberRepository;
     private final OrderDetailRepository orderDetailRepository;
+    private final PointPolicyService pointPolicyService;
+    private final PointHistoryService pointHistoryService;
 
     @Override
     public void registerReview(ReviewRequestDto reviewRequestDto, Long customerId) {
@@ -53,6 +60,16 @@ public class ReviewServiceImpl implements ReviewService {
         Review review = new Review(book, member, orderDetail, reviewRequestDto.score(),
             reviewRequestDto.content());
         reviewRepository.save(review);
+
+        String pointPolicyName = reviewRequestDto.imagePathList().isEmpty() ? "리뷰" : "리뷰-사진";
+
+        PointPolicyView pointPolicy = pointPolicyService.getPolicy(pointPolicyName);
+
+        long pointOffset = pointPolicy.getValue().longValue();
+
+        PointHistoryCreateRequestDto pointHistoryCreateRequestDto = new PointHistoryCreateRequestDto(
+            Name.REVIEW.getDataName(), pointOffset);
+        pointHistoryService.createPointHistory(customerId, pointHistoryCreateRequestDto);
 
         // 리뷰 이미지 저장
         if (!reviewRequestDto.imagePathList().isEmpty()) {

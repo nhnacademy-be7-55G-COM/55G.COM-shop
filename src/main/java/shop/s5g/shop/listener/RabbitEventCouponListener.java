@@ -3,9 +3,10 @@ package shop.s5g.shop.listener;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
-import shop.s5g.shop.dto.tag.MessageDto;
+import shop.s5g.shop.dto.coupon.user.UserCouponRabbitResponseDto;
 import shop.s5g.shop.service.coupon.user.UserCouponService;
 
 @Slf4j
@@ -20,43 +21,23 @@ public class RabbitEventCouponListener {
         concurrency = "1",
         executor = "rabbitExecutor", messageConverter = "jacksonMessageConverter"
     )
-    public MessageDto giveEventCoupon(Long customerId) {
+    public UserCouponRabbitResponseDto giveEventCoupon(Map<String, Object> body) {
 
-        return new MessageDto("Success");
+        long memberId = ((Number) body.get("memberId")).longValue();
+        long couponId = ((Number) body.get("couponId")).longValue();
+        long couponTemplateId = ((Number) body.get("couponTemplateId")).longValue();
+
+        log.debug("Rabbit Coupon request received for memberId = {} & couponId = {} & couponTemplateId = {}",
+            memberId, couponId, couponTemplateId);
+
+        return new UserCouponRabbitResponseDto(true, "Success");
     }
 
     @RabbitListener(
         queues = "${rabbit.coupon.event.create.dlq}",
         concurrency = "1",
-        executor = "rabbitExecutor", messageConverter = "jacksonMessageConverter"
+        executor = "rabbitExecutor"
     )
-    public MessageDto deadEventCoupon(Long customerId) {
-
-        return new MessageDto("Failed");
-    }
-
-    @RabbitListener(
-        queues = "${rabbit.category.event.coupon.create.queue}",
-        concurrency = "1",
-        executor = "rabbitExecutor", messageConverter = "jacksonMessageConverter"
-    )
-    public MessageDto receiveCategoryCoupon(Map<String, Object> body) {
-
-//        String categoryName = (String) body.get("categoryName");
-//        Long currentMemberId = ((Number) body.get("memberId")).longValue();
-//
-//        userCouponService.createCategoryCoupon(currentMemberId, categoryName);
-
-        return new MessageDto("Success");
-    }
-
-    @RabbitListener(
-        queues = "${rabbit.category.event.coupon.create.dlq}",
-        concurrency = "1",
-        executor = "rabbitExecutor", messageConverter = "jacksonMessageConverter"
-    )
-    public MessageDto deadReceiveCategoryCoupon(Long customerId) {
-
-        return new MessageDto("Failed");
+    public void deadEventCoupon(Message failedMessage) {
     }
 }

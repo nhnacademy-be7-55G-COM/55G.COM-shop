@@ -7,6 +7,7 @@ import shop.s5g.shop.repository.book.category.qdsl.BookCategoryQuerydslRepositor
 
 public interface BookCategoryRepository extends JpaRepository<BookCategory, BookCategoryId>, BookCategoryQuerydslRepository {
 
+    void deleteByBookBookId(Long bookId);
 }
 
 

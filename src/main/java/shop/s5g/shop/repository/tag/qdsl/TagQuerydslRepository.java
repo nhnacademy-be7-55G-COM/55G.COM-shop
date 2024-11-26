@@ -11,4 +11,5 @@ public interface TagQuerydslRepository {
     Page<TagResponseDto> findAllTag(Pageable pageable);
     void updateTag(Long tagId, TagRequestDto tagDto);
     void inactiveTag(Long tagId);
+    List<TagResponseDto> findByTagNameList(String keyword);
 }

@@ -9,6 +9,9 @@ public record ValidUserCouponResponseDto(
     @NotNull
     Long couponId,
 
+    @NotNull
+    Long couponTemplateId,
+
     @NotBlank
     String couponCode,
 
