@@ -1,5 +1,8 @@
 package shop.s5g.shop.listener;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.exception.ExceptionUtils;
@@ -22,6 +25,9 @@ public class RabbitPaymentListener {
     private final AbstractPaymentManager paymentManager;
     private final OrderService orderService;
     private final RabbitTemplate rabbitTemplate;
+    private final ObjectMapper objectMapper;
+
+    private static final TypeReference<Map<String, Object>> type = new TypeReference<Map<String, Object>>() {};
     private static final String X_COUNT_HEADER = "x-retry-count";
 
     @Value("${rabbit.retry-count}")
@@ -37,11 +43,13 @@ public class RabbitPaymentListener {
         @Qualifier("tossPaymentsManager")
         AbstractPaymentManager paymentManager,
         OrderService orderService,
-        RabbitTemplate rabbitTemplate
+        RabbitTemplate rabbitTemplate,
+        ObjectMapper objectMapper
     ) {
         this.paymentManager = paymentManager;
         this.orderService = orderService;
         this.rabbitTemplate = rabbitTemplate;
+        this.objectMapper = objectMapper;
     }
 
     @RabbitListener(
@@ -84,6 +92,13 @@ public class RabbitPaymentListener {
         }
         if (count > retryCount) {
             log.warn("Message discarded: {}", new String(failedMessage.getBody()));
+            try {
+                Map<String, Object> msg = objectMapper.readValue(failedMessage.getBody(), type);
+                long orderDataId = ((Number) msg.get("orderDataId")).longValue();
+                orderService.deactivateOrder(orderDataId);
+            }catch (IOException e) {
+                log.error("IOException while deserializing message", e);
+            }
             return;
         }
         log.info("Message retrying count: {}", count);
