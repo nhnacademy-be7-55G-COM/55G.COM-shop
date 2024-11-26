@@ -40,6 +40,7 @@ import shop.s5g.shop.dto.order.OrderWithDetailResponseDto;
 import shop.s5g.shop.exception.ResourceNotFoundException;
 import shop.s5g.shop.exception.member.CustomerNotFoundException;
 import shop.s5g.shop.filter.JwtAuthenticationFilter;
+import shop.s5g.shop.service.member.CustomerService;
 import shop.s5g.shop.service.order.OrderDetailService;
 import shop.s5g.shop.service.order.OrderService;
 
@@ -61,6 +62,9 @@ class OrderControllerTest {
 
     @MockBean
     OrderDetailService orderDetailService;
+
+    @MockBean
+    CustomerService customerService;
 
     @SpyBean
     RestWebAdvice advice;

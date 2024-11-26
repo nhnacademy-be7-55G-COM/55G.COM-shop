@@ -6,4 +6,5 @@ import shop.s5g.shop.entity.booktag.BookTagId;
 import shop.s5g.shop.repository.booktag.qdsl.BookTagQuerydslRepository;
 
 public interface BookTagRepository extends JpaRepository<BookTag, BookTagId>, BookTagQuerydslRepository {
+    void deleteByBookBookId(Long bookId);
 }

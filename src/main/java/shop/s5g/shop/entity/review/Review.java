@@ -8,7 +8,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,6 +48,9 @@ public class Review {
     private LocalDateTime reviewAt;
 
     private boolean active;
+
+    @OneToMany(mappedBy = "review")
+    private List<ReviewImage> reviewImages = new ArrayList<>();
 
     public Review(Book book, Member member, OrderDetail orderDetail, int score, String content) {
         this.book = book;

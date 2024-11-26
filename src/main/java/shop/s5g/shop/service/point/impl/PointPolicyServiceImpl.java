@@ -5,7 +5,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.point.PointPolicyResponseDto;
+import shop.s5g.shop.dto.point.PointPolicyUpdateRequestDto;
 import shop.s5g.shop.dto.point.PointPolicyView;
+import shop.s5g.shop.entity.point.PointPolicy;
+import shop.s5g.shop.exception.BadRequestException;
 import shop.s5g.shop.exception.EssentialDataNotFoundException;
 import shop.s5g.shop.repository.point.PointPolicyRepository;
 import shop.s5g.shop.service.point.PointPolicyService;
@@ -28,5 +31,16 @@ public class PointPolicyServiceImpl implements PointPolicyService {
         return pointPolicyRepository.findByName(name).orElseThrow(
             () -> new EssentialDataNotFoundException("Point policy does not exist: "+name)
         );
+    }
+
+    @Override
+    public void updatePolicyValue(PointPolicyUpdateRequestDto pointPolicyUpdateRequestDto) {
+
+        PointPolicy pointPolicy = pointPolicyRepository.findById(pointPolicyUpdateRequestDto.id())
+            .orElseThrow(BadRequestException::new);
+
+        pointPolicy.setValue(pointPolicyUpdateRequestDto.value());
+
+        pointPolicyRepository.save(pointPolicy);
     }
 }
