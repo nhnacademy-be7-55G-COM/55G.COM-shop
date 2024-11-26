@@ -157,12 +157,17 @@ public class UserCouponServiceImpl implements UserCouponService {
 
         // 사용자가 쿠폰이 없다면 user 에게 쿠폰 넣어주기
         Member member = getMemberById(customerId);
-        Coupon coupon = couponRedisService.popIssuedCoupon(couponTemplateId);
+        String couponCode = couponRedisService.popIssuedCoupon(couponTemplateId);
+
+        Coupon coupon = couponService.getCouponByCode(couponCode);
 
         coupon.setCreatedAt(LocalDateTime.now());
         coupon.setExpiredAt(coupon.getCreatedAt().plusDays(templateDuration));
 
         userCouponRepository.save(new UserCoupon(member, coupon));
+
+        // 해당 쿠폰 수량 하나 지워주기
+        couponRedisService.decreaseCouponCnt(couponTemplateId);
 
         // 쿠폰을 넣어줬다면 redis 발급받은 유저 목록에 넣어주기
         couponRedisService.addUserCoupon(couponTemplateId, customerId);

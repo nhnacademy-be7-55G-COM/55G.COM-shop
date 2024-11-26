@@ -164,6 +164,7 @@ public class CouponQuerydslRepositoryImpl extends QuerydslRepositorySupport impl
 
         List<AvailableCouponResponseDto> availableCouponList = jpaQueryFactory
             .select(Projections.constructor(AvailableCouponResponseDto.class,
+                coupon.couponId.min(),
                 coupon.couponTemplate.couponTemplateId,
                 couponTemplate.couponName,
                 coupon.createdAt.min(),

@@ -61,7 +61,7 @@ public class RabbitEventCouponListener {
             return new UserCouponRabbitResponseDto(false, "Failed");
         }
 
-        return new UserCouponRabbitResponseDto(true, "Success");
+        return new UserCouponRabbitResponseDto(true, "Message Success");
     }
 
     @RabbitListener(

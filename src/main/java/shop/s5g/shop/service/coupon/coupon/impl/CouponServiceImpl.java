@@ -71,7 +71,7 @@ public class CouponServiceImpl implements CouponService {
             );
             // 한 번에 쿠폰 천장까지만 저장할 예정
             if (saveCouponCnt < 1000) {
-                couponRedisService.addIssuedCoupon(couponTemplate.getCouponTemplateId(), coupon);
+                couponRedisService.addIssuedCoupon(couponTemplate.getCouponTemplateId(), code);
             }
             couponSet.add(coupon);
 
@@ -158,6 +158,17 @@ public class CouponServiceImpl implements CouponService {
                 null
             )
         );
+    }
+
+    /**
+     * 쿠폰 조회
+     * @param couponCode
+     * @return Coupon
+     */
+    @Override
+    public Coupon getCouponByCode(String couponCode) {
+
+        return couponRepository.findByCouponCode(couponCode);
     }
 
     /**

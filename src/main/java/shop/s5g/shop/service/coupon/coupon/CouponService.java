@@ -18,6 +18,7 @@ public interface CouponService {
     Coupon createCategoryCoupon();
 
     // 쿠폰 가져오기
+    Coupon getCouponByCode(String couponCode);
     CouponResponseDto getCoupon(Long couponId);
     Page<CouponResponseDto> getAllCouponList(Pageable pageable);
 

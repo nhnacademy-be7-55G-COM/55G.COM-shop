@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import shop.s5g.shop.config.RedisConfig;
-import shop.s5g.shop.entity.coupon.Coupon;
 import shop.s5g.shop.repository.coupon.template.CouponTemplateRepository;
 
 @Slf4j
@@ -67,13 +66,13 @@ public class CouponRedisService {
     /**
      * 발급된 쿠폰 - 사용자에게 넣어주기 전 redis 에 넣어놓을 Coupon List
      * @param couponTemplateId
-     * @param coupon
+     * @param couponCode
      */
-    public void addIssuedCoupon(Long couponTemplateId, Coupon coupon) {
+    public void addIssuedCoupon(Long couponTemplateId, String couponCode) {
 
         String key = COUPON_PREFIX + couponTemplateId;
 
-        redisTemplate.opsForList().rightPush(key, coupon);
+        redisTemplate.opsForList().rightPush(key, couponCode);
     }
 
     /**
@@ -81,11 +80,11 @@ public class CouponRedisService {
      * @param couponTemplateId
      * @return Coupon
      */
-    public Coupon popIssuedCoupon(Long couponTemplateId) {
+    public String popIssuedCoupon(Long couponTemplateId) {
 
         String key = COUPON_PREFIX + couponTemplateId;
 
-        return (Coupon) redisTemplate.opsForList().leftPop(key);
+        return (String) redisTemplate.opsForList().leftPop(key);
     }
 
     /**
