@@ -1,11 +1,11 @@
 package shop.s5g.shop.service.coupon.coupon.impl;
 
-import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,10 +19,8 @@ import shop.s5g.shop.entity.coupon.CouponTemplate;
 import shop.s5g.shop.entity.coupon.CouponTemplate.CouponTemplateType;
 import shop.s5g.shop.exception.coupon.CouponAlreadyDeletedException;
 import shop.s5g.shop.exception.coupon.CouponNotFoundException;
-import shop.s5g.shop.exception.coupon.CouponPolicyNotFoundException;
 import shop.s5g.shop.exception.coupon.CouponTemplateNotFoundException;
 import shop.s5g.shop.repository.coupon.coupon.CouponRepository;
-import shop.s5g.shop.repository.coupon.policy.CouponPolicyRepository;
 import shop.s5g.shop.repository.coupon.template.CouponTemplateRepository;
 import shop.s5g.shop.service.coupon.coupon.CouponService;
 
@@ -33,7 +31,6 @@ public class CouponServiceImpl implements CouponService {
 
     private final CouponRepository couponRepository;
     private final CouponTemplateRepository couponTemplateRepository;
-    private final CouponPolicyRepository couponPolicyRepository;
 
     /**
      * 쿠폰 생성 ( 1 ~ n개 생성 가능 )
@@ -50,37 +47,32 @@ public class CouponServiceImpl implements CouponService {
         CouponTemplate couponTemplate = couponTemplateRepository.findById(couponRequestDto.couponTemplateId())
             .orElseThrow(() -> new CouponTemplateNotFoundException("쿠폰 템플릿을 찾을 수 없습니다."));
 
-        Integer duration = couponTemplateRepository.findCouponPolicyDurationByCouponTemplateId(couponRequestDto.couponTemplateId());
-
-        if (Objects.isNull(duration)) {
-            throw new CouponPolicyNotFoundException("해당 쿠폰 정책이 존재하지 않습니다.");
-        }
-
         Set<String> uniqueCode = new HashSet<>();
         Set<Coupon> couponSet = new HashSet<>();
 
-        // 필요한 수량만큼 쿠폰 코드 생성
         while (uniqueCode.size() < couponCnt) {
-            String couponCode = createCouponNumber();
+            String couponCode = createUniqueCouponNumber();
 
-            if (couponRepository.existsCouponByCouponCode(couponCode)) {
+            if (uniqueCode.contains(couponCode)) {
                 continue;
             }
-
             uniqueCode.add(couponCode);
         }
 
-        // 고유한 코드로 쿠폰 생성
         for (String code : uniqueCode) {
 
             couponSet.add(new Coupon(
                 couponTemplate,
                 code,
-                LocalDateTime.now().plusDays(duration)
+                null,
+                null
             ));
         }
 
+        //TODO 0. - redis : 발급된 갯수만큼 레디스에 넣어주기 (List 형식으로 pop 으로 쉽게 빼가면 되지 않을까?)
+
         couponRepository.saveAll(couponSet);
+
     }
 
     /**
@@ -100,7 +92,7 @@ public class CouponServiceImpl implements CouponService {
         return couponRepository.save(
             new Coupon(
                 welcomeTemplate,
-                createCouponNumber(),
+                createUniqueCouponNumber(),
                 LocalDateTime.now().plusDays(30)
             )
         );
@@ -129,7 +121,7 @@ public class CouponServiceImpl implements CouponService {
         return couponRepository.save(
             new Coupon(
                 birthTemplate,
-                createCouponNumber(),
+                createUniqueCouponNumber(),
                 lastDayOfMonth
             )
         );
@@ -153,7 +145,7 @@ public class CouponServiceImpl implements CouponService {
         return couponRepository.save(
             new Coupon(
                 categoryTemplate,
-                createCouponNumber(),
+                createUniqueCouponNumber(),
                 null
             )
         );
@@ -248,19 +240,26 @@ public class CouponServiceImpl implements CouponService {
      * 쿠폰 번호 랜덤 생성
      * @return String
      */
-    //TODO UUID 와 같이 여기서 고유성을 체크해줘야함
-    private String createCouponNumber() {
+    private String createUniqueCouponNumber() {
 
-        final String ALPHANUMERIC = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        final SecureRandom random = new SecureRandom();
+        String uuid = UUID.randomUUID().toString();
 
-        StringBuilder couponNumber = new StringBuilder(15);
-        for (int i = 0; i < 15; i++) {
-            int number = random.nextInt(ALPHANUMERIC.length());
-            couponNumber.append(ALPHANUMERIC.charAt(number));
+        String base62Encoded = encodeBase62(uuid.getBytes());
+
+        return base62Encoded.substring(0, 15);
+
+    }
+
+    private String encodeBase62(byte[] input) {
+
+        String BASE62 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        StringBuilder result = new StringBuilder();
+
+        for (byte b : input) {
+            result.append(BASE62.charAt(((b & 0xFF) % BASE62.length())));
         }
 
-        return couponNumber.toString();
-
+        return result.toString();
     }
 }

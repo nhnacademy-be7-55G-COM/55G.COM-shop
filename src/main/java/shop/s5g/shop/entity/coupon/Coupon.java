@@ -55,4 +55,13 @@ public class Coupon {
         this.active = true;
     }
 
+    // 시작일 지정 가능
+    public Coupon(CouponTemplate couponTemplate, String couponCode, LocalDateTime createdAt, LocalDateTime expiredAt) {
+        this.couponTemplate = couponTemplate;
+        this.couponCode = couponCode;
+        this.createdAt = createdAt;
+        this.expiredAt = expiredAt;
+        this.usedAt = null;
+        this.active = true;
+    }
 }

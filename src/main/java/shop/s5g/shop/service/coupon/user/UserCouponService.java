@@ -23,4 +23,6 @@ public interface UserCouponService {
 
     // 기간이 지났거나 사용한 쿠폰 조회
     Page<InValidUsedCouponResponseDto> getInValidCoupons(Long customerId, Pageable pageable);
+
+    void addUserCoupon(Long customerId, Long couponTemplateId);
 }
