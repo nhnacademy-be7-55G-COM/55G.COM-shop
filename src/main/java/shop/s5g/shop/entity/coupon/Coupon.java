@@ -15,6 +15,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 @Getter
@@ -37,10 +38,13 @@ public class Coupon {
     @Length(min = 8, max = 50)
     private String couponCode;
 
+    @Setter
     private LocalDateTime createdAt;
 
+    @Setter
     private LocalDateTime expiredAt;
 
+    @Setter
     private LocalDateTime usedAt;
 
     @NotNull

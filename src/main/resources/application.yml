@@ -37,11 +37,14 @@ rabbit:
   retry-count: 5
   exchange:
     orders: 55g.orders.exchange
+    coupons: 55g.coupon.exchange
 
   route:
     orders:
       payment:
         toss: 55g.orders.payment.toss
+    coupons:
+      event: 55g.coupon.create
 
   orders:
     payment:

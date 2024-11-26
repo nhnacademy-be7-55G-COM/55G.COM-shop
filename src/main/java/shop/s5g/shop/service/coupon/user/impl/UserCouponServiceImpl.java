@@ -1,5 +1,6 @@
 package shop.s5g.shop.service.coupon.user.impl;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,11 +14,14 @@ import shop.s5g.shop.dto.coupon.user.ValidUserCouponResponseDto;
 import shop.s5g.shop.entity.coupon.Coupon;
 import shop.s5g.shop.entity.coupon.UserCoupon;
 import shop.s5g.shop.entity.member.Member;
+import shop.s5g.shop.exception.coupon.CouponAlreadyIssuedException;
 import shop.s5g.shop.exception.coupon.CouponCategoryAlreadyExistsException;
+import shop.s5g.shop.exception.coupon.CouponNotFoundException;
 import shop.s5g.shop.exception.member.MemberNotFoundException;
 import shop.s5g.shop.repository.coupon.user.UserCouponRepository;
 import shop.s5g.shop.repository.member.MemberRepository;
 import shop.s5g.shop.service.coupon.coupon.CouponService;
+import shop.s5g.shop.service.coupon.coupon.impl.CouponRedisService;
 import shop.s5g.shop.service.coupon.user.UserCouponService;
 
 @Slf4j
@@ -29,6 +33,7 @@ public class UserCouponServiceImpl implements UserCouponService {
     private final UserCouponRepository userCouponRepository;
     private final CouponService couponService;
     private final MemberRepository memberRepository;
+    private final CouponRedisService couponRedisService;
 
     /**
      * 유저에게 해당 쿠폰 넣어주기
@@ -136,10 +141,31 @@ public class UserCouponServiceImpl implements UserCouponService {
      */
     @Override
     public void addUserCoupon(Long customerId, Long couponTemplateId) {
-        // TODO 1. - redis : 쿠폰 갯수가 있는 지 체크 ( front 단에서도 더블 체크를 할 예정임 )
-        // TODO 2. - redis : 사용자가 이미 쿠폰이 있는 지 체크
-        // TODO 3. - redis : 사용자가 쿠폰이 없다면 userCoupon 안에 넣어주기
-        // TODO 4. - redis : 쿠폰을 넣어줬다면 redis 발급받은 유저 목록에 넣어주기
+
+        // 캐싱된 정책 duration 가져오기
+        int templateDuration = couponRedisService.getCouponPolicyDuration(couponTemplateId);
+
+        // 쿠폰 갯수가 있는 지 체크 ( front 단에서도 더블 체크를 할 예정임 )
+        if (couponRedisService.getCouponCnt(couponTemplateId) <= 0) {
+            throw new CouponNotFoundException("쿠폰 발급이 마감되었습니다.");
+        }
+
+        // 사용자가 이미 쿠폰이 있는 지 체크
+        if (couponRedisService.isUserCouponExists(customerId, couponTemplateId)) {
+            throw new CouponAlreadyIssuedException("이미 쿠폰 발급 받은 유저입니다.");
+        }
+
+        // 사용자가 쿠폰이 없다면 user 에게 쿠폰 넣어주기
+        Member member = getMemberById(customerId);
+        Coupon coupon = couponRedisService.popIssuedCoupon(couponTemplateId);
+
+        coupon.setCreatedAt(LocalDateTime.now());
+        coupon.setExpiredAt(coupon.getCreatedAt().plusDays(templateDuration));
+
+        userCouponRepository.save(new UserCoupon(member, coupon));
+
+        // 쿠폰을 넣어줬다면 redis 발급받은 유저 목록에 넣어주기
+        couponRedisService.addUserCoupon(couponTemplateId, customerId);
     }
 
     /**

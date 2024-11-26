@@ -31,6 +31,7 @@ public class CouponServiceImpl implements CouponService {
 
     private final CouponRepository couponRepository;
     private final CouponTemplateRepository couponTemplateRepository;
+    private final CouponRedisService couponRedisService;
 
     /**
      * 쿠폰 생성 ( 1 ~ n개 생성 가능 )
@@ -59,17 +60,25 @@ public class CouponServiceImpl implements CouponService {
             uniqueCode.add(couponCode);
         }
 
+        int saveCouponCnt = 0;
         for (String code : uniqueCode) {
 
-            couponSet.add(new Coupon(
+            Coupon coupon = new Coupon(
                 couponTemplate,
                 code,
                 null,
                 null
-            ));
+            );
+            // 한 번에 쿠폰 천장까지만 저장할 예정
+            if (saveCouponCnt < 1000) {
+                couponRedisService.addIssuedCoupon(couponTemplate.getCouponTemplateId(), coupon);
+            }
+            couponSet.add(coupon);
+
+            saveCouponCnt++;
         }
 
-        //TODO 0. - redis : 발급된 갯수만큼 레디스에 넣어주기 (List 형식으로 pop 으로 쉽게 빼가면 되지 않을까?)
+        couponRedisService.setCouponCnt(couponTemplate.getCouponTemplateId(), couponCnt);
 
         couponRepository.saveAll(couponSet);
 
