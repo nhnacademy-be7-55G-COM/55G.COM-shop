@@ -26,6 +26,7 @@ import shop.s5g.shop.dto.book.BookSimpleResponseDto;
 import shop.s5g.shop.dto.book.author.BookAuthorResponseDto;
 import shop.s5g.shop.dto.book.category.BookDetailCategoryResponseDto;
 import shop.s5g.shop.dto.cart.response.CartBooksInfoInCartResponseDto;
+import shop.s5g.shop.dto.tag.TagResponseDto;
 import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.BookImage;
 import shop.s5g.shop.entity.Category;
@@ -41,6 +42,9 @@ import static shop.s5g.shop.entity.QCategory.category;
 import static shop.s5g.shop.entity.QPublisher.publisher;
 import static shop.s5g.shop.entity.book.category.QBookCategory.bookCategory;
 import static shop.s5g.shop.entity.QBookImage.bookImage;
+import static shop.s5g.shop.entity.QTag.tag;
+import static shop.s5g.shop.entity.booktag.QBookTag.bookTag;
+import static shop.s5g.shop.entity.coupon.QCouponBook.couponBook;
 
 @Repository
 public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implements
@@ -64,7 +68,8 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
             .set(book.title, bookDto.title())
             .set(book.chapter, bookDto.chapter())
             .set(book.description, bookDto.description())
-            .set(book.publishedDate, LocalDate.parse(bookDto.publishedDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+            .set(book.publishedDate,
+                LocalDate.parse(bookDto.publishedDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")))
             .set(book.isbn, bookDto.isbn())
             .set(book.price, bookDto.price())
             .set(book.discountRate, bookDto.discountRate())
@@ -181,7 +186,9 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
             .where(bookCategory.book.bookId.eq(bookId))
             .select(Projections.constructor(BookCategory.class,
                 category,
-                book
+                book,
+                bookCategory.createdAt,
+                bookCategory.updatedAt
             ))
             .fetchOne();
 
@@ -207,9 +214,29 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
             ))
             .fetchOne();
 
-        String imagePath = "no-image.png";
+        String imagePath = "";
         if (queryBookImage != null) {
             imagePath = queryBookImage.getImageName();
+        }
+
+        List<TagResponseDto> tagList=from(bookTag)
+            .join(bookTag.book,book)
+            .join(bookTag.tag,tag)
+            .where(book.bookId.eq(bookId))
+            .select(Projections.constructor(TagResponseDto.class,
+                tag.tagId,
+                tag.tagName,
+                tag.active
+            ))
+            .fetch();
+
+        Long countCoupons = from(couponBook)
+            .join(couponBook.book, book)
+            .where(book.bookId.eq(bookId))
+            .select(couponBook.count())
+            .fetchOne();
+        if (countCoupons == null) {
+            countCoupons = 0L;
         }
 
         return from(book)
@@ -234,7 +261,9 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
                 book.updatedAt,
                 ConstantImpl.create(imagePath),
                 ConstantImpl.create(authorList),
-                ConstantImpl.create(categoryList)
+                ConstantImpl.create(categoryList),
+                ConstantImpl.create(tagList),
+                ConstantImpl.create(countCoupons)
             ))
             .fetchOne();
     }
@@ -245,13 +274,13 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
             .join(book.bookStatus, bookStatus)
             .where(book.bookId.in(idList))
             .select(Projections.constructor(BookSimpleResponseDto.class,
-                book.bookId,
-                book.title,
-                book.price,
-                book.discountRate,
-                book.stock,
-                book.isPacked,
-                bookStatus.name
+                    book.bookId,
+                    book.title,
+                    book.price,
+                    book.discountRate,
+                    book.stock,
+                    book.isPacked,
+                    bookStatus.name
                 )
             ).fetch();
     }

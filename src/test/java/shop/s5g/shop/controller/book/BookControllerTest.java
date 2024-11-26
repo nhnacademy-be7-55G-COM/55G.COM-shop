@@ -51,6 +51,7 @@ class BookControllerTest {
             {
                 "publisherId": 22,
                 "bookStatusId": 222,
+                "categoryId": 232,
                 "title": "채식주의자",
                 "chapter": "장편소설",
                 "description": "리마스터판",
@@ -60,8 +61,7 @@ class BookControllerTest {
                 "discountRate": 35.6,
                 "isPacked": true,
                 "stock": 34,
-                "views": 45874,
-                "createdAt": "2020-02-03T10:34:34"
+                "tagIdList": [1, 3]
             }
             """;
 
@@ -113,19 +113,20 @@ class BookControllerTest {
         this.mockMvc
                 .perform(put("/api/shop/books/{bookId}", 1)
                         .content("{\n" +
-                                "  \"publisherId\": 22,\n" +
-                                "  \"bookStatusId\": 222,\n" +
+                                "  \"publisherId\": 2,\n" +
+                                "  \"bookStatusId\": 3,\n" +
+                                "  \"categoryId\": 222,\n" +
                                 "  \"title\": \"전래동화\",\n" +
                                 "  \"chapter\": \"이 책은 전래동화 입니다.\",\n" +
-                                "  \"descreption\": \"전래동화 설명입니다.\",\n" +
-                                "  \"publishedDate\": \"1990-10-10T10:50:00\",\n" +
+                                "  \"description\": \"전래동화 설명입니다.\",\n" +
+                                "  \"publishedDate\": \"1990-10-10\",\n" +
                                 "  \"isbn\": \"978-3-15-148410-2\",\n" +
                                 "  \"price\": 15000,\n" +
                                 "  \"discountRate\": 10.5,\n" +
                                 "  \"isPacked\": true,\n" +
                                 "  \"stock\": 200,\n" +
-                                "  \"views\": 2000,\n" +
-                                "  \"createdAt\": \"2000-10-10T10:50:00\"\n" +
+                                "  \"thumbnailPath\": \"1.png\",\n" +
+                                "  \"tagIdList\": [1, 4]\n" +
                                 "}\n")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())//실제값
