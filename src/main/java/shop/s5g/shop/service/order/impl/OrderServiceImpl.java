@@ -142,4 +142,12 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderAdminTableView> getOrderListAdmin(OrderQueryFilterDto filter) {
         return orderRepository.findOrdersUsingFilterForAdmin(filter);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public long getCustomerIdWithOrderId(long orderId) {
+        return orderRepository.findById(orderId).orElseThrow(
+            () -> new ResourceNotFoundException("Order not exist")
+        ).getCustomer().getCustomerId();
+    }
 }
