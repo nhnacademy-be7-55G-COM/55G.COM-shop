@@ -35,9 +35,19 @@ public class OrderDetailController {
     private final RefundHistoryService refundHistoryService;
 
     // 하나의 주문에 대한 주문 상세, 환불내역, 배송지 모두 리턴하는 컨트롤러
+    @GetMapping("/{uuid}")
+    public Object getOrderDetailAll(@PathVariable String uuid, @RequestParam(required = false) String scope) {
+        if (scope == null || scope.isEmpty()) {
+            return orderDetailService.getOrderDetailsWithBook(uuid);
+        } else if (scope.equals("all")) {
+            return orderDetailService.getOrderDetailInfo(uuid);
+        }
+        throw new BadRequestException("다음 인자는 잘못된 인자입니다: scope="+scope);
+    }
+
     @PostAuthorize("isAuthenticated() and (hasRole('ROLE_ADMIN') or returnObject.customerId == principal.getCustomerId())")
-    @GetMapping("/{orderId}")
-    public Object getOrderDetailAll(
+    @GetMapping("/id/{orderId}")
+    public Object getMemberOrderDetailAll(
         @AuthenticationPrincipal ShopMemberDetail memberDetail,
         @PathVariable long orderId, @RequestParam(required = false) String scope
     ) {
@@ -60,7 +70,30 @@ public class OrderDetailController {
         }
         throw new BadRequestException("다음 인자는 잘못된 인자입니다: scope="+scope);
     }
-
+//
+//    @GetMapping("/guest/{orderId}")
+//    public Object getMemberOrderDetailAll(
+//        @PathVariable long orderId, @RequestParam(required = false) String scope
+//    ) {
+//        long ownerId = orderService.getCustomerIdWithOrderId(orderId);
+//        if (scope == null || scope.isEmpty()) {
+//            return orderDetailService.getOrderDetailsWithBook(orderId);
+//        } else if (scope.equals("all")) {
+//            List<OrderDetailWithBookResponseDto> orderDetails = orderDetailService.getOrderDetailsWithBook(
+//                orderId);
+//            DeliveryResponseDto delivery = deliveryService.getDelivery(orderId);
+//
+//            List<RefundHistoryResponseDto> refunds = orderDetails.stream().map(
+//                details -> refundHistoryService.getRefundHistory(details.orderDetailId())
+//            ).toList();
+//
+//            // TODO: 나중에 이미지도 추가해야함..
+//            return new OrderDetailInfoDto(
+//                orderDetails, delivery, refunds, ownerId
+//            );
+//        }
+//        throw new BadRequestException("다음 인자는 잘못된 인자입니다: scope="+scope);
+//    }
     @PutMapping("/details/{detailId}")
     public ResponseEntity<HttpStatus> changeDetailType(
         @AuthenticationPrincipal ShopMemberDetail memberDetail,
