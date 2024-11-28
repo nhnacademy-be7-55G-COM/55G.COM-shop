@@ -6,7 +6,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import shop.s5g.shop.dto.coupon.template.CouponCategoryAndBookResponseDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateRequestDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateResponseDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateUpdateRequestDto;

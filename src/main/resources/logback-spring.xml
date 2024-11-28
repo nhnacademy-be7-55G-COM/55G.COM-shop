@@ -49,15 +49,15 @@
   </appender>
 
   <springProfile name="dev &amp;&amp; !local">
-    <root level="info">
+    <root level="error">
       <appender-ref ref="CONSOLE" />
       <appender-ref ref="root_fout" />
     </root>
-    <logger level="trace" additivity="false" name="shop.s5g.shop">
+    <logger level="debug" additivity="false" name="shop.s5g.shop">
       <appender-ref ref="CONSOLE" />
       <appender-ref ref="app_fout" />
     </logger>
-    <logger leve="trace" additivity="true" name="shop.s5g.shop.service.coupon">
+    <logger leve="debug" additivity="true" name="shop.s5g.shop.service.coupon">
       <appender-ref ref="coupon_fout" />
     </logger>
   </springProfile>

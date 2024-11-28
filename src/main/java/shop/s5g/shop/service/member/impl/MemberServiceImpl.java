@@ -3,12 +3,13 @@ package shop.s5g.shop.service.member.impl;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.address.AddressResponseDto;
-import shop.s5g.shop.dto.coupon.user.UserCouponRequestDto;
+import shop.s5g.shop.dto.coupon.MemberRegisteredEvent;
 import shop.s5g.shop.dto.customer.CustomerResponseDto;
 import shop.s5g.shop.dto.member.IdCheckResponseDto;
 import shop.s5g.shop.dto.member.LoginResponseDto;
@@ -48,9 +49,9 @@ public class MemberServiceImpl implements MemberService {
     private final MemberGradeService memberGradeService;
     private final CustomerService customerService;
     private final PointHistoryService pointHistoryService;
-    private final UserCouponService userCouponService;
     private final PasswordEncoder passwordEncoder;
     private final AddressService addressService;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Override
     @Transactional(readOnly = true)
@@ -107,7 +108,7 @@ public class MemberServiceImpl implements MemberService {
         pointHistoryService.createPointHistory(saved.getId(),
             PointHistoryCreateRequestDto.REGISTER_POINT);
 
-        userCouponService.createWelcomeCoupon(new UserCouponRequestDto(saved.getId()));
+        eventPublisher.publishEvent(new MemberRegisteredEvent(saved));
 
     }
 

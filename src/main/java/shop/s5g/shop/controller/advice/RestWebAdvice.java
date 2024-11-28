@@ -11,6 +11,7 @@ import shop.s5g.shop.exception.AlreadyExistsException;
 import shop.s5g.shop.exception.AuthenticationException;
 import shop.s5g.shop.exception.BadRequestException;
 import shop.s5g.shop.exception.EssentialDataNotFoundException;
+import shop.s5g.shop.exception.ForbiddenResourceException;
 import shop.s5g.shop.exception.ResourceNotFoundException;
 
 /**
@@ -49,6 +50,11 @@ public class RestWebAdvice {
     @ExceptionHandler(AlreadyDeletedRecordException.class)
     public ResponseEntity<MessageDto> handleAlreadyDeletedRecordException(AlreadyDeletedRecordException e) {
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new MessageDto(e.getMessage()));
+    }
+
+    @ExceptionHandler(ForbiddenResourceException.class)
+    public ResponseEntity<MessageDto> handleForbiddenResourceException(ForbiddenResourceException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new MessageDto(e.getMessage()));
     }
 
 }

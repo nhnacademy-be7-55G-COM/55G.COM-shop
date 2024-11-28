@@ -10,7 +10,8 @@ public record OrderAdminTableView(
     Long payAmount,
     String deliveryStatus,
     LocalDateTime orderedAt,
-    boolean active
+    boolean active,
+    String uuid
 ) {
 
 }
