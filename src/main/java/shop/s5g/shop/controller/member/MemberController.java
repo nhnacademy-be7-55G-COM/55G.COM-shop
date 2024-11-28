@@ -36,7 +36,6 @@ import shop.s5g.shop.service.member.MemberService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/shop")
-@ConditionalOnBean(RedisConfig.class)
 public class MemberController {
 
     private final MemberService memberService;
