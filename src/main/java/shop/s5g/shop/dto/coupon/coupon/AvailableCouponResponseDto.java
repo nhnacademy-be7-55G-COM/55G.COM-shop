@@ -7,11 +7,9 @@ public record AvailableCouponResponseDto(
 
     Long couponId,
 
+    Long couponTemplateId,
+
     String couponName,
-
-    LocalDateTime createdAt,
-
-    LocalDateTime expiredAt,
 
     Long condition,
 

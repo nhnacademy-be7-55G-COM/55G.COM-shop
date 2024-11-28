@@ -15,6 +15,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 @Getter
@@ -37,31 +38,12 @@ public class Coupon {
     @Length(min = 8, max = 50)
     private String couponCode;
 
-    private LocalDateTime createdAt;
-
-    private LocalDateTime expiredAt;
-
-    private LocalDateTime usedAt;
-
     @NotNull
     private boolean active;
 
-    public Coupon(CouponTemplate couponTemplate, String couponCode, LocalDateTime expiredAt) {
+    public Coupon(CouponTemplate couponTemplate, String couponCode) {
         this.couponTemplate = couponTemplate;
         this.couponCode = couponCode;
-        this.createdAt = LocalDateTime.now();
-        this.expiredAt = expiredAt;
-        this.usedAt = null;
-        this.active = true;
-    }
-
-    // 시작일 지정 가능
-    public Coupon(CouponTemplate couponTemplate, String couponCode, LocalDateTime createdAt, LocalDateTime expiredAt) {
-        this.couponTemplate = couponTemplate;
-        this.couponCode = couponCode;
-        this.createdAt = createdAt;
-        this.expiredAt = expiredAt;
-        this.usedAt = null;
         this.active = true;
     }
 }
