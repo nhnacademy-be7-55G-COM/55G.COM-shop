@@ -34,7 +34,6 @@ import shop.s5g.shop.repository.book.BookRepository;
 import shop.s5g.shop.repository.book.category.BookCategoryRepository;
 import shop.s5g.shop.repository.book.status.BookStatusRepository;
 import shop.s5g.shop.repository.book.image.BookImageRepository;
-import shop.s5g.shop.repository.book.status.BookStatusRepository;
 import shop.s5g.shop.repository.booktag.BookTagRepository;
 import shop.s5g.shop.repository.category.CategoryRepository;
 import shop.s5g.shop.repository.publisher.PublisherRepository;

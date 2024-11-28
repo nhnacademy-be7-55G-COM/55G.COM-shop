@@ -32,6 +32,10 @@ public class LikeServiceImpl implements LikeService {
     //도서 내 좋아요 등록
     @Override
     public void addLikeInBook(Long customerId, Long bookId) {
+        if (customerId == null) {
+            throw new CustomerNotFoundException("로그인이 필요합니다.");
+        }
+
         if (customerId < 1) {
             throw new LikeBadRequestException("customer id는 1보다 커야 합니다.");
         }
