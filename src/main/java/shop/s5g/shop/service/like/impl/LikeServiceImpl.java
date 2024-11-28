@@ -10,6 +10,7 @@ import shop.s5g.shop.entity.like.Like;
 import shop.s5g.shop.entity.like.LikeId;
 import shop.s5g.shop.entity.member.Customer;
 import shop.s5g.shop.exception.book.BookResourceNotFoundException;
+import shop.s5g.shop.exception.like.LikeAlreadyExistsException;
 import shop.s5g.shop.exception.like.LikeBadRequestException;
 import shop.s5g.shop.exception.member.CustomerNotFoundException;
 import shop.s5g.shop.repository.book.BookRepository;
@@ -18,6 +19,7 @@ import shop.s5g.shop.repository.member.CustomerRepository;
 import shop.s5g.shop.service.like.LikeService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -53,6 +55,9 @@ public class LikeServiceImpl implements LikeService {
         Like like = new Like(customer, book);
 //        likeRepository.addLike(customer, book);
 
+        if(likeRepository.findById(like.getId()).isPresent()) {
+            throw new LikeAlreadyExistsException("좋아요가 등록된 도서 입니다!");
+        }
 
         likeRepository.save(like);
         likeRepository.flush();
