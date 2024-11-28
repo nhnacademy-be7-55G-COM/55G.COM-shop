@@ -2,6 +2,7 @@ package shop.s5g.shop.controller.member;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import shop.s5g.shop.config.RedisConfig;
 import shop.s5g.shop.dto.customer.CustomerUpdateRequestDto;
 import shop.s5g.shop.dto.member.IdCheckResponseDto;
 import shop.s5g.shop.dto.member.LoginResponseDto;
@@ -34,6 +36,7 @@ import shop.s5g.shop.service.member.MemberService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/shop")
+@ConditionalOnBean(RedisConfig.class)
 public class MemberController {
 
     private final MemberService memberService;

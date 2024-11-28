@@ -11,10 +11,6 @@ public record AvailableCouponResponseDto(
 
     String couponName,
 
-    LocalDateTime createdAt,
-
-    LocalDateTime expiredAt,
-
     Long condition,
 
     Long maxPrice,

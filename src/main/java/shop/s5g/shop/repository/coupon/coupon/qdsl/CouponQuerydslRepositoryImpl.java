@@ -13,6 +13,7 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import shop.s5g.shop.dto.coupon.coupon.AvailableCouponResponseDto;
 import shop.s5g.shop.dto.coupon.coupon.CouponResponseDto;
 import shop.s5g.shop.entity.coupon.Coupon;
+import shop.s5g.shop.entity.coupon.CouponTemplate.CouponTemplateType;
 import shop.s5g.shop.entity.coupon.QCoupon;
 import shop.s5g.shop.entity.coupon.QCouponPolicy;
 import shop.s5g.shop.entity.coupon.QCouponTemplate;
@@ -33,18 +34,6 @@ public class CouponQuerydslRepositoryImpl extends QuerydslRepositorySupport impl
     QCouponTemplate couponTemplate = QCouponTemplate.couponTemplate;
     QCouponPolicy couponPolicy = QCouponPolicy.couponPolicy;
 
-    /**
-     * 쿠폰 만료날짜 업데이트 쿼리dsl
-     * @param couponId
-     * @param expiredAt
-     */
-    @Override
-    public void updateCouponExpiredDatetime(Long couponId, LocalDateTime expiredAt) {
-        update(coupon)
-            .set(coupon.expiredAt, expiredAt)
-            .where(coupon.couponId.eq(couponId))
-            .execute();
-    }
 
     /**
      * 특정 쿠폰 조회 쿼리dsl
@@ -58,10 +47,8 @@ public class CouponQuerydslRepositoryImpl extends QuerydslRepositorySupport impl
             CouponResponseDto.class,
                 coupon.couponId,
                 coupon.couponTemplate.couponTemplateId,
-                coupon.couponCode,
-                coupon.createdAt,
-                coupon.expiredAt,
-                coupon.usedAt))
+                coupon.couponCode
+            ))
             .from(coupon)
             .where(coupon.couponId.eq(couponId))
             .fetchOne();
@@ -98,7 +85,7 @@ public class CouponQuerydslRepositoryImpl extends QuerydslRepositorySupport impl
     /**
      * 관리자가 발급한 모든 쿠폰 항목 보기
      * @param pageable
-     * @return
+     * @return Page<CouponResponseDto>
      */
     @Override
     public Page<CouponResponseDto> getAllIssuedCoupons(Pageable pageable) {
@@ -107,10 +94,8 @@ public class CouponQuerydslRepositoryImpl extends QuerydslRepositorySupport impl
             .select(Projections.constructor(CouponResponseDto.class,
                 coupon.couponId,
                 coupon.couponTemplate.couponTemplateId,
-                coupon.couponCode,
-                coupon.createdAt,
-                coupon.expiredAt,
-                coupon.usedAt))
+                coupon.couponCode
+            ))
             .from(coupon)
             .where(coupon.active.eq(ACTIVE))
             .offset(pageable.getOffset())
@@ -127,32 +112,6 @@ public class CouponQuerydslRepositoryImpl extends QuerydslRepositorySupport impl
         return new PageImpl<>(couponList, pageable, total);
     }
 
-    /**
-     * 만료일이 지난 쿠폰 비활성화 해주기
-     */
-    @Override
-    public void deactivateExpiredCoupons() {
-
-        jpaQueryFactory
-            .update(coupon)
-            .set(coupon.active, INACTIVE)
-            .where(coupon.expiredAt.before(LocalDateTime.now()))
-            .execute();
-    }
-
-    /**
-     * 해당 쿠폰이 만료일이 지났는 지 체크해주기
-     * @param couponId
-     * @return boolean
-     */
-    @Override
-    public boolean checkIfCouponExpired(Long couponId) {
-        return Boolean.TRUE.equals(jpaQueryFactory
-            .select(coupon.expiredAt.before(LocalDateTime.now()))
-            .from(coupon)
-            .where(coupon.couponId.eq(couponId))
-            .fetchOne());
-    }
 
     /**
      * 발급 가능한 쿠폰 목록 조회
@@ -167,8 +126,6 @@ public class CouponQuerydslRepositoryImpl extends QuerydslRepositorySupport impl
                 coupon.couponId.min(),
                 coupon.couponTemplate.couponTemplateId,
                 couponTemplate.couponName,
-                coupon.createdAt.min(),
-                coupon.expiredAt.min(),
                 couponPolicy.condition,
                 couponPolicy.maxPrice,
                 couponPolicy.discountPrice,
@@ -177,6 +134,10 @@ public class CouponQuerydslRepositoryImpl extends QuerydslRepositorySupport impl
             .from(coupon)
             .innerJoin(couponTemplate).on(coupon.couponTemplate.couponTemplateId.eq(couponTemplate.couponTemplateId))
             .innerJoin(couponPolicy).on(couponTemplate.couponPolicy.couponPolicyId.eq(couponPolicy.couponPolicyId))
+            .where(
+                couponTemplate.couponName.contains(CouponTemplateType.BIRTH.getTypeName()).not()
+                    .and(couponTemplate.couponName.contains(CouponTemplateType.WELCOME.getTypeName())).not()
+            )
             .groupBy(
                 coupon.couponTemplate.couponTemplateId,
                 couponTemplate.couponName,

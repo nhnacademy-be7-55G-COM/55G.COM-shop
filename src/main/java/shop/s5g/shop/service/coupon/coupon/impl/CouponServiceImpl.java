@@ -1,7 +1,5 @@
 package shop.s5g.shop.service.coupon.coupon.impl;
 
-import java.time.LocalDateTime;
-import java.time.YearMonth;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -23,6 +21,7 @@ import shop.s5g.shop.exception.coupon.CouponTemplateNotFoundException;
 import shop.s5g.shop.repository.coupon.coupon.CouponRepository;
 import shop.s5g.shop.repository.coupon.template.CouponTemplateRepository;
 import shop.s5g.shop.service.coupon.coupon.CouponService;
+import shop.s5g.shop.util.CouponUtil;
 
 @Service
 @Transactional
@@ -31,58 +30,6 @@ public class CouponServiceImpl implements CouponService {
 
     private final CouponRepository couponRepository;
     private final CouponTemplateRepository couponTemplateRepository;
-    private final CouponRedisService couponRedisService;
-
-    /**
-     * 쿠폰 생성 ( 1 ~ n개 생성 가능 )
-     * @param couponCnt
-     * @param couponRequestDto
-     */
-    @Override
-    public void createCoupon(Integer couponCnt, CouponRequestDto couponRequestDto) {
-
-        if (Objects.isNull(couponCnt) || couponCnt <= 0) {
-            throw new IllegalArgumentException("쿠폰 수량이 잘못 지정되었습니다.");
-        }
-
-        CouponTemplate couponTemplate = couponTemplateRepository.findById(couponRequestDto.couponTemplateId())
-            .orElseThrow(() -> new CouponTemplateNotFoundException("쿠폰 템플릿을 찾을 수 없습니다."));
-
-        Set<String> uniqueCode = new HashSet<>();
-        Set<Coupon> couponSet = new HashSet<>();
-
-        while (uniqueCode.size() < couponCnt) {
-            String couponCode = createUniqueCouponNumber();
-
-            if (uniqueCode.contains(couponCode)) {
-                continue;
-            }
-            uniqueCode.add(couponCode);
-        }
-
-        int saveCouponCnt = 0;
-        for (String code : uniqueCode) {
-
-            Coupon coupon = new Coupon(
-                couponTemplate,
-                code,
-                null,
-                null
-            );
-            // 한 번에 쿠폰 천장까지만 저장할 예정
-            if (saveCouponCnt < 1000) {
-                couponRedisService.addIssuedCoupon(couponTemplate.getCouponTemplateId(), code);
-            }
-            couponSet.add(coupon);
-
-            saveCouponCnt++;
-        }
-
-        couponRedisService.setCouponCnt(couponTemplate.getCouponTemplateId(), couponCnt);
-
-        couponRepository.saveAll(couponSet);
-
-    }
 
     /**
      * 웰컴 쿠폰 생성
@@ -101,64 +48,11 @@ public class CouponServiceImpl implements CouponService {
         return couponRepository.save(
             new Coupon(
                 welcomeTemplate,
-                createUniqueCouponNumber(),
-                LocalDateTime.now().plusDays(30)
+                CouponUtil.createUniqueCouponNumber()
             )
         );
     }
 
-    /**
-     * 생일 쿠폰 생성
-     * @return Coupon
-     */
-    @Override
-    public Coupon createBirthCoupon() {
-
-        CouponTemplate birthTemplate = couponTemplateRepository.findParticularCouponByName(
-            CouponTemplateType.BIRTH.getTypeName()
-        );
-
-        if (Objects.isNull(birthTemplate)) {
-            throw new CouponTemplateNotFoundException("해당 쿠폰 템플릿이 존재하지 않습니다.");
-        }
-
-        // 쿠폰의 만료일을 해당 월의 마지막 일로 설정
-        LocalDateTime now = LocalDateTime.now();
-        YearMonth yearMonth = YearMonth.from(now);
-        LocalDateTime lastDayOfMonth = yearMonth.atEndOfMonth().atTime(23, 59, 59);
-
-        return couponRepository.save(
-            new Coupon(
-                birthTemplate,
-                createUniqueCouponNumber(),
-                lastDayOfMonth
-            )
-        );
-    }
-
-    /**
-     * 카테고리와 북 쿠폰 생성
-     * @return Coupon - 생성된 쿠폰
-     */
-    @Override
-    public Coupon createCategoryCoupon() {
-
-        CouponTemplate categoryTemplate = couponTemplateRepository.findParticularCouponByName(
-            CouponTemplateType.CATEGORY.getTypeName()
-        );
-
-        if (Objects.isNull(categoryTemplate)) {
-            throw new CouponTemplateNotFoundException("해당 쿠폰 템플릿이 존재하지 않습니다.");
-        }
-
-        return couponRepository.save(
-            new Coupon(
-                categoryTemplate,
-                createUniqueCouponNumber(),
-                null
-            )
-        );
-    }
 
     /**
      * 쿠폰 조회
@@ -203,28 +97,6 @@ public class CouponServiceImpl implements CouponService {
     }
 
     /**
-     * 쿠폰 수정
-     * @param couponId
-     */
-    @Override
-    public void updateCoupon(Long couponId, LocalDateTime expiredAt) {
-
-        if (Objects.isNull(couponId) || couponId < 0) {
-            throw new IllegalArgumentException("쿠폰 아이디가 잘못 지정되었습니다.");
-        }
-
-        if (!couponRepository.existsById(couponId)) {
-            throw new CouponNotFoundException("해당 쿠폰이 존재하지 않습니다.");
-        }
-
-        if (!couponRepository.checkActiveCoupon(couponId)) {
-            throw new CouponAlreadyDeletedException("해당 쿠폰은 삭제된 쿠폰입니다.");
-        }
-
-        couponRepository.updateCouponExpiredDatetime(couponId, expiredAt);
-    }
-
-    /**
      * 쿠폰 삭제
      * @param couponId
      */
@@ -256,30 +128,4 @@ public class CouponServiceImpl implements CouponService {
         return couponRepository.getAllAvailableCoupons(pageable);
     }
 
-    /**
-     * 쿠폰 번호 랜덤 생성
-     * @return String
-     */
-    private String createUniqueCouponNumber() {
-
-        String uuid = UUID.randomUUID().toString();
-
-        String base62Encoded = encodeBase62(uuid.getBytes());
-
-        return base62Encoded.substring(0, 15);
-
-    }
-
-    private String encodeBase62(byte[] input) {
-
-        String BASE62 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-        StringBuilder result = new StringBuilder();
-
-        for (byte b : input) {
-            result.append(BASE62.charAt(((b & 0xFF) % BASE62.length())));
-        }
-
-        return result.toString();
-    }
 }

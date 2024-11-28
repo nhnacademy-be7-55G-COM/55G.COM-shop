@@ -3,14 +3,12 @@ package shop.s5g.shop.service.coupon.user;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import shop.s5g.shop.dto.coupon.user.InValidUsedCouponResponseDto;
-import shop.s5g.shop.dto.coupon.user.UserCouponRequestDto;
 import shop.s5g.shop.dto.coupon.user.ValidUserCouponResponseDto;
+import shop.s5g.shop.entity.member.Member;
 
 public interface UserCouponService {
 
-    void createWelcomeCoupon(UserCouponRequestDto userCouponRequestDto);
-
-    void createCategoryCoupon(Long memberId, String categoryName);
+    void createWelcomeCoupon(Member member);
 
     // 사용자가 사용하지 않은 유효한 쿠폰 조회
     Page<ValidUserCouponResponseDto> getUnusedCoupons(Long customerId, Pageable pageable);

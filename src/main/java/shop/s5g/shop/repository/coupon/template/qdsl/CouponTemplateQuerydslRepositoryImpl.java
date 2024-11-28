@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
+import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateRequestDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateResponseDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateUpdateRequestDto;
@@ -218,6 +219,7 @@ public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupp
      * @return CouponTemplate
      */
     @Override
+    @Transactional(readOnly = true)
     public CouponTemplate findParticularCouponByName(String keyword) {
 
         return jpaQueryFactory

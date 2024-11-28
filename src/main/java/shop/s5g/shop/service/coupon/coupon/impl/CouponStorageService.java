@@ -1,5 +1,6 @@
 package shop.s5g.shop.service.coupon.coupon.impl;
 
+import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +14,7 @@ import shop.s5g.shop.repository.coupon.template.CouponTemplateRepository;
 @Service
 @RequiredArgsConstructor
 @ConditionalOnBean(RedisConfig.class)
-public class CouponRedisService {
+public class CouponStorageService {
 
     private final RedisTemplate<String, Object> redisTemplate;
     private final CouponTemplateRepository couponTemplateRepository;
@@ -83,6 +84,8 @@ public class CouponRedisService {
     public String popIssuedCoupon(Long couponTemplateId) {
 
         String key = COUPON_PREFIX + couponTemplateId;
+
+        List<Object> lists = redisTemplate.opsForList().range(key, -1, -1);
 
         return (String) redisTemplate.opsForList().leftPop(key);
     }

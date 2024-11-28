@@ -12,17 +12,12 @@ import shop.s5g.shop.entity.coupon.Coupon;
 public interface CouponService {
 
     // 쿠폰 생성
-    void createCoupon(Integer couponCnt, CouponRequestDto couponRequestDto);
     Coupon createWelcomeCoupon();
-    Coupon createBirthCoupon();
-    Coupon createCategoryCoupon();
 
     // 쿠폰 가져오기
     Coupon getCouponByCode(String couponCode);
     CouponResponseDto getCoupon(Long couponId);
     Page<CouponResponseDto> getAllCouponList(Pageable pageable);
-
-    void updateCoupon(Long couponId, LocalDateTime expiredAt);
 
     void deleteCoupon(Long couponId);
 

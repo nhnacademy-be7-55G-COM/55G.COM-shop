@@ -15,10 +15,6 @@ public record ValidUserCouponResponseDto(
 
     String couponName,
 
-    LocalDateTime createdAt,
-
-    LocalDateTime expiredAt,
-
     String couponDescription,
 
     Long condition,

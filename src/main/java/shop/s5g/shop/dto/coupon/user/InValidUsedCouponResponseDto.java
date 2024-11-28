@@ -13,12 +13,6 @@ public record InValidUsedCouponResponseDto(
 
     String couponName,
 
-    LocalDateTime createdAt,
-
-    LocalDateTime expiredAt,
-
-    LocalDateTime usedAt,
-
     String couponDescription,
 
     Long condition,

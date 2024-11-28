@@ -8,7 +8,9 @@ import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Service;
+import shop.s5g.shop.config.RedisConfig;
 import shop.s5g.shop.dto.coupon.user.UserCouponRabbitResponseDto;
 import shop.s5g.shop.exception.coupon.CouponAlreadyIssuedException;
 import shop.s5g.shop.exception.coupon.CouponNotFoundException;
@@ -17,6 +19,7 @@ import shop.s5g.shop.service.coupon.user.UserCouponService;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@ConditionalOnBean(RedisConfig.class)
 public class RabbitEventCouponListener {
 
     private final UserCouponService userCouponService;
