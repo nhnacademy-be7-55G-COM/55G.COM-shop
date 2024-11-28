@@ -43,7 +43,7 @@ public class OrderQuerydslRepositoryImpl extends QuerydslRepositorySupport
             .orderBy(order.id.desc())
             .select(Projections.constructor(OrderWithDetailResponseDto.class,
                 order.id, order.orderedAt, order.netPrice, order.totalPrice,
-                orderDetail.book.title.min(), order.id.count(), orderDetail.quantity.sum())
+                orderDetail.book.title.min(), order.id.count(), orderDetail.quantity.sum(), order.uuid)
             ).fetch();
     }
 
@@ -57,7 +57,7 @@ public class OrderQuerydslRepositoryImpl extends QuerydslRepositorySupport
             .orderBy(order.id.desc())
             .select(Projections.constructor(OrderWithDetailResponseDto.class,
                 order.id, order.orderedAt, order.netPrice, order.totalPrice,
-                orderDetail.book.title.min(), order.id.count(), orderDetail.quantity.sum())
+                orderDetail.book.title.min(), order.id.count(), orderDetail.quantity.sum(), order.uuid)
             ).fetch();
     }
 
@@ -84,7 +84,8 @@ public class OrderQuerydslRepositoryImpl extends QuerydslRepositorySupport
                 payment.amount,
                 deliveryStatus.name,
                 order.orderedAt,
-                order.active
+                order.active,
+                order.uuid
                 )
             ).fetch();
     }
@@ -122,7 +123,8 @@ public class OrderQuerydslRepositoryImpl extends QuerydslRepositorySupport
                     payment.amount,
                     deliveryStatus.name,
                     order.orderedAt,
-                    order.active
+                    order.active,
+                    order.uuid
                 )
             ).fetch();
     }

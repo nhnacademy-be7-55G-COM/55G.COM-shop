@@ -10,9 +10,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -50,6 +52,9 @@ public class Order {
     private long netPrice;
     private long totalPrice;
 
+    @Column(name = "order_uuid")
+    private String uuid;
+
     @Setter
     private boolean active;
 
@@ -60,5 +65,10 @@ public class Order {
         this.totalPrice = totalPrice;
         orderedAt = LocalDateTime.now();
         active = true;
+    }
+
+    @PrePersist
+    public void initializeUuid() {
+        uuid = UUID.randomUUID().toString();
     }
 }

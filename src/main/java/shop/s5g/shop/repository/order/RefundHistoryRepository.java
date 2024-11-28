@@ -6,4 +6,5 @@ import shop.s5g.shop.repository.order.qdsl.RefundHistoryQuerydslRepository;
 
 public interface RefundHistoryRepository extends JpaRepository<RefundHistory, Long>,
     RefundHistoryQuerydslRepository {
+
 }
