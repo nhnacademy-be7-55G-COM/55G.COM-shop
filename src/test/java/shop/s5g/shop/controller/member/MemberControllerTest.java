@@ -1,6 +1,7 @@
 package shop.s5g.shop.controller.member;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
@@ -26,6 +28,7 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import shop.s5g.shop.config.SecurityConfig;
 import shop.s5g.shop.config.TestSecurityConfig;
+import shop.s5g.shop.dto.coupon.MemberRegisteredEvent;
 import shop.s5g.shop.filter.JwtAuthenticationFilter;
 import shop.s5g.shop.service.member.CustomerService;
 import shop.s5g.shop.service.member.MemberService;
@@ -50,9 +53,15 @@ class MemberControllerTest {
     @MockBean
     private CustomerService customerService;
 
+    @MockBean
+    private ApplicationEventPublisher eventPublisher;
+
     @Test
     @DisplayName("POST /api/shop/member - Register a new member")
     void registerMember() throws Exception {
+
+        doNothing().when(eventPublisher).publishEvent(any(MemberRegisteredEvent.class));
+
         mockMvc.perform(post("/api/shop/member")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
@@ -89,6 +98,9 @@ class MemberControllerTest {
     @Test
     @DisplayName("POST /api/shop/member - Bad Request on Validation Error")
     void registerMemberBadRequest() throws Exception {
+
+        doNothing().when(eventPublisher).publishEvent(any(MemberRegisteredEvent.class));
+
         mockMvc.perform(post("/api/shop/member")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(

@@ -73,4 +73,18 @@ public class TagQuerydslRepositoryImpl extends QuerydslRepositorySupport impleme
                 .where(tag.tagId.eq(tagId))
                 .execute();
     }
+
+    // 태그 검색
+    @Override
+    public List<TagResponseDto> findByTagNameList(String keyword){
+        return from(tag)
+            .where(tag.tagName.contains(keyword))
+            .where(tag.active.eq(true))
+            .select(Projections.constructor(TagResponseDto.class,
+                tag.tagId,
+                tag.tagName,
+                tag.active
+            ))
+            .fetch();
+    }
 }

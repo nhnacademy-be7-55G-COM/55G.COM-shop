@@ -84,15 +84,5 @@ public class CategoryController {
         return ResponseEntity.ok().body(new MessageDto("카테고리 삭제 성공"));
     }
 
-    /**
-     * 카테고리 ID로 조회 - API
-     * @param categoryId
-     * @return ResponseEntity<CategoryResponseDto>
-     */
-    @GetMapping("/admin/coupons/category/{categoryId}")
-    public ResponseEntity<CategoryResponseDto> findCategoryById(@PathVariable("categoryId") Long categoryId) {
-        CategoryResponseDto category = categoryService.getCategory(categoryId);
 
-        return ResponseEntity.status(HttpStatus.OK).body(category);
-    }
 }

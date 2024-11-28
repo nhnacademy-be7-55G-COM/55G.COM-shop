@@ -1,8 +1,10 @@
 package shop.s5g.shop.service.tag.impl;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.tag.TagRequestDto;
@@ -54,5 +56,10 @@ public class TagServiceImpl implements TagService {
             throw new BookTagAlreadyExistsException("이 태그는 도서에 적용되어 있습니다.");
         }
         tagRepository.inactiveTag(tagId);
+    }
+
+    // 태그 검색
+    public ResponseEntity<List<TagResponseDto>> searchTags(String keyword){
+        return ResponseEntity.ok().body(tagRepository.findByTagNameList(keyword));
     }
 }

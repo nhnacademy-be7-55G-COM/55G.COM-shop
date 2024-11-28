@@ -2,11 +2,17 @@ package shop.s5g.shop.controller.point;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import shop.s5g.shop.dto.point.PointPolicyResponseDto;
+import shop.s5g.shop.dto.point.PointPolicyUpdateRequestDto;
 import shop.s5g.shop.dto.point.PointPolicyView;
+import shop.s5g.shop.exception.BadRequestException;
 import shop.s5g.shop.service.point.PointPolicyService;
 
 @RestController
@@ -24,5 +30,18 @@ public class PointPolicyController {
     @GetMapping("/purchase")
     public PointPolicyView getPurchasePointPolicy() {
         return pointPolicyService.getPolicy(PURCHASE);
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<Void> updatePolicy(
+        @RequestBody PointPolicyUpdateRequestDto pointPolicyUpdateRequestDto,
+        BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            throw new BadRequestException();
+        }
+        pointPolicyService.updatePolicyValue(pointPolicyUpdateRequestDto);
+
+        return ResponseEntity.ok().build();
     }
 }
