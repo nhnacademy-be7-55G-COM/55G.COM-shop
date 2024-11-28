@@ -7,5 +7,7 @@ public interface OrderDetailService {
 
     List<OrderDetailWithBookResponseDto> getOrderDetailsWithBook(long orderId);
 
+    void changeOrderDetailType(long detailId, String type);
+
 //    void cancelOrderDetail(long orderDetailId);
 }

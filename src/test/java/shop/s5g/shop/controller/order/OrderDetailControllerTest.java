@@ -31,6 +31,7 @@ import shop.s5g.shop.exception.order.OrderDetailsNotExistException;
 import shop.s5g.shop.filter.JwtAuthenticationFilter;
 import shop.s5g.shop.service.delivery.DeliveryService;
 import shop.s5g.shop.service.order.OrderDetailService;
+import shop.s5g.shop.service.order.OrderService;
 import shop.s5g.shop.service.order.RefundHistoryService;
 
 @WebMvcTest(
@@ -53,6 +54,9 @@ class OrderDetailControllerTest {
 
     @MockBean
     RefundHistoryService refundHistoryService;
+
+    @MockBean
+    OrderService orderService;
 
     @SpyBean
     RestWebAdvice advice;
@@ -96,7 +100,7 @@ class OrderDetailControllerTest {
     );
 
     OrderDetailInfoDto example = new OrderDetailInfoDto(
-        details, delivery, List.of()
+        details, delivery, List.of(), 1L
     );
 
     @Test
@@ -104,6 +108,7 @@ class OrderDetailControllerTest {
         when(orderDetailService.getOrderDetailsWithBook(anyLong())).thenReturn(details);
         when(deliveryService.getDelivery(anyLong())).thenReturn(delivery);
         when(refundHistoryService.getRefundHistory(anyLong())).thenReturn(null);
+        when(orderService.getCustomerIdWithOrderId(anyLong())).thenReturn(1L);
 
         mvc.perform(MockMvcRequestBuilders.get("/api/shop/orders/1")
                 .queryParam("scope", "all")
@@ -141,7 +146,8 @@ class OrderDetailControllerTest {
                     "receiverName": "아무개",
                     "status": "PREPARING"
                   },
-                  "refunds": [ null, null ]
+                  "refunds": [ null, null ],
+                  "customerId": 1
                 }
                 """))
             .andExpect(status().isOk());

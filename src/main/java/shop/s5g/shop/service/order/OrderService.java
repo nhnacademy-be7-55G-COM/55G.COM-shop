@@ -25,4 +25,6 @@ public interface OrderService {
     void deactivateOrder(long orderId);
 
     List<OrderAdminTableView> getOrderListAdmin(OrderQueryFilterDto filter);
+
+    long getCustomerIdWithOrderId(long orderId);
 }
