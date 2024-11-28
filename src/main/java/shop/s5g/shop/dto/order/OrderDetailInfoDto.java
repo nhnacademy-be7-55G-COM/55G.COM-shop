@@ -7,7 +7,8 @@ import shop.s5g.shop.dto.refund.RefundHistoryResponseDto;
 public record OrderDetailInfoDto(
     List<OrderDetailWithBookResponseDto> details,
     DeliveryResponseDto delivery,
-    List<RefundHistoryResponseDto> refunds
+    List<RefundHistoryResponseDto> refunds,
+    long customerId
 ) {
 
 }
