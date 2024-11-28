@@ -144,7 +144,7 @@ class OrderControllerTest {
     @Test
     @WithCustomMockUser(loginId = "123", customerId = 1L, role = "ROLE_MEMBER")
     void createNewOrderSuccessTest() throws Exception{
-        OrderCreateResponseDto response = new OrderCreateResponseDto(1L);
+        OrderCreateResponseDto response = new OrderCreateResponseDto(1L, "UUID");
         when(orderService.createOrder(anyLong(), any())).thenReturn(response);
 
         mvc.perform(MockMvcRequestBuilders.post("/api/shop/orders")
