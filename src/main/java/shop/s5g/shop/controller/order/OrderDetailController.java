@@ -35,7 +35,7 @@ public class OrderDetailController {
     private final RefundHistoryService refundHistoryService;
 
     // 하나의 주문에 대한 주문 상세, 환불내역, 배송지 모두 리턴하는 컨트롤러
-    @PostAuthorize("isAuthenticated() and returnObject.customerId == principal.getCustomerId()")
+    @PostAuthorize("isAuthenticated() and (hasRole('ROLE_ADMIN') or returnObject.customerId == principal.getCustomerId())")
     @GetMapping("/{orderId}")
     public Object getOrderDetailAll(
         @AuthenticationPrincipal ShopMemberDetail memberDetail,
