@@ -2,6 +2,7 @@ package shop.s5g.shop.controller.coupon;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import shop.s5g.shop.config.RedisConfig;
 import shop.s5g.shop.dto.PageResponseDto;
 import shop.s5g.shop.dto.coupon.coupon.AvailableCouponResponseDto;
 import shop.s5g.shop.dto.coupon.coupon.CouponRequestDto;
@@ -22,13 +24,16 @@ import shop.s5g.shop.dto.coupon.coupon.CouponResponseDto;
 import shop.s5g.shop.dto.tag.MessageDto;
 import shop.s5g.shop.exception.coupon.CouponBadRequestException;
 import shop.s5g.shop.service.coupon.coupon.CouponService;
+import shop.s5g.shop.service.coupon.coupon.RedisCouponService;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/shop/admin")
+@ConditionalOnBean(RedisConfig.class)
 public class CouponController {
 
     private final CouponService couponService;
+    private final RedisCouponService redisCouponService;
 
     /**
      * 쿠폰 생성 API
@@ -44,7 +49,7 @@ public class CouponController {
             throw new CouponBadRequestException("잘못된 데이터 요청입니다.");
         }
 
-        couponService.createCoupon(couponRequestDto.quantity(), couponRequestDto);
+        redisCouponService.createCoupon(couponRequestDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(new MessageDto("쿠폰 생성 성공"));
     }

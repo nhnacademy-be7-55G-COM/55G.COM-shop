@@ -37,11 +37,14 @@ rabbit:
   retry-count: 5
   exchange:
     orders: 55g.orders.exchange
+    coupons: 55g.coupon.exchange
 
   route:
     orders:
       payment:
         toss: 55g.orders.payment.toss
+    coupons:
+      event: 55g.coupon.create
 
   orders:
     payment:
@@ -89,6 +92,21 @@ spring:
       on-profile: dev
 
     import: optional:configserver:http://55g-config-dev:9050
+
+rabbit:
+  retry-count: 5
+  exchange:
+    coupons: 55g.coupon.test.exchange
+
+  route:
+    coupons:
+      event: 55g.coupon.test
+
+  coupon:
+    event:
+      create:
+        queue: 55g.coupon.test.queue
+        dlq: 55g.coupon.test.dlq
 
 ---
 # on profile 'docker'
