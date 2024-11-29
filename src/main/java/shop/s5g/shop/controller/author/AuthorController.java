@@ -2,6 +2,7 @@ package shop.s5g.shop.controller.author;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -70,4 +71,9 @@ public class AuthorController {
         return ResponseEntity.ok().body(new MessageDto("작가 삭제 성공"));
     }
 
+    // 작가 검색
+    @GetMapping("/authors")
+    ResponseEntity<List<AuthorResponseDto>> searchAuthors(String keyword){
+        return authorService.searchAuthors(keyword);
+    }
 }

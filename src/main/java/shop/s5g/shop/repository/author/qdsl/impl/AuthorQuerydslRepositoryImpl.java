@@ -96,4 +96,17 @@ public class AuthorQuerydslRepositoryImpl extends QuerydslRepositorySupport impl
 
         return result != null;
     }
+
+    @Override
+    public List<AuthorResponseDto> findByAuthorNameList(String keyword){
+        return from(author)
+            .where(author.name.contains(keyword))
+            .where(author.active.eq(true))
+            .select(Projections.constructor(AuthorResponseDto.class,
+                author.authorId,
+                author.name,
+                author.active
+            ))
+            .fetch();
+    }
 }
