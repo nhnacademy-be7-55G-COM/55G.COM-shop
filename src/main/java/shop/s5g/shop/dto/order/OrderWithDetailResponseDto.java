@@ -12,5 +12,6 @@ public record OrderWithDetailResponseDto(
     // 리스트에서 노출시킬 대표 디테일("'예시타이틀' 2권 외...")
     String representTitle,
     long totalKind,      // 종류(총 N종)
-    int totalQuantity   // 양(총 N권)
+    int totalQuantity,   // 양(총 N권),
+    String uuid
 ) {}

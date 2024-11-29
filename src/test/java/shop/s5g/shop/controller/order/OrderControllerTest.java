@@ -84,7 +84,7 @@ class OrderControllerTest {
     @WithCustomMockUser(loginId = "123", customerId = 1L, role = "ROLE_MEMBER")
     void fetchOrdersTest() throws Exception {
         OrderWithDetailResponseDto dto = new OrderWithDetailResponseDto(
-            1L, LocalDateTime.now(), 3000L, 5000L, "test title", 3, 4
+            1L, LocalDateTime.now(), 3000L, 5000L, "test title", 3, 4, "UUID-1"
         );
         List<OrderWithDetailResponseDto> result =  List.of(dto, dto);
 
@@ -144,7 +144,7 @@ class OrderControllerTest {
     @Test
     @WithCustomMockUser(loginId = "123", customerId = 1L, role = "ROLE_MEMBER")
     void createNewOrderSuccessTest() throws Exception{
-        OrderCreateResponseDto response = new OrderCreateResponseDto(1L);
+        OrderCreateResponseDto response = new OrderCreateResponseDto(1L, "UUID");
         when(orderService.createOrder(anyLong(), any())).thenReturn(response);
 
         mvc.perform(MockMvcRequestBuilders.post("/api/shop/orders")
@@ -179,7 +179,7 @@ class OrderControllerTest {
     @WithCustomMockUser(loginId = "123", customerId = 1L, role = "ROLE_MEMBER")
     void fetchOrdersBetweenDatesTest() throws Exception{
         OrderWithDetailResponseDto dto = new OrderWithDetailResponseDto(
-            1L, LocalDateTime.now(), 3000L, 5000L, "test title", 3, 4
+            1L, LocalDateTime.now(), 3000L, 5000L, "test title", 3, 4, "UUID"
         );
         LocalDate startDate = LocalDate.now().minusDays(1);
         LocalDate endDate = LocalDate.now();
@@ -213,8 +213,8 @@ class OrderControllerTest {
     @Test
     void unauthorizedTest() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get("/api/shop/orders"))
-            .andExpect(status().isUnauthorized());
-        verify(advice, times(1)).handleAuthenticationException(any());
+            .andExpect(status().isForbidden());
+        verify(advice, times(1)).handleForbiddenResourceException(any());
         verify(orderService, never()).getAllOrdersWithDetail(anyLong());
     }
 }
