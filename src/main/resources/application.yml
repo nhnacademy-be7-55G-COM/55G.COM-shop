@@ -76,6 +76,10 @@ payment:
   toss:
     secretkey: secret
 
+image:
+  appkey: appkey
+  secretKey: secretKey
+
 ---
 spring:
   config:
