@@ -9,4 +9,6 @@ import shop.s5g.shop.entity.point.PointSource;
 public interface PointSourceRepository extends JpaRepository<PointSource, Long> {
     Optional<PointSource> findBySourceName(String sourceName);
     List<PointSourceView> findAllBy();
+
+    void deleteBySourceName(String sourceName);
 }
