@@ -76,6 +76,9 @@ payment:
   toss:
     secretkey: secret
 
+logncrash:
+  key:
+    app: appKey
 ---
 spring:
   config:
