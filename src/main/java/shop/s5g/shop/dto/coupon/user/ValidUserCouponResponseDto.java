@@ -21,7 +21,11 @@ public record ValidUserCouponResponseDto(
 
     BigDecimal discountPrice,
 
-    Long maxPrice
+    Long maxPrice,
+
+    LocalDateTime createdAt,
+
+    LocalDateTime expiredAt
 ) {
 
 }

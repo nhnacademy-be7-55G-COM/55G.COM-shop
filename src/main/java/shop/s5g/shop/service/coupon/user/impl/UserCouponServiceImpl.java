@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.config.RedisConfig;
 import shop.s5g.shop.dto.coupon.user.InValidUsedCouponResponseDto;
@@ -40,7 +41,6 @@ public class UserCouponServiceImpl implements UserCouponService {
      * 유저에게 해당 쿠폰 넣어주기
      * @param member
      */
-    // TODO 1 쿠폰 처리 트랜잭션에 대해서 생각해보기
     @Override
     public void createWelcomeCoupon(Member member) {
 
@@ -61,8 +61,6 @@ public class UserCouponServiceImpl implements UserCouponService {
         } catch (Exception e) {
             log.warn("회원가입 쿠폰 발급에 실패했습니다. 멤버 ID : {}", member.getId());
         }
-
-
     }
 
     /**
@@ -131,32 +129,40 @@ public class UserCouponServiceImpl implements UserCouponService {
     @Override
     public void addUserCoupon(Long customerId, Long couponTemplateId) {
 
-        // 캐싱된 정책 duration 가져오기
-        int templateDuration = couponStorageService.getCouponPolicyDuration(couponTemplateId);
+        try {
+            // 캐싱된 정책 duration 가져오기
+            LocalDateTime now = LocalDateTime.now();
+            int templateDuration = couponStorageService.getCouponPolicyDuration(couponTemplateId);
 
-        // 쿠폰 갯수가 있는 지 체크 ( front 단에서도 더블 체크를 할 예정임 )
-        if (couponStorageService.getCouponCnt(couponTemplateId) <= 0) {
-            throw new CouponNotFoundException("쿠폰 발급이 마감되었습니다.");
+            // 쿠폰 갯수가 있는 지 체크 ( front 단에서도 더블 체크를 할 예정임 )
+            if (couponStorageService.getCouponCnt(couponTemplateId) <= 0) {
+                throw new CouponNotFoundException("쿠폰 발급이 마감되었습니다.");
+            }
+
+            // 사용자가 이미 쿠폰이 있는 지 체크
+            if (couponStorageService.isUserCouponExists(couponTemplateId, customerId)) {
+                throw new CouponAlreadyIssuedException("이미 쿠폰 발급 받은 유저입니다.");
+            }
+
+            // 사용자가 쿠폰이 없다면 user 에게 쿠폰 넣어주기
+            Member member = getMemberById(customerId);
+            String couponCode = couponStorageService.popIssuedCoupon(couponTemplateId);
+
+            Coupon coupon = couponService.getCouponByCode(couponCode);
+
+            userCouponRepository.save(new UserCoupon(member, coupon, now, now.plusDays(templateDuration)));
+
+            // 해당 쿠폰 수량 하나 지워주기
+            couponStorageService.decreaseCouponCnt(couponTemplateId);
+
+            // 쿠폰을 넣어줬다면 redis 발급받은 유저 목록에 넣어주기
+            couponStorageService.addUserCoupon(couponTemplateId, customerId);
+
+        } catch (Exception e) {
+            log.warn("An error occurred in the process of inserting a coupon to the user ID : {}", customerId);
+            throw e;
         }
 
-        // 사용자가 이미 쿠폰이 있는 지 체크
-        if (couponStorageService.isUserCouponExists(customerId, couponTemplateId)) {
-            throw new CouponAlreadyIssuedException("이미 쿠폰 발급 받은 유저입니다.");
-        }
-
-        // 사용자가 쿠폰이 없다면 user 에게 쿠폰 넣어주기
-        Member member = getMemberById(customerId);
-        String couponCode = couponStorageService.popIssuedCoupon(couponTemplateId);
-
-        Coupon coupon = couponService.getCouponByCode(couponCode);
-
-//        userCouponRepository.save(new UserCoupon(member, coupon));
-
-        // 해당 쿠폰 수량 하나 지워주기
-        couponStorageService.decreaseCouponCnt(couponTemplateId);
-
-        // 쿠폰을 넣어줬다면 redis 발급받은 유저 목록에 넣어주기
-        couponStorageService.addUserCoupon(couponTemplateId, customerId);
     }
 
     /**

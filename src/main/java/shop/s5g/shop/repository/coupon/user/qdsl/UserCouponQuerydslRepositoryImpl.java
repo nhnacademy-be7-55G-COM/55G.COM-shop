@@ -71,7 +71,9 @@ public class UserCouponQuerydslRepositoryImpl extends QuerydslRepositorySupport 
                 couponTemplate.couponDescription,
                 couponPolicy.condition,
                 couponPolicy.discountPrice,
-                couponPolicy.maxPrice
+                couponPolicy.maxPrice,
+                userCoupon.createdAt,
+                userCoupon.expiredAt
             ))
             .from(userCoupon)
             .innerJoin(coupon).on(userCoupon.userCouponPk.couponId.eq(coupon.couponId))

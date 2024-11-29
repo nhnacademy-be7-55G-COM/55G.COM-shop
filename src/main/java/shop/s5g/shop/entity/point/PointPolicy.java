@@ -38,4 +38,10 @@ public class PointPolicy {
     @Setter
     @Column(precision = 10, scale = 2, name = "`value`")
     private BigDecimal value;
+
+    public PointPolicy(PointSource pointSource, String name, BigDecimal value) {
+        this.pointSource = pointSource;
+        this.name = name;
+        this.value = value;
+    }
 }

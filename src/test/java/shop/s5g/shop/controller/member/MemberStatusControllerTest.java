@@ -36,6 +36,7 @@ import shop.s5g.shop.dto.member_status.MemberStatusRequestDto;
 import shop.s5g.shop.dto.member_status.MemberStatusResponseDto;
 import shop.s5g.shop.exception.BadRequestException;
 import shop.s5g.shop.filter.JwtAuthenticationFilter;
+import shop.s5g.shop.service.member.MemberService;
 import shop.s5g.shop.service.member.MemberStatusService;
 
 @AutoConfigureRestDocs
@@ -54,6 +55,9 @@ class MemberStatusControllerTest {
 
     @MockBean
     private MemberStatusService memberStatusService;
+
+    @MockBean
+    private MemberService memberService;
 
     @Test
     @DisplayName("GET /api/shop/member/status - Get all member statuses")
