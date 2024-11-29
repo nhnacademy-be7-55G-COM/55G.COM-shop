@@ -15,7 +15,6 @@ import shop.s5g.shop.exception.order.OrderDetailsNotExistException;
 import shop.s5g.shop.repository.order.OrderDetailRepository;
 import shop.s5g.shop.repository.order.OrderDetailTypeRepository;
 import shop.s5g.shop.repository.order.OrderRepository;
-import shop.s5g.shop.repository.order.RefundHistoryRepository;
 import shop.s5g.shop.service.order.OrderDetailService;
 
 @RequiredArgsConstructor
@@ -25,7 +24,6 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     private final OrderRepository orderRepository;
     private final OrderDetailRepository orderDetailRepository;
     private final OrderDetailTypeRepository orderDetailTypeRepository;
-    private final RefundHistoryRepository refundHistoryRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -61,10 +59,10 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     @Override
     @Transactional(readOnly = true)
     public OrderDetailInfoDto getOrderDetailInfo(String uuid) {
-         Order order = orderRepository.findOrderByUuid(uuid).orElseThrow(
+        Order order = orderRepository.findOrderByUuid(uuid).orElseThrow(
              () -> new ResourceNotFoundException("주문을 찾을 수 없습니다")
          );
-         long ownerId = order.getCustomer().getCustomerId();
+        long ownerId = order.getCustomer().getCustomerId();
         DeliveryResponseDto delivery = DeliveryResponseDto.of(order.getDelivery());
 
         List<OrderDetailWithBookResponseDto> orderDetails = orderDetailRepository.queryAllDetailsByOrderId(order.getId());

@@ -18,12 +18,18 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import shop.s5g.shop.dto.order.OrderDetailWithBookResponseDto;
 import shop.s5g.shop.exception.order.OrderDetailsNotExistException;
 import shop.s5g.shop.repository.order.OrderDetailRepository;
+import shop.s5g.shop.repository.order.OrderDetailTypeRepository;
+import shop.s5g.shop.repository.order.OrderRepository;
 import shop.s5g.shop.service.order.impl.OrderDetailServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 class OrderDetailServiceImplTest {
     @Mock
     OrderDetailRepository orderDetailRepository;
+    @Mock
+    OrderRepository orderRepository;
+    @Mock
+    OrderDetailTypeRepository orderDetailTypeRepository;
 
     @InjectMocks
     OrderDetailServiceImpl service;

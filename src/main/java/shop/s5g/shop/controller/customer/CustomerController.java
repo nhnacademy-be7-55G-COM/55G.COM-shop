@@ -39,7 +39,7 @@ public class CustomerController {
         @RequestParam String password
     ) {
         return switch (type) {
-            case "email" -> throw new IllegalCallerException();
+            case "email" -> throw new UnsupportedOperationException("email is not implemented yet");
             case "phoneNumber" ->
                 customerService.queryCustomer(phoneNumber, name, password);
             default -> throw new BadRequestException("타입이 잘못되었습니다.");
@@ -68,7 +68,7 @@ public class CustomerController {
                 register.phoneNumber(), register.name(), register.password()
             );
             // 미구현
-            case "email" -> throw new IllegalCallerException();
+            case "email" -> throw new UnsupportedOperationException("Email is not implemented yet");
             default -> throw new BadRequestException("타입이 잘못되었습니다.");
         };
     }
