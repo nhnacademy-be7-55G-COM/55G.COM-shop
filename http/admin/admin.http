@@ -4,6 +4,6 @@ Content-Type: application/json
 Authorization: Bearer ANONYMOUS
 
 {
-  "id": "testadmin",
-  "password": "testadmin123"
+  "id": "test10",
+  "password": "test"
 }
