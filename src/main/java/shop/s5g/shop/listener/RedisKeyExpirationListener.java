@@ -29,13 +29,18 @@ public class RedisKeyExpirationListener extends KeyExpirationEventMessageListene
     public void onMessage(Message message, byte[] pattern) {
 
         if (message.toString().startsWith("refresh_token")) {
-
-            String customerLoginId = message.toString().split(":")[1];
-            try {
-                cartService.FromRedisToDb(customerLoginId);
-            } catch (Exception e) {
-                log.debug("refresh_token 만료시 장바구니 db 저장에 실패했습니다.");
+            String[] splitToken = message.toString().split(":");
+            String customerLoginId = splitToken[1];
+            String role = splitToken[2];
+            
+            if (role.equals("ROLE_MEMBER")){
+                try {
+                    cartService.FromRedisToDb(customerLoginId);
+                } catch (Exception e) {
+                    log.debug("refresh_token 만료시 장바구니 db 저장에 실패했습니다.");
+                }
             }
+
         }
     }
 }
