@@ -38,4 +38,12 @@ public class BookAuthor {
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    public BookAuthor(Book book,Author author,AuthorType authorType,LocalDateTime createdAt,LocalDateTime updatedAt){
+        this.book=book;
+        this.author=author;
+        this.authorType=authorType;
+        this.createdAt=createdAt;
+        this.updatedAt=updatedAt;
+    }
 }
