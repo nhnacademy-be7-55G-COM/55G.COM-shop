@@ -1,5 +1,6 @@
 package shop.s5g.shop.controller.point;
 
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +39,7 @@ public class PointPolicyController {
 
     @PostMapping("/update")
     public ResponseEntity<Void> updatePolicy(
-        @RequestBody @Validated PointPolicyUpdateRequestDto pointPolicyUpdateRequestDto,
+        @RequestBody @Valid PointPolicyUpdateRequestDto pointPolicyUpdateRequestDto,
         BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
@@ -51,7 +52,7 @@ public class PointPolicyController {
 
     @PostMapping("/create")
     public ResponseEntity<Void> createPolicy(
-        @RequestBody @Validated PointPolicyCreateRequestDto pointPolicyCreateRequestDto,
+        @RequestBody @Valid PointPolicyCreateRequestDto pointPolicyCreateRequestDto,
         BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
@@ -65,7 +66,7 @@ public class PointPolicyController {
 
     @DeleteMapping("/remove")
     public ResponseEntity<Void> removePolicy(
-        @RequestBody @Validated PointPolicyRemoveRequestDto pointPolicyRemoveRequestDto,
+        @RequestBody @Valid PointPolicyRemoveRequestDto pointPolicyRemoveRequestDto,
         BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
