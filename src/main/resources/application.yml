@@ -58,14 +58,6 @@ rabbit:
         queue: 55g.coupon.create.queue
         dlq: 55g.coupon.create.queue.dlq
 
-  category:
-    event:
-      coupon:
-        create:
-          queue: 55g.category.coupon.create.queue
-          dlq: 55g.category.coupon.create.queue.dlq
-
-
 management:
   endpoints:
     web:
@@ -75,6 +67,10 @@ management:
 payment:
   toss:
     secretkey: secret
+
+image:
+  appkey: appkey
+  secretKey: secretKey
 
 ---
 spring:
@@ -183,3 +179,16 @@ spring:
     elasticsearch:
       repositories:
         enabled: false
+
+
+---
+spring:
+  config:
+    activate:
+      on-profile: coupon
+
+rabbit:
+  coupon:
+    event:
+      create:
+        queue: 55g.dev.test.coupon.queue

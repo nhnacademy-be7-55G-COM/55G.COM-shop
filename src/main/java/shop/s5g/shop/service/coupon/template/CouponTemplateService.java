@@ -17,7 +17,8 @@ public interface CouponTemplateService {
     CouponTemplateResponseDto getCouponTemplate(Long couponTemplateId);
 
     // Update
-    void updateCouponTemplate(Long couponTemplateId, CouponTemplateUpdateRequestDto couponTemplateUpdateRequestDto);
+    void updateCouponTemplate(Long couponTemplateId,
+        CouponTemplateUpdateRequestDto couponTemplateUpdateRequestDto);
 
     // Delete
     void deleteCouponTemplate(Long couponTemplateId);
@@ -26,4 +27,6 @@ public interface CouponTemplateService {
     Page<CouponTemplateResponseDto> getCouponTemplates(Pageable pageable);
 
     Page<CouponTemplateResponseDto> getCouponTemplatesUnused(Pageable pageable);
+
+    Page<CouponTemplateResponseDto> getCouponTemplateExcludingWelcomeAndBirth(Pageable pageable);
 }

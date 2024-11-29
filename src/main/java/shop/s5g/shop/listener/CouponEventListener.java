@@ -18,6 +18,7 @@ public class CouponEventListener {
 
     @EventListener
     public void handleMemberRegisterEvent(MemberRegisteredEvent event) {
+
         Member member = event.getMember();
 
         userCouponService.createWelcomeCoupon(member);

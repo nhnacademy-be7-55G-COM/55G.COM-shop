@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ import shop.s5g.shop.repository.coupon.template.CouponTemplateRepository;
 import shop.s5g.shop.service.coupon.coupon.RedisCouponService;
 import shop.s5g.shop.util.CouponUtil;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -69,7 +71,7 @@ public class RedisCouponServiceImpl implements RedisCouponService {
             saveCouponCnt++;
         }
 
-        couponStorageService.setCouponCnt(couponTemplate.getCouponTemplateId(), uniqueCode.size());
+        couponStorageService.setCouponCnt(couponTemplate.getCouponTemplateId(), couponRequestDto.quantity());
 
         couponRepository.saveAll(couponSet);
 

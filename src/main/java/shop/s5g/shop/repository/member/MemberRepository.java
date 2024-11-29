@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import shop.s5g.shop.entity.member.Member;
+import shop.s5g.shop.entity.member.MemberStatus;
 import shop.s5g.shop.repository.member.qdsl.MemberQuerydslRepository;
 
 public interface MemberRepository extends JpaRepository<Member, Long>, MemberQuerydslRepository {
@@ -23,5 +24,9 @@ public interface MemberRepository extends JpaRepository<Member, Long>, MemberQue
 
     boolean existsByPaycoIdNo(String paycoIdNo);
 
+    Optional<Member> findByLoginIdAndStatusNot(String loginId, MemberStatus status);
+
     Optional<Member> findByIdAndStatus_TypeName(long memberId, String typeName);
+
+    Optional<Member> findByLoginId(String loginId);
 }

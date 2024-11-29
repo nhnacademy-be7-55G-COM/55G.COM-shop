@@ -1,14 +1,19 @@
 package shop.s5g.shop.controller.point;
 
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import shop.s5g.shop.dto.point.PointPolicyCreateRequestDto;
+import shop.s5g.shop.dto.point.PointPolicyRemoveRequestDto;
 import shop.s5g.shop.dto.point.PointPolicyResponseDto;
 import shop.s5g.shop.dto.point.PointPolicyUpdateRequestDto;
 import shop.s5g.shop.dto.point.PointPolicyView;
@@ -34,13 +39,40 @@ public class PointPolicyController {
 
     @PostMapping("/update")
     public ResponseEntity<Void> updatePolicy(
-        @RequestBody PointPolicyUpdateRequestDto pointPolicyUpdateRequestDto,
+        @RequestBody @Valid PointPolicyUpdateRequestDto pointPolicyUpdateRequestDto,
         BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             throw new BadRequestException();
         }
         pointPolicyService.updatePolicyValue(pointPolicyUpdateRequestDto);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<Void> createPolicy(
+        @RequestBody @Valid PointPolicyCreateRequestDto pointPolicyCreateRequestDto,
+        BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            throw new BadRequestException();
+        }
+
+        pointPolicyService.createPointPolicy(pointPolicyCreateRequestDto);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/remove")
+    public ResponseEntity<Void> removePolicy(
+        @RequestBody @Valid PointPolicyRemoveRequestDto pointPolicyRemoveRequestDto,
+        BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            throw new BadRequestException();
+        }
+        pointPolicyService.removePointPolicy(pointPolicyRemoveRequestDto);
 
         return ResponseEntity.ok().build();
     }

@@ -17,6 +17,7 @@ import shop.s5g.shop.dto.member_status.MemberStatusRequestDto;
 import shop.s5g.shop.dto.member_status.MemberStatusResponseDto;
 import shop.s5g.shop.dto.tag.MessageDto;
 import shop.s5g.shop.exception.BadRequestException;
+import shop.s5g.shop.service.member.MemberService;
 import shop.s5g.shop.service.member.MemberStatusService;
 
 @RestController
@@ -25,6 +26,7 @@ import shop.s5g.shop.service.member.MemberStatusService;
 public class MemberStatusController {
 
     private final MemberStatusService memberStatusService;
+    private final MemberService memberService;
 
     @GetMapping("/member/status")
     public ResponseEntity<List<MemberStatusResponseDto>> getMemberStatus() {
@@ -62,4 +64,18 @@ public class MemberStatusController {
         return ResponseEntity.ok().body(new MessageDto("변경 성공"));
     }
 
+    @PutMapping("/member/{login-id}/active")
+    public ResponseEntity<MessageDto> changeMemberToActive(
+        @PathVariable(name = "login-id") String loginId) {
+        memberService.changeStatusToActive(loginId);
+        return ResponseEntity.ok().body(new MessageDto("휴면이 해제되었습니다"));
+    }
+
+    @GetMapping("/member/{login-id}/status")
+    public ResponseEntity<MemberStatusResponseDto> getMemberStatus(
+        @PathVariable(name = "login-id") String loginId) {
+        MemberStatusResponseDto responseDto = memberService.getMemberStatusDtoByloginId(loginId);
+
+        return ResponseEntity.ok(responseDto);
+    }
 }

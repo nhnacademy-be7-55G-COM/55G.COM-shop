@@ -32,6 +32,11 @@ public class PointSource {
     @OneToMany(mappedBy = "pointSource")
     List<PointPolicy> pointPolicy;
 
+
+    public PointSource(String sourceName) {
+        this.sourceName = sourceName;
+    }
+
     @Getter
     public enum Name {
         REGISTER("회원가입"), REVIEW("리뷰"), PURCHASE("구매"), REFUND("환불");

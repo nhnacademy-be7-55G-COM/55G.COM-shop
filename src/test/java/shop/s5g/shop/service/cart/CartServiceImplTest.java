@@ -413,14 +413,25 @@ class CartServiceImplTest {
 
         when(bookRepository.findAllBooksInfoInCart(anySet())).thenReturn(booksInfoInRedisCart);
         when(cartRedisRepository.getBooksInRedisCart(anyString())).thenReturn(booksInRedisCart);
+        List<CartBooksResponseDto> expectedResult = new ArrayList<>();
+        expectedResult.add(
+            new CartBooksResponseDto(1l, 1000l, BigDecimal.valueOf(900l).setScale(1), 1, 10, "title1", "image1",
+                true));
+        expectedResult.add(
+            new CartBooksResponseDto(2l, 2000l, BigDecimal.valueOf(1600l).setScale(1), 1, 20, "title2", "image2",
+                true));
+
 
 
         //when
-        assertThatCode(() -> cartServiceImpl.lookUpAllBooks(customerLoginId)).doesNotThrowAnyException();
+        List<CartBooksResponseDto> actualResult = cartServiceImpl.lookUpAllBooks(
+            customerLoginId);
+
 
         //then
         verify(bookRepository,times(1)).findAllBooksInfoInCart(anySet());
         verify(cartRedisRepository,times(1)).getBooksInRedisCart(anyString());
+        Assertions.assertEquals(expectedResult, actualResult);
     }
 
     @Test
@@ -477,7 +488,9 @@ class CartServiceImplTest {
 
         when(bookRepository.findAllBooksInfoInCart(Set.of(1l, 2l))).thenReturn(booksInfo);
 
-        assertEquals(expectedResult,cartServiceImpl.lookUpAllBooksWhenGuest(cartLocalStorageDto));
+        List<CartBooksResponseDto> actualResult = cartServiceImpl.lookUpAllBooksWhenGuest(
+            cartLocalStorageDto);
+        assertEquals(expectedResult, actualResult);
     }
 
     @Test
