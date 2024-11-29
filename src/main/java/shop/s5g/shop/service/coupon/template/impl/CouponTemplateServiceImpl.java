@@ -149,4 +149,15 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
     public Page<CouponTemplateResponseDto> getCouponTemplatesUnused(Pageable pageable) {
         return couponTemplateRepository.findUnusedCouponTemplates(pageable);
     }
+
+    /**
+     * 생일, 웰컴 제외한 쿠폰 템플릿 조회 - Pageable
+     * @param pageable
+     * @return Page<CouponTemplateResponseDto>
+     */
+    @Override
+    public Page<CouponTemplateResponseDto> getCouponTemplateExcludingWelcomeAndBirth(
+        Pageable pageable) {
+        return couponTemplateRepository.findCouponTemplatesExcludingBirthAndWelcome(pageable);
+    }
 }

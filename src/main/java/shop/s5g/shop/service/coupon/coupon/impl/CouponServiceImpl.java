@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.coupon.coupon.AvailableCouponResponseDto;
 import shop.s5g.shop.dto.coupon.coupon.CouponRequestDto;
@@ -36,6 +37,7 @@ public class CouponServiceImpl implements CouponService {
      * @return Coupon
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Coupon createWelcomeCoupon() {
 
         CouponTemplate welcomeTemplate = couponTemplateRepository.findParticularCouponByName(
