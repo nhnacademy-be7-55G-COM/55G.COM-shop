@@ -6,7 +6,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import shop.s5g.shop.dto.coupon.template.CouponCategoryAndBookResponseDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateRequestDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateResponseDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateUpdateRequestDto;
@@ -149,5 +148,16 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
     @Transactional(readOnly = true)
     public Page<CouponTemplateResponseDto> getCouponTemplatesUnused(Pageable pageable) {
         return couponTemplateRepository.findUnusedCouponTemplates(pageable);
+    }
+
+    /**
+     * 생일, 웰컴 제외한 쿠폰 템플릿 조회 - Pageable
+     * @param pageable
+     * @return Page<CouponTemplateResponseDto>
+     */
+    @Override
+    public Page<CouponTemplateResponseDto> getCouponTemplateExcludingWelcomeAndBirth(
+        Pageable pageable) {
+        return couponTemplateRepository.findCouponTemplatesExcludingBirthAndWelcome(pageable);
     }
 }

@@ -7,6 +7,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anySet;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doNothing;
@@ -31,8 +32,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import shop.s5g.shop.dto.cart.request.CartBookInfoRequestDto;
+import shop.s5g.shop.dto.cart.request.CartBookInfoWithStatusRequestDto;
 import shop.s5g.shop.dto.cart.request.CartBookSelectRequestDto;
+import shop.s5g.shop.dto.cart.request.CartLocalStorageWithStatusRequestDto;
 import shop.s5g.shop.dto.cart.request.CartSessionStorageDto;
+import shop.s5g.shop.dto.cart.response.CartBooksInfoInCartResponseDto;
 import shop.s5g.shop.dto.cart.response.CartBooksResponseDto;
 import shop.s5g.shop.dto.cart.response.CartDetailInfoResponseDto;
 import shop.s5g.shop.entity.Book;
@@ -73,7 +77,7 @@ class CartServiceImplTest {
     CartServiceImpl cartServiceImpl;
 
     Map<Object, Object> booksInRedisCart = new HashMap<>();
-    List<Book> booksInfoInRedisCart = new ArrayList<>();
+    List<CartBooksInfoInCartResponseDto> booksInfoInRedisCart = new ArrayList<>();
 
     @Test
     void getBooksInDbByCustomerIdTest() throws Exception {
@@ -392,28 +396,43 @@ class CartServiceImplTest {
         bookIdField.set(book1, 1L);
         bookIdField.set(book2, 2L);
 
-        booksInfoInRedisCart.add(book1);
-        booksInfoInRedisCart.add(book2);
+        booksInfoInRedisCart.add(
+            new CartBooksInfoInCartResponseDto(book1.getBookId(), book1.getPrice(),
+                book1.getDiscountRate(), book1.getStock(), book1.getTitle(), "image1"));
+        booksInfoInRedisCart.add(
+            new CartBooksInfoInCartResponseDto(book2.getBookId(), book2.getPrice(),
+                book2.getDiscountRate(), book2.getStock(), book2.getTitle(), "image2"));
         booksInRedisCart.put(book1.getBookId(), new CartFieldValue(1, true));
         booksInRedisCart.put(book2.getBookId(), new CartFieldValue(1, true));
     }
-//    @Test
-//    void lookUpAllBooksTest() throws Exception{
-//        setupForLookUpAllBooks();
-//        //given
-//        String customerLoginId = "testCustomerLoginId";
-//
-//        when(bookRepository.findAllById(anyList())).thenReturn(booksInfoInRedisCart);
-//        when(cartRedisRepository.getBooksInRedisCart(anyString())).thenReturn(booksInRedisCart);
-//
-//
-//        //when
-//        assertThatCode(() -> cartServiceImpl.lookUpAllBooks(customerLoginId)).doesNotThrowAnyException();
-//
-//        //then
-//        verify(bookRepository,times(1)).findAllById(anyList());
-//        verify(cartRedisRepository,times(1)).getBooksInRedisCart(anyString());
-//    }
+    @Test
+    void lookUpAllBooksTest() throws Exception{
+        setupForLookUpAllBooks();
+        //given
+        String customerLoginId = "testCustomerLoginId";
+
+        when(bookRepository.findAllBooksInfoInCart(anySet())).thenReturn(booksInfoInRedisCart);
+        when(cartRedisRepository.getBooksInRedisCart(anyString())).thenReturn(booksInRedisCart);
+        List<CartBooksResponseDto> expectedResult = new ArrayList<>();
+        expectedResult.add(
+            new CartBooksResponseDto(1l, 1000l, BigDecimal.valueOf(900l).setScale(1), 1, 10, "title1", "image1",
+                true));
+        expectedResult.add(
+            new CartBooksResponseDto(2l, 2000l, BigDecimal.valueOf(1600l).setScale(1), 1, 20, "title2", "image2",
+                true));
+
+
+
+        //when
+        List<CartBooksResponseDto> actualResult = cartServiceImpl.lookUpAllBooks(
+            customerLoginId);
+
+
+        //then
+        verify(bookRepository,times(1)).findAllBooksInfoInCart(anySet());
+        verify(cartRedisRepository,times(1)).getBooksInRedisCart(anyString());
+        Assertions.assertEquals(expectedResult, actualResult);
+    }
 
     @Test
     void lookUpAllBooksEmptyTest() {
@@ -430,50 +449,60 @@ class CartServiceImplTest {
     }
 
 
-//    @Test
-//    void lookUpAllBooksWhenGuestTest() throws IllegalAccessException, NoSuchFieldException {
-//        Book book1 = Book.builder().price(1000l).discountRate(BigDecimal.valueOf(0.1))
-//            .stock(10).title("title1").build();
-//        Book book2 = Book.builder().price(2000l).discountRate(BigDecimal.valueOf(0.2))
-//            .stock(20).title("title2").build();
-//
-//        Field bookIdField = Book.class.getDeclaredField("bookId");
-//        bookIdField.setAccessible(true);
-//        bookIdField.set(book1, 1L);
-//        bookIdField.set(book2, 2L);
-//
-//        booksInfoInRedisCart.add(book1);
-//        booksInfoInRedisCart.add(book2);
-//
-//        CartBookInfoRequestDto bookInfo1 = new CartBookInfoRequestDto(1l, 1);
-//        CartBookInfoRequestDto bookInfo2 = new CartBookInfoRequestDto(2l, 2);
-//        List<CartBookInfoRequestDto> cartBookInfoList = new ArrayList<>();
-//        cartBookInfoList.add(bookInfo1);
-//        cartBookInfoList.add(bookInfo2);
-//        CartSessionStorageDto cartSessionStorageDto = new CartSessionStorageDto(cartBookInfoList);
-//
-//        List<CartBooksResponseDto> expectedResult = new ArrayList<>();
-//        expectedResult.add(
-//            new CartBooksResponseDto(1l, 1000l, BigDecimal.valueOf(900l).setScale(1), 1, 10, "title1", "image",
-//                true));
-//        expectedResult.add(
-//            new CartBooksResponseDto(2l, 2000l, BigDecimal.valueOf(1600l).setScale(1), 2, 20, "title2", "image",
-//                true));
-//
-//        when(bookRepository.findAllById(Set.of(1l, 2l))).thenReturn(booksInfoInRedisCart);
-//
-//        assertEquals(expectedResult,cartServiceImpl.lookUpAllBooksWhenGuest(cartSessionStorageDto));
-//    }
-//
-//    @Test
-//    void lookUpAllBooksWhenGuestEmptyTest() throws IllegalAccessException, NoSuchFieldException {
-//
-//        List<CartBookInfoRequestDto> cartBookInfoList = new ArrayList<>();
-//        CartSessionStorageDto cartSessionStorageDto = new CartSessionStorageDto(cartBookInfoList);
-//
-//        assertEquals(0, cartServiceImpl.lookUpAllBooksWhenGuest(cartSessionStorageDto).size());
-//        verify(bookRepository, never()).findAllById(any());
-//    }
+    @Test
+    void lookUpAllBooksWhenGuestTest() throws IllegalAccessException, NoSuchFieldException {
+        Book book1 = Book.builder().price(1000l).discountRate(BigDecimal.valueOf(0.1))
+            .stock(10).title("title1").build();
+        Book book2 = Book.builder().price(2000l).discountRate(BigDecimal.valueOf(0.2))
+            .stock(20).title("title2").build();
+
+        Field bookIdField = Book.class.getDeclaredField("bookId");
+        bookIdField.setAccessible(true);
+        bookIdField.set(book1, 1L);
+        bookIdField.set(book2, 2L);
+
+        List<CartBooksInfoInCartResponseDto> booksInfo = new ArrayList<>();
+        booksInfo.add(
+            new CartBooksInfoInCartResponseDto(book1.getBookId(), book1.getPrice(),
+                book1.getDiscountRate(), book1.getStock(), book1.getTitle(), "image1"));
+        booksInfo.add(
+            new CartBooksInfoInCartResponseDto(book2.getBookId(), book2.getPrice(),
+                book2.getDiscountRate(), book2.getStock(), book2.getTitle(), "image2"));
+
+        CartBookInfoWithStatusRequestDto bookInfo1 = new CartBookInfoWithStatusRequestDto(1l, 1,
+            true);
+        CartBookInfoWithStatusRequestDto bookInfo2 = new CartBookInfoWithStatusRequestDto(2l, 2,
+            true);
+        List<CartBookInfoWithStatusRequestDto> cartBookInfoList = new ArrayList<>();
+        cartBookInfoList.add(bookInfo1);
+        cartBookInfoList.add(bookInfo2);
+        CartLocalStorageWithStatusRequestDto cartLocalStorageDto = new CartLocalStorageWithStatusRequestDto(cartBookInfoList);
+
+        List<CartBooksResponseDto> expectedResult = new ArrayList<>();
+        expectedResult.add(
+            new CartBooksResponseDto(1l, 1000l, BigDecimal.valueOf(900l).setScale(1), 1, 10, "title1", "image1",
+                true));
+        expectedResult.add(
+            new CartBooksResponseDto(2l, 2000l, BigDecimal.valueOf(1600l).setScale(1), 2, 20, "title2", "image2",
+                true));
+
+        when(bookRepository.findAllBooksInfoInCart(Set.of(1l, 2l))).thenReturn(booksInfo);
+
+        List<CartBooksResponseDto> actualResult = cartServiceImpl.lookUpAllBooksWhenGuest(
+            cartLocalStorageDto);
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void lookUpAllBooksWhenGuestEmptyTest() throws IllegalAccessException, NoSuchFieldException {
+
+        List<CartBookInfoWithStatusRequestDto> cartBookInfoList = new ArrayList<>();
+        CartLocalStorageWithStatusRequestDto cartLocalStorageDto = new CartLocalStorageWithStatusRequestDto(cartBookInfoList);
+
+        assertEquals(0, cartServiceImpl.lookUpAllBooksWhenGuest(cartLocalStorageDto).size());
+
+        verify(bookRepository, never()).findAllBooksInfoInCart(anySet());
+    }
 
     @Test
     void getTotalPriceAndDeliverFeeTest() {

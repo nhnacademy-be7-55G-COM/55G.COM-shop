@@ -1,7 +1,9 @@
 package shop.s5g.shop.exception.coupon;
 
+import lombok.Getter;
 import shop.s5g.shop.exception.ErrorCode;
 
+@Getter
 public class CouponPolicyValidationException extends RuntimeException {
 
     private final ErrorCode errorCode;
@@ -11,7 +13,4 @@ public class CouponPolicyValidationException extends RuntimeException {
         this.errorCode = errorCode;
     }
 
-    public ErrorCode getErrorCode() {
-        return errorCode;
-    }
 }

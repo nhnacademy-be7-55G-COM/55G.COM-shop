@@ -18,5 +18,4 @@ public interface MemberStatusService {
     MemberStatus getMemberStatusByTypeName(String typeName);
 
     void deleteMemberStatus(long memberStatusId);
-
 }

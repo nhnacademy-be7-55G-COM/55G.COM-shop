@@ -302,4 +302,10 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
                 )
             ).fetch();
     }
+
+    //도서 좋아요 갯수 증가
+    @Override
+    public void likeCount(Long bookId) {
+        update(book);
+    }
 }

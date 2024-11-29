@@ -15,11 +15,11 @@ import shop.s5g.shop.dto.order.OrderQueryFilterDto;
 import shop.s5g.shop.dto.order.OrderQueryRequestDto;
 import shop.s5g.shop.dto.order.OrderWithDetailResponseDto;
 import shop.s5g.shop.entity.Book;
-import shop.s5g.shop.entity.delivery.DeliveryStatus.Type;
-import shop.s5g.shop.entity.member.Customer;
 import shop.s5g.shop.entity.delivery.Delivery;
 import shop.s5g.shop.entity.delivery.DeliveryFee;
 import shop.s5g.shop.entity.delivery.DeliveryStatus;
+import shop.s5g.shop.entity.delivery.DeliveryStatus.Type;
+import shop.s5g.shop.entity.member.Customer;
 import shop.s5g.shop.entity.order.Order;
 import shop.s5g.shop.entity.order.OrderDetail;
 import shop.s5g.shop.entity.order.OrderDetailType;
@@ -30,10 +30,10 @@ import shop.s5g.shop.exception.book.BookResourceNotFoundException;
 import shop.s5g.shop.exception.member.CustomerNotFoundException;
 import shop.s5g.shop.exception.order.WrappingPaperDoesNotExistsException;
 import shop.s5g.shop.repository.book.BookRepository;
-import shop.s5g.shop.repository.member.CustomerRepository;
 import shop.s5g.shop.repository.delivery.DeliveryFeeRepository;
 import shop.s5g.shop.repository.delivery.DeliveryRepository;
 import shop.s5g.shop.repository.delivery.DeliveryStatusRepository;
+import shop.s5g.shop.repository.member.CustomerRepository;
 import shop.s5g.shop.repository.order.OrderDetailRepository;
 import shop.s5g.shop.repository.order.OrderDetailTypeRepository;
 import shop.s5g.shop.repository.order.OrderRepository;
@@ -141,5 +141,13 @@ public class OrderServiceImpl implements OrderService {
     @Transactional(readOnly = true)
     public List<OrderAdminTableView> getOrderListAdmin(OrderQueryFilterDto filter) {
         return orderRepository.findOrdersUsingFilterForAdmin(filter);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public long getCustomerIdWithOrderId(long orderId) {
+        return orderRepository.findById(orderId).orElseThrow(
+            () -> new ResourceNotFoundException("Order not exist")
+        ).getCustomer().getCustomerId();
     }
 }

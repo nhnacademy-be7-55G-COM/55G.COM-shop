@@ -43,7 +43,6 @@ import shop.s5g.shop.repository.book.author.BookAuthorRepository;
 import shop.s5g.shop.repository.book.category.BookCategoryRepository;
 import shop.s5g.shop.repository.book.status.BookStatusRepository;
 import shop.s5g.shop.repository.book.image.BookImageRepository;
-import shop.s5g.shop.repository.book.status.BookStatusRepository;
 import shop.s5g.shop.repository.booktag.BookTagRepository;
 import shop.s5g.shop.repository.category.CategoryRepository;
 import shop.s5g.shop.repository.publisher.PublisherRepository;
@@ -181,6 +180,7 @@ public class BookServiceImpl implements BookService {
             bookDto.isPacked(),
             bookDto.stock(),
             oldBook.getViews(),
+            0L,
             oldBook.getCreatedAt(),
             LocalDateTime.now()
         );

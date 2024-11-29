@@ -14,6 +14,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 @Getter
@@ -34,6 +35,13 @@ public class PointPolicy {
     @Length(max = 50)
     private String name;
 
+    @Setter
     @Column(precision = 10, scale = 2, name = "`value`")
     private BigDecimal value;
+
+    public PointPolicy(PointSource pointSource, String name, BigDecimal value) {
+        this.pointSource = pointSource;
+        this.name = name;
+        this.value = value;
+    }
 }

@@ -6,31 +6,26 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public record ValidUserCouponResponseDto(
-    @NotNull
+
     Long couponId,
 
-    @NotBlank
+    Long couponTemplateId,
+
     String couponCode,
 
-    @NotNull
     String couponName,
 
-    @NotNull
-    LocalDateTime createdAt,
-
-    @NotNull
-    LocalDateTime expiredAt,
-
-    @NotBlank
     String couponDescription,
 
-    @NotNull
     Long condition,
 
-    @NotNull
     BigDecimal discountPrice,
 
-    Long maxPrice
+    Long maxPrice,
+
+    LocalDateTime createdAt,
+
+    LocalDateTime expiredAt
 ) {
 
 }

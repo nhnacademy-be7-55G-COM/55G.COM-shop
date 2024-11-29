@@ -10,11 +10,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
+import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateRequestDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateResponseDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateUpdateRequestDto;
 import shop.s5g.shop.entity.coupon.CouponPolicy;
 import shop.s5g.shop.entity.coupon.CouponTemplate;
+import shop.s5g.shop.entity.coupon.CouponTemplate.CouponTemplateType;
 import shop.s5g.shop.entity.coupon.QCoupon;
 import shop.s5g.shop.entity.coupon.QCouponBook;
 import shop.s5g.shop.entity.coupon.QCouponCategory;
@@ -213,11 +215,47 @@ public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupp
     }
 
     /**
+     * 생일쿠폰과 웰컴쿠폰 템플릿을 제외한 모든 템플릿 가져오기
+     * @param pageable
+     * @return Page<CouponTemplateResponseDto>
+     */
+    @Override
+    public Page<CouponTemplateResponseDto> findCouponTemplatesExcludingBirthAndWelcome(
+        Pageable pageable) {
+
+        List<CouponTemplateResponseDto> templateList = jpaQueryFactory
+            .select(Projections.constructor(CouponTemplateResponseDto.class,
+                couponTemplate.couponTemplateId,
+                couponPolicy.discountPrice,
+                couponPolicy.condition,
+                couponPolicy.maxPrice,
+                couponPolicy.duration,
+                couponTemplate.couponName,
+                couponTemplate.couponDescription))
+            .from(couponTemplate)
+            .innerJoin(couponPolicy).on(couponTemplate.couponPolicy.couponPolicyId.eq(couponPolicy.couponPolicyId))
+            .where(Expressions.stringTemplate("locate({0}, {1})", CouponTemplateType.WELCOME.getTypeName(), couponTemplate.couponName).eq("0")
+                .and(Expressions.stringTemplate("locate({0}, {1})", CouponTemplateType.BIRTH.getTypeName(), couponTemplate.couponName).eq("0"))
+                .and(couponTemplate.active.eq(ACTIVE)))
+            .fetch();
+
+        Long totalCnt = jpaQueryFactory
+            .select(couponTemplate.count())
+            .from(couponTemplate)
+            .fetchOne();
+
+        long total = (Objects.isNull(totalCnt)) ? 0L : totalCnt;
+
+        return new PageImpl<>(templateList, pageable, total);
+    }
+
+    /**
      * 특정 쿠폰이 존재하다면 return
      * @param keyword
      * @return CouponTemplate
      */
     @Override
+    @Transactional(readOnly = true)
     public CouponTemplate findParticularCouponByName(String keyword) {
 
         return jpaQueryFactory

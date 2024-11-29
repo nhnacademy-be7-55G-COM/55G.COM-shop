@@ -1,6 +1,7 @@
 <configuration scan="true" scanPeriod="60 seconds">
   <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
   <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+  <include resource="logback-logncrash.xml" />
 
   <variable name="LOG_FORMAT"
     value="%d{yyyy-MM-dd HH:mm::ss.SSS} %-5level [%thread] %-35logger{35} - %msg%n"/>
@@ -49,20 +50,23 @@
   </appender>
 
   <springProfile name="dev &amp;&amp; !local">
-    <root level="info">
+    <root level="error">
       <appender-ref ref="CONSOLE" />
       <appender-ref ref="root_fout" />
     </root>
-    <logger level="trace" additivity="false" name="shop.s5g.shop">
+    <logger level="debug" additivity="false" name="shop.s5g.shop">
       <appender-ref ref="CONSOLE" />
       <appender-ref ref="app_fout" />
     </logger>
-    <logger leve="trace" additivity="true" name="shop.s5g.shop.service.coupon">
+    <logger leve="debug" additivity="true" name="shop.s5g.shop.service.coupon">
       <appender-ref ref="coupon_fout" />
     </logger>
   </springProfile>
   <springProfile name="local">
-    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <root level="info">
+      <appender-ref ref="CONSOLE" />
+<!--      <appender-ref ref="LNCS-APPENDER"/>-->
+    </root>
     <logger level="trace" additivity="true" name="shop.s5g.shop">
     </logger>
   </springProfile>

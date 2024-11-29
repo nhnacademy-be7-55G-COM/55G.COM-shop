@@ -11,7 +11,7 @@ import shop.s5g.shop.entity.member.Customer;
 @Entity
 @Getter
 @AllArgsConstructor
-@Table(name = "like")
+@Table(name = "`like`")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Like {
 
@@ -31,6 +31,7 @@ public class Like {
     public Like(Customer customer, Book book) {
         this.customer = customer;
         this.book = book;
+        this.id = new LikeId(customer.getCustomerId(), book.getBookId());
     }
 
 }

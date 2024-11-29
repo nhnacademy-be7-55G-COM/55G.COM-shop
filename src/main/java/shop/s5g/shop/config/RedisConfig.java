@@ -12,11 +12,9 @@ import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.GenericToStringSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 @Profile("!disable-redis")
 @Configuration
-@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 60)
 public class RedisConfig {
 
     @Value("${redis.host}")

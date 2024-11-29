@@ -2,13 +2,15 @@ package shop.s5g.shop.service.member.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.address.AddressResponseDto;
-import shop.s5g.shop.dto.coupon.user.UserCouponRequestDto;
+import shop.s5g.shop.dto.coupon.MemberRegisteredEvent;
 import shop.s5g.shop.dto.customer.CustomerResponseDto;
 import shop.s5g.shop.dto.member.IdCheckResponseDto;
 import shop.s5g.shop.dto.member.LoginResponseDto;
@@ -29,7 +31,6 @@ import shop.s5g.shop.exception.member.PasswordIncorrectException;
 import shop.s5g.shop.exception.payco.AlreadyLinkAccountException;
 import shop.s5g.shop.exception.payco.PaycoNotLinkedException;
 import shop.s5g.shop.repository.member.MemberRepository;
-import shop.s5g.shop.service.coupon.user.UserCouponService;
 import shop.s5g.shop.service.member.AddressService;
 import shop.s5g.shop.service.member.CustomerService;
 import shop.s5g.shop.service.member.MemberGradeService;
@@ -48,9 +49,9 @@ public class MemberServiceImpl implements MemberService {
     private final MemberGradeService memberGradeService;
     private final CustomerService customerService;
     private final PointHistoryService pointHistoryService;
-    private final UserCouponService userCouponService;
     private final PasswordEncoder passwordEncoder;
     private final AddressService addressService;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Override
     @Transactional(readOnly = true)
@@ -67,12 +68,12 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional(readOnly = true)
     public LoginResponseDto getLoginDto(String loginId) {
-        if (!memberRepository.existsByLoginIdAndStatus_TypeName(loginId,
-            MemberRepository.ACTIVE_STATUS)) {
-            throw new MemberNotFoundException();
-        }
-        Member member = memberRepository.findByLoginIdAndStatus_TypeName(loginId,
-            MemberRepository.ACTIVE_STATUS);
+
+        MemberStatus withdrawal = memberStatusService.getMemberStatusByTypeName("WITHDRAWAL");
+
+        Optional<Member> memberOpt = memberRepository.findByLoginIdAndStatusNot(loginId,
+            withdrawal);
+        Member member = memberOpt.orElseThrow(MemberNotFoundException::new);
 
         return new LoginResponseDto(member.getLoginId(), member.getPassword());
     }
@@ -107,7 +108,7 @@ public class MemberServiceImpl implements MemberService {
         pointHistoryService.createPointHistory(saved.getId(),
             PointHistoryCreateRequestDto.REGISTER_POINT);
 
-        userCouponService.createWelcomeCoupon(new UserCouponRequestDto(saved.getId()));
+        eventPublisher.publishEvent(new MemberRegisteredEvent(saved));
 
     }
 
@@ -172,6 +173,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public MemberLoginIdResponseDto getMemberLoginIdDtoByPaycoId(String paycoId) {
         Member member = memberRepository.findByPaycoIdNo(paycoId)
             .orElseThrow(() -> new PaycoNotLinkedException("account not linked"));
@@ -205,4 +207,22 @@ public class MemberServiceImpl implements MemberService {
         member.setPaycoIdNo(paycoId);
     }
 
+    @Override
+    public MemberStatusResponseDto getMemberStatusDtoByloginId(String loginId) {
+        MemberStatus withdrawal = memberStatusService.getMemberStatusByTypeName("WITHDRAWAL");
+
+        Optional<Member> memberOpt = memberRepository.findByLoginIdAndStatusNot(loginId,
+            withdrawal);
+        Member member = memberOpt.orElseThrow(MemberNotFoundException::new);
+
+        return MemberStatusResponseDto.toDto(member.getStatus());
+    }
+
+    @Override
+    public void changeStatusToActive(String loginId) {
+        Member member = memberRepository.findByLoginId(loginId)
+            .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
+        MemberStatus memberStatus = memberStatusService.getMemberStatusByTypeName("ACTIVE");
+        member.setStatus(memberStatus);
+    }
 }

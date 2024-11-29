@@ -26,6 +26,7 @@ import shop.s5g.shop.dto.order.OrderQueryRequestDto;
 import shop.s5g.shop.dto.order.OrderWithDetailResponseDto;
 import shop.s5g.shop.exception.BadRequestException;
 import shop.s5g.shop.security.ShopMemberDetail;
+import shop.s5g.shop.service.member.CustomerService;
 import shop.s5g.shop.service.order.OrderService;
 
 @RequiredArgsConstructor
@@ -34,6 +35,7 @@ import shop.s5g.shop.service.order.OrderService;
 @Slf4j
 public class OrderController {
     private final OrderService orderService;
+    private final CustomerService customerService;
 
     @GetMapping
     public List<OrderWithDetailResponseDto> queryAllOrders(
@@ -63,6 +65,19 @@ public class OrderController {
         );
     }
 
+    @PostMapping("/guests/{customerId}")
+    public ResponseEntity<OrderCreateResponseDto> createNewGuestOrder(
+        @PathVariable long customerId,
+        @Valid @RequestBody OrderCreateRequestDto requestDto,
+        BindingResult result
+    ) {
+        if (result.hasErrors()) {
+            throw new BadRequestException("Order creation failed: bad request");
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+            orderService.createOrder(customerId, requestDto)
+        );
+    }
     @DeleteMapping("/{orderId}")
     public ResponseEntity<HttpStatus> deleteOrder(@PathVariable long orderId) {
         orderService.deactivateOrder(orderId);
@@ -79,5 +94,15 @@ public class OrderController {
             throw new BadRequestException("필터가 잘못되었습니다");
         }
         return orderService.getOrderListAdmin(filter);
+    }
+
+    @GetMapping("/guests")
+    public List<OrderWithDetailResponseDto> queryAllGuestOrders(
+        @RequestParam String phoneNumber,
+        @RequestParam String name,
+        @RequestParam String password
+    ) {
+         long customerId = customerService.queryCustomer(phoneNumber, name, password).customerId();
+         return orderService.getAllOrdersWithDetail(customerId);
     }
 }
