@@ -32,7 +32,7 @@ public class ReviewController {
 
     @PostMapping
     public ResponseEntity<MessageDto> registerReview(
-        @RequestBody CreateReviewRequestDto reviewRequestDto, BindingResult bindingResult,
+        @Valid @RequestBody CreateReviewRequestDto reviewRequestDto, BindingResult bindingResult,
         @AuthenticationPrincipal ShopMemberDetail detail) {
 
         if (bindingResult.hasErrors()) {
