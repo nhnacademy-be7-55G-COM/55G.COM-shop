@@ -15,7 +15,6 @@ import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import shop.s5g.shop.dto.review.UpdateReviewRequestDto;
 import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.member.Member;
@@ -42,11 +41,9 @@ public class Review {
     @JoinColumn(name = "order_detail_id")
     private OrderDetail orderDetail;
 
-    @Setter
     private int score;
 
     @Column(columnDefinition = "TEXT")
-    @Setter
     private String content;
 
     private LocalDateTime reviewAt;
