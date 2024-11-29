@@ -9,6 +9,7 @@ import shop.s5g.shop.dto.member.MemberDetailResponseDto;
 import shop.s5g.shop.dto.member.MemberLoginIdResponseDto;
 import shop.s5g.shop.dto.member.MemberRegistrationRequestDto;
 import shop.s5g.shop.dto.member.MemberResponseDto;
+import shop.s5g.shop.dto.member_status.MemberStatusResponseDto;
 import shop.s5g.shop.entity.member.Member;
 
 public interface MemberService {
@@ -34,4 +35,8 @@ public interface MemberService {
     void changePassword(Long customerId, String oldPassword, String newPassword);
 
     void linkAccountByPaycoId(Long customerId, String paycoId);
+
+    MemberStatusResponseDto getMemberStatusDtoByloginId(String loginId);
+
+    void changeStatusToActive(String loginId);
 }
