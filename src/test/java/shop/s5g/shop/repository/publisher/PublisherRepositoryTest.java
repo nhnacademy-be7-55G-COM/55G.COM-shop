@@ -7,9 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import shop.s5g.shop.config.TestQueryFactoryConfig;
+import shop.s5g.shop.dto.PageResponseDto;
 import shop.s5g.shop.dto.publisher.PublisherRequestDto;
 import shop.s5g.shop.dto.publisher.PublisherResponseDto;
+import shop.s5g.shop.dto.tag.TagResponseDto;
 import shop.s5g.shop.entity.Publisher;
 import shop.s5g.shop.exception.publisher.PublisherResourceNotFoundException;
 import shop.s5g.shop.repository.publisher.qdsl.impl.PublisherQuerydslRepositoryImpl;
@@ -46,6 +51,22 @@ class PublisherRepositoryTest {
         Publisher save = publisherRepository.save(publisher);
         PublisherResponseDto publisherResponseDto = publisherQuerydslRepository.getPublisher(save.getId());
         Assertions.assertEquals("한빛", publisherResponseDto.name());
+    }
+
+    /**
+     * 모든 출판사 조회 test
+     */
+    @Test
+    @DisplayName("모든 출판사 조회 test")
+    void getAllPublishersTest() {
+        Publisher p1 = new Publisher("창비", true);
+        Publisher p2 = new Publisher("한빛", true);
+        publisherRepository.save(p1);
+        publisherRepository.save(p2);
+
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<PublisherResponseDto> allPublisher = publisherRepository.getAllPublisher(pageable);
+        Assertions.assertEquals(2, allPublisher.getTotalElements());
     }
 
     /**

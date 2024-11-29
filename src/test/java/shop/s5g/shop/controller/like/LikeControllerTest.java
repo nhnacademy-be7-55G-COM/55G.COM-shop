@@ -1,7 +1,12 @@
 package shop.s5g.shop.controller.like;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
@@ -14,6 +19,11 @@ import shop.s5g.shop.filter.JwtAuthenticationFilter;
 import shop.s5g.shop.security.ShopMemberDetail;
 import shop.s5g.shop.service.like.LikeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.MediaType;
+
+import static org.mockito.BDDMockito.willDoNothing;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @WebMvcTest(
@@ -49,7 +59,7 @@ public class LikeControllerTest {
 //        Long customerId = 15L;
 //        String message = "좋아요 등록 성공";
 //
-////        given(shopMemberDetail.getCustomerId()).willReturn(customerId);
+//        given(shopMemberDetail.getCustomerId()).willReturn(customerId);
 //        willDoNothing().given(likeService).addLikeInBook(customerId, bookId);
 //
 //        //when&then
