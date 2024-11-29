@@ -198,8 +198,7 @@ public class BookServiceImpl implements BookService {
         bookCategoryRepository.save(
             new BookCategory(category, book, LocalDateTime.now(), LocalDateTime.now()));
 
-//        bookImageRepository.save(new BookImage(book, bookDto.thumbnailPath()));
-
+        // 기존 썸네일 이미지 제거
         if (bookDto.thumbnailPath() != null) {
             bookImageRepository.deleteByBook(book);
 
@@ -207,6 +206,7 @@ public class BookServiceImpl implements BookService {
                 new BookImage(book, bookDto.thumbnailPath()));
         }
 
+        // 기존 태그 제거
         bookTagRepository.deleteByBookBookId(bookId);
 
         for (long tagId : bookDto.tagIdList()) {
@@ -216,6 +216,22 @@ public class BookServiceImpl implements BookService {
             }
             bookTagRepository.save(
                 new BookTag(book, optionalTag.get(), LocalDateTime.now(), LocalDateTime.now()));
+        }
+
+        // 기존 작가 제거
+        bookAuthorRepository.deleteAllByBook(book);
+
+        for(BookAuthorRequestDto bookAuthor:bookDto.authorList()){
+            Optional<Author> optionalAuthor=authorRepository.findById(bookAuthor.authorId());
+            if(optionalAuthor.isEmpty()){
+                throw new AuthorResourceNotFooundException("작가가 존재하지 않습니다.");
+            }
+            Optional<AuthorType> optionalAuthorType=authorTypeRepository.findById(bookAuthor.authorTypeId());
+            if(optionalAuthorType.isEmpty()){
+                throw new AuthorTypeResourceNotFoundException("작가 타입이 존재하지 않습니다.");
+            }
+
+            bookAuthorRepository.save(new BookAuthor(book,optionalAuthor.get(),optionalAuthorType.get(),LocalDateTime.now(),LocalDateTime.now()));
         }
     }
 
