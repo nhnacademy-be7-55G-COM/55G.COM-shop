@@ -76,7 +76,8 @@ class CartControllerTest {
         mockMvc.perform(post("/api/shop/cart")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content))
-            .andExpect(status().isOk());
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("['cartCountChange']").value(1));
 
         //then
         verify(cartService, times(1)).putBook(1l, 3, "123");
