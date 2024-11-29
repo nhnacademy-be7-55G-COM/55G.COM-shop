@@ -3,6 +3,7 @@ package shop.s5g.shop.controller.order;
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
@@ -35,6 +36,7 @@ import shop.s5g.shop.annotation.WithCustomMockUser;
 import shop.s5g.shop.config.SecurityConfig;
 import shop.s5g.shop.config.TestSecurityConfig;
 import shop.s5g.shop.controller.advice.RestWebAdvice;
+import shop.s5g.shop.dto.customer.CustomerResponseDto;
 import shop.s5g.shop.dto.order.OrderCreateResponseDto;
 import shop.s5g.shop.dto.order.OrderWithDetailResponseDto;
 import shop.s5g.shop.exception.ResourceNotFoundException;
@@ -216,5 +218,45 @@ class OrderControllerTest {
             .andExpect(status().isForbidden());
         verify(advice, times(1)).handleForbiddenResourceException(any());
         verify(orderService, never()).getAllOrdersWithDetail(anyLong());
+    }
+
+    CustomerResponseDto customerResponse = new CustomerResponseDto(
+        1L, "safdsaf", "name", "pn", "email@email"
+    );
+
+    @Test
+    void queryAllGuestOrdersTest() throws Exception{
+        when(customerService.queryCustomer(anyString(), anyString(), anyString())).thenReturn(customerResponse);
+        when(orderService.getAllOrdersWithDetail(1L)).thenReturn(List.of());
+
+        mvc.perform(MockMvcRequestBuilders.get("/api/shop/orders/guests")
+            .param("phoneNumber", "01023818421")
+            .param("name", "amugae")
+            .param("password", "asfasdfasdf"))
+            .andExpect(status().isOk());
+
+        verify(orderService, times(1)).getAllOrdersWithDetail(1L);
+        verify(customerService, times(1)).queryCustomer(anyString(), anyString(), anyString());
+    }
+
+    @Test
+    void fetchOrdersForAdminTest() throws Exception{;
+        when(orderService.getOrderListAdmin(any())).thenReturn(List.of());
+
+        mvc.perform(MockMvcRequestBuilders.get("/api/shop/orders/admin"))
+            .andExpect(status().isOk());
+
+        verify(orderService, times(1)).getOrderListAdmin(any());
+    }
+
+    @Test
+    void fetchOrdersForAdminValidationTest() throws Exception {
+        when(orderService.getOrderListAdmin(any())).thenReturn(List.of());
+
+        mvc.perform(MockMvcRequestBuilders.get("/api/shop/orders/admin")
+                .param("customerId", "0"))
+            .andExpect(status().isBadRequest());
+
+        verify(orderService, never()).getOrderListAdmin(any());
     }
 }

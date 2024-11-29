@@ -68,6 +68,9 @@ payment:
   toss:
     secretkey: secret
 
+logncrash:
+  key:
+    app: appKey
 image:
   appkey: appkey
   secretKey: secretKey
