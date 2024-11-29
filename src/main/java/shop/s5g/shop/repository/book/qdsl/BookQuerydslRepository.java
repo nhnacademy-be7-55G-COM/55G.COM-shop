@@ -11,6 +11,7 @@ import shop.s5g.shop.dto.book.BookResponseDto;
 import java.util.List;
 import shop.s5g.shop.dto.book.BookSimpleResponseDto;
 import shop.s5g.shop.dto.cart.response.CartBooksInfoInCartResponseDto;
+import shop.s5g.shop.entity.Book;
 
 public interface BookQuerydslRepository {
     void updateBook(long bookId, BookRequestDto bookDto);
@@ -21,4 +22,6 @@ public interface BookQuerydslRepository {
     List<BookSimpleResponseDto> findSimpleBooksByIdList(List<Long> idList);
     String findBookStatus(Long bookId);
     List<CartBooksInfoInCartResponseDto> findAllBooksInfoInCart(Set<Long> bookIdList);
+
+    void likeCount(Long bookId);
 }
