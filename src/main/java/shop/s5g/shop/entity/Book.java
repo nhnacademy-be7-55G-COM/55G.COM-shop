@@ -50,9 +50,12 @@ public class Book {
     @Setter
     private int stock;
     private Long views;
+    private Long likeCount;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    
+
 
     @Builder
     public Book(Publisher publisher, BookStatus bookStatus, String title, String chapter,
@@ -71,6 +74,7 @@ public class Book {
         this.isPacked = isPacked;
         this.stock = stock;
         this.views = views;
+        this.likeCount = 0L;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }

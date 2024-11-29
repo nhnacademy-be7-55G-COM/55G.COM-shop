@@ -153,6 +153,7 @@ public class BookServiceImpl implements BookService {
             bookDto.isPacked(),
             bookDto.stock(),
             oldBook.getViews(),
+            0L,
             oldBook.getCreatedAt(),
             LocalDateTime.now()
         );

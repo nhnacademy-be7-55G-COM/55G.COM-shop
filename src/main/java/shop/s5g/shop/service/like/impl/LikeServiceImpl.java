@@ -52,6 +52,9 @@ public class LikeServiceImpl implements LikeService {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new BookResourceNotFoundException("도서를 찾을 수 없습니다."));
 
+        //좋아요 갯수 증가
+        bookRepository.likeCount(bookId);
+
         Like like = new Like(customer, book);
 //        likeRepository.addLike(customer, book);
 
