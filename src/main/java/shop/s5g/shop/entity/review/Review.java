@@ -15,6 +15,7 @@ import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import shop.s5g.shop.dto.review.UpdateReviewRequestDto;
 import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.member.Member;
 import shop.s5g.shop.entity.order.OrderDetail;
@@ -60,5 +61,10 @@ public class Review {
         this.content = content;
         this.reviewAt = LocalDateTime.now();
         this.active = true;
+    }
+
+    public void update(UpdateReviewRequestDto updateReviewRequestDto) {
+        this.score = updateReviewRequestDto.score();
+        this.content = updateReviewRequestDto.content();
     }
 }
