@@ -1,12 +1,13 @@
 package shop.s5g.shop.service.coupon.coupon.impl;
 
-import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.config.RedisConfig;
 import shop.s5g.shop.repository.coupon.template.CouponTemplateRepository;
 
@@ -84,10 +85,10 @@ public class CouponStorageService {
     public String popIssuedCoupon(Long couponTemplateId) {
 
         String key = COUPON_PREFIX + couponTemplateId;
+        String value = (String) redisTemplate.opsForList().index(key, 0);
+        redisTemplate.opsForList().leftPop(key);
 
-        List<Object> lists = redisTemplate.opsForList().range(key, -1, -1);
-
-        return (String) redisTemplate.opsForList().leftPop(key);
+        return value;
     }
 
     /**
@@ -110,7 +111,7 @@ public class CouponStorageService {
      */
     public boolean isUserCouponExists(Long couponTemplateId, Long userId) {
 
-        String key = COUPON_PREFIX + couponTemplateId;
+        String key = ISSUED_USER_PREFIX + couponTemplateId;
 
         return Boolean.TRUE.equals(redisTemplate.opsForSet().isMember(key, userId));
     }

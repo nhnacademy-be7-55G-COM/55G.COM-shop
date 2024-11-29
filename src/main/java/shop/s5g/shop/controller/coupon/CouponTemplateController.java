@@ -122,6 +122,19 @@ public class CouponTemplateController {
     }
 
     /**
+     * 웰컴, 생일 쿠폰 제외한 템플릿 조회 - API
+     * @param pageable
+     * @return ResponseEntity<PageResponseDto<CouponTemplateResponseDto>>
+     */
+    @GetMapping("/templates/excludes")
+    public ResponseEntity<PageResponseDto<CouponTemplateResponseDto>> getCouponTemplateExcludingWelcomeAndBirth(Pageable pageable) {
+        Page<CouponTemplateResponseDto> templateList = couponTemplateService.getCouponTemplateExcludingWelcomeAndBirth(pageable);
+
+        return ResponseEntity.status(HttpStatus.OK)
+            .body(PageResponseDto.of(templateList));
+    }
+
+    /**
      * 쿠폰 템플릿 삭제 - DELETE
      * @param couponTemplateId
      * @return messageDto
