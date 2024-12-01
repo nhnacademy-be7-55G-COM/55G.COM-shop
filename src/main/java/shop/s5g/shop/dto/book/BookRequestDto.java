@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.util.List;
+import shop.s5g.shop.dto.book.author.BookAuthorRequestDto;
 
 public record BookRequestDto(
     @NotNull
@@ -27,7 +28,8 @@ public record BookRequestDto(
     @NotNull
     int stock,
     String thumbnailPath,   // 도서 이미지가 저장된 URL의 경로
-    List<Long> tagIdList
+    List<Long> tagIdList,
+    List<BookAuthorRequestDto> authorList
 ) {
 
 }

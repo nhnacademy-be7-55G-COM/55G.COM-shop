@@ -1,8 +1,10 @@
 package shop.s5g.shop.service.author;
 
 import jakarta.validation.Valid;
+import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import shop.s5g.shop.dto.author.AllAuthorResponseDto;
 import shop.s5g.shop.dto.author.AuthorRequestDto;
 import shop.s5g.shop.dto.author.AuthorResponseDto;
@@ -18,4 +20,6 @@ public interface AuthorService {
     void updateAuthor(long authorId, AuthorRequestDto authorRequestDto);
 
     void deleteAuthor(long authorId);
+
+    ResponseEntity<List<AuthorResponseDto>> searchAuthors(String keyword);
 }

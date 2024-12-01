@@ -53,6 +53,7 @@ public class PublisherController {
     //모든 출판사 조회
     @GetMapping("/publisher")
     public ResponseEntity<PageResponseDto<PublisherResponseDto>> getAllPublisher(@PageableDefault Pageable pageable) {
+
         log.debug("method start");
         Page<PublisherResponseDto> publisherResponseDtos = publisherService.getAllPublisher(pageable);
 

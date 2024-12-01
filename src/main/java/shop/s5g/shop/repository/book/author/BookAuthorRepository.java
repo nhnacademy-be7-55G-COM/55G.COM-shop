@@ -10,4 +10,5 @@ public interface BookAuthorRepository extends JpaRepository<BookAuthor, Long> {
 
     List<BookAuthor> findAllByBook(Book book);
     List<BookAuthor> findAllByAuthor(Author author);
+    void deleteAllByBook(Book book);
 }

@@ -68,6 +68,13 @@ payment:
   toss:
     secretkey: secret
 
+logncrash:
+  key:
+    app: appKey
+image:
+  appkey: appkey
+  secretKey: secretKey
+
 ---
 spring:
   config:
@@ -136,7 +143,7 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
-        generate_statistics: true
+#        generate_statistics: true
         use_sql_comments: true
         highlight_sql: true
   cloud:

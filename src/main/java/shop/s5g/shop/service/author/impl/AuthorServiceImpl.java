@@ -1,8 +1,10 @@
 package shop.s5g.shop.service.author.impl;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.author.AllAuthorResponseDto;
@@ -60,5 +62,10 @@ public class AuthorServiceImpl implements AuthorService {
             throw new AuthorResourceNotFooundException("삭제할 작가가 존재하지 않습니다.");
         }
         authorRepository.inactiveAuthor(authorId);
+    }
+
+    @Override
+    public ResponseEntity<List<AuthorResponseDto>> searchAuthors(String keyword){
+        return ResponseEntity.ok().body(authorRepository.findByAuthorNameList(keyword));
     }
 }
