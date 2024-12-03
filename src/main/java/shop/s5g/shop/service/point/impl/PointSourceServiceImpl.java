@@ -34,7 +34,7 @@ public class PointSourceServiceImpl implements PointSourceService {
 
         List<PointPolicyFormResponseDto> responseList = new ArrayList<>();
 
-        allPonitSourceList.stream().map(pointSource -> responseList.add(
+        allPonitSourceList.stream().forEach(pointSource -> responseList.add(
             new PointPolicyFormResponseDto(pointSource.getId(), pointSource.getSourceName())));
 
         return responseList;
