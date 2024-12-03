@@ -79,29 +79,6 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
             .execute();
     }
 
-    // 모든 도서 List<BookResponseDto>타입으로 리턴
-    @Override
-    public List<BookResponseDto> findAllBookList() {
-        return jpaQueryFactory
-            .select(Projections.fields(BookResponseDto.class,
-                book.publisher.id.as("publisherId"),
-                book.bookStatus.id.as("bookStatusId"),
-                book.title,
-                book.chapter,
-                book.description,
-                book.publishedDate,
-                book.isbn,
-                book.price,
-                book.discountRate,
-                book.isPacked,
-                book.stock,
-                book.views,
-                book.createdAt
-            ))
-            .from(book)
-            .fetch();
-    }
-
     //모든 도서 Page<BookPageableResponseDto>타입으로 리턴
     @Override
     public Page<BookPageableResponseDto> findAllBookPage(Pageable pageable) {

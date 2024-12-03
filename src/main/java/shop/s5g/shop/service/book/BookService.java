@@ -13,7 +13,6 @@ import shop.s5g.shop.dto.book.BookSimpleResponseDto;
 
 public interface BookService {
     void createBook(BookRequestDto bookDto);
-    List<BookResponseDto> allBook();
     BookDetailResponseDto getBookById(Long bookId);
     void updateBooks(Long bookId, BookRequestDto bookDto);
     void deleteBooks(Long bookId);
@@ -21,7 +20,5 @@ public interface BookService {
 
     List<BookSimpleResponseDto> getSimpleBooks(List<Long> bookIdList);
 
-    List<BookDetailResponseDto> getBookListByBookIdList(List<BookCategoryBookResponseDto> bookIdList);
 
-//    List<BookPageableResponseDto> getBookList(Long categoryId);
 }

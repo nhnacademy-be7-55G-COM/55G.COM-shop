@@ -15,7 +15,6 @@ import shop.s5g.shop.entity.Book;
 
 public interface BookQuerydslRepository {
     void updateBook(long bookId, BookRequestDto bookDto);
-    List<BookResponseDto> findAllBookList();
     BookDetailResponseDto getBookDetail(long bookId);
     Page<BookPageableResponseDto> findAllBookPage(Pageable pageable);
 

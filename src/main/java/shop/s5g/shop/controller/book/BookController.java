@@ -51,17 +51,11 @@ public class BookController {
         return ResponseEntity.ok().body(new MessageDto("도서 등록 성공"));
     }
 
-    //도서 목록 조회
-    @GetMapping("/books")
-    public ResponseEntity<List<BookResponseDto>> getAllBooks() {
-        return ResponseEntity.ok().body(bookService.allBook());
-    }
 
     //도서 목록 조회 pageable
     @GetMapping("/books/pageable")
     public ResponseEntity<PageResponseDto<BookPageableResponseDto>> getAllBooksPageable(
         Pageable pageable) {
-        log.trace("/books/pageable says: Pageable={}", pageable);
         return ResponseEntity.ok().body(PageResponseDto.of(bookService.allBookPageable(pageable)));
     }
 
@@ -115,12 +109,6 @@ public class BookController {
 //        return ResponseEntity.ok().body(bookListByBookIdList);
 //    }
 
-    // bookId 리스트로 book 리스트 조회
-    @PostMapping("/book/bookList")
-    ResponseEntity<List<BookDetailResponseDto>> getBooks(@RequestBody List<BookCategoryBookResponseDto> bookList) {
-        List<BookDetailResponseDto> bookListByBookIdList = bookService.getBookListByBookIdList(bookList);
-        return ResponseEntity.ok().body(bookListByBookIdList);
-    }
 
     //categoryId로 bookList조회
 //    @GetMapping("/books/{categoryId}")

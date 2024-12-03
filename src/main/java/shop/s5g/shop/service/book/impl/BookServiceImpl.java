@@ -104,11 +104,6 @@ public class BookServiceImpl implements BookService {
         }
     }
 
-    //모든 도서 리스트 조회
-    public List<BookResponseDto> allBook() {
-        return bookRepository.findAllBookList();
-    }
-
     //도서 전체 조회 페이징
     @Override
     public Page<BookPageableResponseDto> allBookPageable(Pageable pageable) {
@@ -205,20 +200,4 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findSimpleBooksByIdList(bookIdList);
     }
 
-    //도서id 리스트로 도서 리스트 조회
-    @Override
-    public List<BookDetailResponseDto> getBookListByBookIdList(List<BookCategoryBookResponseDto> bookIdList) {
-        List<BookDetailResponseDto> bookList = new ArrayList<>();
-        for(int i=0 ; i<bookIdList.size(); i++) {
-//            BookDetailResponseDto bookDetail = bookRepository.getBookDetail(bookIdList.get(i).BookId());
-//            bookList.add(bookDetail);
-        }
-        return bookList;
-    }
-
-    //categoryId로 bookList조회
-//    @Override
-//    public List<BookPageableResponseDto> getBookList(Long categoryId) {
-//        return bookcategoryRepository.getBookList(categoryId);
-//    }
 }
