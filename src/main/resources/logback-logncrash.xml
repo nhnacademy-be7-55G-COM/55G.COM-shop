@@ -1,0 +1,33 @@
+<configuration>
+  <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+  <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+  <variable name="LOG_FORMAT"
+    value="%d{yyyy-MM-dd HH:mm::ss.SSS} %-5level [%thread] %-35logger{35} - %msg%n"/>
+
+  <springProperty scope="context" name="LOGNCRASH_APP_KEY" source="logncrash.key.app" />
+
+  <!-- LogNCrashHttpAppender 선언 -->
+  <appender name="logNCrashHttp" class="com.toast.java.logncrash.logback.LogNCrashHttpAppender">
+    <appKey value="${LOGNCRASH_APP_KEY}"/>
+    <logSource value="local"/>
+    <version value="1.0.0"/>
+    <logType value="API"/>
+    <debug value="true"/>
+    <category value="55g-shop"/>
+    <errorCodeType value="action"/>
+  </appender>
+
+  <!-- LogNCrashHttpAppender를 포함한 AsyncAppender 선언 -->
+  <appender name="LNCS-APPENDER" class="ch.qos.logback.classic.AsyncAppender">
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>INFO</level>
+    </filter>
+    <!-- Logback의 AsyncAppender 옵션 -->
+    <includeCallerData value="false"/>
+    <queueSize value="2048"/>
+    <neverBlock value="true"/>
+    <maxFlushTime value="60000"/>
+    <appender-ref ref="logNCrashHttp"/>
+  </appender>
+
+</configuration>

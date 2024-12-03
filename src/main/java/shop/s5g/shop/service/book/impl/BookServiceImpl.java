@@ -16,8 +16,12 @@ import shop.s5g.shop.dto.book.BookPageableResponseDto;
 import shop.s5g.shop.dto.book.BookRequestDto;
 import shop.s5g.shop.dto.book.BookResponseDto;
 import shop.s5g.shop.dto.book.BookSimpleResponseDto;
+import shop.s5g.shop.dto.book.author.BookAuthorRequestDto;
 import shop.s5g.shop.dto.book.category.BookCategoryBookResponseDto;
+import shop.s5g.shop.entity.Author;
+import shop.s5g.shop.entity.AuthorType;
 import shop.s5g.shop.entity.Book;
+import shop.s5g.shop.entity.BookAuthor;
 import shop.s5g.shop.entity.BookImage;
 import shop.s5g.shop.entity.BookStatus;
 import shop.s5g.shop.entity.Category;
@@ -25,12 +29,17 @@ import shop.s5g.shop.entity.Publisher;
 import shop.s5g.shop.entity.Tag;
 import shop.s5g.shop.entity.book.category.BookCategory;
 import shop.s5g.shop.entity.booktag.BookTag;
+import shop.s5g.shop.exception.author.AuthorResourceNotFooundException;
+import shop.s5g.shop.exception.author.AuthorTypeResourceNotFoundException;
 import shop.s5g.shop.exception.book.BookResourceNotFoundException;
 import shop.s5g.shop.exception.bookstatus.BookStatusResourceNotFoundException;
 import shop.s5g.shop.exception.category.CategoryResourceNotFoundException;
 import shop.s5g.shop.exception.publisher.PublisherResourceNotFoundException;
 import shop.s5g.shop.exception.tag.TagResourceNotFoundException;
+import shop.s5g.shop.repository.author.AuthorRepository;
+import shop.s5g.shop.repository.author.AuthorTypeRepository;
 import shop.s5g.shop.repository.book.BookRepository;
+import shop.s5g.shop.repository.book.author.BookAuthorRepository;
 import shop.s5g.shop.repository.book.category.BookCategoryRepository;
 import shop.s5g.shop.repository.book.status.BookStatusRepository;
 import shop.s5g.shop.repository.book.image.BookImageRepository;
@@ -53,6 +62,9 @@ public class BookServiceImpl implements BookService {
     private final BookImageRepository bookImageRepository;
     private final TagRepository tagRepository;
     private final BookTagRepository bookTagRepository;
+    private final BookAuthorRepository bookAuthorRepository;
+    private final AuthorRepository authorRepository;
+    private final AuthorTypeRepository authorTypeRepository;
 
     //도서 등록
     public void createBook(BookRequestDto bookDto) {
@@ -101,6 +113,21 @@ public class BookServiceImpl implements BookService {
             }
             bookTagRepository.save(
                 new BookTag(book, optionalTag.get(), LocalDateTime.now(), LocalDateTime.now()));
+        }
+
+        for (BookAuthorRequestDto bookAuthor : bookDto.authorList()) {
+            Optional<Author> optionalAuthor = authorRepository.findById(bookAuthor.authorId());
+            if (optionalAuthor.isEmpty()) {
+                throw new AuthorResourceNotFooundException("작가 정보가 존재하지 않습니다.");
+            }
+            Optional<AuthorType> optionalAuthorType = authorTypeRepository.findById(
+                bookAuthor.authorTypeId());
+            if (optionalAuthorType.isEmpty()) {
+                throw new AuthorTypeResourceNotFoundException("작가 타입 정보가 존재하지 않습니다.");
+            }
+            bookAuthorRepository.save(
+                new BookAuthor(book, optionalAuthor.get(), optionalAuthorType.get(),
+                    LocalDateTime.now(), LocalDateTime.now()));
         }
     }
 
@@ -166,15 +193,15 @@ public class BookServiceImpl implements BookService {
         bookCategoryRepository.save(
             new BookCategory(category, book, LocalDateTime.now(), LocalDateTime.now()));
 
-//        bookImageRepository.save(new BookImage(book, bookDto.thumbnailPath()));
-
+        // 기존 썸네일 이미지 제거
         if (bookDto.thumbnailPath() != null) {
             bookImageRepository.deleteByBook(book);
-            
+
             BookImage bookImage = bookImageRepository.save(
                 new BookImage(book, bookDto.thumbnailPath()));
         }
 
+        // 기존 태그 제거
         bookTagRepository.deleteByBookBookId(bookId);
 
         for (long tagId : bookDto.tagIdList()) {
@@ -184,6 +211,22 @@ public class BookServiceImpl implements BookService {
             }
             bookTagRepository.save(
                 new BookTag(book, optionalTag.get(), LocalDateTime.now(), LocalDateTime.now()));
+        }
+
+        // 기존 작가 제거
+        bookAuthorRepository.deleteAllByBook(book);
+
+        for(BookAuthorRequestDto bookAuthor:bookDto.authorList()){
+            Optional<Author> optionalAuthor=authorRepository.findById(bookAuthor.authorId());
+            if(optionalAuthor.isEmpty()){
+                throw new AuthorResourceNotFooundException("작가가 존재하지 않습니다.");
+            }
+            Optional<AuthorType> optionalAuthorType=authorTypeRepository.findById(bookAuthor.authorTypeId());
+            if(optionalAuthorType.isEmpty()){
+                throw new AuthorTypeResourceNotFoundException("작가 타입이 존재하지 않습니다.");
+            }
+
+            bookAuthorRepository.save(new BookAuthor(book,optionalAuthor.get(),optionalAuthorType.get(),LocalDateTime.now(),LocalDateTime.now()));
         }
     }
 

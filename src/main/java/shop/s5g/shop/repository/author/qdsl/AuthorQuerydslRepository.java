@@ -1,5 +1,6 @@
 package shop.s5g.shop.repository.author.qdsl;
 
+import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import shop.s5g.shop.dto.author.AllAuthorResponseDto;
@@ -16,4 +17,6 @@ public interface AuthorQuerydslRepository {
     void inactiveAuthor(long authorId);
 
     boolean existsByName(String name);
+
+    List<AuthorResponseDto> findByAuthorNameList(String keyword);
 }

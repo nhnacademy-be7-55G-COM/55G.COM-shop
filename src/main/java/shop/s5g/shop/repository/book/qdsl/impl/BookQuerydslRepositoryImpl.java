@@ -46,7 +46,6 @@ import static shop.s5g.shop.entity.QTag.tag;
 import static shop.s5g.shop.entity.booktag.QBookTag.bookTag;
 import static shop.s5g.shop.entity.coupon.QCouponBook.couponBook;
 
-@Repository
 public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implements
     BookQuerydslRepository {
 
