@@ -147,7 +147,6 @@ class CouponPolicyServiceImplTest {
         assertThat(result).isNotNull();
         assertThat(result.getTotalElements()).isEqualTo(2);
         assertThat(result.getTotalPages()).isEqualTo(1);
-        assertThat(result.getContent().size()).isEqualTo(2);
 
         CouponPolicyResponseDto policy1 = result.getContent().get(0);
         assertThat(policy1.discountPrice()).isEqualTo(new BigDecimal("0.5"));

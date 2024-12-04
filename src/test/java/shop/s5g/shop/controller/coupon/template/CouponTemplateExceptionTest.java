@@ -32,7 +32,7 @@ import shop.s5g.shop.service.coupon.template.impl.CouponTemplateServiceImpl;
     )
 )
 @Import(TestSecurityConfig.class)
-public class CouponTemplateExceptionTest {
+class CouponTemplateExceptionTest {
 
     @Autowired
     private MockMvc mockMvc;

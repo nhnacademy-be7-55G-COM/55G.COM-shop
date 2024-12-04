@@ -1,7 +1,6 @@
 package shop.s5g.shop.service.coupon.policy.impl;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -127,10 +126,8 @@ public class CouponPolicyServiceImpl implements CouponPolicyService {
             }
         }
 
-        if (Objects.nonNull(maxPrice)) {
-            if (maxPrice > (condition / 2)) {
-                throw new CouponPolicyValidationException(ErrorCode.MAX_PRICE_EXCEEDS_LIMIT);
-            }
+        if (Objects.nonNull(maxPrice) && maxPrice > (condition / 2)) {
+            throw new CouponPolicyValidationException(ErrorCode.MAX_PRICE_EXCEEDS_LIMIT);
         }
     }
 }

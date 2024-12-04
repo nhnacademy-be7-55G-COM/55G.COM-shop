@@ -27,6 +27,7 @@ public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupp
 
     private static final boolean ACTIVE = true;
     private static final boolean INACTIVE = false;
+    private static final String LOCATE_TEMPLATE = "locate({0}, {1})";
 
     public CouponTemplateQuerydslRepositoryImpl(EntityManager em) {
         super(CouponTemplate.class);
@@ -232,8 +233,8 @@ public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupp
                 couponTemplate.couponDescription))
             .from(couponTemplate)
             .innerJoin(couponPolicy).on(couponTemplate.couponPolicy.couponPolicyId.eq(couponPolicy.couponPolicyId))
-            .where(Expressions.stringTemplate("locate({0}, {1})", CouponTemplateType.WELCOME.getTypeName(), couponTemplate.couponName).eq("0")
-                .and(Expressions.stringTemplate("locate({0}, {1})", CouponTemplateType.BIRTH.getTypeName(), couponTemplate.couponName).eq("0"))
+            .where(Expressions.stringTemplate(LOCATE_TEMPLATE, CouponTemplateType.WELCOME.getTypeName(), couponTemplate.couponName).eq("0")
+                .and(Expressions.stringTemplate(LOCATE_TEMPLATE, CouponTemplateType.BIRTH.getTypeName(), couponTemplate.couponName).eq("0"))
                 .and(couponTemplate.active.eq(ACTIVE)))
             .fetch();
 
@@ -258,7 +259,7 @@ public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupp
 
         return jpaQueryFactory
             .selectFrom(couponTemplate)
-            .where(Expressions.stringTemplate("locate({0}, {1})", keyword, couponTemplate.couponName).gt("0"))
+            .where(Expressions.stringTemplate(LOCATE_TEMPLATE, keyword, couponTemplate.couponName).gt("0"))
             .fetchOne();
     }
 

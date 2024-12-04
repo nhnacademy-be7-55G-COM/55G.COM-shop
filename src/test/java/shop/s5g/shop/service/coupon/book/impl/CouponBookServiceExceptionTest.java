@@ -58,10 +58,11 @@ class CouponBookServiceExceptionTest {
     void couponBookNotFoundException() {
         // Given
         when(couponBookRepository.existsByBookAndCouponTemplate(50L, 50L)).thenReturn(false);
+        CouponBookRequestDto requestDto = new CouponBookRequestDto(50L, 50L);
 
         // When & Then
         CouponBookNotFoundException exception = assertThrows(CouponBookNotFoundException.class, () ->{
-            couponBookService.getCouponBook(new CouponBookRequestDto(50L, 50L));
+            couponBookService.getCouponBook(requestDto);
         });
 
         assertEquals("해당 couponBook은 존재하지 않습니다.", exception.getMessage());

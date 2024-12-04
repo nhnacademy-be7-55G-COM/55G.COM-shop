@@ -61,7 +61,6 @@ public class CouponController {
      * @param bindingResult
      * @return ResponseEntity<MessageDto>
      */
-    //TODO 쿠폰 업데이트 수정 예정
     @PatchMapping("/coupons/{couponId}")
     public ResponseEntity<MessageDto> updateCoupon(
         @PathVariable("couponId") Long couponId,
