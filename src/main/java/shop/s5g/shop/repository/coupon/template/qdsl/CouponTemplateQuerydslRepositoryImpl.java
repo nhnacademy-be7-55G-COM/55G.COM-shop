@@ -11,10 +11,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.transaction.annotation.Transactional;
-import shop.s5g.shop.dto.coupon.template.CouponTemplateRequestDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateResponseDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateUpdateRequestDto;
-import shop.s5g.shop.entity.coupon.CouponPolicy;
 import shop.s5g.shop.entity.coupon.CouponTemplate;
 import shop.s5g.shop.entity.coupon.CouponTemplate.CouponTemplateType;
 import shop.s5g.shop.entity.coupon.QCoupon;
@@ -265,9 +263,9 @@ public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupp
     }
 
     /**
-     * 쿠폰 템플릿에 사용된 정책 찾기
+     * 쿠폰 템플릿에 사용된 정책의 기간 찾기
      * @param couponTemplateId
-     * @return CouponPolicy
+     * @return Duration
      */
     @Override
     public Integer findCouponPolicyDurationByCouponTemplateId(Long couponTemplateId) {

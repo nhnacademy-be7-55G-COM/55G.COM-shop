@@ -19,9 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
-import shop.s5g.shop.config.QueryFactoryConfig;
 import shop.s5g.shop.config.TestQueryFactoryConfig;
-import shop.s5g.shop.dto.coupon.template.CouponTemplateRequestDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateResponseDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateUpdateRequestDto;
 import shop.s5g.shop.entity.Book;
@@ -32,6 +30,7 @@ import shop.s5g.shop.entity.coupon.CouponBook;
 import shop.s5g.shop.entity.coupon.CouponCategory;
 import shop.s5g.shop.entity.coupon.CouponPolicy;
 import shop.s5g.shop.entity.coupon.CouponTemplate;
+import shop.s5g.shop.entity.coupon.CouponTemplate.CouponTemplateType;
 import shop.s5g.shop.repository.book.BookRepository;
 import shop.s5g.shop.repository.book.status.BookStatusRepository;
 import shop.s5g.shop.repository.category.CategoryRepository;
@@ -294,5 +293,84 @@ class CouponTemplateRepositoryTest {
         CouponTemplateResponseDto responseDto = result.getContent().get(0);
         Assertions.assertEquals(responseDto.couponName(), couponTemplate.getCouponName());
         Assertions.assertEquals(responseDto.couponDescription(), couponTemplate.getCouponDescription());
+    }
+
+    @Test
+    @DisplayName("해당 템플릿 이름이 존재하는 지 체크")
+    void existCouponTemplate() {
+        CouponTemplate couponTemplate = new CouponTemplate(
+            couponPolicy,
+            "Birth Coupon",
+            "생일 쿠폰입니다."
+        );
+
+        couponTemplateRepository.save(couponTemplate);
+
+        boolean result = couponTemplateRepository.existsCouponTemplateName(CouponTemplateType.BIRTH.getTypeName());
+
+        Assertions.assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("해당 템플릿의 유효 기간 찾기")
+    void findCouponDuration() {
+        CouponTemplate couponTemplate = new CouponTemplate(
+            couponPolicy,
+            "Birth Coupon",
+            "생일 쿠폰입니다."
+        );
+
+        CouponTemplate saved = couponTemplateRepository.save(couponTemplate);
+
+        Integer duration = couponTemplateRepository.findCouponPolicyDurationByCouponTemplateId(
+            saved.getCouponTemplateId());
+
+        Assertions.assertNotNull(duration);
+        Assertions.assertEquals(30, duration);
+
+    }
+
+    @Test
+    @DisplayName("해당 쿠폰 템플릿 이름 확인")
+    void findCouponName() {
+        CouponTemplate couponTemplate = new CouponTemplate(
+            couponPolicy,
+            "Birth Coupon",
+            "생일 쿠폰입니다."
+        );
+
+        couponTemplateRepository.save(couponTemplate);
+
+        CouponTemplate result = couponTemplateRepository.findParticularCouponByName("Birth");
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(couponTemplate.getCouponName(), result.getCouponName());
+        Assertions.assertEquals(couponTemplate.getCouponDescription(), result.getCouponDescription());
+    }
+
+    @Test
+    @DisplayName("웰컴과 생일쿠폰 제외하고 가져오기")
+    void findCouponTemplatesExcludingBirthAndWelcome() {
+        CouponTemplate welcomeTemplate = new CouponTemplate(
+            couponPolicy,
+            "Welcome Coupon",
+            "회원가입 쿠폰입니다."
+        );
+
+        CouponTemplate birthTemplate = new CouponTemplate(
+            couponPolicy,
+            "Birth Coupon",
+            "생일 쿠폰입니다."
+        );
+
+        couponTemplateRepository.save(welcomeTemplate);
+        couponTemplateRepository.save(birthTemplate);
+
+        Pageable pageable = PageRequest.of(0, 10);
+
+        Page<CouponTemplateResponseDto> result = couponTemplateRepository.findCouponTemplatesExcludingBirthAndWelcome(pageable);
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(0, result.getContent().size());
     }
 }

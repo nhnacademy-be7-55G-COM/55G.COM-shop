@@ -111,7 +111,7 @@ public class CouponPolicyServiceImpl implements CouponPolicyService {
      * request 데이터 유효성 검사
      * @param couponPolicyRequestDto
      */
-    public void validateCouponPolicy(CouponPolicyRequestDto couponPolicyRequestDto) {
+    private void validateCouponPolicy(CouponPolicyRequestDto couponPolicyRequestDto) {
 
         BigDecimal discountPrice = couponPolicyRequestDto.discountPrice();
         Long condition = couponPolicyRequestDto.condition();

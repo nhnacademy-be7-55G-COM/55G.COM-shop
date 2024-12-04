@@ -3,7 +3,6 @@ package shop.s5g.shop.repository.coupon.coupon.qdsl;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.data.domain.Page;

@@ -25,7 +25,7 @@ public class CouponUtil {
      * @param input 바이트 배열
      * @return String
      */
-    private static String encodeBase62(byte[] input) {
+    public static String encodeBase62(byte[] input) {
         StringBuilder result = new StringBuilder();
         for (byte b : input) {
             result.append(BASE62.charAt(((b & 0xFF) % BASE62.length())));
