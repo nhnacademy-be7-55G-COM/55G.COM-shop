@@ -1,0 +1,83 @@
+= Coupon API Documentation
+
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+
+== CouponPolicy API
+
+=== CouponPolicy - Create
+
+include::{snippets}/couponPolicy-create/http-request.adoc[]
+include::{snippets}/couponPolicy-create/http-response.adoc[]
+
+=== CouponPolicy - Create - BadRequest
+
+include::{snippets}/couponPolicy-create-bad-request/http-request.adoc[]
+include::{snippets}/couponPolicy-create-bad-request/http-response.adoc[]
+
+=== CouponPolicy - Get
+
+include::{snippets}/couponPolicy-get/http-request.adoc[]
+include::{snippets}/couponPolicy-get/http-response.adoc[]
+
+=== CouponPolicy - GetAll
+
+include::{snippets}/couponPolicy-getAll/http-request.adoc[]
+include::{snippets}/couponPolicy-getAll/http-response.adoc[]
+
+=== Coupon - Create
+
+include::{snippets}/Coupon-Create/http-request.adoc[]
+include::{snippets}/Coupon-Create/http-response.adoc[]
+
+=== Coupon - Delete
+
+include::{snippets}/Coupon-Delete/http-request.adoc[]
+include::{snippets}/Coupon-Delete/http-response.adoc[]
+
+=== Coupon - Get All CouponList
+
+=== Coupon - Get Coupon
+
+=== Coupon - Get AvailableList
+
+include::{snippets}/Coupon-GetAvailableList/http-request.adoc[]
+include::{snippets}/Coupon-GetAvailableList/http-response.adoc[]
+
+=== CouponTemplate - Create
+
+include::{snippets}/CouponTemplate-Create/http-request.adoc[]
+include::{snippets}/CouponTemplate-Create/http-response.adoc[]
+
+=== CouponTemplate - Delete
+
+include::{snippets}/CouponTemplate-delete/http-request.adoc[]
+include::{snippets}/CouponTemplate-delete/http-response.adoc[]
+
+=== CouponTemplate - Excluding Welcome And Birth
+
+include::{snippets}/CouponTemplate-ExcludingWelcomeAndBirth/http-request.adoc[]
+include::{snippets}/CouponTemplate-ExcludingWelcomeAndBirth/http-response.adoc[]
+
+=== CouponTemplate - Get
+
+include::{snippets}/CouponTemplate-Get/http-request.adoc[]
+include::{snippets}/CouponTemplate-Get/http-response.adoc[]
+
+=== CouponTemplate - Get All
+
+include::{snippets}/CouponTemplate-getAll/http-request.adoc[]
+include::{snippets}/CouponTemplate-getAll/http-response.adoc[]
+
+=== CouponTemplate - Unused
+
+include::{snippets}/CouponTemplate-Unused/http-request.adoc[]
+include::{snippets}/CouponTemplate-Unused/http-response.adoc[]
+
+=== CouponTemplate - Update
+
+include::{snippets}/CouponTemplate-Update/http-request.adoc[]
+include::{snippets}/CouponTemplate-Update/http-response.adoc[]

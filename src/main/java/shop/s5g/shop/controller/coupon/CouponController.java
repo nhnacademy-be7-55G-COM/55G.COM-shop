@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -52,28 +51,6 @@ public class CouponController {
         redisCouponService.createCoupon(couponRequestDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(new MessageDto("쿠폰 생성 성공"));
-    }
-
-    /**
-     * 쿠폰 업데이트 API
-     * @param couponId
-     * @param couponRequestDto
-     * @param bindingResult
-     * @return ResponseEntity<MessageDto>
-     */
-    @PatchMapping("/coupons/{couponId}")
-    public ResponseEntity<MessageDto> updateCoupon(
-        @PathVariable("couponId") Long couponId,
-        @Valid @RequestBody CouponRequestDto couponRequestDto,
-        BindingResult bindingResult
-    ) {
-        if (bindingResult.hasErrors()) {
-            throw new CouponBadRequestException("잘못된 데이터 요청입니다.");
-        }
-
-//        couponService.updateCoupon(couponId);
-
-        return ResponseEntity.status(HttpStatus.OK).body(new MessageDto("쿠폰 업데이트 성공"));
     }
 
     /**
