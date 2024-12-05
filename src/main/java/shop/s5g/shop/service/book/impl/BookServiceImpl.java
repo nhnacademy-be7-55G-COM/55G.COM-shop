@@ -2,7 +2,6 @@ package shop.s5g.shop.service.book.impl;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import java.util.Optional;
@@ -14,10 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.book.BookDetailResponseDto;
 import shop.s5g.shop.dto.book.BookPageableResponseDto;
 import shop.s5g.shop.dto.book.BookRequestDto;
-import shop.s5g.shop.dto.book.BookResponseDto;
 import shop.s5g.shop.dto.book.BookSimpleResponseDto;
 import shop.s5g.shop.dto.book.author.BookAuthorRequestDto;
-import shop.s5g.shop.dto.book.category.BookCategoryBookResponseDto;
 import shop.s5g.shop.entity.Author;
 import shop.s5g.shop.entity.AuthorType;
 import shop.s5g.shop.entity.Book;

@@ -98,9 +98,6 @@ public class BookController {
 
     @GetMapping("/books/query")
     public ResponseEntity<List<BookSimpleResponseDto>> queryBooks(@RequestParam List<Long> books) {
-//        List<Long> bookIds = Arrays.stream(stringify.split(",")).map(Long::valueOf).toList();
         return ResponseEntity.ok(bookService.getSimpleBooks(books));
     }
-
-
 }

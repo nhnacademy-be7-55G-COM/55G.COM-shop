@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
 public class AuthorType {
 
@@ -18,4 +18,9 @@ public class AuthorType {
     private long authorTypeId;
     private String typeName;
     private boolean active;
+
+    public AuthorType(String typeName, boolean active) {
+        this.typeName = typeName;
+        this.active = active;
+    }
 }
