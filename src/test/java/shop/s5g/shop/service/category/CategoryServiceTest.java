@@ -8,7 +8,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import shop.s5g.shop.entity.Category;
 import shop.s5g.shop.exception.category.CategoryResourceNotFoundException;
 import shop.s5g.shop.repository.category.CategoryRepository;
-import shop.s5g.shop.service.category.impl.CategoryServiceImpl;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.eq;
@@ -19,7 +18,7 @@ class CategoryServiceTest {
     @Mock
     private CategoryRepository categoryRepository;
     @InjectMocks
-    private CategoryServiceImpl categoryServiceImpl;
+    private CategoryService categoryService;
 
     /**
      * 카테고리 등록 test
@@ -54,7 +53,7 @@ class CategoryServiceTest {
         Category mockCategory = mock(Category.class);
         //categoryId가 1L인 Category인스턴스가 존재한다고 가정할 때
         when(categoryRepository.existsById(1L)).thenReturn(false);
-        assertThatThrownBy(() -> categoryServiceImpl.deleteCategory(1L)).isInstanceOf(CategoryResourceNotFoundException.class);
+        assertThatThrownBy(() -> categoryService.deleteCategory(1L)).isInstanceOf(CategoryResourceNotFoundException.class);
         verify(categoryRepository, times(1)).existsById(1L);
         verify(categoryRepository, never()).findById(eq(1L));
     }

@@ -67,6 +67,7 @@ public class BookServiceImpl implements BookService {
     private final AuthorTypeRepository authorTypeRepository;
 
     //도서 등록
+    @Override
     public void createBook(BookRequestDto bookDto) {
         Publisher publisher = publisherRepository.findById(bookDto.publisherId())
             .orElseThrow(() -> new PublisherResourceNotFoundException("해당 출판사를 찾을 수 없습니다."));
@@ -138,8 +139,8 @@ public class BookServiceImpl implements BookService {
     }
 
     //도서 상세 조회
+    @Override
     public BookDetailResponseDto getBookById(Long bookId) {
-        // TODO: 코드 간소화
         if (!bookRepository.existsById(bookId)) {
             throw new BookResourceNotFoundException("Book with id " + bookId + " not found");
         }
@@ -147,6 +148,7 @@ public class BookServiceImpl implements BookService {
     }
 
     //도서 수정
+    @Override
     public void updateBooks(Long bookId, BookRequestDto bookDto) {
         if (!bookRepository.existsById(bookId)) {
             throw new BookResourceNotFoundException("책이 존재하지 않습니다.");
@@ -231,6 +233,7 @@ public class BookServiceImpl implements BookService {
     }
 
     //도서 삭제
+    @Override
     public void deleteBooks(Long bookId) {
         if (!bookRepository.existsById(bookId)) {
             throw new BookResourceNotFoundException("Book with id " + bookId + " not found");

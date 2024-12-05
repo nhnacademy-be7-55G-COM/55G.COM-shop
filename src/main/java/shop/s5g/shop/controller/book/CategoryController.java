@@ -49,6 +49,9 @@ public class CategoryController {
     //자식 카테고리 조회
     @GetMapping("/category/childCategory/{categoryId}")
     public ResponseEntity<List<CategoryResponseDto>> getChildCategories(@Valid @PathVariable("categoryId") long categoryId) {
+        if (categoryId < 1) {
+            throw new CategoryBadRequestException("카테고리 id는 1보다 커야 합니다.");
+        }
         return ResponseEntity.ok().body(categoryService.getChildCategory(categoryId));
     }
 

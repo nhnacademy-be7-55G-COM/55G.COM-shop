@@ -21,7 +21,6 @@ import shop.s5g.shop.service.like.LikeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.MediaType;
 
-import static org.mockito.BDDMockito.willDoNothing;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -55,16 +54,17 @@ public class LikeControllerTest {
 //    @DisplayName("좋아요 등록 test")
 //    void addLikeTest() throws Exception {
 //        //given
-//        Long bookId = 1L;
+//        Long book_Id = 1L;
 //        Long customerId = 15L;
 //        String message = "좋아요 등록 성공";
 //
 //        given(shopMemberDetail.getCustomerId()).willReturn(customerId);
-//        willDoNothing().given(likeService).addLikeInBook(customerId, bookId);
+////        willDoNothing().given(likeService).addLikeInBook(customerId, bookId);
 //
 //        //when&then
-//        mockMvc.perform(post("/api/shop/like/{bookId}", bookId)
-//                        .contentType(MediaType.APPLICATION_JSON))
+//        mockMvc.perform(post("/api/shop/like/{bookId}", 1)
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(1L, 15L))
 //                .andExpect(status().isOk())
 //                .andExpect(jsonPath("$.message").value(message));
 //    }

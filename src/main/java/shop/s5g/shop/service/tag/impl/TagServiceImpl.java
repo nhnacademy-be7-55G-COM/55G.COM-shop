@@ -26,6 +26,7 @@ public class TagServiceImpl implements TagService {
     private final BookTagRepository bookTagRepository;
 
     //태그 등록
+    @Override
     public void createtag(TagRequestDto tagDto) {
 
         if (tagRepository.existsByTagName(tagDto.tagName())) {
@@ -43,11 +44,16 @@ public class TagServiceImpl implements TagService {
     }
 
     //태그 수정
+    @Override
     public void updateTag(Long tagId, TagRequestDto tagDto) {
+        if(!tagRepository.existsById(tagId)) {
+            throw new TagResourceNotFoundException("수정할 태그가 존재하지 않습니다.");
+        }
         tagRepository.updateTag(tagId, tagDto);
     }
 
     //태그 삭제
+    @Override
     public void deleteTags(Long tagId) {
         if(!tagRepository.existsById(tagId)) {
             throw new TagResourceNotFoundException(tagId+"태그는 존재하지 않습니다.");
@@ -59,6 +65,7 @@ public class TagServiceImpl implements TagService {
     }
 
     // 태그 검색
+    @Override
     public ResponseEntity<List<TagResponseDto>> searchTags(String keyword){
         return ResponseEntity.ok().body(tagRepository.findByTagNameList(keyword));
     }
