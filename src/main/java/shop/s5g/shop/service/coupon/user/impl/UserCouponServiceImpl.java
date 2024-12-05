@@ -8,7 +8,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.config.RedisConfig;
 import shop.s5g.shop.dto.coupon.user.InValidUsedCouponResponseDto;
@@ -55,11 +54,12 @@ public class UserCouponServiceImpl implements UserCouponService {
                     coupon,
                     now,
                     now.plusDays(30)));
+
             } else {
-                log.warn("해당 쿠폰이 유효하지 않습니다.");
+                log.warn("Coupon could not be created");
             }
         } catch (Exception e) {
-            log.warn("회원가입 쿠폰 발급에 실패했습니다. 멤버 ID : {}", member.getId());
+            log.warn("회원가입 쿠폰 발급에 실패했습니다. 멤버 ID : {}",member.getId() ,e);
         }
     }
 

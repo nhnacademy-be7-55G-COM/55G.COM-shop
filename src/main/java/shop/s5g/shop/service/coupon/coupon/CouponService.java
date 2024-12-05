@@ -1,11 +1,8 @@
 package shop.s5g.shop.service.coupon.coupon;
 
-import java.time.LocalDateTime;
-import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import shop.s5g.shop.dto.coupon.coupon.AvailableCouponResponseDto;
-import shop.s5g.shop.dto.coupon.coupon.CouponRequestDto;
 import shop.s5g.shop.dto.coupon.coupon.CouponResponseDto;
 import shop.s5g.shop.entity.coupon.Coupon;
 

@@ -11,10 +11,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.transaction.annotation.Transactional;
-import shop.s5g.shop.dto.coupon.template.CouponTemplateRequestDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateResponseDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateUpdateRequestDto;
-import shop.s5g.shop.entity.coupon.CouponPolicy;
 import shop.s5g.shop.entity.coupon.CouponTemplate;
 import shop.s5g.shop.entity.coupon.CouponTemplate.CouponTemplateType;
 import shop.s5g.shop.entity.coupon.QCoupon;
@@ -29,6 +27,7 @@ public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupp
 
     private static final boolean ACTIVE = true;
     private static final boolean INACTIVE = false;
+    private static final String LOCATE_TEMPLATE = "locate({0}, {1})";
 
     public CouponTemplateQuerydslRepositoryImpl(EntityManager em) {
         super(CouponTemplate.class);
@@ -234,8 +233,8 @@ public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupp
                 couponTemplate.couponDescription))
             .from(couponTemplate)
             .innerJoin(couponPolicy).on(couponTemplate.couponPolicy.couponPolicyId.eq(couponPolicy.couponPolicyId))
-            .where(Expressions.stringTemplate("locate({0}, {1})", CouponTemplateType.WELCOME.getTypeName(), couponTemplate.couponName).eq("0")
-                .and(Expressions.stringTemplate("locate({0}, {1})", CouponTemplateType.BIRTH.getTypeName(), couponTemplate.couponName).eq("0"))
+            .where(Expressions.stringTemplate(LOCATE_TEMPLATE, CouponTemplateType.WELCOME.getTypeName(), couponTemplate.couponName).eq("0")
+                .and(Expressions.stringTemplate(LOCATE_TEMPLATE, CouponTemplateType.BIRTH.getTypeName(), couponTemplate.couponName).eq("0"))
                 .and(couponTemplate.active.eq(ACTIVE)))
             .fetch();
 
@@ -260,14 +259,14 @@ public class CouponTemplateQuerydslRepositoryImpl extends QuerydslRepositorySupp
 
         return jpaQueryFactory
             .selectFrom(couponTemplate)
-            .where(Expressions.stringTemplate("locate({0}, {1})", keyword, couponTemplate.couponName).gt("0"))
+            .where(Expressions.stringTemplate(LOCATE_TEMPLATE, keyword, couponTemplate.couponName).gt("0"))
             .fetchOne();
     }
 
     /**
-     * 쿠폰 템플릿에 사용된 정책 찾기
+     * 쿠폰 템플릿에 사용된 정책의 기간 찾기
      * @param couponTemplateId
-     * @return CouponPolicy
+     * @return Duration
      */
     @Override
     public Integer findCouponPolicyDurationByCouponTemplateId(Long couponTemplateId) {

@@ -242,4 +242,33 @@ class CouponTemplateServiceImplTest {
         assertThat(templateDto.couponName()).isEqualTo("생일 쿠폰");
         assertThat(templateDto.couponDescription()).isEqualTo("이 쿠폰은 생일자를 위한 쿠폰입니다.");
     }
+
+    @Test
+    @DisplayName("생일쿠폰과 웰컴쿠폰을 제외한 쿠폰 발급")
+    void getCouponTemplateExcludingWelcomeAndBirth() {
+        // Given
+        Pageable pageable = PageRequest.of(0, 10);
+
+        List<CouponTemplateResponseDto> couponTemplateResponseDto = List.of(
+            new CouponTemplateResponseDto(
+                2L,
+                new BigDecimal("0.2"),
+                30000L,
+                5000L,
+                30,
+                "Book Coupon",
+                "이 쿠폰은 책에 쓰이는 쿠폰입니다."
+            )
+        );
+
+        Page<CouponTemplateResponseDto> pageDto = new PageImpl<>(couponTemplateResponseDto, pageable, couponTemplateResponseDto.size());
+
+        when(couponTemplateRepository.findCouponTemplatesExcludingBirthAndWelcome(pageable)).thenReturn(pageDto);
+
+        Page<CouponTemplateResponseDto> result = couponTemplateService.getCouponTemplateExcludingWelcomeAndBirth(pageable);
+
+        assertThat(result).isNotNull();
+        assertThat(result.getTotalElements()).isEqualTo(1);
+        assertThat(result.getTotalPages()).isEqualTo(1);
+    }
 }

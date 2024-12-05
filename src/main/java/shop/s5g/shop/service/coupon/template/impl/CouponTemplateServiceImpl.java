@@ -1,5 +1,7 @@
 package shop.s5g.shop.service.coupon.template.impl;
 
+import static shop.s5g.shop.exception.ErrorCode.COUPON_TEMPLATE_NOT_FOUND;
+
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -71,7 +73,7 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
         }
 
         if (!couponTemplateRepository.existsById(couponTemplateId)) {
-            throw new CouponTemplateNotFoundException("쿠폰 템플릿이 존재하지 않습니다.");
+            throw new CouponTemplateNotFoundException(COUPON_TEMPLATE_NOT_FOUND.getMessage());
         }
 
         if (!couponTemplateRepository.checkActiveCouponTemplate(couponTemplateId)) {
@@ -95,7 +97,7 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
         }
 
         if (!couponTemplateRepository.existsById(couponTemplateId)) {
-            throw new CouponTemplateNotFoundException("쿠폰 템플릿이 존재하지 않습니다.");
+            throw new CouponTemplateNotFoundException(COUPON_TEMPLATE_NOT_FOUND.getMessage());
         }
 
         if (!couponTemplateRepository.checkActiveCouponTemplate(couponTemplateId)) {
@@ -118,7 +120,7 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
         }
 
         if (!couponTemplateRepository.existsById(couponTemplateId)) {
-            throw new CouponTemplateNotFoundException("쿠폰 템플릿이 존재하지 않습니다.");
+            throw new CouponTemplateNotFoundException(COUPON_TEMPLATE_NOT_FOUND.getMessage());
         }
 
         if (!couponTemplateRepository.checkActiveCouponTemplate(couponTemplateId)) {
