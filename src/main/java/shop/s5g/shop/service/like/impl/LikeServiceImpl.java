@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.book.BookLikeResponseDto;
 import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.like.Like;
-import shop.s5g.shop.entity.like.LikeId;
 import shop.s5g.shop.entity.member.Customer;
 import shop.s5g.shop.exception.book.BookResourceNotFoundException;
 import shop.s5g.shop.exception.like.LikeAlreadyExistsException;
@@ -19,8 +18,6 @@ import shop.s5g.shop.repository.member.CustomerRepository;
 import shop.s5g.shop.service.like.LikeService;
 
 import java.util.List;
-import java.util.Optional;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -85,6 +82,7 @@ public class LikeServiceImpl implements LikeService {
                 .orElseThrow(() -> new BookResourceNotFoundException("도서를 찾을 수 없습니다."));
 
         likeRepository.deleteLike(customer, book);
+//        likeRepository.delete()
     }
 
 

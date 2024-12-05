@@ -30,7 +30,6 @@ import shop.s5g.shop.dto.tag.TagRequestDto;
 import shop.s5g.shop.dto.tag.TagResponseDto;
 import shop.s5g.shop.filter.JwtAuthenticationFilter;
 import shop.s5g.shop.service.tag.TagService;
-import shop.s5g.shop.service.tag.impl.TagServiceImpl;
 import static org.mockito.BDDMockito.given;
 
 import java.util.ArrayList;

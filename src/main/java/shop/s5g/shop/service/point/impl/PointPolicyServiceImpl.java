@@ -11,6 +11,7 @@ import shop.s5g.shop.dto.point.PointPolicyUpdateRequestDto;
 import shop.s5g.shop.dto.point.PointPolicyView;
 import shop.s5g.shop.entity.point.PointPolicy;
 import shop.s5g.shop.entity.point.PointSource;
+import shop.s5g.shop.exception.AlreadyExistsException;
 import shop.s5g.shop.exception.BadRequestException;
 import shop.s5g.shop.exception.EssentialDataNotFoundException;
 import shop.s5g.shop.repository.point.PointPolicyRepository;
@@ -51,14 +52,16 @@ public class PointPolicyServiceImpl implements PointPolicyService {
     @Override
     public void createPointPolicy(PointPolicyCreateRequestDto pointPolicyCreateRequestDto) {
 
-        pointSourceRepository.findBySourceName(pointPolicyCreateRequestDto.policyName()).ifPresent(pointSource -> {
-            throw new BadRequestException();
+        pointPolicyRepository.findByName(pointPolicyCreateRequestDto.policyName()).ifPresent(pointPolicy -> {
+            throw new AlreadyExistsException("이미 존재하는 정책입니다.");
         });
 
-        PointSource savedPolicySource = pointSourceRepository.save(
-            new PointSource(pointPolicyCreateRequestDto.policyName()));
+        PointSource pointSource = pointSourceRepository.findById(
+                pointPolicyCreateRequestDto.pointSourceId())
+            .orElseThrow(BadRequestException::new);
+
         pointPolicyRepository.save(
-            new PointPolicy(savedPolicySource, pointPolicyCreateRequestDto.policyName(),
+            new PointPolicy(pointSource, pointPolicyCreateRequestDto.policyName(),
                 pointPolicyCreateRequestDto.discountValue()));
 
     }
@@ -68,7 +71,6 @@ public class PointPolicyServiceImpl implements PointPolicyService {
 
         pointPolicyRepository.deleteById(pointPolicyRemoveRequestDto.id());
 
-        pointSourceRepository.deleteBySourceName(pointPolicyRemoveRequestDto.sourceName());
 
     }
 }
