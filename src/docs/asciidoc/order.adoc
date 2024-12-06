@@ -1,0 +1,53 @@
+= Order API Documentation
+:toc: left
+:toclevels: 2
+
+== Order Create API
+
+=== POST - /api/shop/orders
+
+operation::order-create[snippets='http-request,request-fields,http-response,response-fields']
+
+=== Invalid Customer : 404 Not Found
+
+operation::order-create-invalid-customer[snippets='http-request,http-response']
+
+=== Validation Fail : 400 Bad Request
+
+operation::order-create-validation-fail[snippets='http-request,http-response']
+
+== Member Level Order Fetch API
+
+=== GET - /api/shop/orders
+
+operation::order-fetch[snippets='http-request,query-parameters,http-response,response-fields']
+
+=== Unauthorized - 401 Unauthorized
+
+operation::order-fetch-unauthorized[snippets='http-request,http-response']
+
+== Admin Level Order Fetch API
+
+=== GET - /api/shop/orders/admin
+
+operation::order-fetch-admin[snippets='http-request,query-parameters,http-response,response-fields']
+
+=== Validation Failure : 400 Bad Request
+
+operation::order-fetch-admin-validation-fail[snippets='http-request,http-response']
+
+== Order Delete API
+
+=== DELETE - /api/shop/orders/\{orderId\}
+
+operation::order-delete[snippets='http-request,http-response']
+
+=== OrderId Unavailable : 404 Not Found
+
+operation::order-delete-not-found[snippets='http-request,http-response']
+
+== Guest Level Order Fetch API
+
+=== GET - /api/shop/orders/guests
+
+operation::order-guest-query[snippets='http-request,query-parameters,http-response,response-fields']
