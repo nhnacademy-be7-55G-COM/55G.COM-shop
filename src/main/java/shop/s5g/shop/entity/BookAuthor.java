@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,4 +35,15 @@ public class BookAuthor {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "authorId")
     private Author author;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    public BookAuthor(Book book,Author author,AuthorType authorType,LocalDateTime createdAt,LocalDateTime updatedAt){
+        this.book=book;
+        this.author=author;
+        this.authorType=authorType;
+        this.createdAt=createdAt;
+        this.updatedAt=updatedAt;
+    }
 }

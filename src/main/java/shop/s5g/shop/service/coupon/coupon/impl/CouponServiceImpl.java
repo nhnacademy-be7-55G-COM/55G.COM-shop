@@ -1,25 +1,23 @@
 package shop.s5g.shop.service.coupon.coupon.impl;
 
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang.RandomStringUtils;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import shop.s5g.shop.dto.coupon.coupon.CouponRequestDto;
+import shop.s5g.shop.dto.coupon.coupon.AvailableCouponResponseDto;
 import shop.s5g.shop.dto.coupon.coupon.CouponResponseDto;
 import shop.s5g.shop.entity.coupon.Coupon;
 import shop.s5g.shop.entity.coupon.CouponTemplate;
+import shop.s5g.shop.entity.coupon.CouponTemplate.CouponTemplateType;
 import shop.s5g.shop.exception.coupon.CouponAlreadyDeletedException;
 import shop.s5g.shop.exception.coupon.CouponNotFoundException;
-import shop.s5g.shop.exception.coupon.CouponTemplateNotFoundException;
 import shop.s5g.shop.repository.coupon.coupon.CouponRepository;
 import shop.s5g.shop.repository.coupon.template.CouponTemplateRepository;
 import shop.s5g.shop.service.coupon.coupon.CouponService;
+import shop.s5g.shop.util.CouponUtil;
 
 @Service
 @Transactional
@@ -30,33 +28,38 @@ public class CouponServiceImpl implements CouponService {
     private final CouponTemplateRepository couponTemplateRepository;
 
     /**
-     * 쿠폰 생성 ( 1 ~ n개 생성 가능 )
-     * @param couponCnt
-     * @param couponRequestDto
+     * 웰컴 쿠폰 생성
+     * @return Coupon
      */
     @Override
-    public void createCoupon(Integer couponCnt, CouponRequestDto couponRequestDto) {
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public Coupon createWelcomeCoupon() {
 
-        if (Objects.isNull(couponCnt) || couponCnt <= 0) {
-            throw new IllegalArgumentException("쿠폰 수량이 잘못 지정되었습니다.");
+        CouponTemplate welcomeTemplate = couponTemplateRepository.findParticularCouponByName(
+            CouponTemplateType.WELCOME.getTypeName());
+
+        if (Objects.isNull(welcomeTemplate)) {
+            return null;
         }
 
-        CouponTemplate couponTemplate = couponTemplateRepository.findById(couponRequestDto.couponTemplateId())
-            .orElseThrow(() -> new CouponTemplateNotFoundException("쿠폰 템플릿을 찾을 수 없습니다."));
+        return couponRepository.save(
+            new Coupon(
+                welcomeTemplate,
+                CouponUtil.createUniqueCouponNumber()
+            )
+        );
+    }
 
-        Set<Coupon> couponSet = new HashSet<>();
 
-        while (couponSet.size() < couponCnt) {
-            couponSet.add(
-                new Coupon(
-                    couponTemplate,
-                    createCouponNumber(),
-                    couponRequestDto.expiredAt()
-                )
-            );
-        }
+    /**
+     * 쿠폰 조회
+     * @param couponCode
+     * @return Coupon
+     */
+    @Override
+    public Coupon getCouponByCode(String couponCode) {
 
-        couponRepository.saveAll(couponSet);
+        return couponRepository.findByCouponCode(couponCode);
     }
 
     /**
@@ -81,25 +84,13 @@ public class CouponServiceImpl implements CouponService {
     }
 
     /**
-     * 쿠폰 수정
-     * @param couponId
+     * 발급한 모든 쿠폰 조회
+     * @param pageable
+     * @return Page<CouponResponseDto> - paging 처리
      */
     @Override
-    public void updateCoupon(Long couponId, LocalDateTime expiredAt) {
-
-        if (Objects.isNull(couponId) || couponId < 0) {
-            throw new IllegalArgumentException("쿠폰 아이디가 잘못 지정되었습니다.");
-        }
-
-        if (!couponRepository.existsById(couponId)) {
-            throw new CouponNotFoundException("해당 쿠폰이 존재하지 않습니다.");
-        }
-
-        if (!couponRepository.checkActiveCoupon(couponId)) {
-            throw new CouponAlreadyDeletedException("해당 쿠폰은 삭제된 쿠폰입니다.");
-        }
-
-        couponRepository.updateCouponExpiredDatetime(couponId, expiredAt);
+    public Page<CouponResponseDto> getAllCouponList(Pageable pageable) {
+        return couponRepository.getAllIssuedCoupons(pageable);
     }
 
     /**
@@ -124,10 +115,14 @@ public class CouponServiceImpl implements CouponService {
     }
 
     /**
-     * 쿠폰 번호 랜덤 생성
-     * @return String
+     * 발급 가능한 쿠폰 조회
+     * @param pageable
+     * @return Page<AvailableCouponResponseDto>
      */
-    private String createCouponNumber() {
-        return RandomStringUtils.randomAlphanumeric(15);
+    @Override
+    public Page<AvailableCouponResponseDto> getAvailableCoupons(Pageable pageable) {
+
+        return couponRepository.getAllAvailableCoupons(pageable);
     }
+
 }

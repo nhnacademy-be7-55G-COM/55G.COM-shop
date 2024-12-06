@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import shop.s5g.shop.config.FeignAuthorizationConfig;
 import shop.s5g.shop.dto.payments.TossPaymentsCancelRequestDto;
+import shop.s5g.shop.dto.payments.TossPaymentsCancelSimpleRequestDto;
 import shop.s5g.shop.dto.payments.TossPaymentsConfirmRequestDto;
 import shop.s5g.shop.dto.payments.TossPaymentsDto;
 
@@ -22,7 +23,15 @@ public interface TossPaymentsAdapter {
     @GetMapping("/orders/{orderId}")
     ResponseEntity<TossPaymentsDto> queryPayByOrderId(@PathVariable String orderId);
 
+//    @PostMapping("/{paymentKey}/cancel")
+//    ResponseEntity<TossPaymentsDto> cancel(@PathVariable String paymentKey, @RequestHeader("Idempotency-Key") String idempotencyKey, @RequestBody
+//        TossPaymentsCancelRequestDto cancelRequest);
+
     @PostMapping("/{paymentKey}/cancel")
     ResponseEntity<TossPaymentsDto> cancel(@PathVariable String paymentKey, @RequestBody
-        TossPaymentsCancelRequestDto cancelRequest);
+    TossPaymentsCancelRequestDto cancelRequest);
+
+    @PostMapping("/{paymentKey}/cancel")
+    ResponseEntity<TossPaymentsDto> cancel(@PathVariable String paymentKey, @RequestBody
+    TossPaymentsCancelSimpleRequestDto cancelRequest);
 }

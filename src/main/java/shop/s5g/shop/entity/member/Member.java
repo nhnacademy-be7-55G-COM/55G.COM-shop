@@ -47,4 +47,6 @@ public class Member {
     @Setter
     private Long point;
 
+    @Setter
+    private String paycoIdNo;
 }

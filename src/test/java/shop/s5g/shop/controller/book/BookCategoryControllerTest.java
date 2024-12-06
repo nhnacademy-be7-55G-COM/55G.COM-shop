@@ -3,10 +3,7 @@ package shop.s5g.shop.controller.book;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,7 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import shop.s5g.shop.config.SecurityConfig;
 import shop.s5g.shop.config.TestSecurityConfig;
 import shop.s5g.shop.filter.JwtAuthenticationFilter;
-import shop.s5g.shop.service.bookcategory.impl.BookCategoryServiceImpl;
+import shop.s5g.shop.service.book.category.impl.BookCategoryServiceImpl;
 
 
 @WebMvcTest(
@@ -51,36 +48,9 @@ class BookCategoryControllerTest {
         this.mockMvc
                 .perform(post("/api/shop/bookcategory/1/1")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(print());
+                .andExpect(status().isOk());
         verify(bookCategoryService, times(1)).addCategoryInBook(any(), any());
     }
 
-    /**
-     * 도서카테고리 조회 test
-     */
-    @Test
-    void getBookCategoryTest() throws Exception {
-        this.mockMvc
-                .perform(get("/api/shop/bookcategory/1")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(print());
-        verify(bookCategoryService, times(1)).getCategoryInBook(any());
-
-    }
-
-
-    /**
-     * 도서카테고리 삭제 test
-     */
-    @Test
-    void deleteBookCategoryTest() throws Exception {
-    this.mockMvc
-            .perform(delete("/api/shop/bookcategory/1/1"))
-            .andExpect(status().isOk())
-            .andDo(print());
-    verify(bookCategoryService, times(1)).deleteCategory(any(), any());
-    }
 }
 

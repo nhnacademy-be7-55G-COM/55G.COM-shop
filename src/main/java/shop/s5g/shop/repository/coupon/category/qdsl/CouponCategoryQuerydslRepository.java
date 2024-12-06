@@ -14,5 +14,5 @@ public interface CouponCategoryQuerydslRepository {
 
     // read
     Page<CouponCategoryResponseDto> findAllCouponCategories(Pageable pageable);
-    Page<CouponCategoryDetailsForCategoryDto> findCategoryByCouponTemplateId(Long couponTemplateId, Pageable pageable);
+    Page<CouponCategoryDetailsForCategoryDto> findCategoryInfoByCouponTemplate(Pageable pageable);
 }

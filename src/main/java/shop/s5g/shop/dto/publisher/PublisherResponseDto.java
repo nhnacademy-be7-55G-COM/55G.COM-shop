@@ -7,7 +7,6 @@ public record PublisherResponseDto (
     Long id,
     @NotNull
     String name,
-
     @NotNull
     boolean active
 ){

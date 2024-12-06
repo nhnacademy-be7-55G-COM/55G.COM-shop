@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import shop.s5g.shop.config.TestQueryFactoryConfig;
 import shop.s5g.shop.dto.tag.TagRequestDto;
 import shop.s5g.shop.dto.tag.TagResponseDto;
@@ -49,8 +52,9 @@ class TagRepositoryTest {
         tagRepository.save(tag1);
         tagRepository.save(tag2);
 
-        List<TagResponseDto> allTag = tagQuerydslRepository.findAllTag();
-        Assertions.assertEquals(2, allTag.size());
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<TagResponseDto> allTag = tagQuerydslRepository.findAllTag(pageable);
+        Assertions.assertEquals(2, allTag.getTotalElements());
     }
 
     /**
@@ -60,7 +64,7 @@ class TagRepositoryTest {
     @DisplayName("테그 수정 test")
     void updateTagTest() {
         Tag oldTag = new Tag("5월 베스트셀러", true);
-        TagRequestDto newTag = new TagRequestDto("6월 베스트셀러", true);
+        TagRequestDto newTag = new TagRequestDto("6월 베스트셀러");
 
         //oldTag 저장
         Tag save = tagRepository.save(oldTag);

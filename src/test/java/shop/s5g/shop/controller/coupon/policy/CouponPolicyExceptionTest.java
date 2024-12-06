@@ -1,6 +1,10 @@
 package shop.s5g.shop.controller.coupon.policy;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.snippet.Attributes.key;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -16,6 +20,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import shop.s5g.shop.config.SecurityConfig;
@@ -66,7 +71,32 @@ class CouponPolicyExceptionTest {
         mockMvc.perform(post("/api/shop/admin/coupons/policy")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(addCouponPolicy))
-            .andExpect(status().isBadRequest());
+            .andExpect(status().isBadRequest())
+            .andDo(document("couponPolicy-create-bad-request",
+                requestFields(
+                    fieldWithPath("discountPrice")
+                        .type(JsonFieldType.NUMBER)
+                        .description("할인 비율 ( 예 : 0.5는 50% 할인 )")
+                        .attributes(key("constraints").value("NotNull, 0.1 ~ 0.8 or 1000 이상")),
+                    fieldWithPath("condition")
+                        .type(JsonFieldType.NULL)
+                        .description("할인이 적용될 최소 금액")
+                        .attributes(key("constraints").value("NotNull, 10000 ~ 50000 사이")),
+                    fieldWithPath("maxPrice")
+                        .type(JsonFieldType.NULL)
+                        .description("할인의 최대 금액 (최대 할인 금액)")
+                        .attributes(key("constraints").value("null, 금액의 80%")),
+                    fieldWithPath("duration")
+                        .type(JsonFieldType.NUMBER)
+                        .description("쿠폰의 유효 기간(일 단위)")
+                        .attributes(key("constraints").value("NotNull, 1 ~ 365 사이"))
+                ),
+                responseFields(
+                    fieldWithPath("message")
+                        .type(JsonFieldType.STRING)
+                        .description("응답 메시지")
+                )
+            ));
     }
 
     @Test
@@ -79,9 +109,34 @@ class CouponPolicyExceptionTest {
             + "\"duration\":30}";
 
         // When
-        mockMvc.perform(patch("/api/shop/admin/coupons/policy/1")
+        mockMvc.perform(post("/api/shop/admin/coupons/policy/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(updateCouponPolicy))
-            .andExpect(status().isBadRequest());
+            .andExpect(status().isBadRequest())
+            .andDo(document("couponPolicy-update-bad-request",
+                requestFields(
+                    fieldWithPath("discountPrice")
+                        .type(JsonFieldType.NUMBER)
+                        .description("할인 비율 ( 예 : 0.5는 50% 할인 )")
+                        .attributes(key("constraints").value("NotNull, 0.1 ~ 0.8 or 1000 이상")),
+                    fieldWithPath("condition")
+                        .type(JsonFieldType.NULL)
+                        .description("할인이 적용될 최소 금액")
+                        .attributes(key("constraints").value("Null, 10000 ~ 50000 사이")),
+                    fieldWithPath("maxPrice")
+                        .type(JsonFieldType.NULL)
+                        .description("할인의 최대 금액 (최대 할인 금액)")
+                        .attributes(key("constraints").value("null, 금액의 80%")),
+                    fieldWithPath("duration")
+                        .type(JsonFieldType.NUMBER)
+                        .description("쿠폰의 유효 기간(일 단위)")
+                        .attributes(key("constraints").value("Null, 1 ~ 365 사이"))
+                ),
+                responseFields(
+                    fieldWithPath("message")
+                        .type(JsonFieldType.STRING)
+                        .description("응답 메시지")
+                )
+            ));
     }
 }

@@ -1,7 +1,13 @@
 package shop.s5g.shop.controller.coupon.template;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.snippet.Attributes.key;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.DisplayName;
@@ -14,6 +20,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import shop.s5g.shop.config.SecurityConfig;
@@ -32,7 +39,7 @@ import shop.s5g.shop.service.coupon.template.impl.CouponTemplateServiceImpl;
     )
 )
 @Import(TestSecurityConfig.class)
-public class CouponTemplateExceptionTest {
+class CouponTemplateExceptionTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -46,28 +53,63 @@ public class CouponTemplateExceptionTest {
         // Given
         String createTemplate = "{\"couponPolicyId\":1,"
             + "\"couponName\": null,"
-            + "\"couponDescription\": \"이 쿠폰은 생일자들을 위한 쿠폰입니다.\"}";
+            + "\"couponDescription\": null}";
 
         // When
         mockMvc.perform(post("/api/shop/admin/coupons/template")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(createTemplate))
-            .andExpect(status().isBadRequest());
+            .andExpect(status().isBadRequest())
+            .andDo(document("CouponTemplate-Create-Bad-Request",
+                requestFields(
+                    fieldWithPath("couponPolicyId")
+                        .type(JsonFieldType.NUMBER)
+                        .description("쿠폰 정책 ID"),
+                    fieldWithPath("couponName")
+                        .type(JsonFieldType.NULL)
+                        .description("쿠폰 이름")
+                        .attributes(key("constraints").value("Null, 에러 상황")),
+                    fieldWithPath("couponDescription")
+                        .type(JsonFieldType.NULL)
+                        .description("쿠폰 설명")
+                        .attributes(key("constraints").value("Null, 에러 상황"))
+                )
+            ));
     }
 
     @Test
     @DisplayName("쿠폰 템플릿 수정 API 에러 테스트")
     void updateCouponTemplateThrowsBadRequestException() throws Exception {
         // Given
-        String updateTemplate = "{\"couponPolicyId\":1,"
+        String updateTemplate = "{\"couponTemplateId\":1,"
             + "\"couponName\": null,"
-            + "\"couponDescription\": \"이 쿠폰은 생일자들을 위한 쿠폰입니다.\"}";
+            + "\"couponDescription\": null}";
 
         // When
-        mockMvc.perform(patch("/api/shop/admin/coupons/template/1")
+        mockMvc.perform(post("/api/shop/admin/coupons/template/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(updateTemplate))
-            .andExpect(status().isBadRequest());
+            .andExpect(status().isBadRequest())
+            .andDo(document("CouponTemplate-Update-Bad-Request",
+                requestFields(
+                    fieldWithPath("couponTemplateId")
+                        .type(JsonFieldType.NUMBER)
+                        .description("쿠폰 템플릿 ID"),
+                    fieldWithPath("couponName")
+                        .type(JsonFieldType.NULL)
+                        .description("쿠폰 이름")
+                        .attributes(key("constraints").value("Null, error status")),
+                    fieldWithPath("couponDescription")
+                        .type(JsonFieldType.NULL)
+                        .description("쿠폰 설명")
+                        .attributes(key("constraints").value("Null, error status"))
+                ),
+                responseFields(
+                    fieldWithPath("message")
+                        .type(JsonFieldType.STRING)
+                        .description("응답 메시지")
+                )
+            ));
     }
 
 }

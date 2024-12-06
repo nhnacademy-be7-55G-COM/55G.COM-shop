@@ -23,10 +23,40 @@ spring:
     username: username
     password: password
 
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
+
 redis:
   host: host
   port: 1
   password: password
+
+rabbit:
+  retry-count: 5
+  exchange:
+    orders: 55g.orders.exchange
+    coupons: 55g.coupon.exchange
+
+  route:
+    orders:
+      payment:
+        toss: 55g.orders.payment.toss
+    coupons:
+      event: 55g.coupon.create
+
+  orders:
+    payment:
+      toss:
+        queue: 55g.orders.payment.queue
+        dlq: 55g.orders.payment.queue.dlq
+
+  coupon:
+    event:
+      create:
+        queue: 55g.coupon.create.queue
+        dlq: 55g.coupon.create.queue.dlq
 
 management:
   endpoints:
@@ -37,6 +67,13 @@ management:
 payment:
   toss:
     secretkey: secret
+
+logncrash:
+  key:
+    app: appKey
+image:
+  appkey: appkey
+  secretKey: secretKey
 
 ---
 spring:
@@ -54,6 +91,21 @@ spring:
       on-profile: dev
 
     import: optional:configserver:http://55g-config-dev:9050
+
+rabbit:
+  retry-count: 5
+  exchange:
+    coupons: 55g.coupon.test.exchange
+
+  route:
+    coupons:
+      event: 55g.coupon.test
+
+  coupon:
+    event:
+      create:
+        queue: 55g.coupon.test.queue
+        dlq: 55g.coupon.test.dlq
 
 ---
 # on profile 'docker'
@@ -74,13 +126,24 @@ spring:
 spring:
   config:
     activate:
+      on-profile: local
+
+rabbit:
+  orders:
+    payment:
+      toss:
+        queue: 55g.dev.orders.payment.queue
+---
+spring:
+  config:
+    activate:
       on-profile: test
   jpa:
     properties:
       hibernate:
         format_sql: true
         show_sql: true
-        generate_statistics: true
+#        generate_statistics: true
         use_sql_comments: true
         highlight_sql: true
   cloud:
@@ -90,11 +153,11 @@ spring:
           default:
             logger-level: full
 
-
-logging:
-  level:
-    shop.s5g: trace
-    root: info
+rabbit:
+  orders:
+    payment:
+      toss:
+        queue: 55g.dev.f3fort.orders.payment.queue
 
 ---
 spring:
@@ -107,3 +170,28 @@ spring:
     url: jdbc:mysql://localhost:3306/55g
     username: root
     password:
+
+---
+spring:
+  config:
+    activate:
+      on-profile: disable-redis
+
+  # elasticsearch가 레포지토리 기능을 비활성화
+  data:
+    elasticsearch:
+      repositories:
+        enabled: false
+
+
+---
+spring:
+  config:
+    activate:
+      on-profile: coupon
+
+rabbit:
+  coupon:
+    event:
+      create:
+        queue: 55g.dev.test.coupon.queue

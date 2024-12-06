@@ -1,7 +1,6 @@
 package shop.s5g.shop.service.coupon.policy.impl;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -52,7 +51,6 @@ public class CouponPolicyServiceImpl implements CouponPolicyService {
     @Override
     public void updateCouponPolicy(Long couponPolicyId, CouponPolicyRequestDto couponPolicyRequestDto) {
 
-        //TODO (young) : 에러 처리 수정 예정
         if (Objects.isNull(couponPolicyId) || couponPolicyId <= 0) {
             throw new IllegalArgumentException();
         }
@@ -81,7 +79,6 @@ public class CouponPolicyServiceImpl implements CouponPolicyService {
     @Transactional(readOnly = true)
     public CouponPolicyResponseDto getByCouponPolicyId(Long couponPolicyId) {
 
-        //TODO (young) : 에러 처리 수정 예정
         if (Objects.isNull(couponPolicyId) || couponPolicyId <= 0) {
             throw new IllegalArgumentException();
         }
@@ -119,7 +116,6 @@ public class CouponPolicyServiceImpl implements CouponPolicyService {
         Long condition = couponPolicyRequestDto.condition();
         Long maxPrice = couponPolicyRequestDto.maxPrice();
 
-        //TODO (young) : 에러 처리 수정 예정
         if (discountPrice.compareTo(BigDecimal.ONE) < 0) {
             if (discountPrice.compareTo(new BigDecimal("0.8")) > 0) {
                 throw new CouponPolicyValidationException(ErrorCode.DISCOUNT_EXCEEDS_80_PERCENT);
@@ -130,10 +126,8 @@ public class CouponPolicyServiceImpl implements CouponPolicyService {
             }
         }
 
-        if (Objects.nonNull(maxPrice)) {
-            if (maxPrice > (condition / 2)) {
-                throw new CouponPolicyValidationException(ErrorCode.MAX_PRICE_EXCEEDS_LIMIT);
-            }
+        if (Objects.nonNull(maxPrice) && maxPrice > (condition / 2)) {
+            throw new CouponPolicyValidationException(ErrorCode.MAX_PRICE_EXCEEDS_LIMIT);
         }
     }
 }

@@ -1,24 +1,18 @@
 package shop.s5g.shop.dto.book;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
-import shop.s5g.shop.entity.BookStatus;
-import shop.s5g.shop.entity.Publisher;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.List;
+import shop.s5g.shop.dto.book.author.BookAuthorRequestDto;
 
-public record BookRequestDto (
+public record BookRequestDto(
     @NotNull
-//    Publisher publisherId,
     Long publisherId,
     @NotNull
-//    BookStatus bookStatusId,
     Long bookStatusId,
+    @NotNull
+    long categoryId,
     @NotNull
     String title,
     String chapter,
@@ -30,13 +24,12 @@ public record BookRequestDto (
     Long price,
     @NotNull
     BigDecimal discountRate,
-    @NotNull
     boolean isPacked,
     @NotNull
     int stock,
-    @NotNull
-    Long views,
-    @NotNull
-    LocalDateTime createdAt
-){
+    String thumbnailPath,   // 도서 이미지가 저장된 URL의 경로
+    List<Long> tagIdList,
+    List<BookAuthorRequestDto> authorList
+) {
+
 }

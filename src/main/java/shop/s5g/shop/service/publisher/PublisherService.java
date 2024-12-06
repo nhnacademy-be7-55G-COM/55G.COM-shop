@@ -1,6 +1,9 @@
 package shop.s5g.shop.service.publisher;
 
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import shop.s5g.shop.dto.PageResponseDto;
 import shop.s5g.shop.dto.publisher.PublisherRequestDto;
 import shop.s5g.shop.dto.publisher.PublisherResponseDto;
 
@@ -15,5 +18,5 @@ public interface PublisherService {
 
     void deletePublisher(@Valid Long publisherId);
 
-    List<PublisherResponseDto> getAllPublisher();
+    Page<PublisherResponseDto> getAllPublisher(Pageable pageable);
 }

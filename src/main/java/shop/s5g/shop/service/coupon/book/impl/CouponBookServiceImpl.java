@@ -14,7 +14,6 @@ import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.coupon.CouponBook;
 import shop.s5g.shop.entity.coupon.CouponTemplate;
 import shop.s5g.shop.exception.book.BookResourceNotFoundException;
-import shop.s5g.shop.exception.bookstatus.BookStatusBadRequestException;
 import shop.s5g.shop.exception.bookstatus.BookStatusResourceNotFoundException;
 import shop.s5g.shop.exception.coupon.CouponBookAlreadyExistsException;
 import shop.s5g.shop.exception.coupon.CouponBookNotFoundException;
@@ -112,18 +111,12 @@ public class CouponBookServiceImpl implements CouponBookService {
 
     /**
      * 특정 쿠폰 템플릿이 적용된 책 조회
-     * @param templateId
      * @param pageable
      * @return Page<CouponBookDetailsForBookDto>
      */
     @Override
-    public Page<CouponBookDetailsForBookDto> getCouponBooksByTemplateId(Long templateId,
-        Pageable pageable) {
+    public Page<CouponBookDetailsForBookDto> getCouponBooksByTemplateId(Pageable pageable) {
 
-        if (Objects.isNull(templateId) || templateId <= 0) {
-            throw new IllegalArgumentException("잘못된 템플릿 아이디 값 요청입니다.");
-        }
-
-        return couponBookRepository.findCouponBooksByCouponTemplateId(templateId, pageable);
+        return couponBookRepository.findCouponBooksInfo(pageable);
     }
 }

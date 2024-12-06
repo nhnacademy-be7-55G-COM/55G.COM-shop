@@ -1,11 +1,12 @@
 package shop.s5g.shop.service.category.impl;
 
 import java.util.Objects;
-import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.category.CategoryRequestDto;
 import shop.s5g.shop.dto.category.CategoryResponseDto;
 import shop.s5g.shop.dto.category.CategoryUpdateRequestDto;
@@ -17,26 +18,29 @@ import shop.s5g.shop.service.category.CategoryService;
 import java.util.List;
 
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
 
-    @Autowired
-    public CategoryServiceImpl(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
-    
     //카테고리 등록
+    @Override
     public void createCategory(CategoryRequestDto categoryDto) {
+        if (categoryDto.parentCategoryId() == null) {
+            Category category = new Category(null, categoryDto.categoryName(), true);
+            categoryRepository.save(category);
+        } else {
+            Category category1 = categoryRepository.findById(categoryDto.parentCategoryId())
+                    .orElseThrow(() -> new CategoryResourceNotFoundException("카테고리가 존재하지 않습니다."));
 
-        Category category1 = categoryRepository.findById(categoryDto.parentCategoryId())
-                .orElseThrow(() -> new CategoryResourceNotFoundException("카테고리가 존재하지 않습니다."));
-
-        Category category = new Category(category1, categoryDto.categoryName(), true);
-        categoryRepository.save(category);
+            Category category = new Category(category1, categoryDto.categoryName(), true);
+            categoryRepository.save(category);
+        }
     }
 
     //모든 카테고리 조회
+    @Override
     public Page<CategoryResponseDto> allCategory(Pageable pageable) {
         return categoryRepository.getAllCategory(pageable);
     }
@@ -49,8 +53,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     //국내도서 하위 카테고리
     @Override
-    public List<CategoryResponseDto> getKoreaBooks() {
-        return categoryRepository.getKoreaBook();
+    public Page<CategoryResponseDto> getKoreaBooks(Pageable pageable) {
+        return categoryRepository.getKoreaBook(pageable);
     }
 
     // 아이디로 조회
@@ -62,32 +66,36 @@ public class CategoryServiceImpl implements CategoryService {
         }
 
         Category category = categoryRepository.findById(categoryId)
-            .orElseThrow(() -> new CategoryResourceNotFoundException("해당 카테고리는 존재하지 않습니다."));
+                .orElseThrow(() -> new CategoryResourceNotFoundException("해당 카테고리는 존재하지 않습니다."));
 
         Long parentCategoryId = (category.getParentCategory() != null) ? category.getParentCategory().getCategoryId() : null;
 
         return new CategoryResponseDto(
-            category.getCategoryId(),
-            parentCategoryId,
-            category.getCategoryName(),
-            category.isActive()
+                category.getCategoryId(),
+                parentCategoryId,
+                category.getCategoryName(),
+                category.isActive()
         );
     }
 
     //카테고리 수정
+    @Override
     public void updateCategory(Long categoryId, CategoryUpdateRequestDto categoryDto) {
-        if(categoryRepository.findById(categoryId).isPresent()) {
+        if (!categoryRepository.findById(categoryId).isPresent()) {
             throw new CategoryResourceNotFoundException(categoryId + " 는 존재하지 않습니다.");
         }
 
         categoryRepository.updatesCategory(categoryId, categoryDto);
     }
 
+
     //카테고리 삭제(비활성화)
+    @Override
     public void deleteCategory(Long categoryId) {
         if (!categoryRepository.existsById(categoryId)) {
             throw new CategoryResourceNotFoundException("Category with id " + categoryId + " not found");
         }
         categoryRepository.inactiveCategory(categoryId);
     }
+
 }

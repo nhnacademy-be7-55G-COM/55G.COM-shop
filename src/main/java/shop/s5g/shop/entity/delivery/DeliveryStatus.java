@@ -10,6 +10,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 @Getter
@@ -26,4 +27,16 @@ public class DeliveryStatus {
     @Column(name = "type_name")
     @Length(max = 20)
     private String name;
+
+    @Getter
+    @RequiredArgsConstructor
+    public enum Type {
+        PREPARING("배송준비중"), SHIPPING("배송중"), DELIVERED("배송 완료"), CANCELED("배송 취소됨");
+        private final String korName;
+
+        @Override
+        public String toString() {
+            return String.format("[%s(%s)]", name(), korName);
+        }
+    }
 }

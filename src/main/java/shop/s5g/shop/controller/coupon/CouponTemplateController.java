@@ -1,9 +1,7 @@
 package shop.s5g.shop.controller.coupon;
 
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties.Http;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import shop.s5g.shop.dto.PageResponseDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateRequestDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateResponseDto;
+import shop.s5g.shop.dto.coupon.template.CouponTemplateUpdateRequestDto;
 import shop.s5g.shop.dto.tag.MessageDto;
 import shop.s5g.shop.exception.coupon.CouponTemplateBadRequestException;
 import shop.s5g.shop.service.coupon.template.CouponTemplateService;
@@ -58,16 +57,16 @@ public class CouponTemplateController {
     }
 
     /**
-     * 쿠폰 템플릿 수정 - PATCH
+     * 쿠폰 템플릿 수정 - Post
      * @param couponTemplateId
      * @param couponTemplateRequestDto
      * @param bindingResult
      * @return messageDto
      */
-    @PatchMapping("/template/{couponTemplateId}")
+    @PostMapping("/template/{couponTemplateId}")
     public ResponseEntity<MessageDto> updateCouponTemplate(
         @PathVariable("couponTemplateId") Long couponTemplateId,
-        @Valid @RequestBody CouponTemplateRequestDto couponTemplateRequestDto,
+        @Valid @RequestBody CouponTemplateUpdateRequestDto couponTemplateRequestDto,
         BindingResult bindingResult
     ) {
 
@@ -120,6 +119,19 @@ public class CouponTemplateController {
 
         return ResponseEntity.status(HttpStatus.OK)
             .body(PageResponseDto.of(unUsedTemplateList));
+    }
+
+    /**
+     * 웰컴, 생일 쿠폰 제외한 템플릿 조회 - API
+     * @param pageable
+     * @return ResponseEntity<PageResponseDto<CouponTemplateResponseDto>>
+     */
+    @GetMapping("/templates/excludes")
+    public ResponseEntity<PageResponseDto<CouponTemplateResponseDto>> getCouponTemplateExcludingWelcomeAndBirth(Pageable pageable) {
+        Page<CouponTemplateResponseDto> templateList = couponTemplateService.getCouponTemplateExcludingWelcomeAndBirth(pageable);
+
+        return ResponseEntity.status(HttpStatus.OK)
+            .body(PageResponseDto.of(templateList));
     }
 
     /**

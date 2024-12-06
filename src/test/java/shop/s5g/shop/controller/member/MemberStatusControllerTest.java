@@ -32,17 +32,18 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import shop.s5g.shop.config.SecurityConfig;
 import shop.s5g.shop.config.TestSecurityConfig;
-import shop.s5g.shop.dto.memberStatus.MemberStatusRequestDto;
-import shop.s5g.shop.dto.memberStatus.MemberStatusResponseDto;
+import shop.s5g.shop.dto.member_status.MemberStatusRequestDto;
+import shop.s5g.shop.dto.member_status.MemberStatusResponseDto;
 import shop.s5g.shop.exception.BadRequestException;
 import shop.s5g.shop.filter.JwtAuthenticationFilter;
+import shop.s5g.shop.service.member.MemberService;
 import shop.s5g.shop.service.member.MemberStatusService;
 
 @AutoConfigureRestDocs
 @WebMvcTest(
     value = MemberStatusController.class,
     excludeFilters = @ComponentScan.Filter(
-        type= FilterType.ASSIGNABLE_TYPE,
+        type = FilterType.ASSIGNABLE_TYPE,
         classes = {SecurityConfig.class, JwtAuthenticationFilter.class}
     )
 )
@@ -54,6 +55,9 @@ class MemberStatusControllerTest {
 
     @MockBean
     private MemberStatusService memberStatusService;
+
+    @MockBean
+    private MemberService memberService;
 
     @Test
     @DisplayName("GET /api/shop/member/status - Get all member statuses")

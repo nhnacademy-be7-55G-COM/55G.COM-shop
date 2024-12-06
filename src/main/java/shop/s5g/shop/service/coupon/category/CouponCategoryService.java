@@ -14,5 +14,5 @@ public interface CouponCategoryService {
     // read
     Page<CouponCategoryResponseDto> getAllCouponCategories(Pageable pageable);
 
-    Page<CouponCategoryDetailsForCategoryDto> getCategoriesByCouponTemplateId(Long couponTemplateId, Pageable pageable);
+    Page<CouponCategoryDetailsForCategoryDto> getCategoriesByCouponTemplate(Pageable pageable);
 }

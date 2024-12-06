@@ -3,12 +3,14 @@ package shop.s5g.shop.entity.document;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import lombok.Getter;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 @Document(indexName = "55g-book")
 @Getter
 public class BookDocument {
 
+    @Id
     private Long book_id;
     private Long publisher_id;
     private Long book_status_id;
@@ -24,4 +26,9 @@ public class BookDocument {
     private Long views;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
+    private String[] author_names;
+    private String[] category_names;
+    private String publisher_name;
+    private String[] tag_names;
+    private String[] image_paths;
 }

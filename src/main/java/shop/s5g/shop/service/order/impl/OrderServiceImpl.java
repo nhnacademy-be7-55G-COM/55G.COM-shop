@@ -7,16 +7,19 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.s5g.shop.dto.delivery.DeliveryCreateRequestDto;
+import shop.s5g.shop.dto.order.OrderAdminTableView;
 import shop.s5g.shop.dto.order.OrderCreateRequestDto;
 import shop.s5g.shop.dto.order.OrderCreateResponseDto;
 import shop.s5g.shop.dto.order.OrderDetailCreateRequestDto;
+import shop.s5g.shop.dto.order.OrderQueryFilterDto;
 import shop.s5g.shop.dto.order.OrderQueryRequestDto;
 import shop.s5g.shop.dto.order.OrderWithDetailResponseDto;
 import shop.s5g.shop.entity.Book;
-import shop.s5g.shop.entity.member.Customer;
 import shop.s5g.shop.entity.delivery.Delivery;
 import shop.s5g.shop.entity.delivery.DeliveryFee;
 import shop.s5g.shop.entity.delivery.DeliveryStatus;
+import shop.s5g.shop.entity.delivery.DeliveryStatus.Type;
+import shop.s5g.shop.entity.member.Customer;
 import shop.s5g.shop.entity.order.Order;
 import shop.s5g.shop.entity.order.OrderDetail;
 import shop.s5g.shop.entity.order.OrderDetailType;
@@ -27,10 +30,10 @@ import shop.s5g.shop.exception.book.BookResourceNotFoundException;
 import shop.s5g.shop.exception.member.CustomerNotFoundException;
 import shop.s5g.shop.exception.order.WrappingPaperDoesNotExistsException;
 import shop.s5g.shop.repository.book.BookRepository;
-import shop.s5g.shop.repository.member.CustomerRepository;
 import shop.s5g.shop.repository.delivery.DeliveryFeeRepository;
 import shop.s5g.shop.repository.delivery.DeliveryRepository;
 import shop.s5g.shop.repository.delivery.DeliveryStatusRepository;
+import shop.s5g.shop.repository.member.CustomerRepository;
 import shop.s5g.shop.repository.order.OrderDetailRepository;
 import shop.s5g.shop.repository.order.OrderDetailTypeRepository;
 import shop.s5g.shop.repository.order.OrderRepository;
@@ -50,8 +53,6 @@ public class OrderServiceImpl implements OrderService {
     private final WrappingPaperRepository wrappingPaperRepository;
     private final OrderDetailTypeRepository orderDetailTypeRepository;
     private final DeliveryStatusRepository deliveryStatusRepository;
-
-    private static final String INITIAL_STATE = "PREPARING";
 
     @Override
     @Transactional(readOnly = true)
@@ -74,9 +75,7 @@ public class OrderServiceImpl implements OrderService {
             () -> new EssentialDataNotFoundException("Cannot find delivery fee data")
         );
 
-        DeliveryStatus status = deliveryStatusRepository.findByName(INITIAL_STATE).orElseThrow(
-            () -> new EssentialDataNotFoundException("Delivery state is not exists for 'preparing' state")
-        );
+        DeliveryStatus status = deliveryStatusRepository.findStatusByName(Type.PREPARING.name());
 
         Delivery delivery = deliveryRepository.save(
             new Delivery(deliveryDto.address(), deliveryDto.receivedDate(), status, fee, deliveryDto.receiverName())
@@ -91,12 +90,14 @@ public class OrderServiceImpl implements OrderService {
             new Order(customer, delivery, requestDto.netPrice(), requestDto.totalPrice())
         );
 
+        OrderDetailType.Type type = requestDto.usePoint() == 0 ? OrderDetailType.Type.COMPLETE : OrderDetailType.Type.CONFIRM;
+
         // orderDetail 생성
-        linkOrderDetails(order, requestDto.cartList());
+        linkOrderDetails(order, requestDto.cartList(), type);
         return OrderCreateResponseDto.of(order);
     }
 
-    private void linkOrderDetails(Order order, List<OrderDetailCreateRequestDto> details) {
+    private void linkOrderDetails(Order order, List<OrderDetailCreateRequestDto> details, OrderDetailType.Type type) {
         for (OrderDetailCreateRequestDto detail: details) {
             Book book = bookRepository.findById(detail.bookId()).orElseThrow(
                 () -> new BookResourceNotFoundException("Book not found: "+detail.bookId())
@@ -104,15 +105,13 @@ public class OrderServiceImpl implements OrderService {
             WrappingPaper wrappingPaper = detail.wrappingPaperId() == null ? null : wrappingPaperRepository.findById(detail.wrappingPaperId()).orElseThrow(
                 () -> new WrappingPaperDoesNotExistsException(detail.wrappingPaperId())
             );
-            OrderDetailType type = orderDetailTypeRepository.findByName("COMPLETE").orElseThrow(
-                () -> new EssentialDataNotFoundException("Order detail type error")
-            );
+            OrderDetailType typeEntity = orderDetailTypeRepository.findStatusByName(type);
 
             OrderDetail orderDetail = OrderDetail.builder()
                 .order(order)
                 .book(book)
                 .wrappingPaper(wrappingPaper)
-                .orderDetailType(type)
+                .orderDetailType(typeEntity)
                 .quantity(detail.quantity())
                 .totalPrice(detail.totalPrice())
                 .accumulationPrice(detail.accumulationPrice())
@@ -136,5 +135,19 @@ public class OrderServiceImpl implements OrderService {
     public void deactivateOrder(long orderId) {
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new ResourceNotFoundException("Given id is not available: "+orderId));
         order.setActive(false);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<OrderAdminTableView> getOrderListAdmin(OrderQueryFilterDto filter) {
+        return orderRepository.findOrdersUsingFilterForAdmin(filter);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public long getCustomerIdWithOrderId(long orderId) {
+        return orderRepository.findById(orderId).orElseThrow(
+            () -> new ResourceNotFoundException("Order not exist")
+        ).getCustomer().getCustomerId();
     }
 }

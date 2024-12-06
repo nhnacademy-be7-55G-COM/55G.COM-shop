@@ -7,14 +7,17 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
+import shop.s5g.shop.dto.category.CategoryDetailResponseDto;
 import shop.s5g.shop.dto.category.CategoryResponseDto;
 import shop.s5g.shop.dto.category.CategoryUpdateRequestDto;
+import shop.s5g.shop.dto.publisher.PublisherResponseDto;
 import shop.s5g.shop.entity.Category;
 import shop.s5g.shop.repository.category.qdsl.CategoryQuerydslRepository;
 
 import java.util.List;
 
 import static shop.s5g.shop.entity.QCategory.category;
+import static shop.s5g.shop.entity.QPublisher.publisher;
 
 @Repository
 public class CategoryQuerydslRepositoryImpl extends QuerydslRepositorySupport implements CategoryQuerydslRepository {
@@ -29,9 +32,8 @@ public class CategoryQuerydslRepositoryImpl extends QuerydslRepositorySupport im
     //카테고리 수정
     @Override
     public void updatesCategory(Long categoryId, CategoryUpdateRequestDto categoryDto) {
-        jpaQueryFactory .update(category)
+        update(category)
                 .set(category.categoryName, categoryDto.categoryName())
-                .set(category.active, categoryDto.active())
                 .where(category.categoryId.eq(categoryId))
                 .execute();//쿼리를 최종적으로 실행하여 변경 내용을 db에 반영
     }
@@ -79,16 +81,30 @@ public class CategoryQuerydslRepositoryImpl extends QuerydslRepositorySupport im
 
     //국내도서 하위 카테고리 조회
     @Override
-    public List<CategoryResponseDto> getKoreaBook() {
-        return jpaQueryFactory
-                .from(category)
+    public Page<CategoryResponseDto> getKoreaBook(Pageable pageable) {
+        List<CategoryResponseDto> categories = jpaQueryFactory
                 .select(Projections.constructor(CategoryResponseDto.class,
                         category.categoryId,
                         category.parentCategory.categoryId,
                         category.categoryName,
-                        category.active))
+                        category.active
+                ))
+                .from(category)
                 .where(category.parentCategory.isNull())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
+
+        // 총 개수 쿼리
+        Long total = jpaQueryFactory
+                .select(category.count())
+                .from(category)
+                .where(category.parentCategory.isNull())
+                .fetchOne();
+        total = total != null ? total : 0L; // Null 안전 처리
+
+        // Page 객체 반환
+        return new PageImpl<>(categories, pageable, total);
     }
 
     //카테고리 비활성화
@@ -99,4 +115,5 @@ public class CategoryQuerydslRepositoryImpl extends QuerydslRepositorySupport im
                 .where(category.categoryId.eq(categoryId))
                 .execute();
     }
+
 }

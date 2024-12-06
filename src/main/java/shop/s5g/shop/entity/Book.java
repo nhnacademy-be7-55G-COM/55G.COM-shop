@@ -9,8 +9,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +20,8 @@ import lombok.Setter;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
+@AllArgsConstructor
 public class Book {
 
     @Id
@@ -37,7 +40,7 @@ public class Book {
     @Column(columnDefinition = "TEXT")
     private String description;
     @Column(name = "published_date")
-    private LocalDateTime publishedDate;
+    private LocalDate publishedDate;
     private String isbn;
     private Long price;
     @Column(name = "discount_rate", precision = 10, scale = 2)
@@ -47,13 +50,18 @@ public class Book {
     @Setter
     private int stock;
     private Long views;
+    private Long likeCount;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    
+
 
     @Builder
     public Book(Publisher publisher, BookStatus bookStatus, String title, String chapter,
-        String description, LocalDateTime publishedDate, String isbn, Long price,
-        BigDecimal discountRate, boolean isPacked, int stock, Long views, LocalDateTime createdAt) {
+        String description, LocalDate publishedDate, String isbn, Long price,
+        BigDecimal discountRate, boolean isPacked, int stock, Long views, LocalDateTime createdAt,
+        LocalDateTime updatedAt) {
         this.publisher = publisher;
         this.bookStatus = bookStatus;
         this.title = title;
@@ -66,6 +74,8 @@ public class Book {
         this.isPacked = isPacked;
         this.stock = stock;
         this.views = views;
+        this.likeCount = 0L;
         this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 }

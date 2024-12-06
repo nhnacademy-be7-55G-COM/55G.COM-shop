@@ -1,8 +1,8 @@
 package shop.s5g.shop.service.member;
 
 import java.util.List;
-import shop.s5g.shop.dto.memberStatus.MemberStatusRequestDto;
-import shop.s5g.shop.dto.memberStatus.MemberStatusResponseDto;
+import shop.s5g.shop.dto.member_status.MemberStatusRequestDto;
+import shop.s5g.shop.dto.member_status.MemberStatusResponseDto;
 import shop.s5g.shop.entity.member.MemberStatus;
 
 public interface MemberStatusService {
@@ -18,5 +18,4 @@ public interface MemberStatusService {
     MemberStatus getMemberStatusByTypeName(String typeName);
 
     void deleteMemberStatus(long memberStatusId);
-
 }

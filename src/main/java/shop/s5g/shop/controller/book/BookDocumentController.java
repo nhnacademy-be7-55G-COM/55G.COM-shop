@@ -1,29 +1,47 @@
 package shop.s5g.shop.controller.book;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import shop.s5g.shop.dto.book.BookDocumentRequestDto;
+import shop.s5g.shop.dto.PageResponseDto;
 import shop.s5g.shop.dto.book.BookDocumentResponseDto;
 import shop.s5g.shop.service.book.BookDocumentService;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/shop")
+@ConditionalOnProperty(
+    name = "spring.data.elasticsearch.repositories.enabled",
+    havingValue = "true"
+)
 public class BookDocumentController {
 
-    private final BookDocumentService bookSearchService;
+    private final BookDocumentService bookDocumentService;
 
-    @GetMapping("/book/search")
-    public ResponseEntity<List<BookDocumentResponseDto>> searchByTitleOrDescription(
-        @RequestBody BookDocumentRequestDto bookSearchRequestDto
+    @GetMapping("/book/list")
+    public PageResponseDto<BookDocumentResponseDto> searchByKeyword(
+        @RequestParam("keyword") String keyword,
+        Pageable pageable
     ) {
-        List<BookDocumentResponseDto> bookList = bookSearchService.searchByTitleOrDescription(
-            bookSearchRequestDto.keyword());
-        return ResponseEntity.ok().body(bookList);
+        if (keyword.isEmpty()) {
+            return bookDocumentService.findAllBooks(pageable);
+        }
+        return bookDocumentService.searchByKeyword(keyword, pageable);
+    }
+
+    @GetMapping("/book/list/category")
+    public PageResponseDto<BookDocumentResponseDto> searchByCategoryAndKeyword(
+        @RequestParam("name") String categoryName,
+        @RequestParam("keyword") String keyword,
+        Pageable pageable
+    ) {
+        if (keyword.isEmpty()) {
+            return bookDocumentService.findAllBooksByCategory(categoryName, pageable);
+        }
+        return bookDocumentService.searchByCategoryAndKeyword(categoryName, keyword, pageable);
     }
 }

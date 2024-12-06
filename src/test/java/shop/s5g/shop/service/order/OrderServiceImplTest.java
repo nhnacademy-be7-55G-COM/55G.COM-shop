@@ -34,6 +34,7 @@ import shop.s5g.shop.entity.delivery.DeliveryStatus;
 import shop.s5g.shop.entity.member.Customer;
 import shop.s5g.shop.entity.order.Order;
 import shop.s5g.shop.entity.order.OrderDetailType;
+import shop.s5g.shop.entity.order.OrderDetailType.Type;
 import shop.s5g.shop.entity.order.WrappingPaper;
 import shop.s5g.shop.exception.EssentialDataNotFoundException;
 import shop.s5g.shop.exception.ResourceNotFoundException;
@@ -128,7 +129,7 @@ class OrderServiceImplTest {
     );
 
     OrderCreateRequestDto request = new OrderCreateRequestDto(
-        deliveryReq, List.of(detail), 0L, 0L
+        deliveryReq, List.of(detail), 0L, 0L, 0L
     );
 
     @Test
@@ -138,7 +139,7 @@ class OrderServiceImplTest {
         Delivery delivery = mock(Delivery.class);
 
         when(deliveryFeeRepository.findById(anyLong())).thenReturn(Optional.of(fee));
-        when(deliveryStatusRepository.findByName(anyString())).thenReturn(Optional.of(status));
+        when(deliveryStatusRepository.findStatusByName(anyString())).thenReturn(status);
         when(deliveryRepository.save(any())).thenReturn(delivery);
         when(customerRepository.findById(anyLong())).thenReturn(Optional.empty());
 
@@ -147,7 +148,9 @@ class OrderServiceImplTest {
 
         verify(orderRepository, never()).save(any());
 
-        when(deliveryStatusRepository.findByName(anyString())).thenReturn(Optional.empty());
+        when(deliveryStatusRepository.findStatusByName(anyString())).thenThrow(
+            EssentialDataNotFoundException.class
+        );
 
         assertThatThrownBy(() -> orderService.createOrder(1L, request))
             .isInstanceOf(EssentialDataNotFoundException.class);
@@ -172,17 +175,18 @@ class OrderServiceImplTest {
         WrappingPaper wrappingPaper = mock(WrappingPaper.class);
 
         when(deliveryFeeRepository.findById(anyLong())).thenReturn(Optional.of(fee));
-        when(deliveryStatusRepository.findByName(anyString())).thenReturn(Optional.of(status));
+        when(deliveryStatusRepository.findStatusByName(anyString())).thenReturn(status);
         when(deliveryRepository.save(any())).thenReturn(delivery);
         when(customerRepository.findById(anyLong())).thenReturn(Optional.of(customer));
 
         when(bookRepository.findById(anyLong())).thenReturn(Optional.of(book));
         when(wrappingPaperRepository.findById(anyLong())).thenReturn(Optional.of(wrappingPaper));
-        when(orderDetailTypeRepository.findByName("COMPLETE")).thenReturn(Optional.empty());
+        when(orderDetailTypeRepository.findStatusByName(Type.COMPLETE)).thenThrow(
+            EssentialDataNotFoundException.class
+        );
 //      --------- 주문 타입 비활성화 -----------
         assertThatThrownBy(() -> orderService.createOrder(1L, request))
-            .isInstanceOf(EssentialDataNotFoundException.class)
-            .hasMessageContaining("Order detail");
+            .isInstanceOf(EssentialDataNotFoundException.class);
 
         verify(orderRepository, atLeastOnce()).save(any());
         verify(orderDetailRepository, never()).save(any());
@@ -218,13 +222,13 @@ class OrderServiceImplTest {
         when(order.getId()).thenReturn(123L);
 
         when(deliveryFeeRepository.findById(anyLong())).thenReturn(Optional.of(fee));
-        when(deliveryStatusRepository.findByName(anyString())).thenReturn(Optional.of(status));
+        when(deliveryStatusRepository.findStatusByName(anyString())).thenReturn(status);
         when(deliveryRepository.save(any())).thenReturn(delivery);
         when(customerRepository.findById(anyLong())).thenReturn(Optional.of(customer));
 
         when(bookRepository.findById(anyLong())).thenReturn(Optional.of(book));
         when(wrappingPaperRepository.findById(anyLong())).thenReturn(Optional.of(wrappingPaper));
-        when(orderDetailTypeRepository.findByName("COMPLETE")).thenReturn(Optional.of(type));
+        when(orderDetailTypeRepository.findStatusByName(Type.COMPLETE)).thenReturn(type);
 
         when(orderRepository.save(any())).thenReturn(order);
 

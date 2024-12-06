@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import org.junit.jupiter.api.Test;
 import shop.s5g.shop.entity.coupon.CouponPolicy;
 
-public class CouponPolicyEntityBuilderTest {
+class CouponPolicyEntityBuilderTest {
 
     @Test
     void createCouponPolicyWithBuilder() {

@@ -1,19 +1,12 @@
 package shop.s5g.shop.dto.coupon.coupon;
 
-import java.time.LocalDateTime;
-import shop.s5g.shop.entity.coupon.CouponTemplate;
-
 public record CouponResponseDto(
 
-    CouponTemplate couponTemplate,
+    Long couponId,
 
-    String couponCode,
+    Long couponTemplateId,
 
-    LocalDateTime createdAt,
-
-    LocalDateTime expiredAt,
-
-    LocalDateTime usedAt
+    String couponCode
 
 ) {
 

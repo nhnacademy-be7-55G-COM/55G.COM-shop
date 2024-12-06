@@ -8,5 +8,5 @@ import shop.s5g.shop.repository.member.qdsl.CustomerQuerydslRepository;
 public interface CustomerRepository extends JpaRepository<Customer, Long>,
     CustomerQuerydslRepository {
 
-    Optional<Customer> findByCustomerIdAndActiveIsTrue(long id);
+    Optional<Customer> findByPhoneNumberAndNameAndPassword(String phoneNumber, String name, String password);
 }
