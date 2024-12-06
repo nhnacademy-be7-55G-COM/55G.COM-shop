@@ -5,7 +5,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import shop.s5g.shop.dto.PageResponseDto;
 import shop.s5g.shop.dto.publisher.PublisherRequestDto;
 import shop.s5g.shop.dto.publisher.PublisherResponseDto;
 import shop.s5g.shop.entity.Publisher;
@@ -13,8 +12,6 @@ import shop.s5g.shop.exception.publisher.PublisherAlreadyExistsException;
 import shop.s5g.shop.exception.publisher.PublisherResourceNotFoundException;
 import shop.s5g.shop.repository.publisher.PublisherRepository;
 import shop.s5g.shop.service.publisher.PublisherService;
-
-import java.util.List;
 
 @Service
 @Transactional
