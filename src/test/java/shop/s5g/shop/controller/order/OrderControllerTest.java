@@ -14,6 +14,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -37,6 +38,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -259,9 +261,11 @@ class OrderControllerTest {
     }
     @Test
     void deleteOrderSuccessTest() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.delete("/api/shop/orders/1"))
+        mvc.perform(RestDocumentationRequestBuilders.delete("/api/shop/orders/{orderId}", 1))
             .andExpect(status().isNoContent())
-            .andDo(customDocs("order-delete"));
+            .andDo(customDocs("order-delete", pathParameters(
+                parameterWithName("orderId").description("삭제할 주문의 고유 ID")
+            )));
 
         verify(orderService, times(1)).deactivateOrder(1L);
         verify(advice, never()).handleResourceNotFoundException(any());
