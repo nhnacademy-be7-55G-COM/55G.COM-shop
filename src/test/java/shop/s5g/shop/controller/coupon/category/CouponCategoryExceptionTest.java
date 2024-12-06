@@ -1,4 +1,4 @@
-package shop.s5g.shop.controller.coupon.book;
+package shop.s5g.shop.controller.coupon.category;
 
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -6,6 +6,7 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.snippet.Attributes.key;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.DisplayName;
@@ -23,57 +24,60 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import shop.s5g.shop.config.SecurityConfig;
 import shop.s5g.shop.config.TestSecurityConfig;
-import shop.s5g.shop.controller.coupon.CouponBookController;
-import shop.s5g.shop.exception.coupon.CouponBookBadRequestException;
+import shop.s5g.shop.controller.coupon.CouponCategoryController;
+import shop.s5g.shop.exception.BadRequestException;
 import shop.s5g.shop.filter.JwtAuthenticationFilter;
-import shop.s5g.shop.service.coupon.book.impl.CouponBookServiceImpl;
+import shop.s5g.shop.service.category.impl.CategoryServiceImpl;
+import shop.s5g.shop.service.coupon.category.impl.CouponCategoryServiceImpl;
 
 @AutoConfigureRestDocs
 @ActiveProfiles("local")
 @WebMvcTest(
-    value = CouponBookController.class,
+    value = CouponCategoryController.class,
     excludeFilters = @ComponentScan.Filter(
         type= FilterType.ASSIGNABLE_TYPE,
         classes = {SecurityConfig.class, JwtAuthenticationFilter.class}
     )
 )
 @Import(TestSecurityConfig.class)
-class CouponBookExceptionTest {
+class CouponCategoryExceptionTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private CouponBookServiceImpl couponBookService;
+    private CouponCategoryServiceImpl couponCategoryService;
+
+    @MockBean
+    private CategoryServiceImpl categoryService;
 
     @Test
-    @DisplayName("쿠폰 책 생성 요청시 유효증 검증 실패 테스트")
-    void createCouponBookWithInvalidData() throws Exception {
+    @DisplayName("쿠폰 카테고리 유효성 실패 테스트")
+    void createCouponCategoryInvalidExceptionTest() throws Exception {
         // Given
-        String invalidRequest = "{\"couponTemplateId\":-10, \"bookId\":-10}";
+        String invalidRequest = "{\"couponTemplateId\":-10, \"categoryId\":-10}";
 
         // When & Then
-        mockMvc.perform(post("/api/shop/admin/coupons/book")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(invalidRequest))
+        mockMvc.perform(post("/api/shop/admin/coupons/category")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(invalidRequest))
             .andExpect(status().isBadRequest())
             .andExpect(result ->
-                assertInstanceOf(CouponBookBadRequestException.class, result.getResolvedException()))
-            .andDo(document("CouponBook-Create-Bad-Request",
+                assertInstanceOf(BadRequestException.class, result.getResolvedException()))
+            .andDo(document("CouponCategory-Create-Bad-Request",
                 requestFields(
                     fieldWithPath("couponTemplateId")
                         .type(JsonFieldType.NUMBER)
-                        .description("쿠폰 템플릿 ID"),
-                    fieldWithPath("bookId")
+                        .description("쿠폰 템플릿 ID")
+                        .attributes(key("constraints").value("NotNull")),
+                    fieldWithPath("categoryId")
                         .type(JsonFieldType.NUMBER)
-                        .description("책 ID")
+                        .description("카테고리 ID")
                 ),
                 responseFields(
                     fieldWithPath("message")
                         .type(JsonFieldType.STRING)
                         .description("응답 메시지")
-                )
-            ));;
+                )));
     }
-
 }

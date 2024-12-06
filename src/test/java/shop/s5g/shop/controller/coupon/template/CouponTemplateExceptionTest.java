@@ -60,7 +60,7 @@ class CouponTemplateExceptionTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(createTemplate))
             .andExpect(status().isBadRequest())
-            .andDo(document("CouponTemplate-Create",
+            .andDo(document("CouponTemplate-Create-Bad-Request",
                 requestFields(
                     fieldWithPath("couponPolicyId")
                         .type(JsonFieldType.NUMBER)
@@ -90,7 +90,7 @@ class CouponTemplateExceptionTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(updateTemplate))
             .andExpect(status().isBadRequest())
-            .andDo(document("CouponTemplate-Create",
+            .andDo(document("CouponTemplate-Update-Bad-Request",
                 requestFields(
                     fieldWithPath("couponTemplateId")
                         .type(JsonFieldType.NUMBER)

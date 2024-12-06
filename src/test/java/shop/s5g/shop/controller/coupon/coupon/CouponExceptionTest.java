@@ -1,7 +1,12 @@
 package shop.s5g.shop.controller.coupon.coupon;
 
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.snippet.Attributes.key;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -15,6 +20,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import shop.s5g.shop.config.RedisConfig;
@@ -58,6 +64,24 @@ class CouponExceptionTest {
             .andExpect(status().isBadRequest())
             .andExpect(result ->
                 assertInstanceOf(CouponBadRequestException.class, result.getResolvedException()))
-            .andDo(print());
+            .andDo(document("Coupon-Create-Bad-Request",
+                requestFields(
+                    fieldWithPath("quantity")
+                        .type(JsonFieldType.VARIES)
+                        .optional()
+                        .description("발급할 쿠폰 수량")
+                        .attributes(key("constraints").value("Not Null, up to 1")),
+                    fieldWithPath("couponTemplateId")
+                        .type(JsonFieldType.VARIES)
+                        .optional()
+                        .description("쿠폰 템플릿 ID")
+                        .attributes(key("constraints").value("Not Null, up to 1 Long"))
+                ),
+                responseFields(
+                    fieldWithPath("message")
+                        .type(JsonFieldType.STRING)
+                        .description("응답 메시지")
+                )
+            ));
     }
 }
