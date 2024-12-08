@@ -1,0 +1,27 @@
+= Customer API Documentation
+:toc: left
+:toclevels:2
+
+== Customer Info Read API
+
+=== GET - /api/shop/customer: 200 OK
+
+operation::customer-get-info[snippets='http-request,query-parameters,http-response,response-fields']
+
+=== Invalid Type Exception: 400 Bad Request
+
+operation::customer-get-info-invalid-type[snippets='http-request,http-response']
+
+=== Customer Not Found: 404 Not Found
+
+operation::customer-get-info-not-found[snippets='http-request,http-response']
+
+== Customer Create Or Get For Purchase API
+
+=== POST - /api/shop/customer: 200 OK
+
+operation::customer-create-for-purchase[snippets='http-request,query-parameters,request-fields,http-response,response-fields']
+
+=== Invalid Type Exception: 400 Bad Request
+
+operation::customer-create-invalid-type[snippets='http-request,http-response']
