@@ -1,5 +1,7 @@
 package shop.s5g.shop.test.utils;
 
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
@@ -16,4 +18,6 @@ public class RestDocsHelper {
             snippets
         );
     }
+
+    public static final Snippet SNIPPET_AUTH_HEADER = requestHeaders(headerWithName("Authorization").description("멤버 JWT 액세스 토큰"));
 }

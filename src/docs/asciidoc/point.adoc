@@ -1,0 +1,11 @@
+= Point API Documentation
+:toc: left
+:toclevels: 2
+
+== Point History Fetch API
+
+operation::point-history-fetch[snippets='http-request,request-headers,query-parameters,http-response,response-fields']
+
+== Point History Create APi
+
+operation::point-history-create[snippets='http-request,request-headers,request-fields,http-response,response-fields']
