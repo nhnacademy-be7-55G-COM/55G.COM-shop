@@ -3,6 +3,7 @@ package shop.s5g.shop.repository.coupon.user.qdsl;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.data.domain.Page;
@@ -122,6 +123,7 @@ public class UserCouponQuerydslRepositoryImpl extends QuerydslRepositorySupport 
             .innerJoin(couponPolicy).on(couponTemplate.couponPolicy.couponPolicyId.eq(couponPolicy.couponPolicyId))
             .where(
                 userCoupon.userCouponPk.customerId.eq(customerId)
+                    .and(userCoupon.usedAt.isNotNull())
                     .and(coupon.active.isFalse())
             )
             .offset(pageable.getOffset())
@@ -148,6 +150,8 @@ public class UserCouponQuerydslRepositoryImpl extends QuerydslRepositorySupport 
     public Page<InValidUsedCouponResponseDto> findAfterExpiredUserCouponList(Long customerId,
         Pageable pageable) {
 
+        LocalDateTime now = LocalDateTime.now();
+
         List<InValidUsedCouponResponseDto> expiredCouponList = queryFactory
             .select(Projections.constructor(InValidUsedCouponResponseDto.class,
                 coupon.couponId,
@@ -163,6 +167,8 @@ public class UserCouponQuerydslRepositoryImpl extends QuerydslRepositorySupport 
             .innerJoin(couponPolicy).on(couponTemplate.couponPolicy.couponPolicyId.eq(couponPolicy.couponPolicyId))
             .where(
                 userCoupon.userCouponPk.customerId.eq(customerId)
+                    .and(userCoupon.expiredAt.before(now))
+                    .and(userCoupon.usedAt.isNull())
                     .and(coupon.active.isFalse())
             )
             .offset(pageable.getOffset())
@@ -189,6 +195,8 @@ public class UserCouponQuerydslRepositoryImpl extends QuerydslRepositorySupport 
     public Page<InValidUsedCouponResponseDto> findInvalidUserCouponList(Long customerId,
         Pageable pageable) {
 
+        LocalDateTime now = LocalDateTime.now();
+
         List<InValidUsedCouponResponseDto> invalidCouponList = queryFactory
             .select(Projections.constructor(InValidUsedCouponResponseDto.class,
                 coupon.couponId,
@@ -204,6 +212,15 @@ public class UserCouponQuerydslRepositoryImpl extends QuerydslRepositorySupport 
             .innerJoin(couponPolicy).on(couponTemplate.couponPolicy.couponPolicyId.eq(couponPolicy.couponPolicyId))
             .where(
                 userCoupon.userCouponPk.customerId.eq(customerId)
+                    .and(
+                        userCoupon.usedAt.isNull()
+                            .and(userCoupon.expiredAt.before(now))
+                            .and(coupon.active.isFalse())
+                    )
+                    .or(
+                        userCoupon.usedAt.isNotNull()
+                            .and(coupon.active.isFalse())
+                    )
             )
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())

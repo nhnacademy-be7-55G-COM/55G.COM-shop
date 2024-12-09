@@ -1,6 +1,5 @@
 package shop.s5g.shop.repository.coupon.coupon.qdsl;
 
-import java.time.LocalDateTime;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import shop.s5g.shop.dto.coupon.coupon.AvailableCouponResponseDto;

@@ -2,6 +2,10 @@ package shop.s5g.shop.service.coupon.policy.impl;
 
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -105,32 +109,108 @@ class CouponPolicyServiceExceptionTest {
     }
 
     @Test
-    @DisplayName("할인 금액이 0보다 작고 80%를 초과할 경우 예외 발생")
-    void validateDiscountExceeds80Percent() {
-        CouponPolicyRequestDto request = new CouponPolicyRequestDto(new BigDecimal("0.85"), 20000L, 15000L, 30);
+    @DisplayName("80% 이상 예외 처리 테스트")
+    void testDiscountExceeds80Percent() {
 
-        assertThatThrownBy(() -> couponPolicyService.validateCouponPolicy(request))
-            .isInstanceOf(CouponPolicyValidationException.class)
-            .hasMessageContaining(ErrorCode.DISCOUNT_EXCEEDS_80_PERCENT.getMessage());
+        // Given
+        CouponPolicyRequestDto couponPolicyRequestDto = new CouponPolicyRequestDto(
+            new BigDecimal("0.85"),
+            10000L,
+            null,
+            30
+        );
+
+        when(couponPolicyRepository.existsById(any())).thenReturn(true);
+
+        // When & Then
+        CouponPolicyValidationException exception = assertThrows(
+            CouponPolicyValidationException.class,
+            () -> couponPolicyService.updateCouponPolicy(1L, couponPolicyRequestDto)
+        );
+
+        assertEquals(ErrorCode.DISCOUNT_EXCEEDS_80_PERCENT, exception.getErrorCode());
     }
 
     @Test
-    @DisplayName("할인 금액이 1,000원 미만이거나 조건 금액의 80% 초과할 경우 예외 발생")
-    void validateDiscountInvalidRange() {
-        CouponPolicyRequestDto request = new CouponPolicyRequestDto(new BigDecimal("17000"), 20000L, 5000L, 30);
+    @DisplayName("유효하지 않은 범위 테스트")
+    void testDiscountInvalidRangeLow() {
+        // Given
+        CouponPolicyRequestDto couponPolicyRequestDto = new CouponPolicyRequestDto(
+            new BigDecimal("500"),
+            10000L,
+            null,
+            30
+        );
 
-        assertThatThrownBy(() -> couponPolicyService.validateCouponPolicy(request))
-            .isInstanceOf(CouponPolicyValidationException.class)
-            .hasMessageContaining(ErrorCode.DISCOUNT_INVALID_RANGE.getMessage());
+        // When & Then
+        when(couponPolicyRepository.existsById(any())).thenReturn(true);
+
+        CouponPolicyValidationException exception = assertThrows(
+            CouponPolicyValidationException.class,
+            () -> couponPolicyService.updateCouponPolicy(1L, couponPolicyRequestDto)
+        );
+
+        assertEquals(ErrorCode.DISCOUNT_INVALID_RANGE, exception.getErrorCode());
     }
 
     @Test
-    @DisplayName("최대 할인 금액이 조건 금액의 절반을 초과할 경우 예외 발생")
-    void validateMaxPriceExceedsLimit() {
-        CouponPolicyRequestDto request = new CouponPolicyRequestDto(new BigDecimal("0.8"), 20000L, 12001L, 30);
+    @DisplayName("할인금액 유효하지 않은 범위 테스트")
+    void testDiscountInvalidRangeHigh() {
 
-        assertThatThrownBy(() -> couponPolicyService.validateCouponPolicy(request))
-            .isInstanceOf(CouponPolicyValidationException.class)
-            .hasMessageContaining(ErrorCode.MAX_PRICE_EXCEEDS_LIMIT.getMessage());
+        // Given
+        CouponPolicyRequestDto requestDto = new CouponPolicyRequestDto(
+            new BigDecimal("9000"),
+            10000L,
+            null,
+            30
+        );
+
+        when(couponPolicyRepository.existsById(any())).thenReturn(true);
+
+        // When & Then
+        CouponPolicyValidationException exception = assertThrows(
+            CouponPolicyValidationException.class,
+            () -> couponPolicyService.updateCouponPolicy(1L, requestDto)
+        );
+
+        assertEquals(ErrorCode.DISCOUNT_INVALID_RANGE, exception.getErrorCode());
+    }
+
+    @Test
+    @DisplayName("최대 금액 예외 처리 테스트")
+    void testMaxPriceExceedsLimit() {
+        // Given
+        CouponPolicyRequestDto requestDto = new CouponPolicyRequestDto(
+            new BigDecimal("1000"),
+            10000L,
+            6000L,
+            30
+        );
+
+        when(couponPolicyRepository.existsById(any())).thenReturn(true);
+
+        // When & Then
+        CouponPolicyValidationException exception = assertThrows(
+            CouponPolicyValidationException.class,
+            () -> couponPolicyService.updateCouponPolicy(1L, requestDto)
+        );
+
+        assertEquals(ErrorCode.MAX_PRICE_EXCEEDS_LIMIT, exception.getErrorCode());
+    }
+
+    @Test
+    @DisplayName("maxPrice가 null일 때 예외가 발생하지 않음")
+    void validateCouponPolicy_maxPriceIsNull_NoExceptionThrown() {
+        // Given
+        CouponPolicyRequestDto requestDto = new CouponPolicyRequestDto(
+            new BigDecimal("1000"),
+            10000L,
+            null,
+            30
+        );
+        when(couponPolicyRepository.existsById(any())).thenReturn(true);
+
+        // When & Then
+        assertDoesNotThrow(() -> couponPolicyService.updateCouponPolicy(1L, requestDto));
     }
 }

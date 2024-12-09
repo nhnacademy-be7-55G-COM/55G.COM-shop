@@ -1,7 +1,5 @@
 package shop.s5g.shop.dto.coupon.user;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 

@@ -11,7 +11,7 @@ import shop.s5g.shop.entity.Tag;
 @Getter
 @AllArgsConstructor
 @Table(name = "book_tag")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class BookTag {
 
     @EmbeddedId

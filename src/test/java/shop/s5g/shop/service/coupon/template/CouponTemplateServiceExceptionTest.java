@@ -1,10 +1,15 @@
 package shop.s5g.shop.service.coupon.template;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,9 +18,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ActiveProfiles;
+import shop.s5g.shop.dto.coupon.policy.CouponPolicyRequestDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateRequestDto;
 import shop.s5g.shop.dto.coupon.template.CouponTemplateUpdateRequestDto;
+import shop.s5g.shop.entity.coupon.CouponPolicy;
 import shop.s5g.shop.exception.coupon.CouponPolicyNotFoundException;
+import shop.s5g.shop.exception.coupon.CouponTemplateAlreadyExistsException;
 import shop.s5g.shop.exception.coupon.CouponTemplateNotFoundException;
 import shop.s5g.shop.repository.coupon.policy.CouponPolicyRepository;
 import shop.s5g.shop.repository.coupon.template.CouponTemplateRepository;
@@ -226,5 +234,51 @@ class CouponTemplateServiceExceptionTest {
         verify(couponTemplateRepository, times(1)).existsById(deletedId);
         verify(couponTemplateRepository, times(1)).checkActiveCouponTemplate(deletedId);
     }
-    
+
+    @Test
+    @DisplayName("쿠폰 템플릿 이름이 WELCOME 또는 BIRTH를 포함하고 이미 존재하는 경우 예외 발생")
+    void testCouponTemplateAlreadyExistsException() {
+        // Given
+        CouponTemplateRequestDto requestDto = new CouponTemplateRequestDto(
+            1L,
+            "Welcome Coupon",
+            "웰컴 쿠폰입니다."
+        );
+
+        // 쿠폰 이름의 키워드 "WELCOME"이 이미 존재하는 것으로 설정
+        when(couponTemplateRepository.existsCouponTemplateName("Welcome")).thenReturn(true);
+
+        // When & Then
+        CouponTemplateAlreadyExistsException exception = assertThrows(
+            CouponTemplateAlreadyExistsException.class,
+            () -> couponTemplateService.createCouponTemplate(requestDto)
+        );
+
+        assertEquals("해당 쿠폰 템플릿은 이미 존재합니다.", exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("쿠폰 템플릿 이름이 WELCOME 또는 BIRTH를 포함하고 존재하지 않는 경우 예외 없음")
+    void testCouponTemplateValid() {
+        // Given
+        CouponTemplateRequestDto requestDto = new CouponTemplateRequestDto(
+            1L,
+            "Birth Coupon",
+            "This is Birth Coupon"
+        );
+
+        CouponPolicy couponPolicy = new CouponPolicy(
+            new BigDecimal("1000"),
+            20000L,
+            null,
+            30
+        );
+
+        // 쿠폰 이름의 키워드 "BIRTH"가 존재하지 않는 것으로 설정
+        when(couponTemplateRepository.existsCouponTemplateName("Birth")).thenReturn(false);
+        when(couponPolicyRepository.findById(1L)).thenReturn(Optional.of(couponPolicy));
+
+        // When & Then
+        assertDoesNotThrow(() -> couponTemplateService.createCouponTemplate(requestDto));
+    }
 }
