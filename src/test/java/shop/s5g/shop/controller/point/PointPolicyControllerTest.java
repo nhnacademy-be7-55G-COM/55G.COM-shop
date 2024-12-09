@@ -109,4 +109,7 @@ class PointPolicyControllerTest {
 
         verify(pointPolicyService, times(1)).getPolicy(anyString());
     }
+
+    @Test
+
 }

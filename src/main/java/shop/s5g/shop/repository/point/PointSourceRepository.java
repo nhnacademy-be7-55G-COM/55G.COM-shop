@@ -10,5 +10,4 @@ public interface PointSourceRepository extends JpaRepository<PointSource, Long> 
     Optional<PointSource> findBySourceName(String sourceName);
     List<PointSourceView> findAllBy();
 
-    void deleteBySourceName(String sourceName);
 }
