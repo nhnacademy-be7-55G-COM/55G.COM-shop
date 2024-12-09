@@ -113,7 +113,7 @@ class CouponPolicyExceptionTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(updateCouponPolicy))
             .andExpect(status().isBadRequest())
-            .andDo(document("couponPolicy-create",
+            .andDo(document("couponPolicy-update-bad-request",
                 requestFields(
                     fieldWithPath("discountPrice")
                         .type(JsonFieldType.NUMBER)

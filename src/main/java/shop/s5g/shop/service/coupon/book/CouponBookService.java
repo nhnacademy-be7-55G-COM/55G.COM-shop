@@ -19,7 +19,7 @@ public interface CouponBookService {
 
     Page<CouponTemplateResponseDto> getCouponBooksByBookId(Long bookId, Pageable pageable);
 
-    public Page<CouponBookDetailsForBookDto> getCouponBooksByTemplateId(Pageable pageable);
+    Page<CouponBookDetailsForBookDto> getCouponBooksByTemplateId(Pageable pageable);
 
     // update 가 필요한 것인가??
 

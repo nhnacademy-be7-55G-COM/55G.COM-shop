@@ -1,8 +1,4 @@
 = Coupon API Documentation
-
-:doctype: book
-:icons: font
-:source-highlighter: highlightjs
 :toc: left
 :toclevels: 3
 
@@ -28,10 +24,17 @@ include::{snippets}/couponPolicy-get/http-response.adoc[]
 include::{snippets}/couponPolicy-getAll/http-request.adoc[]
 include::{snippets}/couponPolicy-getAll/http-response.adoc[]
 
+== Coupon API
+
 === Coupon - Create
 
 include::{snippets}/Coupon-Create/http-request.adoc[]
 include::{snippets}/Coupon-Create/http-response.adoc[]
+
+=== Coupon - Create - BadRequest
+
+include::{snippets}/Coupon-Create-Bad-Request/http-request.adoc[]
+include::{snippets}/Coupon-Create-Bad-Request/http-response.adoc[]
 
 === Coupon - Delete
 
@@ -40,17 +43,30 @@ include::{snippets}/Coupon-Delete/http-response.adoc[]
 
 === Coupon - Get All CouponList
 
+include::{snippets}/Coupon-Get-All-CouponList/http-request.adoc[]
+include::{snippets}/Coupon-Get-All-CouponList/http-response.adoc[]
+
 === Coupon - Get Coupon
+
+include::{snippets}/Coupon-Get-Coupon/http-request.adoc[]
+include::{snippets}/Coupon-Get-Coupon/http-response.adoc[]
 
 === Coupon - Get AvailableList
 
 include::{snippets}/Coupon-GetAvailableList/http-request.adoc[]
 include::{snippets}/Coupon-GetAvailableList/http-response.adoc[]
 
+== CouponTemplate API
+
 === CouponTemplate - Create
 
 include::{snippets}/CouponTemplate-Create/http-request.adoc[]
 include::{snippets}/CouponTemplate-Create/http-response.adoc[]
+
+=== CouponTemplate - Create BadRequest
+
+include::{snippets}/CouponTemplate-Create-Bad-Request/http-request.adoc[]
+include::{snippets}/CouponTemplate-Create-Bad-Request/http-response.adoc[]
 
 === CouponTemplate - Delete
 
@@ -81,3 +97,84 @@ include::{snippets}/CouponTemplate-Unused/http-response.adoc[]
 
 include::{snippets}/CouponTemplate-Update/http-request.adoc[]
 include::{snippets}/CouponTemplate-Update/http-response.adoc[]
+
+=== CouponTemplate - Update BadRequest
+
+include::{snippets}/CouponTemplate-Update-Bad-Request/http-request.adoc[]
+include::{snippets}/CouponTemplate-Update-Bad-Request/http-response.adoc[]
+
+== CouponBook API
+
+=== CouponBook - Create
+
+include::{snippets}/CouponBook-Create/http-request.adoc[]
+include::{snippets}/CouponBook-Create/http-response.adoc[]
+
+=== CouponBook - Create - BadRequest
+
+include::{snippets}/CouponBook-Create-Bad-Request/http-request.adoc[]
+include::{snippets}/CouponBook-Create-Bad-Request/http-response.adoc[]
+
+=== CouponBook - Get All CouponBook
+
+include::{snippets}/CouponBook-GetAllCouponBook/http-request.adoc[]
+include::{snippets}/CouponBook-GetAllCouponBook/http-response.adoc[]
+
+=== CouponBook - Get BookList
+
+include::{snippets}/CouponBook-GetBookList/http-request.adoc[]
+include::{snippets}/CouponBook-GetBookList/http-response.adoc[]
+
+=== CouponBook - Get TemplateList
+
+include::{snippets}/CouponBook-GetTemplateList/http-request.adoc[]
+include::{snippets}/CouponBook-GetTemplateList/http-response.adoc[]
+
+== CouponCategory API
+
+=== CouponCategory - Create
+
+include::{snippets}/CouponCategory-Create/http-request.adoc[]
+include::{snippets}/CouponCategory-Create/http-response.adoc[]
+
+=== CouponCategory - Create BadRequest
+
+include::{snippets}/CouponCategory-Create-Bad-Request/http-request.adoc[]
+include::{snippets}/CouponCategory-Create-Bad-Request/http-response.adoc[]
+
+=== CouponCategory - Get All CouponCategory
+
+include::{snippets}/CouponCategory-GetAllCouponCategory/http-request.adoc[]
+include::{snippets}/CouponCategory-GetAllCouponCategory/http-response.adoc[]
+
+=== CouponCategory - Get Category
+
+include::{snippets}/CouponCategory-GetCategory/http-request.adoc[]
+include::{snippets}/CouponCategory-GetCategory/http-response.adoc[]
+
+=== CouponCategory - GetCategoryName
+
+include::{snippets}/CouponCategory-GetCategoryName/http-request.adoc[]
+include::{snippets}/CouponCategory-GetCategoryName/http-response.adoc[]
+
+== UserCoupon API
+
+=== UserCoupon - Get CouponList
+
+include::{snippets}/UserCoupon-Get-Coupon-List/http-request.adoc[]
+include::{snippets}/UserCoupon-Get-Coupon-List/http-response.adoc[]
+
+=== UserCoupon - Get Expired CouponList
+
+include::{snippets}/UserCoupon-Get-Expired-CouponList/http-request.adoc[]
+include::{snippets}/UserCoupon-Get-Expired-CouponList/http-response.adoc[]
+
+=== UserCoupon - Get Invalid CouponList
+
+include::{snippets}/UserCoupon-Get-Invalid-CouponList/http-request.adoc[]
+include::{snippets}/UserCoupon-Get-Invalid-CouponList/http-response.adoc[]
+
+=== UserCoupon - Get UsedCouponList
+
+include::{snippets}/UserCoupon-Get-Used-CouponList/http-request.adoc[]
+include::{snippets}/UserCoupon-Get-Used-CouponList/http-response.adoc[]

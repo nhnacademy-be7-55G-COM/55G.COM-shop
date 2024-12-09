@@ -1,0 +1,23 @@
+= Delivery API Documentation
+:toc: left
+:toclevels: 2
+
+== Admin Level Delivery Update API
+
+=== PUT - /api/shop/delivery/admin
+
+operation::delivery-update-admin[snippets='http-request,request-fields,http-response,response-fields']
+
+=== Validation Failure : 400 Bad Request
+
+operation::delivery-update-admin-fail[snippets='http-request,http-response']
+
+== User Level Delivery Update API
+
+=== PUT - /api/shop/delivery
+
+operation::delivery-update-user[snippets='http-request,request-fields,http-response,response-fields']
+
+=== Validation Failure : 400 Bad Request
+
+operation::delivery-update-user-fail[snippets='http-request,http-response']
