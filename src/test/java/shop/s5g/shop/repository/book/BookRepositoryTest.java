@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Rollback;
 import shop.s5g.shop.config.TestQueryFactoryConfig;
 import shop.s5g.shop.dto.book.BookRequestDto;
 import shop.s5g.shop.dto.book.author.BookAuthorRequestDto;
@@ -34,51 +35,18 @@ import shop.s5g.shop.repository.publisher.PublisherRepository;
 class BookRepositoryTest {
 
     private final BookRepository bookRepository;
-    private final PublisherRepository publisherRepository;
-    private final BookStatusRepository bookStatusRepository;
     @Autowired
     private TestEntityManager testEntityManager;
 
     @Autowired
-    public BookRepositoryTest(BookRepository bookRepository,
-        PublisherRepository publisherRepository,
-        BookStatusRepository bookStatusRepository) {
+    public BookRepositoryTest(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
-        this.publisherRepository = publisherRepository;
-        this.bookStatusRepository = bookStatusRepository;
     }
 
     /**
-     * 도서 등록 Test
+     * 도서 수정 Test
      */
-//    @Test
-//    @DisplayName("도서 등록 test")
-//    @Rollback(value=false)
-//    void addBookTest() {
-//
-//        Publisher publisher = new Publisher();
-//        BookStatus bookStatus = new BookStatus();
-//
-//        Book book = new Book(
-//            publisher,
-//            bookStatus,
-//            "아낌없이 주는 나무",
-//            "전래동화",
-//            "이 책은 전래동화 입니다.",
-//            LocalDate.of(2000, 10, 10),
-//            "978-3-15-148410-2",
-//            15000L,
-//            new BigDecimal("5.5"),
-//            true,
-//            200,
-//            2000L,
-//            LocalDateTime.of(2010, 5, 5, 15, 30),
-//            LocalDateTime.of(2010, 5, 5, 15, 30)
-//        );
-//
-//        Book save = bookRepository.save(book);
-//        assertEquals(save.getTitle(), "아낌없이 주는 나무");
-//    }
+
 
     /**
      * 모든 도서 리스트 조회

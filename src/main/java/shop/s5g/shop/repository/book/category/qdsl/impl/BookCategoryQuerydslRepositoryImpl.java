@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import shop.s5g.shop.dto.book.category.BookCategoryResponseDto;
 import shop.s5g.shop.entity.book.category.BookCategory;
 import shop.s5g.shop.repository.book.category.qdsl.BookCategoryQuerydslRepository;
-import shop.s5g.shop.dto.book.category.BookCategoryBookResponseDto;
 import shop.s5g.shop.entity.QBook;
 import shop.s5g.shop.entity.QCategory;
 import shop.s5g.shop.entity.book.category.QBookCategory;

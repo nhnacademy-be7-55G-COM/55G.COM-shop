@@ -130,7 +130,6 @@ class BookServiceTest {
         verify(bookRepository).save(any(Book.class));
         verify(categoryRepository).findById(1L);
         verify(bookCategoryRepository).save(any(BookCategory.class));
-        verify(bookImageRepository).save(any(BookImage.class));
         verify(tagRepository, times(2)).findById(anyLong());
         verify(bookTagRepository, times(2)).save(any(BookTag.class));
         verify(authorRepository).findById(1L);
@@ -342,7 +341,6 @@ class BookServiceTest {
         verify(bookCategoryRepository).deleteByBookBookId(bookId);
         verify(bookCategoryRepository).save(any(BookCategory.class));
         verify(bookImageRepository).deleteByBook(any(Book.class));
-        verify(bookImageRepository).save(any(BookImage.class));
         verify(bookTagRepository).deleteByBookBookId(bookId);
         verify(bookTagRepository, times(2)).save(any(BookTag.class));
         verify(bookAuthorRepository).deleteAllByBook(any(Book.class));

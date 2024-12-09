@@ -7,7 +7,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
-import shop.s5g.shop.dto.publisher.PublisherResponseDto;
 import shop.s5g.shop.dto.tag.TagRequestDto;
 import shop.s5g.shop.dto.tag.TagResponseDto;
 import shop.s5g.shop.entity.Tag;
@@ -15,7 +14,6 @@ import shop.s5g.shop.repository.tag.qdsl.TagQuerydslRepository;
 
 import java.util.List;
 
-import static shop.s5g.shop.entity.QPublisher.publisher;
 import static shop.s5g.shop.entity.QTag.tag;
 
 @Repository

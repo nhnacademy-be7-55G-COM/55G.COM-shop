@@ -77,7 +77,6 @@ class TagControllerTest {
      */
     @Test
     void testGetTagsError() throws Exception {
-        TagRequestDto tagRequestDto = new TagRequestDto("베스트셀러");
 
         this.mockMvc
                 .perform(post("/api/shop/tag")

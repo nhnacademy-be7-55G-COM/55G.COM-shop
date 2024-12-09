@@ -53,7 +53,6 @@ public class LikeServiceImpl implements LikeService {
         bookRepository.likeCount(bookId);
 
         Like like = new Like(customer, book);
-//        likeRepository.addLike(customer, book);
 
         if(likeRepository.findById(like.getId()).isPresent()) {
             throw new LikeAlreadyExistsException("좋아요가 등록된 도서 입니다!");
@@ -89,7 +88,6 @@ public class LikeServiceImpl implements LikeService {
     //마이페이지에서 좋아요 누른 도서 조회
     @Override
     public List<BookLikeResponseDto> getLikeBookByCustomerId(Long customerId) {
-        List<BookLikeResponseDto> books = likeRepository.getLikeBooksByCustomerId(customerId);
-        return books;
+        return likeRepository.getLikeBooksByCustomerId(customerId);
     }
 }

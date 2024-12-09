@@ -19,7 +19,6 @@ import shop.s5g.shop.entity.Author;
 import shop.s5g.shop.entity.AuthorType;
 import shop.s5g.shop.entity.Book;
 import shop.s5g.shop.entity.BookAuthor;
-import shop.s5g.shop.entity.BookImage;
 import shop.s5g.shop.entity.BookStatus;
 import shop.s5g.shop.entity.Category;
 import shop.s5g.shop.entity.Publisher;
@@ -98,11 +97,6 @@ public class BookServiceImpl implements BookService {
         Category category = optionalCategory.get();
         bookCategoryRepository.save(
             new BookCategory(category, book, LocalDateTime.now(), LocalDateTime.now()));
-
-        if (bookDto.thumbnailPath() != null) {
-            BookImage bookImage = bookImageRepository.save(
-                new BookImage(book, bookDto.thumbnailPath()));
-        }
 
         for (long tagId : bookDto.tagIdList()) {
             Optional<Tag> optionalTag = tagRepository.findById(tagId);
@@ -195,9 +189,6 @@ public class BookServiceImpl implements BookService {
         // 기존 썸네일 이미지 제거
         if (bookDto.thumbnailPath() != null) {
             bookImageRepository.deleteByBook(book);
-
-            BookImage bookImage = bookImageRepository.save(
-                new BookImage(book, bookDto.thumbnailPath()));
         }
 
         // 기존 태그 제거

@@ -1,25 +1,19 @@
 package shop.s5g.shop.repository.publisher.qdsl.impl;
 
 import com.querydsl.core.types.Projections;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
-import shop.s5g.shop.dto.PageResponseDto;
 import shop.s5g.shop.dto.publisher.PublisherRequestDto;
 import shop.s5g.shop.dto.publisher.PublisherResponseDto;
 import shop.s5g.shop.entity.Publisher;
-import shop.s5g.shop.entity.QPublisher;
 import shop.s5g.shop.repository.publisher.qdsl.PublisherQuerydslRepository;
 
 import java.util.List;
 
-import static com.querydsl.jpa.JPAExpressions.select;
 import static shop.s5g.shop.entity.QPublisher.publisher;
 
 @Repository

@@ -6,12 +6,10 @@ import org.springframework.data.domain.Pageable;
 import shop.s5g.shop.dto.book.BookDetailResponseDto;
 import shop.s5g.shop.dto.book.BookPageableResponseDto;
 import shop.s5g.shop.dto.book.BookRequestDto;
-import shop.s5g.shop.dto.book.BookResponseDto;
 
 import java.util.List;
 import shop.s5g.shop.dto.book.BookSimpleResponseDto;
 import shop.s5g.shop.dto.cart.response.CartBooksInfoInCartResponseDto;
-import shop.s5g.shop.entity.Book;
 
 public interface BookQuerydslRepository {
     void updateBook(long bookId, BookRequestDto bookDto);

@@ -13,7 +13,6 @@ import shop.s5g.shop.dto.tag.TagRequestDto;
 import shop.s5g.shop.dto.tag.TagResponseDto;
 import shop.s5g.shop.exception.tag.TagBadRequestException;
 import shop.s5g.shop.service.tag.TagService;
-import shop.s5g.shop.service.tag.impl.TagServiceImpl;
 
 import java.util.List;
 

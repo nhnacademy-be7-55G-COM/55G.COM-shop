@@ -5,8 +5,6 @@ import org.springframework.data.domain.Pageable;
 import shop.s5g.shop.dto.book.BookDetailResponseDto;
 import shop.s5g.shop.dto.book.BookPageableResponseDto;
 import shop.s5g.shop.dto.book.BookRequestDto;
-import shop.s5g.shop.dto.book.BookResponseDto;
-import shop.s5g.shop.dto.book.category.BookCategoryBookResponseDto;
 
 import java.util.List;
 import shop.s5g.shop.dto.book.BookSimpleResponseDto;
