@@ -6,7 +6,7 @@
 
 === POST - /api/shop/orders
 
-operation::order-create[snippets='http-request,request-fields,http-response,response-fields']
+operation::order-create[snippets='http-request,request-headers,request-fields,http-response,response-fields']
 
 === Invalid Customer : 404 Not Found
 
@@ -20,7 +20,7 @@ operation::order-create-validation-fail[snippets='http-request,http-response']
 
 === GET - /api/shop/orders
 
-operation::order-fetch[snippets='http-request,query-parameters,http-response,response-fields']
+operation::order-fetch[snippets='http-request,request-headers,query-parameters,http-response,response-fields']
 
 === Unauthorized - 401 Unauthorized
 
@@ -40,7 +40,7 @@ operation::order-fetch-admin-validation-fail[snippets='http-request,http-respons
 
 === DELETE - /api/shop/orders/\{orderId\}
 
-operation::order-delete[snippets='http-request,http-response']
+operation::order-delete[snippets='http-request,path-parameters,http-response']
 
 === OrderId Unavailable : 404 Not Found
 
@@ -51,3 +51,18 @@ operation::order-delete-not-found[snippets='http-request,http-response']
 === GET - /api/shop/orders/guests
 
 operation::order-guest-query[snippets='http-request,query-parameters,http-response,response-fields']
+
+== Guest Level Order Create API
+
+=== POST - /api/shop/orders/guests/\{customerId\}
+
+operation::order-guest-create[snippets='http-request,path-parameters,request-fields,http-response,response-fields']
+
+=== CustomerId Unavailable : 404 Not Found
+
+operation::order-guest-create-invalid-customer[snippets='http-request,http-response']
+
+=== Validation Failure : 400 Bad Request
+
+operation::order-guest-create-validation-fail[snippets='http-request,http-response']
+
