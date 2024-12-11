@@ -33,7 +33,6 @@ public abstract class AbstractPaymentManager {
     private DeliveryService deliveryService;
     private TossPaymentRepository paymentRepository;
 
-    // TODO: 비회원 전용 메소드도 필요함.
     @Transactional
     public <T> T confirmPayment(
         long orderDataId,
@@ -50,7 +49,6 @@ public abstract class AbstractPaymentManager {
         for (OrderDetail detail: details) {
             Book book = detail.getBook();
 
-            // TODO: stock - quantity가 음수인지 아닌지는 프론트에서도 판단해야함!
             int rest = book.getStock() - detail.getQuantity();
             if (rest < 0) {
                 throw new OrderDoesNotProceedException("재고가 부족함!");
@@ -72,9 +70,7 @@ public abstract class AbstractPaymentManager {
                 );
             }
         }
-        T object = responseType.cast(confirmPaymentAdapter(orderDataId, request));
-
-        return object;
+        return responseType.cast(confirmPaymentAdapter(orderDataId, request));
     }
 
     @Transactional
@@ -83,14 +79,11 @@ public abstract class AbstractPaymentManager {
         Map<String, Object> request,        // cancelReason 은 이미 담겨있음. -> 확장성을 위해서 나중에 뜯어내야 할지도?
         Class<T> responseType
     ) {
-        // Not implemented yet
-        // TODO: 주문 부분 취소 구현
         // TODO: 전체적으로 N+1 문제가 발생하고 있음.
         OrderDetail orderDetail = orderDetailRepository.findById(orderDetailId).orElseThrow(
             () -> new OrderDetailsNotExistException("주문을 찾을 수 없습니다")
         );
 
-        // TODO: BadRequest 말고 다른거.
         if (!orderDetail.getOrderDetailType().getName().equals(Type.COMPLETE.name())) {
             throw new BadRequestException("취소할 수 없는 주문입니다.");
         }
@@ -120,7 +113,6 @@ public abstract class AbstractPaymentManager {
         return object;
     }
 
-    // TODO: 주문에 연관된 payment 레코드 생성도 여기서
     protected abstract Object confirmPaymentAdapter(long orderDataId, Map<String, Object> request);
 
     /**
