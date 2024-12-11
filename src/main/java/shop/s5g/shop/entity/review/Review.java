@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import shop.s5g.shop.dto.review.UpdateReviewRequestDto;
@@ -23,6 +24,7 @@ import shop.s5g.shop.entity.order.OrderDetail;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class Review {
 
     @Id
