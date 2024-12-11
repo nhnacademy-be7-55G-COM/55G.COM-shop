@@ -1,0 +1,25 @@
+= Refund API Documentation
+:toc: left
+:toclevels: 2
+
+== Refund Create API
+
+=== POST - /api/shop/refund: 201 Created
+
+operation::refund-create[snippets='http-request,request-headers,request-fields,http-response,response-fields']
+
+=== Validation Failure: 400 Bad Request
+
+operation::refund-create-validation-failure[snippets='http-request,http-response']
+
+=== Order Detail Already Confirmed: 400 Bad Request
+
+operation::refund-create-already-confirmed[snippets='http-request,http-response']
+
+=== Condition Not Fulfilled-Normal: 400 Bad Request
+
+operation::refund-create-condition-not-fulfilled-normal[snippets='http-request,http-response']
+
+=== Condition Not Fulfilled-Destruction: 400 Bad Request
+
+operation::refund-create-condition-not-fulfilled-special[snippets='http-request,http-response']

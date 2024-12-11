@@ -34,6 +34,7 @@ public class BookDocumentServiceImpl implements BookDocumentService {
     private final BookDocumentRepository bookDocumentRepository;
     private final ElasticsearchOperations elasticsearchOperations;
 
+    @Override
     public PageResponseDto<BookDocumentResponseDto> findAllBooks(Pageable pageable) {
         Page<BookDocument> bookDocumentPage = bookDocumentRepository.findAll(pageable);
 
@@ -45,6 +46,7 @@ public class BookDocumentServiceImpl implements BookDocumentService {
             bookDocumentPage.getSize(), bookDocumentPage.getTotalElements());
     }
 
+    @Override
     public PageResponseDto<BookDocumentResponseDto> searchByKeyword(String keyword,
         Pageable pageable) {
 

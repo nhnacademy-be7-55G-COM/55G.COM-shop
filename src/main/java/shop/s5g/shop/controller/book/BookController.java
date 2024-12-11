@@ -20,12 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import shop.s5g.shop.dto.PageResponseDto;
 import shop.s5g.shop.dto.book.BookPageableResponseDto;
-import shop.s5g.shop.dto.book.category.BookCategoryBookResponseDto;
 import shop.s5g.shop.dto.tag.MessageDto;
 import shop.s5g.shop.exception.book.BookBadRequestException;
 import shop.s5g.shop.dto.book.BookDetailResponseDto;
 import shop.s5g.shop.dto.book.BookRequestDto;
-import shop.s5g.shop.dto.book.BookResponseDto;
 import shop.s5g.shop.dto.book.BookSimpleResponseDto;
 import shop.s5g.shop.service.book.BookService;
 

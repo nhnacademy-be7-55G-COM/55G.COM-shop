@@ -5,19 +5,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import shop.s5g.shop.dto.PageResponseDto;
-import shop.s5g.shop.dto.category.CategoryDetailResponseDto;
 import shop.s5g.shop.dto.category.CategoryRequestDto;
 import shop.s5g.shop.dto.category.CategoryResponseDto;
 import shop.s5g.shop.dto.category.CategoryUpdateRequestDto;
 import shop.s5g.shop.dto.tag.MessageDto;
 import shop.s5g.shop.exception.category.CategoryBadRequestException;
 import shop.s5g.shop.service.category.CategoryService;
-import shop.s5g.shop.service.category.impl.CategoryServiceImpl;
 
 import java.util.List;
 
