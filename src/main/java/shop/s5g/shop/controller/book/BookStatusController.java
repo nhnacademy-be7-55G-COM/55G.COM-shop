@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import shop.s5g.shop.dto.book.status.BookStatusResponseDto;
-import shop.s5g.shop.service.bookStatus.BookStatusService;
+import shop.s5g.shop.service.bookstatus.BookStatusService;
 
 import java.util.List;
 

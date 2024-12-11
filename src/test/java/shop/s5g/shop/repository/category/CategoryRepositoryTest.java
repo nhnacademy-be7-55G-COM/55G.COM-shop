@@ -1,6 +1,6 @@
 package shop.s5g.shop.repository.category;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
@@ -11,11 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
-import shop.s5g.shop.config.QueryFactoryConfig;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import shop.s5g.shop.config.TestQueryFactoryConfig;
+import shop.s5g.shop.dto.category.CategoryResponseDto;
 import shop.s5g.shop.dto.category.CategoryUpdateRequestDto;
 import shop.s5g.shop.entity.Category;
 import shop.s5g.shop.exception.category.CategoryResourceNotFoundException;
+import shop.s5g.shop.repository.category.qdsl.impl.CategoryQuerydslRepositoryImpl;
 
 @DataJpaTest
 @Import(TestQueryFactoryConfig.class)
@@ -24,6 +28,8 @@ class CategoryRepositoryTest {
     private final CategoryRepository categoryRepository;
     @Autowired
     private TestEntityManager testEntityManager;
+    @Autowired
+    private CategoryQuerydslRepositoryImpl categoryQuerydslRepository;
 
     @Autowired
     public CategoryRepositoryTest(CategoryRepository categoryRepository) {
@@ -37,7 +43,7 @@ class CategoryRepositoryTest {
     @DisplayName("카테고리 등록 test")
     void addCategoryTest() {
         Category category = new Category(null, "컴퓨터", true);
-        Category c = categoryRepository.save(category);
+        categoryRepository.save(category);
 
         assertEquals(1, categoryRepository.findAll().size());
     }
@@ -46,16 +52,89 @@ class CategoryRepositoryTest {
      * 카테고리 목록 조회 test
      */
     @Test
-    void getAllCategoriesTest() {
-        Category category1 = new Category(null, "헬스", true);
-        Category category2 = new Category(category1, "컴퓨터", true);
+    @DisplayName("모든 카테고리 조회 테스트")
+    void getAllCategoryTest() {
+        // Given
+        Category parentCategory = new Category(null, "Parent Category", true);
+        testEntityManager.persist(parentCategory);
 
-        categoryRepository.save(category1);
-        categoryRepository.save(category2);
+        Category childCategory = new Category(parentCategory, "Child Category", true);
+        testEntityManager.persist(childCategory);
 
-        List<Category> categories = categoryRepository.findAll();
+        Pageable pageable = PageRequest.of(0, 10);
 
-        assertEquals(2, categories.size());
+        // When
+        Page<CategoryResponseDto> result = categoryQuerydslRepository.getAllCategory(pageable);
+
+        // Then
+        assertEquals(2, result.getTotalElements());
+        assertEquals("Parent Category", result.getContent().get(0).categoryName());
+        assertEquals("Child Category", result.getContent().get(1).categoryName());
+    }
+
+    /**
+     * 자식 카테고리 조회 test
+     */
+    @Test
+    @DisplayName("자식 카테고리 조회 테스트")
+    void getChildCategoryTest() {
+        // Given
+        Category parentCategory = new Category(null, "Parent Category", true);
+        testEntityManager.persist(parentCategory);
+
+        Category childCategory1 = new Category(parentCategory, "Child Category 1", true);
+        Category childCategory2 = new Category(parentCategory, "Child Category 2", true);
+        testEntityManager.persist(childCategory1);
+        testEntityManager.persist(childCategory2);
+
+        testEntityManager.flush();
+        testEntityManager.clear();
+
+        // When
+        List<CategoryResponseDto> result = categoryQuerydslRepository.getChild_Category(parentCategory.getCategoryId());
+
+        // Then
+        assertEquals(2, result.size());
+        assertTrue(result.stream().anyMatch(dto -> dto.categoryName().equals("Child Category 1")));
+        assertTrue(result.stream().anyMatch(dto -> dto.categoryName().equals("Child Category 2")));
+    }
+
+    /**
+     * 국내 도서 카테고리 조회 test
+     */
+    @Test
+    @DisplayName("국내도서 하위 카테고리 조회 테스트")
+    void getKoreaBookTest() {
+        // Given
+        Category koreaBookCategory1 = new Category(null, "Korean Books 1", true);
+        Category koreaBookCategory2 = new Category(null, "Korean Books 2", true);
+        Category childCategory = new Category(koreaBookCategory1, "Child Category", true);
+
+        testEntityManager.persist(koreaBookCategory1);
+        testEntityManager.persist(koreaBookCategory2);
+        testEntityManager.persist(childCategory);
+
+        Pageable pageable = PageRequest.of(0, 10);
+
+        testEntityManager.flush();
+        testEntityManager.clear();
+
+        // When
+        Page<CategoryResponseDto> result = categoryQuerydslRepository.getKoreaBook(pageable);
+
+        // Then
+        assertEquals(2, result.getTotalElements());
+        assertEquals(2, result.getContent().size());
+
+        // Validate the first category
+        CategoryResponseDto category1 = result.getContent().get(0);
+        assertEquals("Korean Books 1", category1.categoryName());
+        assertNull(category1.parentCategoryId());
+
+        // Validate the second category
+        CategoryResponseDto category2 = result.getContent().get(1);
+        assertEquals("Korean Books 2", category2.categoryName());
+        assertNull(category2.parentCategoryId());
     }
 
     /**
@@ -66,7 +145,7 @@ class CategoryRepositoryTest {
         Category category1 = new Category(null, "음악", true);
         Category category2 = new Category(category1, "컴퓨터", true);
 
-        Category saved1 = categoryRepository.save(category1);
+        categoryRepository.save(category1);
         Category saved2 = categoryRepository.save(category2);
 
         CategoryUpdateRequestDto category3 = new CategoryUpdateRequestDto("인문학");

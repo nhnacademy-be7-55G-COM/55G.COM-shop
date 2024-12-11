@@ -28,12 +28,12 @@ import shop.s5g.shop.controller.book.CategoryController;
 import shop.s5g.shop.dto.category.CategoryResponseDto;
 import shop.s5g.shop.filter.JwtAuthenticationFilter;
 import shop.s5g.shop.service.category.CategoryService;
+
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -48,7 +48,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         )
 )
 @Import(TestSecurityConfig.class)
-public class CategoryControllerTest {
+class CategoryControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -89,11 +89,12 @@ public class CategoryControllerTest {
         this.mockMvc
                 //given
                 .perform(post("/api/shop/category")
-                        .content("{\n" +
-                                "  \"categoryName\": \"컴퓨터2\",\n" +
-                                "  \"parentCategoryId\": 333,\n" +
-                                "}\n")
-
+                        .content("""
+                                {
+                                  "categoryName": "컴퓨터2",
+                                  "parentCategoryId": 
+                                }
+                                """)
                         //when & then
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
@@ -151,11 +152,11 @@ public class CategoryControllerTest {
                     Long categoryId = invocation.getArgument(0);
                     return mockCategory.stream()
                             .filter(category -> category.parentCategoryId() != null && category.parentCategoryId().equals(categoryId))
-                            .collect(Collectors.toList());
+                            .toList();
                 });
 
         mockMvc.perform(get("/api/shop/category/childCategory/1")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.[0].categoryName").value("기타"))
                 .andExpect(jsonPath("$.[1].categoryName").value("드럼"));
@@ -212,9 +213,12 @@ public class CategoryControllerTest {
     void updateCategoryTest() throws Exception {
         this.mockMvc
                 .perform(put("/api/shop/category/1")
-                        .content("{\n" +
-                                " \"categoryName\" : \"컴퓨터\"\n" +
-                                "}\n")
+                        .content("""
+                                {
+                                  "categoryName": "컴퓨터"
+                                }
+                                """)
+
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print());
@@ -228,9 +232,12 @@ public class CategoryControllerTest {
     void updateCategoryIdErrorTest() throws Exception {
         this.mockMvc
                 .perform(put("/api/shop/category/-1")
-                        .content("{\n" +
-                                " \"categoryName\" : \"컴퓨터\"\n" +
-                                "}\n")
+                        .content("""
+                                {
+                                  "categoryName": "컴퓨터"
+                                }
+                                """)
+
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andDo(print());

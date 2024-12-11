@@ -1,7 +1,6 @@
 package shop.s5g.shop.controller.author;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Min;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

@@ -6,7 +6,6 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +16,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
-import org.springframework.stereotype.Repository;
 import shop.s5g.shop.dto.book.BookDetailResponseDto;
 import shop.s5g.shop.dto.book.BookPageableResponseDto;
 import shop.s5g.shop.dto.book.BookRequestDto;
-import shop.s5g.shop.dto.book.BookResponseDto;
 import shop.s5g.shop.dto.book.BookSimpleResponseDto;
 import shop.s5g.shop.dto.book.author.BookAuthorResponseDto;
 import shop.s5g.shop.dto.book.category.BookDetailCategoryResponseDto;
@@ -61,9 +58,9 @@ public class BookQuerydslRepositoryImpl extends QuerydslRepositorySupport implem
     public void updateBook(long bookId, BookRequestDto bookDto) {
         jpaQueryFactory.update(book)
             .set(book.publisher.id,
-                bookDto.publisherId()) //TODO bookDto의 publisherId로 publisher를 찾아 객체를 바꿔줘야 되는지?
+                bookDto.publisherId())
             .set(book.bookStatus.id,
-                bookDto.bookStatusId()) //TODO bookDto의 statusId로 status를 찾아 객체를 바꿔줘야 되는지?
+                bookDto.bookStatusId())
             .set(book.title, bookDto.title())
             .set(book.chapter, bookDto.chapter())
             .set(book.description, bookDto.description())
