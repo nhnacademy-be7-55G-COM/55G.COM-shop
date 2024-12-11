@@ -38,6 +38,7 @@ public class ElasticSearchConfig {
     }
 
     @Bean
+    @RefreshScope
     public ReactiveElasticsearchClient reactiveElasticsearchClient() {
         ClientConfiguration clientConfiguration = ClientConfiguration.builder()
             .connectedTo(url)
