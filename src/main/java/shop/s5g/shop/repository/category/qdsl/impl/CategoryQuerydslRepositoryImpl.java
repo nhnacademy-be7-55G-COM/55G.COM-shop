@@ -7,17 +7,14 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
-import shop.s5g.shop.dto.category.CategoryDetailResponseDto;
 import shop.s5g.shop.dto.category.CategoryResponseDto;
 import shop.s5g.shop.dto.category.CategoryUpdateRequestDto;
-import shop.s5g.shop.dto.publisher.PublisherResponseDto;
 import shop.s5g.shop.entity.Category;
 import shop.s5g.shop.repository.category.qdsl.CategoryQuerydslRepository;
 
 import java.util.List;
 
 import static shop.s5g.shop.entity.QCategory.category;
-import static shop.s5g.shop.entity.QPublisher.publisher;
 
 @Repository
 public class CategoryQuerydslRepositoryImpl extends QuerydslRepositorySupport implements CategoryQuerydslRepository {
