@@ -1,4 +1,4 @@
-package shop.s5g.shop.service.bookstatus;
+package shop.s5g.shop.service.bookStatus;
 
 import shop.s5g.shop.dto.book.status.BookStatusResponseDto;
 
