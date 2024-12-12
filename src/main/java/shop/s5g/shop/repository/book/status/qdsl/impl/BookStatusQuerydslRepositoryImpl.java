@@ -29,5 +29,4 @@ public class BookStatusQuerydslRepositoryImpl extends QuerydslRepositorySupport 
                 .from(bookStatus)
                 .fetch();
     }
-    //todo 도서 1권의 상태 조회 코드 작성
 }

@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import shop.s5g.shop.dto.tag.TagRequestDto;
 import shop.s5g.shop.dto.tag.TagResponseDto;
 import shop.s5g.shop.entity.Tag;
+import shop.s5g.shop.entity.booktag.BookTag;
+import shop.s5g.shop.exception.booktag.BookTagAlreadyExistsException;
 import shop.s5g.shop.exception.tag.TagAlreadyExistsException;
 import shop.s5g.shop.exception.tag.TagResourceNotFoundException;
 import shop.s5g.shop.repository.booktag.BookTagRepository;
@@ -21,6 +23,7 @@ import shop.s5g.shop.service.tag.impl.TagServiceImpl;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.util.AssertionErrors.assertEquals;
 
@@ -179,6 +182,32 @@ class TagServiceTest {
 
         //then
         verify(tagRepository, times(1)).existsById(tagId);
+    }
+
+    /**
+     * 태그 삭제 실패
+     * 도서에 태그 달려있음
+     */
+    @Test
+    @DisplayName("태그 삭제 - 실패 (태그가 도서에 연결되어 있음)")
+    void deleteTagsInUseTest() {
+        // Given
+        Long tagId = 1L;
+
+        // Mock 동작 정의
+        when(tagRepository.existsById(tagId)).thenReturn(true); // 태그가 존재한다고 설정
+        when(bookTagRepository.BookTagCount(tagId)).thenReturn(List.of(new BookTag())); // 태그가 도서에 연결됨
+
+        // When
+        assertThrows(
+                BookTagAlreadyExistsException.class,
+                () -> tagService.deleteTags(tagId)
+        );
+
+        //Then
+        verify(tagRepository, times(1)).existsById(tagId); // 태그 존재 확인 메서드 호출 검증
+        verify(bookTagRepository, times(1)).BookTagCount(tagId); // 도서 연결 확인 메서드 호출 검증
+        verify(tagRepository, never()).inactiveTag(tagId); // 태그 비활성화 메서드 호출되지 않아야 함
     }
 
     /**
