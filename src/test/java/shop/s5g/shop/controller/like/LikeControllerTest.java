@@ -1,13 +1,10 @@
 package shop.s5g.shop.controller.like;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
@@ -23,12 +20,10 @@ import shop.s5g.shop.dto.book.BookLikeResponseDto;
 import shop.s5g.shop.filter.JwtAuthenticationFilter;
 import shop.s5g.shop.security.ShopMemberDetail;
 import shop.s5g.shop.service.like.LikeService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.List;
 
-import static org.mockito.Mockito.when;
-
+import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -43,7 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         )
 )
 @Import(TestSecurityConfig.class)
-public class LikeControllerTest {
+class LikeControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
