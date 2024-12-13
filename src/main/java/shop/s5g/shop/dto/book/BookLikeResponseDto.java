@@ -7,6 +7,5 @@ public record BookLikeResponseDto(
         Long price,
         String publisher,
         String status
-//        String imageName
 ) {
 }

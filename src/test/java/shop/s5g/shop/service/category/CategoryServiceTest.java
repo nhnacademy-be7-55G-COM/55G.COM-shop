@@ -5,10 +5,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.*;
 import shop.s5g.shop.dto.category.CategoryRequestDto;
 import shop.s5g.shop.dto.category.CategoryResponseDto;
+import shop.s5g.shop.dto.category.CategoryUpdateRequestDto;
 import shop.s5g.shop.entity.Category;
 import shop.s5g.shop.exception.category.CategoryResourceNotFoundException;
 import shop.s5g.shop.repository.category.CategoryRepository;
@@ -175,6 +177,48 @@ class CategoryServiceTest {
     }
 
     /**
+     * 카테고리 수정 test
+     */
+
+    @Test
+    void updateCategory_ValidCategory_Success() {
+        // Given
+        Long categoryId = 1L;
+        CategoryUpdateRequestDto updateRequest = new CategoryUpdateRequestDto("Updated Category");
+
+        Category existingCategory = new Category(null, "Original Category", true);
+
+        Mockito.when(categoryRepository.findById(categoryId)).thenReturn(Optional.of(existingCategory));
+
+        // When
+        categoryService.updateCategory(categoryId, updateRequest);
+
+        // Then
+        Mockito.verify(categoryRepository, times(1)).findById(categoryId);
+        Mockito.verify(categoryRepository, times(1)).updatesCategory(categoryId, updateRequest);
+    }
+
+    /**
+     * 카테고리 수정 실패 test
+     */
+    @Test
+    void updateCategory_NonExistentCategory_ThrowsCategoryResourceNotFoundException() {
+        // Given
+        Long categoryId = 999L;
+        CategoryUpdateRequestDto updateRequest = new CategoryUpdateRequestDto("Updated Category");
+
+        Mockito.when(categoryRepository.findById(categoryId)).thenReturn(Optional.empty());
+
+        // When & Then
+        CategoryResourceNotFoundException exception = assertThrows(CategoryResourceNotFoundException.class,
+                () -> categoryService.updateCategory(categoryId, updateRequest));
+
+        assertEquals(categoryId + " 는 존재하지 않습니다.", exception.getMessage());
+        Mockito.verify(categoryRepository, times(1)).findById(categoryId);
+        Mockito.verify(categoryRepository, never()).updatesCategory(anyLong(), any());
+    }
+
+    /**
      * 카테고리 삭제 test
      */
     @Test
@@ -184,5 +228,24 @@ class CategoryServiceTest {
         assertThatThrownBy(() -> categoryService.deleteCategory(1L)).isInstanceOf(CategoryResourceNotFoundException.class);
         verify(categoryRepository, times(1)).existsById(1L);
         verify(categoryRepository, never()).findById((1L));
+    }
+
+    /**
+     * 카테고리 삭제 실패 test
+     */
+    @Test
+    void deleteCategory_NonExistentId_ThrowsCategoryResourceNotFoundException() {
+        // Given
+        Long categoryId = 999L;
+
+        Mockito.when(categoryRepository.existsById(categoryId)).thenReturn(false);
+
+        // When & Then
+        CategoryResourceNotFoundException exception = assertThrows(CategoryResourceNotFoundException.class,
+                () -> categoryService.deleteCategory(categoryId));
+
+        assertEquals("Category with id " + categoryId + " not found", exception.getMessage());
+        Mockito.verify(categoryRepository, times(1)).existsById(categoryId);
+        Mockito.verify(categoryRepository, never()).inactiveCategory(anyLong());
     }
 }
